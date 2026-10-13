@@ -834,6 +834,10 @@ export default function Page() {
       breakdown: v.breakdown || [],
       tax: v.tax || null,
       nightAllowance: v.nightAllowance || 0,
+      // Driving minutes for this priced trip — carried through so downstream
+      // pages (checkout, payment) can compute an estimated arrival date without
+      // a second API call. Zero means the backend didn't return it (local/hourly).
+      durationMin: Number(v.durationMin || 0),
     };
   }
 

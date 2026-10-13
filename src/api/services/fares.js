@@ -143,6 +143,10 @@ function mergeOptionWithCatalogue(opt, catalogueMap, topLevelSurge) {
     // Backend copy explaining the premium (e.g. "Booked within 4 hours in a
     // village area"), shown instead of a generic line.
     surgeReason:     surgeInfo?.reason || null,
+    // Driving time for this trip as priced by the backend. Used by checkout
+    // and payment to compute an estimated arrival date for one-way trips with
+    // stops, where the trip may cross midnight and the date matters.
+    durationMin:     Number(opt.durationMin ?? 0),
   };
 }
 

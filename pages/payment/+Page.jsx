@@ -1,4 +1,17 @@
 import { formatDate, formatDateTime } from "../../src/lib/dateTime";
+
+/**
+ * Compute estimated arrival for one-way trips with stops.
+ * durationMin is carried on `selected` from the backend fare quote.
+ */
+function estimatedArrival(date, time, durationMin) {
+  if (!date || !durationMin) return null;
+  const [h = "0", m = "0"] = (time || "00:00").split(":");
+  const dt = new Date(`${date}T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00`);
+  if (isNaN(dt.getTime())) return null;
+  dt.setMinutes(dt.getMinutes() + Number(durationMin));
+  return dt;
+}
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { navigate } from "vike/client/router";
@@ -474,6 +487,21 @@ export default function Page() {
             {journey.tripType === "local" && journey.package && (
               <SummaryRow label="Package" value={journey.package} />
             )}
+            {/* Estimated arrival date for one-way trips with stops. Only shown
+                when stops exist — a plain one-way is almost always same-day and
+                showing a date for it is noise. Multi-stop routes (e.g. BLR →
+                Gulbarga → Hubli) can cross midnight; the date prevents surprises
+                right before the customer hits Pay. */}
+            {journey.tripType === "one-way" &&
+             (journey.stops?.length > 0) &&
+             selected?.durationMin > 0 &&
+             (() => {
+               const arr = estimatedArrival(journey.date, journey.time, selected.durationMin);
+               return arr ? (
+                 <SummaryRow label="Est. Arrival" value={formatDate(arr)} />
+               ) : null;
+             })()
+            }
 
             {/* Real, reconciling fare breakdown — these lines always sum to
                 the trip fare below, whether they came from the backend's

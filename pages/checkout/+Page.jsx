@@ -1,6 +1,21 @@
 import { isIndianMobile, parseIndianMobile, cleanPhoneInput } from "../../src/lib/phone";
 import { realEmailOrEmpty } from "../../src/lib/guestContact";
 import { formatDate, formatTime } from "../../src/lib/dateTime";
+
+/**
+ * Compute the estimated arrival datetime for a one-way trip with stops.
+ * Returns a Date object, or null when inputs are missing.
+ * durationMin comes from the backend's fare quote (fare.service.computeFare)
+ * and reflects the full routed distance including all intermediate stops.
+ */
+function estimatedArrival(date, time, durationMin) {
+  if (!date || !durationMin) return null;
+  const [h = "0", m = "0"] = (time || "00:00").split(":");
+  const dt = new Date(`${date}T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00`);
+  if (isNaN(dt.getTime())) return null;
+  dt.setMinutes(dt.getMinutes() + Number(durationMin));
+  return dt;
+}
 import React, { useState, useRef, useEffect } from "react";
 import { useGoogleMapsReady, bindPlacesAutocomplete, pointFromPlace as mapsPointFromPlace } from "../../src/lib/googleMaps";
 import { useSelector, useDispatch } from "react-redux";
@@ -717,6 +732,23 @@ export default function Page() {
                   {journey.tripType === "round-trip" && journey.returnTime && (
                     <SummaryRow label="Return Time" value={formatTime(journey.returnTime)} />
                   )}
+                  {/* Estimated arrival date — only for one-way trips that have
+                      stops. A plain one-way almost always arrives same day; a
+                      multi-stop trip (e.g. Bengaluru → Gulbarga → Hubli) can
+                      cross midnight, so showing the date prevents surprises. */}
+                  {journey.tripType === "one-way" &&
+                   (journey.stops?.length > 0) &&
+                   selected?.durationMin > 0 &&
+                   (() => {
+                     const arr = estimatedArrival(journey.date, journey.time, selected.durationMin);
+                     return arr ? (
+                       <SummaryRow
+                         label="Est. Arrival Date"
+                         value={formatDate(arr)}
+                       />
+                     ) : null;
+                   })()
+                  }
                   {journey.tripType === "local" && journey.package && (
                     <SummaryRow label="Package" value={journey.package} />
                   )}
