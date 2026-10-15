@@ -8,7 +8,7 @@
 // The backend resolves the account by the LAST 10 DIGITS of the phone, so any
 // spelling ("+91 98765 43210", "09876543210", "9876543210") maps to the same
 // account. We still normalise to 10 digits here before sending, to keep the
-// request body clean and the masked-number UI accurate.
+
 
 import { api, ApiError } from "../client";
 import { USE_MOCK, MOCK_FALLBACK } from "../config";
