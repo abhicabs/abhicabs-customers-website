@@ -3,12 +3,12 @@ import Layout from "../src/components/Layout";
 
 export default {
   extends: [vikeReact],
-  // This is a front-end demo whose "API" is a Redux store persisted to
-  // localStorage (see src/store). That only exists in the browser, so the
-  // whole app runs client-side rendered — swap this on once a real backend
-  // is wired up.
-  ssr: false,
-  title: "ABHI CABS — Your Journey, Our Responsibility",
+  // SSR enabled for SEO — Google needs rendered HTML to index pages.
+  // The Redux store hydrates client-side after the initial server render,
+  // so transactional pages (checkout, payment, my-booking) still work as
+  // SPAs while public pages get proper meta tags in the crawled HTML.
+  ssr: true,
+  title: "AbhiCabs — Outstation Cab Booking | Karnataka & Hyderabad",
   Layout,
   // Real brand favicon (the "A" road-and-pin mark). Uses the pre-rasterized
   // .ico rather than the raw .svg — the source logo is a highly detailed

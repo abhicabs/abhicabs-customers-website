@@ -1,0 +1,17 @@
+# AbhiCabs — Search engine crawling rules
+# https://www.abhicabs24x7.com
+
+User-agent: *
+Allow: /
+
+# Private / transactional pages — no value in search results
+Disallow: /checkout
+Disallow: /payment
+Disallow: /confirmation
+Disallow: /login
+Disallow: /my-booking
+Disallow: /booking-details
+Disallow: /support-tickets
+Disallow: /tracking
+
+Sitemap: https://www.abhicabs24x7.com/sitemap.xml

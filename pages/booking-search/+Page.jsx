@@ -160,7 +160,7 @@ export default function Page() {
   // BookingWidget.jsx already had this exact fix; porting it here too.
   const today = toLocalISODate(new Date());
   const [inlineTrip, setInlineTrip] = useState({
-    tripType: "one-way", pickup: "", drop: "", date: today, time: "", returnDate: "", returnTime: "", package: "8 hrs / 80 km",
+    tripType: "one-way", pickup: "", drop: "", date: today, time: "", returnDate: "", returnTime: "", dropDate: "", package: "8 hrs / 80 km",
     airport: "", airportTerminal: "", airportDirection: "drop", stops: [],
   });
   // Pre-fill the trip panel from the saved trip whenever one is loaded (e.g.
@@ -177,6 +177,7 @@ export default function Page() {
       time:       journey.time       || "",
       returnDate: journey.returnDate || "",
       returnTime: journey.returnTime || "",
+      dropDate:   journey.dropDate   || "",
       package:    journey.package    || f.package,
       stops:      Array.isArray(journey.stops) ? journey.stops : [],
     }));
@@ -589,6 +590,15 @@ export default function Page() {
       }
     }
 
+    // Destination date — required for one-way with stops (backend requires dropAt).
+    const filledStops = (inlineTrip.stops || []).filter((s) => String(s || "").trim());
+    if (inlineTrip.tripType === "one-way" && filledStops.length > 0 && !inlineTrip.dropDate) {
+      return "Please select the destination date for your multi-stop trip";
+    }
+    if (inlineTrip.tripType === "one-way" && filledStops.length > 0 && inlineTrip.dropDate && inlineTrip.dropDate < inlineTrip.date) {
+      return "Destination date cannot be before the pickup date";
+    }
+
     return null;
   }
 
@@ -649,6 +659,8 @@ export default function Page() {
       stops: effType === "local" || effType === "airport"
         ? []
         : (inlineTrip.stops || []).filter((s) => s.trim()),
+      dropDate: effType === "one-way" && (inlineTrip.stops || []).filter((s) => s.trim()).length > 0
+        ? inlineTrip.dropDate : "",
     };
     const action = dispatch(createJourney(journeyObj));
     const newId = action.payload.id;
@@ -1153,6 +1165,16 @@ export default function Page() {
                       <label style={{ fontSize: 11, fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 5 }}>Return Date</label>
                       <PickerScope compact>
                         <DatePicker ariaLabel="Return date" placeholder="Add return" min={inlineTrip.date || today} value={inlineTrip.returnDate} onChange={setInline("returnDate")} />
+                      </PickerScope>
+                    </div>
+                  )}
+
+                  {/* Destination date — one-way with stops only */}
+                  {inlineTrip.tripType === "one-way" && (inlineTrip.stops || []).some((s) => String(s || "").trim()) && (
+                    <div>
+                      <label style={{ fontSize: 11, fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 5 }}>Destination Date</label>
+                      <PickerScope compact>
+                        <DatePicker ariaLabel="Destination date" placeholder="Arrival date" min={inlineTrip.date || today} value={inlineTrip.dropDate} onChange={setInline("dropDate")} />
                       </PickerScope>
                     </div>
                   )}

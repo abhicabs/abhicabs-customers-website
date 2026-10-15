@@ -94,6 +94,7 @@ export default function Page() {
       pickupTime:    journey.time,
       returnDate:    journey.returnDate || undefined,
       returnTime:    journey.returnTime || undefined,
+      dropDate:      journey.dropDate || undefined,
       rentalPackage: journey.package || undefined,
       // Contact as entered at checkout — never a fabricated value.
       guestName:  details.fullName || undefined,
@@ -185,6 +186,7 @@ export default function Page() {
       tripType:      journey.tripType,
       returnDate:    journey.returnDate,
       returnTime:    journey.returnTime,
+      dropDate:      journey.dropDate,
       // The chosen local package ("8 hrs / 80 km"). This was never forwarded,
       // so toBookingRequest() had nothing to derive rentalHours from and fell
       // back to a hardcoded 8 — the source of "That rental package is not

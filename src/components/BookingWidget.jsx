@@ -100,6 +100,7 @@ function emptyFields() {
   return {
     pickup: "", drop: "", date: today, time: "",
     returnDate: "", returnTime: "",
+    dropDate: "",
     package: "8 hrs / 80 km",
     airport: "BLR",
     airportTerminal: "",
@@ -168,6 +169,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
           time: presetJourney.time || "",
           returnDate: presetJourney.returnDate || "",
           returnTime: presetJourney.returnTime || "",
+          dropDate: presetJourney.dropDate || "",
           package: presetJourney.package || "8 hrs / 80 km",
           airport: presetJourney.airport || "BLR",
           airportTerminal: presetJourney.airportTerminal || "",
@@ -438,6 +440,14 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
       toast("Please fill in all stop fields or remove empty ones", "error"); return;
     }
 
+    // ── 8b. DESTINATION DATE (one-way with stops)
+    if (mode === "one-way" && filledStops.length > 0 && !fields.dropDate) {
+      toast("Please select the destination date for your multi-stop trip", "error"); return;
+    }
+    if (mode === "one-way" && filledStops.length > 0 && fields.dropDate && fields.dropDate < fields.date) {
+      toast("Destination date cannot be before the pickup date", "error"); return;
+    }
+
     // Out-of-area trips are no longer blocked here. The booking-search page
     // shows normal vehicle cards (with no prices) and a "Request Booking"
     // button that opens the contact form. So we let the navigation happen.
@@ -484,6 +494,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
       returnTime: "",  // Return time removed — only return date is used
       package: effMode === "local" ? (localPackage || fields.package) : "",
       stops: effMode === "local" || effMode === "airport" ? [] : filledStops,
+      dropDate: effMode === "one-way" && filledStops.length > 0 ? fields.dropDate : "",
       // No client-side surge: whether demand pricing applies, and how much
       // (5/10/15% by area tier), is decided by the backend quote and shown on
       // each vehicle from /fares/options.
@@ -564,6 +575,16 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
       <DatePicker ariaLabel="Return date" placeholder="Add return" min={fields.date || today} value={fields.returnDate} onChange={set("returnDate")} />
     </Field>
   );
+  // Destination date — shown only for one-way trips with stops, because a
+  // multi-stop itinerary may arrive the next day (e.g. Bengaluru → Bidar →
+  // Hyderabad). The backend requires `dropAt` for these trips.
+  const hasStops = stops.length > 0 && stops.some((s) => s.value.trim());
+  const showDropDate = mode === "one-way" && hasStops;
+  const dropDateField = (
+    <Field label="Destination Date">
+      <DatePicker ariaLabel="Destination date" placeholder="Arrival date" min={fields.date || today} value={fields.dropDate} onChange={set("dropDate")} />
+    </Field>
+  );
   /*
    * Return TIME. Submit already refused a round trip without one ("Please
    * select a return time") but no input existed to supply it, so Round Trip
@@ -635,6 +656,11 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
         {withReturn && (
           <m.div layout="position" className="w-full sm:w-auto sm:flex-[1_1_170px]">
             <div>{returnDateField}</div>
+          </m.div>
+        )}
+        {showDropDate && (
+          <m.div layout="position" className="w-full sm:w-auto sm:flex-[1_1_170px]">
+            <div>{dropDateField}</div>
           </m.div>
         )}
       </div>

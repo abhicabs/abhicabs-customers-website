@@ -86,6 +86,11 @@ function toBookingRequest(p) {
     body.returnAt = new Date(`${returnDate}T${returnTime}:00`).toISOString();
   }
 
+  // ONE_WAY with stops — dropAt required by schema (the destination date for
+  // a multi-stop itinerary that may arrive the next day).
+  if (tripType === "ONE_WAY" && Array.isArray(p.stops) && p.stops.length && p.dropDate) {
+    body.dropAt = p.dropDate; // YYYY-MM-DD, exactly what the schema expects
+  }
 
   // HOURLY — schema requires rentalPackageId OR rentalHours
   if (tripType === "HOURLY") {

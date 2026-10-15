@@ -328,6 +328,7 @@ export default function Page() {
       pickupTime:    journey.time,
       returnDate:    journey.returnDate || undefined,
       returnTime:    journey.returnTime || undefined,
+      dropDate:      journey.dropDate || undefined,
       rentalPackage: journey.package || undefined,
       vehicleClass:  selected.vehicleClass || undefined,
       vehicleName:   selected.vehicleName || vehicle?.name || undefined,
@@ -731,6 +732,9 @@ export default function Page() {
                   )}
                   {journey.tripType === "round-trip" && journey.returnTime && (
                     <SummaryRow label="Return Time" value={formatTime(journey.returnTime)} />
+                  )}
+                  {journey.tripType === "one-way" && journey.dropDate && journey.stops?.length > 0 && (
+                    <SummaryRow label="Destination Date" value={formatDate(journey.dropDate)} />
                   )}
                   {/* Estimated arrival date — only for one-way trips that have
                       stops. A plain one-way almost always arrives same day; a
