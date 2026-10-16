@@ -5,7 +5,7 @@ import { LazyMotion, domAnimation, m, MotionConfig, useScroll, useTransform, use
 // footer's Contact link scroll here). Same props and copy as before.
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 // Same promises the hero makes — nothing new claimed here.
 const TRUST = ["Verified Drivers", "Transparent Pricing", "24×7 Support"];
 
@@ -70,7 +70,7 @@ export default function CTASection({ onBookMode, id = "contact" }) {
             aria-hidden
             animate={{ opacity: [0.7, 1, 0.7] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            style={{ position: "absolute", left: "50%", bottom: "-45%", width: "min(900px,120%)", height: "90%", transform: "translateX(-50%)", zIndex: -1, pointerEvents: "none", background: "radial-gradient(ellipse at center, rgba(255,193,7,.22) 0%, transparent 65%)" }}
+            style={{ position: "absolute", left: "50%", bottom: "-45%", width: "min(900px,120%)", height: "90%", transform: "translateX(-50%)", zIndex: -1, pointerEvents: "none", background: "radial-gradient(ellipse at center, rgba(255,213,79,.22) 0%, transparent 65%)" }}
           />
 
           <m.div
@@ -111,7 +111,7 @@ export default function CTASection({ onBookMode, id = "contact" }) {
                     variants={underline}
                     d="M2 10 C 50 2, 110 2, 198 8"
                     fill="none"
-                    stroke="#FFC107"
+                    stroke="#FFD54F"
                     strokeWidth="3"
                     strokeLinecap="round"
                   />
@@ -137,7 +137,7 @@ export default function CTASection({ onBookMode, id = "contact" }) {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 10, padding: "16px 32px", borderRadius: 9999,
                   background: GOLD, color: "#111", fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer",
-                  boxShadow: "0 18px 36px -14px rgba(255,193,7,.65), inset 0 1px 0 rgba(255,255,255,.55)",
+                  boxShadow: "0 18px 36px -14px rgba(255,213,79,.65), inset 0 1px 0 rgba(255,255,255,.55)",
                 }}
               >
                 <m.span
@@ -182,8 +182,8 @@ export default function CTASection({ onBookMode, id = "contact" }) {
               {TRUST.map((t) => (
                 <m.li key={t} variants={trustItem} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13.5, fontWeight: 500, color: "rgba(255,255,255,.7)" }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <circle cx="12" cy="12" r="10" fill="rgba(255,193,7,.16)" />
-                    <path d="M8 12.5l2.5 2.5 5-5.5" stroke="#FFC107" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="12" cy="12" r="10" fill="rgba(255,213,79,.16)" />
+                    <path d="M8 12.5l2.5 2.5 5-5.5" stroke="#FFD54F" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   {t}
                 </m.li>

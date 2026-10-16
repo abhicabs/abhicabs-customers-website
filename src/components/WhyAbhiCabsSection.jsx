@@ -5,7 +5,7 @@ import { LazyMotion, domAnimation, m, MotionConfig, useScroll, useTransform, use
 // One orchestrated moment: the photo unmasks, then the reasons draw in.
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 
 const photoReveal = {
   hidden: { clipPath: "inset(10% 10% 10% 10% round 24px)", opacity: 0 },

@@ -106,7 +106,7 @@ export default function Page() {
               <h3 style={{ fontSize: 15.5, fontWeight: 700, margin: "22px 0 10px" }}>Cancellation Policy</h3>
               <p style={{ fontSize: 13.5, color: "#666", lineHeight: 1.6, margin: 0 }}>
                 Free cancellation up to 1 hour before pickup. Cancellations within 1 hour of pickup are subject to a partial fee.
-                See our <a href="/cancellation" style={{ color: "#FFC107", fontWeight: 600 }}>Cancellation &amp; Refund Policy</a> for details.
+                See our <a href="/cancellation" style={{ color: "#FFD54F", fontWeight: 600 }}>Cancellation &amp; Refund Policy</a> for details.
               </p>
             </div>
           </div>
@@ -158,7 +158,7 @@ function BrowseFareCard() {
       <a
         href="/#booking"
         className="hover:!bg-[#FFB300]"
-        style={{ display: "flex", width: "100%", padding: 15, borderRadius: 12, border: "none", background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 15, textAlign: "center", justifyContent: "center", alignItems: "center" }}
+        style={{ display: "flex", width: "100%", padding: 15, borderRadius: 12, border: "none", background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 15, textAlign: "center", justifyContent: "center", alignItems: "center" }}
       >
         Enter Trip Details
       </a>
@@ -215,7 +215,7 @@ function UnpricedFareCard({ resultsHref }) {
       <a
         href={resultsHref}
         className="hover:!bg-[#FFB300]"
-        style={{ display: "flex", width: "100%", padding: 15, borderRadius: 12, border: "none", background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 15, textAlign: "center", justifyContent: "center", alignItems: "center" }}
+        style={{ display: "flex", width: "100%", padding: 15, borderRadius: 12, border: "none", background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 15, textAlign: "center", justifyContent: "center", alignItems: "center" }}
       >
         Back to Results
       </a>
@@ -241,7 +241,7 @@ function FareCard({ selected }) {
       <a
         href="/checkout"
         className="hidden md:flex hover:!bg-[#FFB300]"
-        style={{ marginTop: 16, width: "100%", padding: 15, borderRadius: 12, border: "none", background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 15, textAlign: "center", justifyContent: "center", alignItems: "center" }}
+        style={{ marginTop: 16, width: "100%", padding: 15, borderRadius: 12, border: "none", background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 15, textAlign: "center", justifyContent: "center", alignItems: "center" }}
       >
         Continue Booking
       </a>

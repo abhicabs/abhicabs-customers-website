@@ -56,7 +56,7 @@ function TicketCard({ ticket, onRefresh }) {
           </div>
           <div style={{ fontSize: 12.5, color: "#888", marginTop: 4 }}>Submitted {date}</div>
         </div>
-        <span style={{ fontSize: 12, fontWeight: 600, color: "#FFC107", background: "#FFFBEB", border: "1px solid #FCD34D", borderRadius: 8, padding: "4px 10px" }}>
+        <span style={{ fontSize: 12, fontWeight: 600, color: "#FFD54F", background: "#FFFBEB", border: "1px solid #FCD34D", borderRadius: 8, padding: "4px 10px" }}>
           {ticket.topic}
         </span>
       </div>
@@ -77,7 +77,7 @@ function TicketCard({ ticket, onRefresh }) {
           style={{ fontSize: 12.5, fontWeight: 600, color: "#B8860B", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
         >
           {refreshing
-            ? <><span style={{ width: 12, height: 12, borderRadius: "50%", border: "2px solid #FFC107", borderTopColor: "transparent", animation: "tkSpin .7s linear infinite", display: "inline-block" }} /> Checking…</>
+            ? <><span style={{ width: 12, height: 12, borderRadius: "50%", border: "2px solid #FFD54F", borderTopColor: "transparent", animation: "tkSpin .7s linear infinite", display: "inline-block" }} /> Checking…</>
             : "↻ Refresh Status"}
         </button>
       </div>
@@ -140,7 +140,7 @@ export default function SupportTicketsPage() {
     padding: "8px 18px", borderRadius: 9999, border: "none",
     fontWeight: 600, fontSize: 13.5, cursor: "pointer",
     background: active ? "#111" : "#F3F3F3",
-    color: active ? "#FFC107" : "#555",
+    color: active ? "#FFD54F" : "#555",
     transition: "background .2s",
   });
 
@@ -167,7 +167,7 @@ export default function SupportTicketsPage() {
           <button style={pillStyle(tab === "lookup")} onClick={() => setTab("lookup")}>Look Up by ID</button>
           <button
             onClick={() => navigate("/contact")}
-            style={{ marginLeft: "auto", padding: "8px 18px", borderRadius: 9999, background: "#FFC107", color: "#111", border: "none", fontWeight: 700, fontSize: 13.5, cursor: "pointer" }}
+            style={{ marginLeft: "auto", padding: "8px 18px", borderRadius: 9999, background: "#FFD54F", color: "#111", border: "none", fontWeight: 700, fontSize: 13.5, cursor: "pointer" }}
           >
             + Raise New Ticket
           </button>
@@ -184,7 +184,7 @@ export default function SupportTicketsPage() {
               </p>
               <button
                 onClick={() => navigate("/contact")}
-                style={{ padding: "11px 24px", borderRadius: 9999, background: "#FFC107", color: "#111", border: "none", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
+                style={{ padding: "11px 24px", borderRadius: 9999, background: "#FFD54F", color: "#111", border: "none", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
               >
                 Contact Support
               </button>
@@ -228,7 +228,7 @@ export default function SupportTicketsPage() {
                 <button
                   type="submit"
                   disabled={looking || !lookupId.trim()}
-                  style={{ padding: "11px 22px", borderRadius: 10, border: "none", background: looking || !lookupId.trim() ? "#F0F0F0" : "#FFC107", color: looking || !lookupId.trim() ? "#aaa" : "#111", fontWeight: 700, fontSize: 14, cursor: looking || !lookupId.trim() ? "not-allowed" : "pointer" }}
+                  style={{ padding: "11px 22px", borderRadius: 10, border: "none", background: looking || !lookupId.trim() ? "#F0F0F0" : "#FFD54F", color: looking || !lookupId.trim() ? "#aaa" : "#111", fontWeight: 700, fontSize: 14, cursor: looking || !lookupId.trim() ? "not-allowed" : "pointer" }}
                 >
                   {looking ? "Searching…" : "Look Up"}
                 </button>

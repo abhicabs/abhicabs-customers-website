@@ -46,7 +46,7 @@ export default function GroupTransportBannerSection({ seaterOptions, onRequestQu
               aria-hidden
               animate={{ x: [0, -24, 0], y: [0, 18, 0], scale: [1, 1.08, 1], opacity: [0.9, 1, 0.9] }}
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-              style={{ position: "absolute", top: -100, right: -80, width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle,rgba(255,193,7,.16),transparent 70%)", pointerEvents: "none" }}
+              style={{ position: "absolute", top: -100, right: -80, width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle,rgba(255,213,79,.16),transparent 70%)", pointerEvents: "none" }}
             />
 
             <m.div
@@ -57,7 +57,7 @@ export default function GroupTransportBannerSection({ seaterOptions, onRequestQu
               style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px,6vw,82px) 22px", position: "relative" }}
             >
               <div style={{ maxWidth: 640 }}>
-                <m.span variants={fadeUp} style={{ display: "inline-block", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#FFC107" }}>
+                <m.span variants={fadeUp} style={{ display: "inline-block", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#FFD54F" }}>
                   Group Transportation
                 </m.span>
                 <m.h2 variants={fadeUp} style={{ fontWeight: 800, fontSize: "clamp(28px,3.8vw,46px)", lineHeight: 1.1, margin: "10px 0 0", letterSpacing: "-.02em", color: "#fff" }}>
@@ -90,7 +90,7 @@ export default function GroupTransportBannerSection({ seaterOptions, onRequestQu
                       className="relative isolate"
                       style={{
                         padding: "14px 20px", borderRadius: 14, fontWeight: 700, fontSize: 15, cursor: "pointer",
-                        border: isActive ? "1.5px solid #FFC107" : "1px solid rgba(255,255,255,.14)",
+                        border: isActive ? "1.5px solid #FFD54F" : "1px solid rgba(255,255,255,.14)",
                         background: "rgba(255,255,255,.05)",
                         color: isActive ? "#111" : "#fff",
                         transition: "color .18s, border-color .18s",
@@ -105,7 +105,7 @@ export default function GroupTransportBannerSection({ seaterOptions, onRequestQu
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ type: "spring", stiffness: 450, damping: 36 }}
-                            style={{ position: "absolute", inset: 0, zIndex: -1, borderRadius: 12.5, background: "#FFC107", boxShadow: "0 10px 24px -10px rgba(255,193,7,.7)" }}
+                            style={{ position: "absolute", inset: 0, zIndex: -1, borderRadius: 12.5, background: "#FFD54F", boxShadow: "0 10px 24px -10px rgba(255,213,79,.7)" }}
                           />
                         )}
                       </AnimatePresence>
@@ -125,7 +125,7 @@ export default function GroupTransportBannerSection({ seaterOptions, onRequestQu
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.2 }}
                     aria-live="polite"
-                    style={{ fontSize: 13, color: selected ? "rgba(255,193,7,.85)" : "rgba(255,255,255,.45)", margin: 0 }}
+                    style={{ fontSize: 13, color: selected ? "rgba(255,213,79,.85)" : "rgba(255,255,255,.45)", margin: 0 }}
                   >
                     {hint}
                   </m.p>
@@ -145,7 +145,7 @@ export default function GroupTransportBannerSection({ seaterOptions, onRequestQu
                   variants={{ rest: { y: 0 }, hover: { y: -2 } }}
                   transition={{ layout: { type: "spring", stiffness: 400, damping: 34 } }}
                   className="hover:!bg-[#FFB300]"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 9, padding: "15px 28px", borderRadius: 9999, background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 15, cursor: "pointer", border: "none", boxShadow: "0 12px 28px -12px rgba(255,193,7,.75)" }}
+                  style={{ display: "inline-flex", alignItems: "center", gap: 9, padding: "15px 28px", borderRadius: 9999, background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 15, cursor: "pointer", border: "none", boxShadow: "0 12px 28px -12px rgba(255,213,79,.75)" }}
                 >
                   <AnimatePresence mode="popLayout" initial={false}>
                     <m.span

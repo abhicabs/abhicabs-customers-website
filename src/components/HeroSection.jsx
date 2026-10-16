@@ -123,9 +123,9 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
                   gap: 9,
                   padding: "8px 15px",
                   borderRadius: 9999,
-                  background: "rgba(255,193,7,.13)",
-                  border: "1px solid rgba(255,193,7,.35)",
-                  color: "#FFC107",
+                  background: "rgba(255,213,79,.13)",
+                  border: "1px solid rgba(255,213,79,.35)",
+                  color: "#FFD54F",
                   fontWeight: 600,
                   fontSize: 12,
                   letterSpacing: ".05em",
@@ -156,7 +156,7 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
                   <m.span
                     variants={headlineLine}
                     className="hero-h1-accent"
-                    style={{ display: "block", color: "#FFC107", whiteSpace: "nowrap" }}
+                    style={{ display: "block", color: "#FFD54F", whiteSpace: "nowrap" }}
                   >
                     Travel Comfortably.
                   </m.span>
@@ -202,7 +202,7 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
                     }}
                   >
                     <m.svg variants={checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="10" fill="#FFC107" />
+                      <circle cx="12" cy="12" r="10" fill="#FFD54F" />
                       <path
                         d="M8 12.5l2.5 2.5 5-5.5"
                         stroke="#111"

@@ -429,8 +429,8 @@ export default function Page() {
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <span style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${paymentMode === opt.key ? "#FFC107" : "#ccc"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        {paymentMode === opt.key && <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#FFC107" }} />}
+                      <span style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${paymentMode === opt.key ? "#FFD54F" : "#ccc"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        {paymentMode === opt.key && <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#FFD54F" }} />}
                       </span>
                       <div>
                         <p style={{ fontSize: 13.5, fontWeight: 700, margin: 0 }}>{opt.title}</p>
@@ -448,8 +448,8 @@ export default function Page() {
                 className="hover:!bg-[#FFB300]"
                 style={{
                   width: "100%", marginTop: 20, display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-                  padding: 16, borderRadius: 12, border: "none", background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 16,
-                  cursor: processing ? "default" : "pointer", opacity: processing ? 0.7 : 1, boxShadow: "0 10px 26px rgba(255,193,7,.4)",
+                  padding: 16, borderRadius: 12, border: "none", background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 16,
+                  cursor: processing ? "default" : "pointer", opacity: processing ? 0.7 : 1, boxShadow: "0 10px 26px rgba(255,213,79,.4)",
                 }}
               >
                 {processing && <span style={{ width: 18, height: 18, borderRadius: "50%", border: "2.4px solid rgba(17,17,17,.3)", borderTopColor: "#111", display: "inline-block", animation: "spin .7s linear infinite" }} />}

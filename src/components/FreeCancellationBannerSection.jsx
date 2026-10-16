@@ -58,7 +58,7 @@ export default function FreeCancellationBannerSection({ bookHref = "/#booking" }
                 <span className="fc-shield" aria-hidden>
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
                     <path d="M12 2.5l7.5 3v6c0 4.6-3.2 8.6-7.5 10-4.3-1.4-7.5-5.4-7.5-10v-6l7.5-3z" fill="#111" />
-                    <text x="12" y="15.6" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#FFC107" fontFamily="Arial, sans-serif">₹</text>
+                    <text x="12" y="15.6" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#FFD54F" fontFamily="Arial, sans-serif">₹</text>
                   </svg>
                 </span>
                 <span className="fc-eyebrow">Book with confidence</span>
@@ -75,8 +75,8 @@ export default function FreeCancellationBannerSection({ bookHref = "/#booking" }
                 {POINTS.map((p) => (
                   <li key={p}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <circle cx="12" cy="12" r="10" fill="rgba(255,193,7,.18)" />
-                      <path d="M7.5 12.5l3 3 6-6.5" stroke="#FFC107" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                      <circle cx="12" cy="12" r="10" fill="rgba(255,213,79,.18)" />
+                      <path d="M7.5 12.5l3 3 6-6.5" stroke="#FFD54F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {p}
                   </li>

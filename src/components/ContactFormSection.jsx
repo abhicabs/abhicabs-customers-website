@@ -12,7 +12,7 @@ const TOPICS = ["Booking Support", "Payment Support", "Cancellation Support", "C
 // up in Admin → Support. Submission logic is unchanged.
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 
 const header = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
 const fadeUp = {
@@ -124,7 +124,7 @@ export default function ContactFormSection({ id = "contact-form" }) {
                 animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }}
                 transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
                 className="pointer-events-none absolute -right-24 -top-24 -z-10 h-72 w-72 rounded-full"
-                style={{ background: "radial-gradient(circle, rgba(255,193,7,.22), transparent 68%)" }}
+                style={{ background: "radial-gradient(circle, rgba(255,213,79,.22), transparent 68%)" }}
               />
 
               <m.h3 variants={item} className="m-0 mb-1 text-[18px] font-bold text-[#141414]">Abhi Cabs Contact Details</m.h3>
@@ -296,7 +296,7 @@ function ContactMethod({ icon, title, sub, href }) {
         href ? "hover:bg-[#FFF6D6] focus-visible:bg-[#FFF6D6] focus-visible:outline-none" : ""
       }`}
     >
-      <span className="grid h-10 w-10 flex-none place-items-center rounded-xl border border-[#F6E3A1] bg-[#FFF7DE] text-[#B07A00] transition-colors duration-200 group-hover:border-[#FFC107] group-hover:bg-[#FFC107] group-hover:text-[#141414]">
+      <span className="grid h-10 w-10 flex-none place-items-center rounded-xl border border-[#F6E3A1] bg-[#FFF7DE] text-[#B07A00] transition-colors duration-200 group-hover:border-[#FFD54F] group-hover:bg-[#FFD54F] group-hover:text-[#141414]">
         {icon}
       </span>
       <div className="min-w-0 flex-1">
@@ -320,7 +320,7 @@ function ContactMethod({ icon, title, sub, href }) {
 const FIELD_BASE =
   "w-full rounded-[12px] border px-3.5 py-3 text-base md:text-[14.5px] font-medium text-[#141414] outline-none transition-[border-color,background-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-[#A8A49B]";
 const FIELD_OK =
-  "border-[#E8E5DE] bg-[#F8F7F3] hover:border-[#D3CFC5] hover:bg-white focus:border-[#FFC107] focus:bg-white focus:shadow-[0_0_0_4px_rgba(255,193,7,0.18)]";
+  "border-[#E8E5DE] bg-[#F8F7F3] hover:border-[#D3CFC5] hover:bg-white focus:border-[#FFD54F] focus:bg-white focus:shadow-[0_0_0_4px_rgba(255,213,79,0.18)]";
 const FIELD_ERR =
   "border-[#E7A58A] bg-[#FFF7F3] focus:border-[#D9653B] focus:bg-white focus:shadow-[0_0_0_4px_rgba(217,101,59,0.15)]";
 
@@ -384,7 +384,7 @@ function TopicPicker({ value, onChange }) {
                 aria-checked={active}
                 onClick={() => onChange(t)}
                 whileTap={{ scale: 0.96 }}
-                className={`relative isolate rounded-full border px-3.5 py-2 text-[13px] font-semibold outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-1 ${
+                className={`relative isolate rounded-full border px-3.5 py-2 text-[13px] font-semibold outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[#FFD54F] focus-visible:ring-offset-1 ${
                   active
                     ? "border-transparent text-[#141414]"
                     : "border-[#E8E5DE] bg-[#F8F7F3] text-[#3D3A33] hover:border-[#F0D27A] hover:bg-[#FFFBEA]"

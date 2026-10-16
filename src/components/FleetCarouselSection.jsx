@@ -5,7 +5,7 @@ import { fmtINR } from "../data/mockData";
 import FuelToggle from "./FuelToggle";
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 const LIGHT = "linear-gradient(180deg, #FFFFFF 0%, #F3F2EF 100%)";
 const DARK = "linear-gradient(180deg, #3A3A3A 0%, #1C1C1C 55%, #0B0B0B 100%)";
 
@@ -294,7 +294,7 @@ export default function FleetCarouselSection({ vehicles = [], loading = false, e
                         whileHover={{ y: -2 }}
                         whileTap={{ scale: 0.95 }}
                         aria-label={`Show image ${i + 1}`}
-                        style={{ width: 64, height: 44, borderRadius: 8, overflow: "hidden", border: activeImg === i ? "2px solid #FFC107" : "2px solid transparent", opacity: activeImg === i ? 1 : 0.55, cursor: "pointer", padding: 0, transition: "opacity .2s, border-color .2s" }}
+                        style={{ width: 64, height: 44, borderRadius: 8, overflow: "hidden", border: activeImg === i ? "2px solid #FFD54F" : "2px solid transparent", opacity: activeImg === i ? 1 : 0.55, cursor: "pointer", padding: 0, transition: "opacity .2s, border-color .2s" }}
                       >
                         <img src={src} alt="" onError={(e) => { if (modal.imgFallback && e.currentTarget.src !== modal.imgFallback) e.currentTarget.src = modal.imgFallback; }} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       </m.button>
@@ -405,7 +405,7 @@ function NavButton({ dir, enabled, onClick }) {
         hover: { scale: 1.07, boxShadow: "0 16px 28px -10px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(0,0,0,0)" },
       }}
       transition={{ type: "spring", stiffness: 380, damping: 24 }}
-      className="relative isolate grid h-12 w-12 place-items-center rounded-full border-0 outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2 enabled:cursor-pointer disabled:cursor-not-allowed"
+      className="relative isolate grid h-12 w-12 place-items-center rounded-full border-0 outline-none focus-visible:ring-2 focus-visible:ring-[#FFD54F] focus-visible:ring-offset-2 enabled:cursor-pointer disabled:cursor-not-allowed"
       style={{ background: LIGHT }}
     >
       {/* Black fill (active) — sits over the white base */}
@@ -420,7 +420,7 @@ function NavButton({ dir, enabled, onClick }) {
       <m.span
         aria-hidden
         variants={{
-          on:    { x: 0,       color: "#FFC107" },
+          on:    { x: 0,       color: "#FFD54F" },
           off:   { x: 0,       color: "#BDBAB2" },
           hover: { x: dir * 2, color: "#FFD54A" },
         }}

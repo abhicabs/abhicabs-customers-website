@@ -2,7 +2,7 @@ import React from "react";
 import { LazyMotion, domAnimation, m, MotionConfig, useReducedMotion } from "framer-motion";
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 
 const COLUMNS = [
   {
@@ -92,10 +92,10 @@ function FooterLink({ href, children, external }) {
       <a
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        className="group inline-flex items-center gap-2 text-[14px] text-white/60 no-underline outline-none transition-colors duration-200 hover:text-[#FFC107] focus-visible:text-[#FFC107]"
+        className="group inline-flex items-center gap-2 text-[14px] text-white/60 no-underline outline-none transition-colors duration-200 hover:text-[#FFD54F] focus-visible:text-[#FFD54F]"
       >
         {/* Gold dash grows in on hover */}
-        <span aria-hidden className="h-px w-0 bg-[#FFC107] transition-[width] duration-300 ease-out group-hover:w-3 group-focus-visible:w-3" />
+        <span aria-hidden className="h-px w-0 bg-[#FFD54F] transition-[width] duration-300 ease-out group-hover:w-3 group-focus-visible:w-3" />
         {children}
       </a>
     </m.li>
@@ -118,7 +118,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: EASE_OUT }}
             className="absolute inset-x-0 top-0 h-px"
-            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(255,193,7,.7) 50%, transparent 100%)" }}
+            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(255,213,79,.7) 50%, transparent 100%)" }}
           />
           {/* Faint dot texture + soft glow */}
           <div
@@ -131,7 +131,7 @@ export default function Footer() {
             animate={{ opacity: [0.7, 1, 0.7], scale: [1, 1.08, 1] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             className="pointer-events-none absolute -left-32 -top-40 -z-10 h-[420px] w-[420px] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(255,193,7,.12), transparent 68%)" }}
+            style={{ background: "radial-gradient(circle, rgba(255,213,79,.12), transparent 68%)" }}
           />
 
           <div className="mx-auto max-w-[1280px] px-[22px]">
@@ -159,7 +159,7 @@ export default function Footer() {
                   whileHover="hover"
                   whileTap={{ scale: 0.97 }}
                   className="mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-bold text-[#141414] no-underline"
-                  style={{ background: GOLD, boxShadow: "0 12px 26px -12px rgba(255,193,7,.6), inset 0 1px 0 rgba(255,255,255,.55)" }}
+                  style={{ background: GOLD, boxShadow: "0 12px 26px -12px rgba(255,213,79,.6), inset 0 1px 0 rgba(255,255,255,.55)" }}
                 >
                   Book a Ride
                   <m.svg
@@ -201,7 +201,7 @@ export default function Footer() {
                         {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                         className="group inline-flex items-center gap-3 text-[14px] text-white/60 no-underline outline-none transition-colors duration-200 hover:text-white focus-visible:text-white"
                       >
-                        <span className="grid h-8 w-8 flex-none place-items-center rounded-[10px] border border-white/10 bg-white/[0.04] text-[#FFC107] transition-colors duration-200 group-hover:border-[#FFC107] group-hover:bg-[#FFC107] group-hover:text-[#141414] group-focus-visible:border-[#FFC107]">
+                        <span className="grid h-8 w-8 flex-none place-items-center rounded-[10px] border border-white/10 bg-white/[0.04] text-[#FFD54F] transition-colors duration-200 group-hover:border-[#FFD54F] group-hover:bg-[#FFD54F] group-hover:text-[#141414] group-focus-visible:border-[#FFD54F]">
                           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>{c.icon}</svg>
                         </span>
                         {c.label}
@@ -240,7 +240,7 @@ export default function Footer() {
               </div>
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                 {[["Privacy Policy", "/privacy"], ["Terms", "/terms"], ["Cancellation Policy", "/cancellation"]].map(([l, h]) => (
-                  <a key={l} href={h} className="text-[13px] text-white/45 no-underline transition-colors duration-200 hover:text-[#FFC107]">{l}</a>
+                  <a key={l} href={h} className="text-[13px] text-white/45 no-underline transition-colors duration-200 hover:text-[#FFD54F]">{l}</a>
                 ))}
                 <m.button
                   type="button"
@@ -250,7 +250,7 @@ export default function Footer() {
                   animate="rest"
                   whileHover="hover"
                   whileTap={{ scale: 0.92 }}
-                  className="ml-1 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/[0.04] text-[#FFC107] transition-colors duration-200 hover:border-[#FFC107] hover:bg-[#FFC107] hover:text-[#141414]"
+                  className="ml-1 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/[0.04] text-[#FFD54F] transition-colors duration-200 hover:border-[#FFD54F] hover:bg-[#FFD54F] hover:text-[#141414]"
                 >
                   <m.svg
                     variants={{ rest: { y: 0 }, hover: { y: -2 } }}

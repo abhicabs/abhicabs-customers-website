@@ -312,7 +312,7 @@ export default function Header() {
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                className="ac-download px-5 py-2.5 rounded-full bg-primary text-brand-black font-semibold text-[14px] shadow-[0_6px_18px_rgba(255,193,7,.4)] border-none cursor-pointer hover:!bg-[#FFB300]"
+                className="ac-download px-5 py-2.5 rounded-full bg-primary text-brand-black font-semibold text-[14px] shadow-[0_6px_18px_rgba(255,213,79,.4)] border-none cursor-pointer hover:!bg-[#FFB300]"
               >
                 Download App
               </m.button>
@@ -436,7 +436,7 @@ export default function Header() {
                     href="/#booking"
                     whileTap={{ scale: 0.97 }}
                     onClick={() => dispatch(setMobileNavOpen(false))}
-                    className="w-full py-3.5 rounded-full text-center font-bold text-[15px] bg-primary text-brand-black shadow-[0_4px_16px_rgba(255,193,7,.4)]"
+                    className="w-full py-3.5 rounded-full text-center font-bold text-[15px] bg-primary text-brand-black shadow-[0_4px_16px_rgba(255,213,79,.4)]"
                   >
                     🚕 Book Now
                   </m.a>

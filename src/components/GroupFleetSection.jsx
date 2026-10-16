@@ -4,7 +4,7 @@ import { LazyMotion, domAnimation, m, MotionConfig, AnimatePresence } from "fram
 import { fmtINR } from "../data/mockData";
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 
 const headerReveal = {
   hidden: { opacity: 0, y: 16 },
@@ -91,7 +91,7 @@ export default function GroupFleetSection({ vehicles, id = "group-fleet" }) {
               >
                 <div style={{ aspectRatio: "16/9", background: "#F0F0F0", position: "relative", overflow: "hidden" }}>
                   <img src={v.img} alt={v.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-                  <span style={{ position: "absolute", top: 9, left: 10, fontSize: 10, fontWeight: 600, color: "#111", background: "#FFC107", padding: "3px 9px", borderRadius: 9999 }}>
+                  <span style={{ position: "absolute", top: 9, left: 10, fontSize: 10, fontWeight: 600, color: "#111", background: "#FFD54F", padding: "3px 9px", borderRadius: 9999 }}>
                     {v.seats}
                   </span>
                 </div>
@@ -168,7 +168,7 @@ export default function GroupFleetSection({ vehicles, id = "group-fleet" }) {
                         whileHover={{ y: -2 }}
                         whileTap={{ scale: 0.95 }}
                         aria-label={`Show image ${i + 1}`}
-                        style={{ width: 64, height: 44, borderRadius: 8, overflow: "hidden", border: activeImg === i ? "2px solid #FFC107" : "2px solid transparent", opacity: activeImg === i ? 1 : 0.55, cursor: "pointer", padding: 0, transition: "opacity .2s, border-color .2s" }}
+                        style={{ width: 64, height: 44, borderRadius: 8, overflow: "hidden", border: activeImg === i ? "2px solid #FFD54F" : "2px solid transparent", opacity: activeImg === i ? 1 : 0.55, cursor: "pointer", padding: 0, transition: "opacity .2s, border-color .2s" }}
                       >
                         <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                       </m.button>

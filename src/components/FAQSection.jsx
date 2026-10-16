@@ -4,7 +4,7 @@ import { LazyMotion, domAnimation, m, MotionConfig, AnimatePresence } from "fram
 // FAQ accordion — same props as before, plus an optional `contactHref`
 // (defaults to the Contact section that sits directly above; pass null to hide).
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 
 const header = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
 const fadeUp = {
@@ -123,7 +123,7 @@ function FAQItem({ q, a, open, onToggle, id }) {
           onClick={onToggle}
           aria-expanded={open}
           aria-controls={panelId}
-          className="group flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent px-[22px] py-[18px] text-left outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFC107]"
+          className="group flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent px-[22px] py-[18px] text-left outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFD54F]"
         >
           <span className={`text-[15px] leading-snug text-[#141414] transition-[font-weight] ${open ? "font-bold" : "font-semibold"}`}>
             {q}

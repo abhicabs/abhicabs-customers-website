@@ -4,7 +4,7 @@
 /* ── ABHI CABS Brand Design System ──────────────────────────────────────────*/
 
 @theme {
-  --color-primary:       #FFC107;
+  --color-primary:       #FFD54F;
   --color-primary-dark:  #E6AC00;
   --color-primary-light: #FFD54F;
   --color-primary-tint:  #FFFBEA;
@@ -25,7 +25,7 @@
   --shadow-card:    0 1px 3px rgba(17,17,17,0.06);
   --shadow-elevated:0 8px 24px rgba(17,17,17,0.10);
   --shadow-lifted:  0 20px 48px rgba(17,17,17,0.16);
-  --shadow-brand:   0 8px 24px rgba(255,193,7,0.35);
+  --shadow-brand:   0 8px 24px rgba(255,213,79,0.35);
   --animate-drive: driveAlong 9s ease-in-out infinite;
 }
 
@@ -57,7 +57,7 @@ img { max-width: 100%; height: auto; }
 button { cursor: pointer; }
 
 /* ── Brand utilities ──────────────────────────────────────────────────────────*/
-.btn-brand { background-color: #FFC107; color: #111111; font-weight: 700; }
+.btn-brand { background-color: #FFD54F; color: #111111; font-weight: 700; }
 .btn-brand:hover { background-color: #E6AC00; }
 
 /* ── Scroll utilities ─────────────────────────────────────────────────────────*/
@@ -86,10 +86,10 @@ button { cursor: pointer; }
 .ac-util-wrap {
   position: relative; color: #fff; overflow: hidden;
   background:
-    radial-gradient(600px 80px at 12% 50%, rgba(255,193,7,.16), transparent 70%),
-    radial-gradient(500px 80px at 88% 50%, rgba(255,193,7,.12), transparent 70%),
+    radial-gradient(600px 80px at 12% 50%, rgba(255,213,79,.16), transparent 70%),
+    radial-gradient(500px 80px at 88% 50%, rgba(255,213,79,.12), transparent 70%),
     linear-gradient(90deg, #0b0b0b 0%, #1a1a1a 50%, #0b0b0b 100%);
-  border-bottom: 1px solid rgba(255,193,7,.35);
+  border-bottom: 1px solid rgba(255,213,79,.35);
 }
 /* slow light sweep across the bar */
 .ac-util-wrap::after {
@@ -104,13 +104,13 @@ button { cursor: pointer; }
 .ac-util-loc {
   display: inline-flex; align-items: center; gap: 8px; min-width: 0;
   padding: 3px 12px 3px 4px; border-radius: 9999px;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,193,7,.28);
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,213,79,.28);
   white-space: nowrap;
 }
-.ac-util-loc b { color: #FFC107; font-weight: 700; }
+.ac-util-loc b { color: #FFD54F; font-weight: 700; }
 .ac-util-loc-icon {
   display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 9999px;
-  background: #FFC107; color: #111; flex: none;
+  background: #FFD54F; color: #111; flex: none;
 }
 .ac-util-muted { color: rgba(255,255,255,.75); }
 
@@ -118,33 +118,33 @@ button { cursor: pointer; }
   display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.85);
   transition: color .2s;
 }
-.ac-util-link:hover { color: #FFC107; }
+.ac-util-link:hover { color: #FFD54F; }
 
 .ac-util-sep { width: 1px; height: 16px; background: rgba(255,255,255,.18); }
 
 .ac-util-phones { display: inline-flex; align-items: center; gap: 8px; }
 .ac-util-phone-icon {
   display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 9999px;
-  background: rgba(255,193,7,.15); color: #FFC107; border: 1px solid rgba(255,193,7,.4);
+  background: rgba(255,213,79,.15); color: #FFD54F; border: 1px solid rgba(255,213,79,.4);
 }
 .ac-util-phone {
   color: #fff; font-weight: 700; letter-spacing: .02em; padding: 2px 8px; border-radius: 7px;
   transition: background .2s, color .2s;
 }
-.ac-util-phone:hover { background: #FFC107; color: #111; }
+.ac-util-phone:hover { background: #FFD54F; color: #111; }
 .ac-util-slash { color: rgba(255,255,255,.3); }
 
 .ac-util-badge {
   display: inline-flex; align-items: center; gap: 7px; padding: 4px 12px; border-radius: 9999px;
-  background: linear-gradient(90deg, #FFC107, #FFD54F); color: #111; font-weight: 800;
-  font-size: 12px; letter-spacing: .02em; box-shadow: 0 0 16px rgba(255,193,7,.35);
+  background: linear-gradient(90deg, #FFD54F, #FFD54F); color: #111; font-weight: 800;
+  font-size: 12px; letter-spacing: .02em; box-shadow: 0 0 16px rgba(255,213,79,.35);
   white-space: nowrap;
 }
 .ac-util-dot { width: 7px; height: 7px; border-radius: 9999px; background: #111; flex: none; }
 
 .ac-util-callnow {
   display: none; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 9999px;
-  background: #FFC107; color: #111; font-weight: 800; white-space: nowrap; flex: none;
+  background: #FFD54F; color: #111; font-weight: 800; white-space: nowrap; flex: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -560,7 +560,7 @@ iframe, video, canvas, svg { max-width: 100%; }
 @media (max-width: 520px) {
   .promo-group-text { max-width: 100% !important; }
   .promo-group-photo { width: 62% !important; opacity: .55; }
-  .promo-group-fade { background: linear-gradient(90deg,#FFC107 45%,rgba(255,193,7,.55) 75%,rgba(255,193,7,.25)) !important; }
+  .promo-group-fade { background: linear-gradient(90deg,#FFD54F 45%,rgba(255,213,79,.55) 75%,rgba(255,213,79,.25)) !important; }
 }
 
 /* ── Vehicle photos ───────────────────────────────────────────────────────────
@@ -664,25 +664,25 @@ img.vehicle-photo--thumb { padding: 3px; }
   position: relative; display: flex; flex-direction: column; justify-content: center;
   align-items: flex-start; padding: clamp(26px,3.4vw,48px); color: #fff;
   background:
-    radial-gradient(420px 220px at 100% 0%, rgba(255,193,7,.14), transparent 70%),
+    radial-gradient(420px 220px at 100% 0%, rgba(255,213,79,.14), transparent 70%),
     #111;
 }
 .fc-badge-row { display: flex; align-items: center; gap: 12px; }
 .fc-shield {
   display: inline-grid; place-items: center; width: 50px; height: 50px; border-radius: 9999px;
-  background: #FFC107; box-shadow: 0 0 0 6px rgba(255,193,7,.18), 0 8px 22px rgba(255,193,7,.35);
+  background: #FFD54F; box-shadow: 0 0 0 6px rgba(255,213,79,.18), 0 8px 22px rgba(255,213,79,.35);
   flex: none;
 }
 .fc-eyebrow {
-  font-weight: 700; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: #FFC107;
+  font-weight: 700; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: #FFD54F;
 }
 .fc-title {
   font-weight: 800; font-size: clamp(30px,3.6vw,46px); line-height: 1.05; margin: 18px 0 6px; color: #fff;
 }
-.fc-title span { color: #FFC107; }
+.fc-title span { color: #FFD54F; }
 .fc-sub { font-size: clamp(16px,1.6vw,20px); color: rgba(255,255,255,.8); margin: 0 0 20px; font-weight: 500; }
 .fc-sub b {
-  color: #111; background: #FFC107; padding: 1px 9px; border-radius: 7px; font-weight: 800;
+  color: #111; background: #FFD54F; padding: 1px 9px; border-radius: 7px; font-weight: 800;
 }
 .fc-points { list-style: none; padding: 0; margin: 0 0 24px; display: flex; flex-direction: column; gap: 9px; }
 .fc-points li {
@@ -692,14 +692,14 @@ img.vehicle-photo--thumb { padding: 3px; }
 .fc-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 20px; }
 .fc-cta {
   display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 9999px;
-  background: #FFC107; color: #111; font-weight: 700; font-size: 14px; transition: background-color .2s, transform .2s;
+  background: #FFD54F; color: #111; font-weight: 700; font-size: 14px; transition: background-color .2s, transform .2s;
 }
 .fc-cta:hover { background: #FFB300; transform: translateY(-1px); }
 .fc-link {
   font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,.8);
-  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,193,7,.6);
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,213,79,.6);
 }
-.fc-link:hover { color: #FFC107; }
+.fc-link:hover { color: #FFD54F; }
 
 @media (max-width: 860px) {
   .fc-banner { grid-template-columns: 1fr; }

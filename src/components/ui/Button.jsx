@@ -1,6 +1,6 @@
 import React from "react";
 
-// ABHI CABS brand: Primary = Yellow (#FFC107) with Black text
+// ABHI CABS brand: Primary = Yellow (#FFD54F) with Black text
 // Per brand guidelines: black gives strength, yellow gives energy & visibility
 //
 // STANDARDISED SIZING — every button across the site uses one of these three

@@ -692,7 +692,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
               ))}
             </div>
             {/* Hairline gold seam between the dark bar and the form */}
-            <div aria-hidden style={{ height: 1, background: "linear-gradient(90deg, transparent 0%, rgba(255,193,7,.6) 50%, transparent 100%)" }} />
+            <div aria-hidden style={{ height: 1, background: "linear-gradient(90deg, transparent 0%, rgba(255,213,79,.6) 50%, transparent 100%)" }} />
 
             <AnimatedHeight>
               <form onSubmit={handleSubmit} className="px-4 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-6">
@@ -961,7 +961,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
                             <div style={{
                               width: 26, height: 26, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
                               fontSize: 11.5, fontWeight: 800,
-                              background: s <= ooaStep ? "#FFC107" : "#F3F4F6",
+                              background: s <= ooaStep ? "#FFD54F" : "#F3F4F6",
                               color: s <= ooaStep ? "#141414" : "#9CA3AF",
                               transition: "all .25s",
                             }}>
@@ -970,7 +970,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
                             <span style={{ fontSize: 12, fontWeight: 600, color: s <= ooaStep ? "#141414" : "#9CA3AF" }}>
                               {s === 1 ? "Select vehicle" : "Your details"}
                             </span>
-                            {s < 2 && <div style={{ width: 20, height: 2, borderRadius: 1, background: ooaStep > 1 ? "#FFC107" : "#E5E5E5" }} />}
+                            {s < 2 && <div style={{ width: 20, height: 2, borderRadius: 1, background: ooaStep > 1 ? "#FFD54F" : "#E5E5E5" }} />}
                           </div>
                         ))}
                       </div>
@@ -993,7 +993,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
                                   style={{
                                     position: "relative",
                                     padding: "12px 14px", borderRadius: 14,
-                                    border: active ? "2px solid #FFC107" : "1.5px solid #E8E5DE",
+                                    border: active ? "2px solid #FFD54F" : "1.5px solid #E8E5DE",
                                     background: active ? "#FFFBEB" : "#fff",
                                     cursor: "pointer", transition: "all .15s",
                                   }}
@@ -1002,7 +1002,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
                                   <div style={{
                                     width: 42, height: 42, borderRadius: 11, flexShrink: 0,
                                     display: "flex", alignItems: "center", justifyContent: "center",
-                                    background: active ? "#FFC107" : "#F5F4F0",
+                                    background: active ? "#FFD54F" : "#F5F4F0",
                                     transition: "background .15s",
                                   }}>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={active ? "#141414" : "#77736A"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1019,7 +1019,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
                                   {v.tag && (
                                     <span style={{
                                       fontSize: 10, fontWeight: 800, padding: "3px 8px", borderRadius: 6,
-                                      background: active ? "#FFC107" : "#F5F4F0",
+                                      background: active ? "#FFD54F" : "#F5F4F0",
                                       color: active ? "#141414" : "#77736A",
                                     }}>
                                       {v.tag}
@@ -1029,7 +1029,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
                                   {active && (
                                     <div style={{
                                       width: 22, height: 22, borderRadius: "50%", flexShrink: 0,
-                                      background: "#FFC107", display: "flex", alignItems: "center", justifyContent: "center",
+                                      background: "#FFD54F", display: "flex", alignItems: "center", justifyContent: "center",
                                     }}>
                                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#141414" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                         <polyline points="20 6 9 17 4 12" />
@@ -1073,8 +1073,8 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
                       {ooaStep === 2 && (
                         <>
                           {/* Selected vehicle summary */}
-                          <div className="flex items-center gap-3 mb-4" style={{ padding: "10px 14px", borderRadius: 12, background: "#FFFBEB", border: "1.5px solid #FFC107" }}>
-                            <div style={{ width: 36, height: 36, borderRadius: 9, background: "#FFC107", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <div className="flex items-center gap-3 mb-4" style={{ padding: "10px 14px", borderRadius: 12, background: "#FFFBEB", border: "1.5px solid #FFD54F" }}>
+                            <div style={{ width: 36, height: 36, borderRadius: 9, background: "#FFD54F", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#141414" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M5 17h14M5 17a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2M5 17l-1 3h2l1-3m12 0l1 3h-2l-1-3" />
                                 <circle cx="7.5" cy="14.5" r="1.5" /><circle cx="16.5" cy="14.5" r="1.5" />
@@ -1541,7 +1541,7 @@ function LiveLocationButton({ onLocate }) {
         <m.span
           animate={{ rotate: 360 }}
           transition={{ duration: 0.7, repeat: Infinity, ease: "linear" }}
-          style={{ width: 15, height: 15, borderRadius: "50%", border: "2px solid #FFC107", borderTopColor: "transparent", display: "block" }}
+          style={{ width: 15, height: 15, borderRadius: "50%", border: "2px solid #FFD54F", borderTopColor: "transparent", display: "block" }}
         />
       ) : (
         <LocateIcon />

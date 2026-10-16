@@ -134,7 +134,7 @@ export default function Page() {
     padding: "8px 16px", borderRadius: 9999, border: "none",
     fontWeight: 600, fontSize: 13, cursor: "pointer",
     background: active ? "#111" : "#F3F3F3",
-    color: active ? "#FFC107" : "#555",
+    color: active ? "#FFD54F" : "#555",
     whiteSpace: "nowrap",
   });
 
@@ -146,7 +146,7 @@ export default function Page() {
         .mbk-card { display:flex; flex-direction:column; background:#fff; border:1px solid #EFEFEF;
           border-radius:18px; overflow:hidden; text-decoration:none; color:inherit;
           transition:border-color .15s, box-shadow .15s; }
-        .mbk-card:hover { border-color:#FFC107; }
+        .mbk-card:hover { border-color:#FFD54F; }
         .mbk-thumb { position:relative; width:100%; aspect-ratio:16/10; background:#F7F7F7; flex:none; }
         .mbk-body { padding:15px 16px; display:flex; flex-direction:column; min-width:0; flex:1; }
         .mbk-head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:6px; }
@@ -267,7 +267,7 @@ function BookingCard({ booking, lookupVehicle }) {
           <div className="mbk-route">
             <span className="mbk-loc" title={booking.pickup}>{booking.pickup || "—"}</span>
             <span className="mbk-drop" title={booking.drop}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}><path d="M5 12h14M13 6l6 6-6 6" stroke="#FFC107" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}><path d="M5 12h14M13 6l6 6-6 6" stroke="#FFD54F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
               <span>{booking.drop || "—"}</span>
             </span>
           </div>

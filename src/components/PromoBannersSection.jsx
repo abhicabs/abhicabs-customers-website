@@ -64,7 +64,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               </div>
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,rgba(13,13,13,.9),rgba(13,13,13,.5))", pointerEvents: "none" }} />
               <div style={{ position: "relative", padding: "clamp(24px,3vw,40px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start" }}>
-                <m.span variants={textItem} style={{ fontWeight: 700, fontSize: 11.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#FFC107" }}>Outstation</m.span>
+                <m.span variants={textItem} style={{ fontWeight: 700, fontSize: 11.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#FFD54F" }}>Outstation</m.span>
                 <m.h3 variants={textItem} style={{ fontWeight: 800, fontSize: "clamp(24px,2.8vw,34px)", color: "#fff", margin: "10px 0 8px", lineHeight: 1.1 }}>Weekend Getaway?</m.h3>
                 <m.p variants={textItem} style={{ fontSize: 14.5, color: "rgba(255,255,255,.75)", fontWeight: 400, margin: "0 0 20px", maxWidth: 300 }}>
                   Take the road to your next destination in comfort.
@@ -74,7 +74,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                   whileTap={{ scale: 0.96 }}
                   onClick={onOutstation}
                   className="hover:!bg-[#FFB300]"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 9999, background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", transition: "background-color .2s" }}
+                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 9999, background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", transition: "background-color .2s" }}
                 >
                   Book Outstation
                   <m.svg variants={arrowNudge} width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -92,7 +92,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               whileInView="show"
               whileHover="hover"
               viewport={{ once: true, amount: 0.35 }}
-              style={{ position: "relative", borderRadius: 22, overflow: "hidden", minHeight: 260, display: "flex", background: "#FFC107", isolation: "isolate" }}
+              style={{ position: "relative", borderRadius: 22, overflow: "hidden", minHeight: 260, display: "flex", background: "#FFD54F", isolation: "isolate" }}
             >
               <div className="promo-group-photo" style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "52%", overflow: "hidden" }}>
                 <m.img
@@ -102,7 +102,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                   style={{ width: "100%", height: "100%", objectFit: "cover", willChange: "transform" }}
                 />
               </div>
-              <div className="promo-group-fade" style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,#FFC107 40%,rgba(255,193,7,.2) 62%,transparent)", pointerEvents: "none" }} />
+              <div className="promo-group-fade" style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,#FFD54F 40%,rgba(255,213,79,.2) 62%,transparent)", pointerEvents: "none" }} />
               <div style={{ position: "relative", padding: "clamp(24px,3vw,40px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", maxWidth: "60%" }} className="promo-group-text">
                 <m.span variants={textItem} style={{ fontWeight: 700, fontSize: 11.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#7a5c00" }}>Group Travel</m.span>
                 <m.h3 variants={textItem} style={{ fontWeight: 800, fontSize: "clamp(24px,2.8vw,34px)", color: "#111", margin: "10px 0 8px", lineHeight: 1.1 }}>Travelling With a Group?</m.h3>
@@ -118,7 +118,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                 >
                   Explore Group Travel
                   <m.svg variants={arrowNudge} width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M5 12h14M13 6l6 6-6 6" stroke="#FFC107" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke="#FFD54F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
                   </m.svg>
                 </m.button>
               </div>

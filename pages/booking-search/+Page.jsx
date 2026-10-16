@@ -943,7 +943,7 @@ export default function Page() {
     display: "inline-flex",
     alignItems: "center",
     padding: "0 16px", borderRadius: 9999, border: active ? "1.5px solid #111" : "1.5px solid #E5E5E5",
-    background: active ? "#111" : "#fff", color: active ? "#FFC107" : "#666", fontWeight: 600, fontSize: 12.5, cursor: "pointer",
+    background: active ? "#111" : "#fff", color: active ? "#FFD54F" : "#666", fontWeight: 600, fontSize: 12.5, cursor: "pointer",
   });
 
   const groupFieldStyle = {
@@ -1082,7 +1082,7 @@ export default function Page() {
                                 flex: 1, height: 38, borderRadius: 9999, fontSize: 12.5, fontWeight: 600, cursor: "pointer",
                                 border: inlineTrip.airportDirection === d.key ? "none" : "1px solid #E5E5E5",
                                 background: inlineTrip.airportDirection === d.key ? "#111" : "#fff",
-                                color: inlineTrip.airportDirection === d.key ? "#FFC107" : "#444",
+                                color: inlineTrip.airportDirection === d.key ? "#FFD54F" : "#444",
                               }}
                             >
                               {d.label}
@@ -1182,7 +1182,7 @@ export default function Page() {
                   {/* Return time removed — only return date is needed for round trips */}
 
                   <button onClick={submitInlineTrip}
-                    style={{ height: 46, borderRadius: 9999, border: "none", background: "#FFC107", color: "#111", fontWeight: 800, fontSize: 14, cursor: "pointer", marginTop: 4 }}>
+                    style={{ height: 46, borderRadius: 9999, border: "none", background: "#FFD54F", color: "#111", fontWeight: 800, fontSize: 14, cursor: "pointer", marginTop: 4 }}>
                     {chosenVehicle && seaterFlow
                       ? "Confirm & Continue to Checkout →"
                       : chosenVehicle
@@ -1222,7 +1222,7 @@ export default function Page() {
           <div className="summary-bar-route" style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <IconPin className="w-4 h-4 text-primary" />
             <span title={journey.pickup} style={{ fontWeight: 700, fontSize: 22 }}>{shortAddress(journey.pickup)}</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#FFC107" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#FFD54F" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             <span title={journey.drop} style={{ fontWeight: 700, fontSize: 22 }}>{shortAddress(journey.drop)}</span>
           </div>
           <span style={{ width: 1, height: 22, background: "rgba(255,255,255,.2)" }} className="hidden sm:block" />
@@ -1235,7 +1235,7 @@ export default function Page() {
           <button
             onClick={() => navigate(`/?j=${encodeURIComponent(effectiveJourneyId)}#booking`)}
             className="summary-bar-btn hover:!bg-[#FFB300]"
-            style={{ marginLeft: "auto", padding: "10px 18px", borderRadius: 9999, background: "#FFC107", color: "#111", fontWeight: 600, fontSize: 13, border: "none", cursor: "pointer" }}
+            style={{ marginLeft: "auto", padding: "10px 18px", borderRadius: 9999, background: "#FFD54F", color: "#111", fontWeight: 600, fontSize: 13, border: "none", cursor: "pointer" }}
           >
             Modify Search
           </button>
@@ -1315,7 +1315,7 @@ export default function Page() {
             <button
               type="button"
               onClick={clearLocations}
-              style={{ display: "block", width: "100%", padding: "13px 0", borderRadius: 12, background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 15, border: "none", cursor: "pointer" }}
+              style={{ display: "block", width: "100%", padding: "13px 0", borderRadius: 12, background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 15, border: "none", cursor: "pointer" }}
             >
               ← Change Pickup Location
             </button>
@@ -1331,7 +1331,7 @@ export default function Page() {
         <>
         {/* Seater pre-selected banner */}
         {urlSeater && (
-          <div style={{ display: "flex", alignItems: "center", gap: 10, background: "#FFFBEA", border: "1.5px solid #FFC107", borderRadius: 12, padding: "12px 16px", marginBottom: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, background: "#FFFBEA", border: "1.5px solid #FFD54F", borderRadius: 12, padding: "12px 16px", marginBottom: 16 }}>
             <span style={{ fontSize: 20 }}>🚌</span>
             <div style={{ flex: 1 }}>
               <p style={{ fontWeight: 700, fontSize: 14, margin: 0, color: "#111" }}>
@@ -1501,7 +1501,7 @@ export default function Page() {
 
             {requestOffer && (
               <div style={{ background: "#FFFBEB", border: "1.5px solid #FDE68A", borderRadius: 16, padding: "14px 18px", marginBottom: 16, display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: "#FFC107", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "#FFD54F", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z" stroke="#111" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="10" r="2" fill="#111"/></svg>
                 </div>
                 <div>
@@ -1544,9 +1544,9 @@ export default function Page() {
                   // Key on the priced class so two options can't collide.
                   const cardKey = `${v.vehicleClass || v.id || "v"}-${idx}`;
                   return (
-                    <div key={cardKey} className="vehicle-card-wrap" style={{ background: "#fff", border: isPinned ? "2px solid #FFC107" : "1px solid #EFEFEF", borderRadius: 20, overflow: "hidden", display: "flex", flexWrap: "wrap", position: "relative", boxShadow: isPinned ? "0 0 0 4px rgba(255,193,7,.15)" : "none" }}>
+                    <div key={cardKey} className="vehicle-card-wrap" style={{ background: "#fff", border: isPinned ? "2px solid #FFD54F" : "1px solid #EFEFEF", borderRadius: 20, overflow: "hidden", display: "flex", flexWrap: "wrap", position: "relative", boxShadow: isPinned ? "0 0 0 4px rgba(255,213,79,.15)" : "none" }}>
                       {isPinned && (
-                        <div style={{ position: "absolute", top: 14, left: 14, zIndex: 10, background: "#FFC107", color: "#111", fontSize: 11, fontWeight: 700, letterSpacing: ".06em", padding: "3px 10px", borderRadius: 9999, textTransform: "uppercase" }}>
+                        <div style={{ position: "absolute", top: 14, left: 14, zIndex: 10, background: "#FFD54F", color: "#111", fontSize: 11, fontWeight: 700, letterSpacing: ".06em", padding: "3px 10px", borderRadius: 9999, textTransform: "uppercase" }}>
                           {!browseMode ? "✓ Your Selection" : pickedKey ? "✓ Selected" : "✓ Pre-selected"}
                         </div>
                       )}
@@ -1613,7 +1613,7 @@ export default function Page() {
                           <button
                             onClick={() => selectVehicle(v)}
                             className="hover:!bg-[#FFB300]"
-                            style={{ flex: "1 1 140px", height: 48, borderRadius: 9999, border: "none", background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
+                            style={{ flex: "1 1 140px", height: 48, borderRadius: 9999, border: "none", background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
                           >
                             {requestOffer
                               ? "Request Booking →"
@@ -1758,7 +1758,7 @@ function SeaterStepTwo({ vehicle, seats, onChange, form }) {
       <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "#B8860B" }}>Step 2 of 2</div>
       <h2 style={{ fontWeight: 800, fontSize: 22, margin: "4px 0 14px" }}>Add your trip details</h2>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 16, background: "#fff", border: "2px solid #FFC107", borderRadius: 18, padding: 14, marginBottom: 18, flexWrap: "wrap" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 16, background: "#fff", border: "2px solid #FFD54F", borderRadius: 18, padding: 14, marginBottom: 18, flexWrap: "wrap" }}>
         <img
           className="vehicle-photo"
           src={vehicle.img}

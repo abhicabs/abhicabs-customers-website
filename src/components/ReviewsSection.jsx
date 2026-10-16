@@ -3,7 +3,7 @@ import { LazyMotion, domAnimation, m, MotionConfig } from "framer-motion";
 
 // Customer reviews — same data shape as before: { quote, name, meta, stars?, avatar? }.
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 
 const header = {
   hidden: {},
@@ -48,7 +48,7 @@ function Stars({ count = 5 }) {
         <m.svg key={i} variants={star} width="17" height="17" viewBox="0 0 24 24" aria-hidden>
           <path
             d="M12 2.8l2.8 5.7 6.3.9-4.55 4.43 1.07 6.27L12 17.13l-5.62 2.97 1.07-6.27L2.9 9.4l6.3-.9L12 2.8z"
-            fill={i < filled ? "#FFC107" : "#ECE9E2"}
+            fill={i < filled ? "#FFD54F" : "#ECE9E2"}
           />
         </m.svg>
       ))}
@@ -96,7 +96,7 @@ export default function ReviewsSection({ reviews }) {
                 <svg
                   aria-hidden
                   width="64" height="64" viewBox="0 0 24 24"
-                  className="pointer-events-none absolute -right-1 -top-1 -z-10 text-[#FFC107] opacity-[0.14] transition-opacity duration-300 group-hover:opacity-25"
+                  className="pointer-events-none absolute -right-1 -top-1 -z-10 text-[#FFD54F] opacity-[0.14] transition-opacity duration-300 group-hover:opacity-25"
                 >
                   <path
                     fill="currentColor"

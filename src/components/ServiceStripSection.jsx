@@ -6,7 +6,7 @@ import { LazyMotion, domMax, m, MotionConfig, LayoutGroup } from "framer-motion"
 // brand yellow gradient, and that fill glides to whichever card you pick.
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
-const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)";
+const GOLD = "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)";
 
 const ITEMS = [
   {
@@ -116,7 +116,7 @@ function ServiceCard({ item, active, onSelect, className = "" }) {
         className={[
           "relative isolate flex h-full w-full min-w-0 items-center gap-3 rounded-2xl border px-4 py-3.5 text-left no-underline outline-none",
           "transition-[border-color,box-shadow] duration-200",
-          "focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-2",
+          "focus-visible:ring-2 focus-visible:ring-[#FFD54F] focus-visible:ring-offset-2",
           active
             ? "border-transparent shadow-[0_14px_28px_-14px_rgba(240,165,0,0.8)]"
             : "border-[#ECE9E2] bg-white hover:border-[#F0D27A] hover:shadow-[0_10px_24px_-16px_rgba(20,20,20,0.25)]",

@@ -14,7 +14,7 @@ export default function ErrorPage({ is404 }) {
       </p>
       <a
         href="/"
-        style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", borderRadius: 9999, background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 15, textDecoration: "none" }}
+        style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", borderRadius: 9999, background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 15, textDecoration: "none" }}
       >
         ← Back to Home
       </a>

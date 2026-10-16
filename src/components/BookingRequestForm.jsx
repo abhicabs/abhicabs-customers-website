@@ -79,7 +79,7 @@ export default function BookingRequestForm({ journey, message, allowedStates = [
     <div style={wrap}>
       {/* Header */}
       <div style={{ padding: "24px 28px 0", textAlign: "center" }}>
-        <div style={{ width: 48, height: 48, borderRadius: 12, background: "#FFC107", display: "grid", placeItems: "center", margin: "0 auto 12px" }}>
+        <div style={{ width: 48, height: 48, borderRadius: 12, background: "#FFD54F", display: "grid", placeItems: "center", margin: "0 auto 12px" }}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
           </svg>
@@ -94,7 +94,7 @@ export default function BookingRequestForm({ journey, message, allowedStates = [
 
       {/* Selected vehicle bar */}
       <div style={{ margin: "20px 28px 0", display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderRadius: 14, background: "#FFFBEB", border: "1.5px solid #FDE68A" }}>
-        <div style={{ width: 40, height: 40, borderRadius: 10, background: "#FFC107", display: "grid", placeItems: "center", flexShrink: 0 }}>
+        <div style={{ width: 40, height: 40, borderRadius: 10, background: "#FFD54F", display: "grid", placeItems: "center", flexShrink: 0 }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 17h14M5 17a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2M5 17l-1 3h2l1-3m12 0l1 3h-2l-1-3"/>
             <circle cx="7.5" cy="14.5" r="1.5"/><circle cx="16.5" cy="14.5" r="1.5"/>
@@ -158,8 +158,8 @@ export default function BookingRequestForm({ journey, message, allowedStates = [
         <button type="submit" disabled={busy}
           style={{
             marginTop: 4, padding: "14px 0", borderRadius: 14, border: "none",
-            background: "linear-gradient(135deg, #FFC107 0%, #FFB300 100%)",
-            boxShadow: "0 4px 16px rgba(255,193,7,0.35)",
+            background: "linear-gradient(135deg, #FFD54F 0%, #FFB300 100%)",
+            boxShadow: "0 4px 16px rgba(255,213,79,0.35)",
             color: "#111", fontWeight: 800, fontSize: 15.5,
             cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1,
             transition: "transform 0.15s, box-shadow 0.2s",

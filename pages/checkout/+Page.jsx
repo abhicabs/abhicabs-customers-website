@@ -544,7 +544,7 @@ export default function Page() {
                   }}
                   style={{
                     fontSize: 12.5, fontWeight: 700, padding: "6px 12px", borderRadius: 9999, cursor: "pointer",
-                    border: isCorporate ? "1.5px solid #FFC107" : "1.5px solid #E5E5E5",
+                    border: isCorporate ? "1.5px solid #FFD54F" : "1.5px solid #E5E5E5",
                     background: isCorporate ? "#FFFBEA" : "#fff",
                     color: isCorporate ? "#B8860B" : "#666",
                   }}

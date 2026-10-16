@@ -3,7 +3,7 @@ import { LazyMotion, domAnimation, m, MotionConfig, animate, useInView, useReduc
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 const COUNT_EASE = [0.16, 1, 0.3, 1];
-const GOLD_BG = "linear-gradient(135deg, #FFD54A 0%, #FFC107 45%, #F5AE00 100%)";
+const GOLD_BG = "linear-gradient(135deg, #FFD54A 0%, #FFD54F 45%, #F5AE00 100%)";
 
 // Parses "10,000+" → { prefix: "", number: 10000, decimals: 0, suffix: "+" }
 // and "4.8★" → { number: 4.8, decimals: 1, suffix: "★" }. Values it can't

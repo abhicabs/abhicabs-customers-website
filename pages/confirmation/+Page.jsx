@@ -107,7 +107,7 @@ export default function Page() {
             <a
               href={`/my-booking?b=${booking.bookingId}`}
               className="hover:!bg-[#FFB300]"
-              style={{ flex: "1 1 150px", padding: 14, borderRadius: 12, border: "none", background: "#FFC107", color: "#111", fontWeight: 700, fontSize: 14, textAlign: "center", cursor: "pointer" }}
+              style={{ flex: "1 1 150px", padding: 14, borderRadius: 12, border: "none", background: "#FFD54F", color: "#111", fontWeight: 700, fontSize: 14, textAlign: "center", cursor: "pointer" }}
             >
               View Booking
             </a>

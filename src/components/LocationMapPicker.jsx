@@ -22,7 +22,7 @@ const PICKED_ZOOM    = 15;
 // ─── Custom SVG pin ───────────────────────────────────────────────────────────
 const PIN_SVG = encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="48" viewBox="0 0 36 48">` +
-  `<path d="M18 0C8.06 0 0 8.06 0 18c0 13.5 18 30 18 30S36 31.5 36 18C36 8.06 27.94 0 18 0z" fill="#FFC107"/>` +
+  `<path d="M18 0C8.06 0 0 8.06 0 18c0 13.5 18 30 18 30S36 31.5 36 18C36 8.06 27.94 0 18 0z" fill="#FFD54F"/>` +
   `<circle cx="18" cy="18" r="7" fill="#111"/>` +
   `</svg>`
 );
@@ -327,11 +327,11 @@ export default function LocationMapPicker({ open, title, initialAddress, onConfi
                 style={{ flexShrink: 0, width: 46, height: 46, borderRadius: 10, border: "1.5px solid #E0E0E0", background: locating ? "#FFFBEB" : "#fff", cursor: locating ? "wait" : "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
               >
                 {locating
-                  ? <div style={{ width: 20, height: 20, borderRadius: "50%", border: "2.5px solid #FFC107", borderTopColor: "transparent", animation: "lmpSpin .8s linear infinite" }} />
+                  ? <div style={{ width: 20, height: 20, borderRadius: "50%", border: "2.5px solid #FFD54F", borderTopColor: "transparent", animation: "lmpSpin .8s linear infinite" }} />
                   : <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="4" fill="#FFC107"/>
-                      <circle cx="12" cy="12" r="8" stroke="#FFC107" strokeWidth="1.6"/>
-                      <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#FFC107" strokeWidth="1.6" strokeLinecap="round"/>
+                      <circle cx="12" cy="12" r="4" fill="#FFD54F"/>
+                      <circle cx="12" cy="12" r="8" stroke="#FFD54F" strokeWidth="1.6"/>
+                      <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#FFD54F" strokeWidth="1.6" strokeLinecap="round"/>
                     </svg>
                 }
               </button>
@@ -347,7 +347,7 @@ export default function LocationMapPicker({ open, title, initialAddress, onConfi
               {/* Loading overlay */}
               {!mapsReady && !mapsError && (
                 <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, background: "#f8f6f1" }}>
-                  <div style={{ width: 36, height: 36, borderRadius: "50%", border: "3px solid #FFC107", borderTopColor: "transparent", animation: "lmpSpin .8s linear infinite" }} />
+                  <div style={{ width: 36, height: 36, borderRadius: "50%", border: "3px solid #FFD54F", borderTopColor: "transparent", animation: "lmpSpin .8s linear infinite" }} />
                   <span style={{ fontSize: 13, color: "#888" }}>Loading map…</span>
                 </div>
               )}
@@ -372,14 +372,14 @@ export default function LocationMapPicker({ open, title, initialAddress, onConfi
 
           {/* Selected location preview card */}
           <div style={{ background: address ? "#FFFBEB" : "#F9F9F9", border: `1.5px solid ${address ? "#FCD34D" : "#EFEFEF"}`, borderRadius: 12, padding: "12px 14px", display: "flex", alignItems: "flex-start", gap: 10, minHeight: 54, transition: "all .2s" }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 1, color: address ? "#FFC107" : "#ccc" }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 1, color: address ? "#FFD54F" : "#ccc" }}>
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/>
               <circle cx="12" cy="9" r="2.5" fill="#111"/>
             </svg>
             <div style={{ flex: 1, minWidth: 0 }}>
               {resolving
                 ? <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#888", fontSize: 13 }}>
-                    <div style={{ width: 14, height: 14, borderRadius: "50%", border: "2px solid #FFC107", borderTopColor: "transparent", animation: "lmpSpin .8s linear infinite" }} />
+                    <div style={{ width: 14, height: 14, borderRadius: "50%", border: "2px solid #FFD54F", borderTopColor: "transparent", animation: "lmpSpin .8s linear infinite" }} />
                     Resolving address…
                   </div>
                 : address
@@ -411,7 +411,7 @@ export default function LocationMapPicker({ open, title, initialAddress, onConfi
           <button
             onClick={handleConfirm}
             disabled={!address || resolving}
-            style={{ flex: 2, padding: "13px 0", borderRadius: 12, border: "none", background: address && !resolving ? "#FFC107" : "#F0F0F0", color: address && !resolving ? "#111" : "#aaa", fontWeight: 700, fontSize: 14, cursor: address && !resolving ? "pointer" : "not-allowed", transition: "background .2s, color .2s" }}
+            style={{ flex: 2, padding: "13px 0", borderRadius: 12, border: "none", background: address && !resolving ? "#FFD54F" : "#F0F0F0", color: address && !resolving ? "#111" : "#aaa", fontWeight: 700, fontSize: 14, cursor: address && !resolving ? "pointer" : "not-allowed", transition: "background .2s, color .2s" }}
           >
             {resolving ? "Resolving address…" : address ? "✓ Confirm Location" : "Pick a location first"}
           </button>

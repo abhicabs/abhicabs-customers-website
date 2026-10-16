@@ -22,14 +22,14 @@ export const EASE_OUT = [0.22, 1, 0.36, 1];
 // earlier 135° diagonal). Active is always yellow; inactive has a dark
 // variant (on the black tab bar) and a light variant (on the white card).
 export const GRADIENT = {
-  active: "linear-gradient(180deg, #FFD54A 0%, #FFC107 55%, #F0A500 100%)",
+  active: "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)",
   activeShadow:
     "0 8px 18px -8px rgba(240,165,0,.75), inset 0 1px 0 rgba(255,255,255,.6), inset 0 -1px 0 rgba(0,0,0,.08)",
   dark: {
     base: "linear-gradient(180deg, #1F1F1F 0%, #131313 100%)",
     hover: "linear-gradient(180deg, #2E2B22 0%, #171612 100%)",
     ring: "rgba(255,255,255,.06)",
-    ringHover: "rgba(255,193,7,.38)",
+    ringHover: "rgba(255,213,79,.38)",
     text: "rgba(255,255,255,.72)",
   },
   // Inactive on the white card: a visible pale-gold gradient. It stays in the
@@ -49,7 +49,7 @@ export const GRADIENT = {
 // .bw-portal carries the same tokens for things rendered into <body>.
 export const BW_CSS = `
 .bw-root, .bw-portal {
-  --bw-yellow: #FFC107;
+  --bw-yellow: #FFD54F;
   --bw-ink: #141414;
   --bw-text: #2B2925;
   --bw-muted: #77736A;
@@ -75,10 +75,10 @@ export const BW_CSS = `
 .bw-field:hover { border-color: var(--bw-line-strong); background: #fff; }
 .bw-field:focus-within, .bw-field.is-open {
   border-color: var(--bw-yellow); background: #fff;
-  box-shadow: 0 0 0 4px rgba(255,193,7,.18);
+  box-shadow: 0 0 0 4px rgba(255,213,79,.18);
 }
 .bw-field--button { cursor: pointer; user-select: none; }
-.bw-field--button:focus-visible { outline: none; border-color: var(--bw-yellow); box-shadow: 0 0 0 4px rgba(255,193,7,.18); }
+.bw-field--button:focus-visible { outline: none; border-color: var(--bw-yellow); box-shadow: 0 0 0 4px rgba(255,213,79,.18); }
 .bw-chip {
   flex: none; width: 34px; height: 34px; border-radius: 10px;
   display: grid; place-items: center;
@@ -103,7 +103,7 @@ export const BW_CSS = `
   color: var(--bw-muted); cursor: pointer;
   transition: background-color .2s, color .2s;
 }
-.bw-icon-btn:hover { background: rgba(255,193,7,.16); color: var(--bw-ink); }
+.bw-icon-btn:hover { background: rgba(255,213,79,.16); color: var(--bw-ink); }
 .bw-icon-btn:focus-visible { outline: 2px solid var(--bw-yellow); outline-offset: 1px; }
 .bw-icon-btn:disabled { opacity: .5; cursor: default; }
 .bw-clear-btn {
@@ -121,7 +121,7 @@ export const BW_CSS = `
   transition: border-color .2s, background-color .2s, color .2s;
 }
 .bw-addstop:hover { border-color: var(--bw-yellow); background: #FFFBEA; color: var(--bw-ink); }
-.bw-addstop:focus-visible { outline: none; border-color: var(--bw-yellow); box-shadow: 0 0 0 4px rgba(255,193,7,.18); }
+.bw-addstop:focus-visible { outline: none; border-color: var(--bw-yellow); box-shadow: 0 0 0 4px rgba(255,213,79,.18); }
 .bw-addstop-plus {
   width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center;
   background: ${GRADIENT.active}; color: var(--bw-ink);
@@ -149,7 +149,7 @@ export const BW_CSS = `
 
 .bw-surge {
   display: flex; align-items: center; gap: 12px; padding: 10px 14px;
-  border-radius: 14px; border: 1px solid rgba(255,193,7,.45);
+  border-radius: 14px; border: 1px solid rgba(255,213,79,.45);
   background: linear-gradient(90deg, #FFF6D6 0%, #FFFCF2 100%);
 }
 .bw-surge-icon {
@@ -186,32 +186,32 @@ export const TW = {
   trigger:
     "group relative flex h-[52px] w-full min-w-0 items-center gap-2.5 rounded-[14px] border pl-2 pr-3 text-left outline-none transition-[border-color,background-color,box-shadow] duration-200",
   triggerIdle:
-    "border-[#E8E5DE] bg-[#F8F7F3] hover:border-[#D3CFC5] hover:bg-white focus-visible:border-[#FFC107] focus-visible:bg-white focus-visible:shadow-[0_0_0_4px_rgba(255,193,7,0.18)]",
-  triggerOpen: "border-[#FFC107] bg-white shadow-[0_0_0_4px_rgba(255,193,7,0.18)]",
+    "border-[#E8E5DE] bg-[#F8F7F3] hover:border-[#D3CFC5] hover:bg-white focus-visible:border-[#FFD54F] focus-visible:bg-white focus-visible:shadow-[0_0_0_4px_rgba(255,213,79,0.18)]",
+  triggerOpen: "border-[#FFD54F] bg-white shadow-[0_0_0_4px_rgba(255,213,79,0.18)]",
   chip: "grid h-[34px] w-[34px] flex-none place-items-center rounded-[10px] border transition-colors duration-200",
   chipIdle:
-    "border-[#E8E5DE] bg-white text-[#141414] group-focus-visible:border-[#FFC107] group-focus-visible:bg-[#FFC107]",
-  chipOpen: "border-[#FFC107] bg-[#FFC107] text-[#141414]",
+    "border-[#E8E5DE] bg-white text-[#141414] group-focus-visible:border-[#FFD54F] group-focus-visible:bg-[#FFD54F]",
+  chipOpen: "border-[#FFD54F] bg-[#FFD54F] text-[#141414]",
   value: "min-w-0 flex-1 truncate text-[15px] font-medium text-[#141414]",
   placeholder: "font-normal text-[#A8A49B]",
   pop: "rounded-[18px] border border-[#E8E5DE] bg-white shadow-[0_24px_48px_-16px_rgba(20,20,20,0.28),0_2px_6px_rgba(20,20,20,0.06)]",
-  gold: "bg-[linear-gradient(180deg,#FFD54A_0%,#FFC107_55%,#F0A500_100%)] shadow-[0_8px_18px_-8px_rgba(240,165,0,0.75),inset_0_1px_0_rgba(255,255,255,0.6)]",
+  gold: "bg-[linear-gradient(180deg,#FFD54A_0%,#FFD54F_55%,#F0A500_100%)] shadow-[0_8px_18px_-8px_rgba(240,165,0,0.75),inset_0_1px_0_rgba(255,255,255,0.6)]",
   navBtn:
-    "grid h-8 w-8 place-items-center rounded-[10px] text-[#2B2925] transition-colors hover:bg-[#F6F5F1] disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107]",
+    "grid h-8 w-8 place-items-center rounded-[10px] text-[#2B2925] transition-colors hover:bg-[#F6F5F1] disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD54F]",
   dayBase:
-    "relative grid h-9 place-items-center rounded-[10px] text-[13.5px] tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107] focus-visible:ring-offset-1",
+    "relative grid h-9 place-items-center rounded-[10px] text-[13.5px] tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD54F] focus-visible:ring-offset-1",
   daySelected:
-    "font-bold text-[#141414] bg-[linear-gradient(180deg,#FFD54A_0%,#FFC107_55%,#F0A500_100%)] shadow-[0_8px_18px_-8px_rgba(240,165,0,0.75),inset_0_1px_0_rgba(255,255,255,0.6)]",
+    "font-bold text-[#141414] bg-[linear-gradient(180deg,#FFD54A_0%,#FFD54F_55%,#F0A500_100%)] shadow-[0_8px_18px_-8px_rgba(240,165,0,0.75),inset_0_1px_0_rgba(255,255,255,0.6)]",
   dayDisabled: "cursor-not-allowed text-[#D3CFC5] line-through decoration-[#E3DFD6]",
   dayOutside: "font-medium text-[#B9B5AC] hover:bg-[#F6F5F1]",
   dayIdle: "font-medium text-[#2B2925] hover:bg-[#FFF1C2]",
   quick:
-    "rounded-full border border-[#E8E5DE] bg-[linear-gradient(180deg,#FFFFFF_0%,#F6F4EE_100%)] px-3 py-1.5 text-[12.5px] font-semibold text-[#2B2925] transition-colors hover:border-[#F0C24A] hover:bg-[linear-gradient(180deg,#FFFDF5_0%,#FDEFC4_100%)] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC107]",
+    "rounded-full border border-[#E8E5DE] bg-[linear-gradient(180deg,#FFFFFF_0%,#F6F4EE_100%)] px-3 py-1.5 text-[12.5px] font-semibold text-[#2B2925] transition-colors hover:border-[#F0C24A] hover:bg-[linear-gradient(180deg,#FFFDF5_0%,#FDEFC4_100%)] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD54F]",
   quickActive:
-    "rounded-full border border-transparent px-3 py-1.5 text-[12.5px] font-bold text-[#141414] bg-[linear-gradient(180deg,#FFD54A_0%,#FFC107_55%,#F0A500_100%)] shadow-[0_8px_18px_-8px_rgba(240,165,0,0.75),inset_0_1px_0_rgba(255,255,255,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141414]",
+    "rounded-full border border-transparent px-3 py-1.5 text-[12.5px] font-bold text-[#141414] bg-[linear-gradient(180deg,#FFD54A_0%,#FFD54F_55%,#F0A500_100%)] shadow-[0_8px_18px_-8px_rgba(240,165,0,0.75),inset_0_1px_0_rgba(255,255,255,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141414]",
   option: "flex cursor-pointer select-none items-center gap-3 rounded-[12px] px-2.5 py-2 transition-colors",
   badge:
-    "grid h-9 min-w-[48px] place-items-center rounded-[10px] bg-[linear-gradient(180deg,#2B2B2B_0%,#141414_100%)] px-2 text-[11.5px] font-bold tracking-[0.06em] text-[#FFC107]",
+    "grid h-9 min-w-[48px] place-items-center rounded-[10px] bg-[linear-gradient(180deg,#2B2B2B_0%,#141414_100%)] px-2 text-[11.5px] font-bold tracking-[0.06em] text-[#FFD54F]",
 };
 
 // ── Shared: anchored popover state (position, flip, outside click, Esc) ──

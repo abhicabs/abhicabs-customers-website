@@ -110,7 +110,7 @@ export function openRazorpayCheckout({ order, name, email, contact, description 
             contact: contact || undefined,
           },
           notes: { paymentId: order.paymentId },
-          theme: { color: "#FFC107" },
+          theme: { color: "#FFD54F" },
           retry: { enabled: true },
           handler: (resp) => {
             settled = true;

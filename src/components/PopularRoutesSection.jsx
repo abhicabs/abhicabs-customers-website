@@ -6,7 +6,7 @@ import { LazyMotion, domMax, m, MotionConfig, AnimatePresence, LayoutGroup } fro
 // motion is applied to a wrapper around each card, never the card itself,
 // so the card's own hover lift keeps working.
 const BADGE_COLORS = {
-  Intercity: { bg: "rgba(255,193,7,.9)", fg: "#111" },
+  Intercity: { bg: "rgba(255,213,79,.9)", fg: "#111" },
   Outstation: { bg: "#111", fg: "#fff" },
   "Long Distance": { bg: "rgba(255,255,255,.9)", fg: "#111" },
 };
@@ -85,7 +85,7 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
                         aria-selected={active}
                         onClick={() => setFilter(b)}
                         whileTap={{ scale: 0.96 }}
-                        className={`relative isolate inline-flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-[13.5px] font-semibold outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[#FFC107] ${
+                        className={`relative isolate inline-flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-[13.5px] font-semibold outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[#FFD54F] ${
                           active ? "text-white" : "text-[#3D3A33] hover:text-[#141414]"
                         }`}
                       >
@@ -101,7 +101,7 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
                         {b}
                         <span
                           className={`rounded-full px-1.5 py-px text-[11px] font-bold tabular-nums transition-colors duration-200 ${
-                            active ? "bg-[#FFC107] text-[#141414]" : "bg-[#ECE9E2] text-[#77736A]"
+                            active ? "bg-[#FFD54F] text-[#141414]" : "bg-[#ECE9E2] text-[#77736A]"
                           }`}
                         >
                           {count}

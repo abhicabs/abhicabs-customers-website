@@ -117,7 +117,7 @@ function BigMap({ hovered, onHover, onLeave, onTapToggle }) {
             key={`c${i}`}
             d={d}
             fill="none"
-            stroke="#FFC107"
+            stroke="#FFD54F"
             strokeWidth={1.5}
             strokeDasharray="1 7"
             strokeLinecap="round"
@@ -136,7 +136,7 @@ function BigMap({ hovered, onHover, onLeave, onTapToggle }) {
         return (
           <g key={`p${n}`} transform={`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`}>
             <m.g custom={i} variants={pinIn}>
-              <circle r="5" fill="#FFC107" opacity="0.4">
+              <circle r="5" fill="#FFD54F" opacity="0.4">
                 <animate attributeName="r" values="5;17;5" dur="2.6s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values=".5;0;.5" dur="2.6s" repeatCount="indefinite" />
               </circle>
@@ -152,7 +152,7 @@ function BigMap({ hovered, onHover, onLeave, onTapToggle }) {
                 <text
                   x="0"
                   y="14.5"
-                  fill="#FFC107"
+                  fill="#FFD54F"
                   fontSize="11"
                   fontWeight="700"
                   fontFamily="Poppins,system-ui,sans-serif"
@@ -205,7 +205,7 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
               style={{
                 position: "absolute", top: -140, right: -40,
                 width: 520, height: 520, borderRadius: "50%",
-                background: "radial-gradient(circle,rgba(255,193,7,.16),transparent 68%)",
+                background: "radial-gradient(circle,rgba(255,213,79,.16),transparent 68%)",
                 pointerEvents: "none"
               }}
             />
@@ -221,13 +221,13 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
               >
                 <m.span variants={fadeUp} style={{
                   display: "inline-block", fontWeight: 700, fontSize: 12,
-                  letterSpacing: ".16em", textTransform: "uppercase", color: "#FFC107"
+                  letterSpacing: ".16em", textTransform: "uppercase", color: "#FFD54F"
                 }}>Coverage</m.span>
                 <m.h2 variants={fadeUp} style={{
                   fontWeight: 800, fontSize: "clamp(30px,4vw,52px)", lineHeight: 1.04,
                   margin: "12px 0 16px", letterSpacing: "-.025em", color: "#fff"
                 }}>
-                  Built Around<br />Your <span style={{ color: "#FFC107" }}>Routes</span>
+                  Built Around<br />Your <span style={{ color: "#FFD54F" }}>Routes</span>
                 </m.h2>
                 <m.p variants={fadeUp} style={{
                   fontSize: 15.5, lineHeight: 1.6, color: "rgba(255,255,255,.62)",
@@ -246,8 +246,8 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
                         onMouseLeave={() => setHovered(null)}
                         onClick={() => setHovered(prev => (prev === name ? null : name))}
                         style={{
-                          background: hovered === name ? "rgba(255,193,7,.06)" : "rgba(255,255,255,.045)",
-                          border: `1px solid ${hovered === name ? "rgba(255,193,7,.45)" : "rgba(255,255,255,.09)"}`,
+                          background: hovered === name ? "rgba(255,213,79,.06)" : "rgba(255,255,255,.045)",
+                          border: `1px solid ${hovered === name ? "rgba(255,213,79,.45)" : "rgba(255,255,255,.09)"}`,
                           borderRadius: 18, padding: "16px 14px 14px", cursor: "pointer",
                           position: "relative", transition: "transform .2s, border-color .2s, background .2s",
                           transform: hovered === name ? "translateY(-4px)" : "none"
@@ -257,14 +257,14 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
                           <span style={{
                             position: "absolute", top: 10, right: 10,
                             fontSize: 8.5, fontWeight: 700, letterSpacing: ".06em",
-                            color: "#111", background: "#FFC107", padding: "2px 7px", borderRadius: 9999
+                            color: "#111", background: "#FFD54F", padding: "2px 7px", borderRadius: 9999
                           }}>NEW</span>
                         )}
                         <div style={{ height: 66, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
                           <MiniMap name={name} />
                         </div>
                         <div style={{ textAlign: "center", fontWeight: 700, fontSize: 13.5, color: "#fff" }}>{name}</div>
-                        <div style={{ width: 26, height: 3, borderRadius: 2, background: "#FFC107", margin: "8px auto 0" }} />
+                        <div style={{ width: 26, height: 3, borderRadius: 2, background: "#FFD54F", margin: "8px auto 0" }} />
                       </div>
                     </m.div>
                   ))}
@@ -289,7 +289,7 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
                   <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: ".2em", color: "rgba(255,255,255,.42)", lineHeight: 1.9 }}>
                     FOUR STATES<br />COUNTLESS<br />DESTINATIONS
                   </div>
-                  <div style={{ width: 44, height: 3, background: "#FFC107", margin: "10px 0 0 auto", borderRadius: 2 }} />
+                  <div style={{ width: 44, height: 3, background: "#FFD54F", margin: "10px 0 0 auto", borderRadius: 2 }} />
                 </m.div>
                 <div className="cov-map-wrap" style={{ position: "absolute", inset: 0 }}>
                   <BigMap
@@ -311,7 +311,7 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
               style={{
                 position: "relative",
                 margin: "0 clamp(16px,2vw,28px)",
-                background: "#FFC107", borderRadius: 22,
+                background: "#FFD54F", borderRadius: 22,
                 padding: "clamp(22px,2.6vw,30px) clamp(24px,3vw,40px)",
                 display: "flex", flexWrap: "wrap", alignItems: "center", gap: "20px 28px"
               }}
@@ -352,7 +352,7 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
                 }}
               >
                 <m.svg variants={arrowNudge} width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke="#FFC107" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="#FFD54F" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                 </m.svg>
               </m.button>
             </m.div>
@@ -371,7 +371,7 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
             >
               <m.div variants={fadeUp} style={{ display: "flex", alignItems: "center", gap: 14, padding: "6px 22px 6px 0", borderRight: "1px solid rgba(255,255,255,.08)" }}>
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-                  <path d="M3 13l1.6-4.4A2.5 2.5 0 017 7h10a2.5 2.5 0 012.4 1.6L21 13v5h-2.5M3 18v-5m0 5h2.5m0 0a1.75 1.75 0 103.5 0m-3.5 0h9m0 0a1.75 1.75 0 103.5 0" stroke="#FFC107" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M3 13l1.6-4.4A2.5 2.5 0 017 7h10a2.5 2.5 0 012.4 1.6L21 13v5h-2.5M3 18v-5m0 5h2.5m0 0a1.75 1.75 0 103.5 0m-3.5 0h9m0 0a1.75 1.75 0 103.5 0" stroke="#FFD54F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 15, color: "#fff" }}>Wide Coverage</div>
@@ -380,9 +380,9 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
               </m.div>
               <m.div variants={fadeUp} style={{ display: "flex", alignItems: "center", gap: 14, padding: "6px 22px", borderRight: "1px solid rgba(255,255,255,.08)" }}>
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-                  <circle cx="9" cy="8" r="3.2" stroke="#FFC107" strokeWidth="1.8" />
-                  <path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5" stroke="#FFC107" strokeWidth="1.8" strokeLinecap="round" />
-                  <path d="M16 6.5a3 3 0 010 5.6M17.5 19c0-2.2-1-3.9-2.5-4.7" stroke="#FFC107" strokeWidth="1.8" strokeLinecap="round" />
+                  <circle cx="9" cy="8" r="3.2" stroke="#FFD54F" strokeWidth="1.8" />
+                  <path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5" stroke="#FFD54F" strokeWidth="1.8" strokeLinecap="round" />
+                  <path d="M16 6.5a3 3 0 010 5.6M17.5 19c0-2.2-1-3.9-2.5-4.7" stroke="#FFD54F" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 15, color: "#fff" }}>Dedicated Support</div>
@@ -391,8 +391,8 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
               </m.div>
               <m.div variants={fadeUp} style={{ display: "flex", alignItems: "center", gap: 14, padding: "6px 0 6px 22px" }}>
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 3l7 2.5v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9v-5L12 3z" stroke="#FFC107" strokeWidth="1.8" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" stroke="#FFC107" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M12 3l7 2.5v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9v-5L12 3z" stroke="#FFD54F" strokeWidth="1.8" strokeLinejoin="round" />
+                  <path d="M9 12l2 2 4-4" stroke="#FFD54F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 15, color: "#fff" }}>Reliable Travel</div>

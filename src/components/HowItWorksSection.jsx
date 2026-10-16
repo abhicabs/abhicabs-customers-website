@@ -98,7 +98,7 @@ export default function HowItWorksSection({ steps }) {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "linear-gradient(90deg, #FFC107, #FFD54F)",
+                  background: "linear-gradient(90deg, #FFD54F, #FFD54F)",
                   borderRadius: 3,
                   originX: 0,
                 }}
@@ -117,9 +117,9 @@ export default function HowItWorksSection({ steps }) {
                   height: 12,
                   borderRadius: "50%",
                   background: "#fff",
-                  border: "3px solid #FFC107",
+                  border: "3px solid #FFD54F",
                   transform: "translateY(-50%)",
-                  boxShadow: "0 0 8px rgba(255,193,7,.6)",
+                  boxShadow: "0 0 8px rgba(255,213,79,.6)",
                   boxSizing: "border-box",
                 }} />
               </m.div>
@@ -148,8 +148,8 @@ export default function HowItWorksSection({ steps }) {
                       height: 70,
                       margin: "0 auto 20px",
                       borderRadius: 22,
-                      background: isLast ? "#FFC107" : "#111",
-                      color: isLast ? "#111" : "#FFC107",
+                      background: isLast ? "#FFD54F" : "#111",
+                      color: isLast ? "#111" : "#FFD54F",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -157,7 +157,7 @@ export default function HowItWorksSection({ steps }) {
                       fontWeight: 800,
                       fontSize: 23,
                       boxShadow: isLast
-                        ? "0 8px 28px rgba(255,193,7,.5)"
+                        ? "0 8px 28px rgba(255,213,79,.5)"
                         : "0 8px 24px rgba(0,0,0,.18)",
                       position: "relative",
                       zIndex: 2,
@@ -172,7 +172,7 @@ export default function HowItWorksSection({ steps }) {
                         position: "absolute",
                         inset: 0,
                         borderRadius: 22,
-                        border: "2px solid #FFC107",
+                        border: "2px solid #FFD54F",
                         pointerEvents: "none",
                       }}
                     />
