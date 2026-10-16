@@ -84,7 +84,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               </div>
             </m.div>
 
-            {/* Group Travel */}
+            {/* Group Travel — stacks on mobile, side-by-side on desktop */}
             <m.div
               custom={1}
               variants={banner}
@@ -92,21 +92,14 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               whileInView="show"
               whileHover="hover"
               viewport={{ once: true, amount: 0.35 }}
-              style={{ position: "relative", borderRadius: 22, overflow: "hidden", minHeight: 260, display: "flex", background: "#FFD54F", isolation: "isolate" }}
+              className="promo-group-card"
+              style={{ position: "relative", borderRadius: 22, overflow: "hidden", minHeight: 280, display: "grid", gridTemplateColumns: "1fr 1fr", background: "#FFD54F", isolation: "isolate" }}
             >
-              <div className="promo-group-photo" style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "52%", overflow: "hidden" }}>
-                <m.img
-                  variants={photo}
-                  src="/images/40seater.jpg"
-                  alt="Group travel"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", willChange: "transform" }}
-                />
-              </div>
-              <div className="promo-group-fade" style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,#FFD54F 40%,rgba(255,213,79,.2) 62%,transparent)", pointerEvents: "none" }} />
-              <div style={{ position: "relative", padding: "clamp(24px,3vw,40px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", maxWidth: "60%" }} className="promo-group-text">
+              {/* Text — left column, never overlaps */}
+              <div style={{ position: "relative", padding: "clamp(28px,3.5vw,44px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", zIndex: 2 }} className="promo-group-text">
                 <m.span variants={textItem} style={{ fontWeight: 700, fontSize: 11.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#7a5c00" }}>Group Travel</m.span>
                 <m.h3 variants={textItem} style={{ fontWeight: 800, fontSize: "clamp(24px,2.8vw,34px)", color: "#111", margin: "10px 0 8px", lineHeight: 1.1 }}>Travelling With a Group?</m.h3>
-                <m.p variants={textItem} style={{ fontSize: 14.5, color: "#3a2f00", fontWeight: 500, margin: "0 0 20px" }}>
+                <m.p variants={textItem} style={{ fontSize: 14.5, color: "#3a2f00", fontWeight: 500, margin: "0 0 22px", lineHeight: 1.55 }}>
                   Comfortable vehicles for every group size.
                 </m.p>
                 <m.button
@@ -114,7 +107,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                   whileTap={{ scale: 0.96 }}
                   onClick={onGroup}
                   className="hover:!bg-black"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 9999, background: "#111", color: "#fff", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", transition: "background-color .2s", whiteSpace: "nowrap" }}
+                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 26px", borderRadius: 9999, background: "#111", color: "#fff", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", transition: "background-color .2s", whiteSpace: "nowrap" }}
                 >
                   Explore Group Travel
                   <m.svg variants={arrowNudge} width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -122,7 +115,31 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                   </m.svg>
                 </m.button>
               </div>
+              {/* Photo — right column, contained */}
+              <div className="promo-group-photo" style={{ position: "relative", overflow: "hidden" }}>
+                <m.img
+                  variants={photo}
+                  src="/images/40seater.jpg"
+                  alt="Group travel"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", willChange: "transform" }}
+                />
+              </div>
+              {/* Subtle edge blend between text and photo */}
+              <div aria-hidden style={{ position: "absolute", top: 0, bottom: 0, left: "46%", width: "12%", background: "linear-gradient(90deg,#FFD54F,transparent)", zIndex: 1, pointerEvents: "none" }} className="promo-group-fade" />
             </m.div>
+
+            {/* Responsive: stack on small screens */}
+            <style>{`
+              @media (max-width: 580px) {
+                .promo-group-card {
+                  grid-template-columns: 1fr !important;
+                  grid-template-rows: auto 200px;
+                }
+                .promo-group-card .promo-group-text { order: 1; }
+                .promo-group-card .promo-group-photo { order: 2; }
+                .promo-group-card .promo-group-fade { display: none; }
+              }
+            `}</style>
           </div>
         </section>
       </MotionConfig>

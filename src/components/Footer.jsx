@@ -249,13 +249,13 @@ export default function Footer() {
                   initial="rest"
                   animate="rest"
                   whileHover="hover"
-                  whileTap={{ scale: 0.92 }}
-                  className="ml-1 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/[0.04] text-[#FFD54F] transition-colors duration-200 hover:border-[#FFD54F] hover:bg-[#FFD54F] hover:text-[#141414]"
+                  whileTap={{ scale: 0.88 }}
+                  className="ml-2 grid h-12 w-12 place-items-center rounded-full border-2 border-[#FFD54F] bg-[#FFD54F]/15 text-[#FFD54F] shadow-[0_0_18px_rgba(255,213,79,0.35),0_4px_14px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-300 hover:bg-[#FFD54F] hover:text-[#141414] hover:shadow-[0_0_28px_rgba(255,213,79,0.5),0_6px_20px_rgba(0,0,0,0.3)]"
                 >
                   <m.svg
-                    variants={{ rest: { y: 0 }, hover: { y: -2 } }}
+                    variants={{ rest: { y: 0 }, hover: { y: -3 } }}
                     transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                    width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden
+                    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden
                   >
                     <path d="M12 19V5M6 11l6-6 6 6" />
                   </m.svg>
