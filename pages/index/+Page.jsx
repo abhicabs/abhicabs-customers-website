@@ -219,7 +219,7 @@ export default function Page() {
       />
 
       {/* ============================== WHY CHOOSE US (ABOUT) ============================== */}
-      <WhyAbhiCabsSection reasons={WHY_US} imageSrc="/images/morethanjustride.png" />
+      <WhyAbhiCabsSection imageSrc="/images/morethanjustride.png" />
 
       {/* ============================== POPULAR ROUTES (id="services") ============================== */}
       <PopularRoutesSection routes={ROUTES} onBook={bookRoute} />
