@@ -558,9 +558,7 @@ iframe, video, canvas, svg { max-width: 100%; }
    card, wrapping the heading word-by-word and the button onto three lines.
    Give the text the full width and fade the photo further behind it. */
 @media (max-width: 520px) {
-  .promo-group-text { max-width: 100% !important; }
-  .promo-group-photo { width: 62% !important; opacity: .55; }
-  .promo-group-fade { background: linear-gradient(90deg,#FFD54F 45%,rgba(255,213,79,.55) 75%,rgba(255,213,79,.25)) !important; }
+  .promo-group-text { max-width: 75% !important; }
 }
 
 /* ── Vehicle photos ───────────────────────────────────────────────────────────

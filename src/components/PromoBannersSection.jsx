@@ -126,14 +126,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               </div>
             </m.div>
 
-            {/* Responsive: wider text area on mobile */}
-            <style>{`
-              @media (max-width: 580px) {
-                .promo-group-card .promo-group-text {
-                  max-width: 70% !important;
-                }
-              }
-            `}</style>
+
           </div>
         </section>
       </MotionConfig>
