@@ -172,7 +172,7 @@ export default function Header() {
                 src="/images/abhi-cabs-logo-new.svg"
                 alt="Abhi Cabs"
                 className="ac-logo-img"
-                style={{ height: 48, width: "auto", objectFit: "contain" }}
+                style={{ height: 44, width: "auto", maxWidth: 180, objectFit: "contain", borderRadius: 0 }}
               />
             </m.a>
 

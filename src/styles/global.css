@@ -180,7 +180,7 @@ button { cursor: pointer; }
   padding: 0 16px; height: 72px;
 }
 .ac-logo-link  { display: flex; align-items: center; gap: 10px; flex-shrink: 0; min-width: 0; }
-.ac-logo-img   { width: 40px; height: 40px; object-fit: contain; border-radius: 9px; flex: none; }
+.ac-logo-img   { height: 44px; width: auto; max-width: 180px; object-fit: contain; flex: none; }
 .ac-nav-links  { display: flex; align-items: center; }
 .ac-nav-actions{ display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .ac-user-menu  { position: relative; display: block; }
@@ -201,7 +201,7 @@ button { cursor: pointer; }
   .ac-hamburger { display: inline-flex !important; }
 }
 @media (max-width: 639px) {
-  .ac-logo-img { width: 32px; height: 32px; }
+  .ac-logo-img { height: 36px; width: auto; max-width: 150px; }
 }
 @media (min-width: 1024px) {
   .ac-hide-desktop { display: none !important; }
