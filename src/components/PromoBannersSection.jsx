@@ -93,7 +93,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               whileHover="hover"
               viewport={{ once: true, amount: 0.35 }}
               className="promo-group-card"
-              style={{ position: "relative", borderRadius: 22, overflow: "hidden", minHeight: 280, display: "grid", gridTemplateColumns: "1fr 1fr", background: "#FFD54F", isolation: "isolate" }}
+              style={{ position: "relative", borderRadius: 22, overflow: "hidden", minHeight: 280, display: "grid", gridTemplateColumns: "1fr 1fr", background: "#FFE89A", isolation: "isolate" }}
             >
               {/* Text — left column, never overlaps */}
               <div style={{ position: "relative", padding: "clamp(28px,3.5vw,44px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", zIndex: 2 }} className="promo-group-text">

@@ -89,7 +89,12 @@ export default function ContactFormSection({ id = "contact-form" }) {
   return (
     <LazyMotion features={domMax} strict>
       <MotionConfig reducedMotion="user">
-        <section id={id} style={{ maxWidth: 1100, margin: "0 auto", padding: "clamp(46px,6vw,80px) 22px 0" }}>
+        <div style={{
+          background: "linear-gradient(160deg, #FFFEF9 0%, #FFF8E1 50%, #FFF3CC 100%)",
+          borderRadius: 28,
+          marginTop: "clamp(46px,6vw,80px)",
+        }}>
+        <section id={id} style={{ maxWidth: 1100, margin: "0 auto", padding: "clamp(46px,6vw,80px) 22px" }}>
           <m.div
             variants={header}
             initial="hidden"
@@ -97,9 +102,9 @@ export default function ContactFormSection({ id = "contact-form" }) {
             viewport={{ once: true, amount: 0.6 }}
             style={{ textAlign: "center", margin: "0 auto 38px" }}
           >
-            <m.span variants={fadeUp} style={{ display: "inline-block", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#B8860B" }}>Get In Touch</m.span>
-            <m.h2 variants={fadeUp} style={{ fontWeight: 800, fontSize: "clamp(26px,3.4vw,42px)", lineHeight: 1.12, margin: "8px 0 0", letterSpacing: "-.02em" }}>Send Us a Message</m.h2>
-            <m.p variants={fadeUp} style={{ fontSize: 15.5, color: "#666", fontWeight: 400, margin: "8px 0 0" }}>Booking help, payments, cancellations, or anything else — we usually reply within a few hours.</m.p>
+            <m.span variants={fadeUp} style={{ display: "inline-block", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#B07A00" }}>Get In Touch</m.span>
+            <m.h2 variants={fadeUp} style={{ fontWeight: 800, fontSize: "clamp(26px,3.4vw,42px)", lineHeight: 1.12, margin: "8px 0 0", letterSpacing: "-.02em", color: "#141414" }}>Send Us a Message</m.h2>
+            <m.p variants={fadeUp} style={{ fontSize: 15.5, color: "rgba(20,20,20,0.5)", fontWeight: 400, margin: "8px 0 0" }}>Booking help, payments, cancellations, or anything else — we usually reply within a few hours.</m.p>
           </m.div>
 
           <m.div
@@ -111,7 +116,8 @@ export default function ContactFormSection({ id = "contact-form" }) {
             {/* ── Contact details (warm light card) ─────────────────── */}
             <m.aside
               variants={panel(-24)}
-              className="relative isolate flex flex-col overflow-hidden rounded-[22px] border border-[#ECE9E2] bg-[linear-gradient(160deg,#FFFFFF_0%,#FFFBEE_100%)] p-7 text-[#141414] shadow-[0_24px_48px_-32px_rgba(20,20,20,0.35)]"
+              className="relative isolate flex flex-col overflow-hidden rounded-[22px] border border-[rgba(255,213,79,0.2)] bg-[rgba(255,255,255,0.8)] p-7 text-[#141414] shadow-[0_24px_48px_-32px_rgba(20,20,20,0.1)]"
+              style={{ backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}
             >
               {/* Faint dot texture + soft gold glow */}
               <div
@@ -176,7 +182,7 @@ export default function ContactFormSection({ id = "contact-form" }) {
             {/* ── Form ───────────────────────────────────────────────── */}
             <m.div
               variants={panel(24)}
-              className="relative overflow-hidden rounded-[22px] border border-[#ECE9E2] bg-white p-7 shadow-[0_24px_48px_-32px_rgba(20,20,20,0.35)]"
+              className="relative overflow-hidden rounded-[22px] border border-[#ECE9E2] bg-white p-7 shadow-[0_24px_48px_-32px_rgba(20,20,20,0.12)]"
             >
               <form onSubmit={submit} noValidate>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -275,6 +281,7 @@ export default function ContactFormSection({ id = "contact-form" }) {
             </m.div>
           </m.div>
         </section>
+        </div>
       </MotionConfig>
     </LazyMotion>
   );

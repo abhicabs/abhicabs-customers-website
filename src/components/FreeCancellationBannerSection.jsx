@@ -46,7 +46,7 @@ export default function FreeCancellationBannerSection({ bookHref = "/#booking" }
             <div className="fc-photo">
               <m.img
                 variants={photo}
-                src="/images/mountain-road-full.jpg"
+                src="/images/freecancel.png"
                 alt="Abhi Cabs car on a hill road"
                 loading="lazy"
               />
