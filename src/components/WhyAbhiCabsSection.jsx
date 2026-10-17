@@ -81,14 +81,15 @@ export default function WhyAbhiCabsSection({
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
               className="relative overflow-hidden rounded-[24px] shadow-[0_30px_60px_-30px_rgba(20,20,20,0.45)]"
-              style={{ flex: "1 1 320px", minWidth: "min(100%,320px)", minHeight: 420 }}
+              style={{ flex: "1 1 420px", minWidth: "min(100%,320px)", minHeight: 380, aspectRatio: "2/1" }}
             >
               <m.img
                 src={imageSrc}
                 alt={imageAlt}
                 style={{
-                  position: "absolute", top: "-8%", left: 0, width: "100%", height: "116%",
-                  objectFit: "cover", objectPosition: "center 20%", y: photoY, willChange: "transform",
+                  position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
+                  objectFit: "contain", objectPosition: "center center", y: photoY, willChange: "transform",
+                  background: "#0d0d0d",
                 }}
               />
               {/* Soft bottom shade so the badge reads on any photo */}
