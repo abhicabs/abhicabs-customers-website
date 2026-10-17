@@ -115,8 +115,8 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                   </m.svg>
                 </m.button>
               </div>
-              {/* Photo — right column, full bus visible */}
-              <div className="promo-group-photo" style={{ position: "relative", overflow: "hidden" }}>
+              {/* Photo — right column, fills entire cell edge to edge */}
+              <div className="promo-group-photo" style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "50%", overflow: "hidden" }}>
                 <m.img
                   variants={photo}
                   src="/images/grouptravel.png"
@@ -132,11 +132,12 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               @media (max-width: 580px) {
                 .promo-group-card {
                   grid-template-columns: 1fr !important;
-                  grid-template-rows: auto auto;
                 }
-                .promo-group-card .promo-group-text { order: 1; }
-                .promo-group-card .promo-group-photo { order: 2; min-height: 220px; }
-
+                .promo-group-card .promo-group-photo {
+                  position: relative !important;
+                  width: 100% !important;
+                  min-height: 220px;
+                }
               }
             `}</style>
           </div>
