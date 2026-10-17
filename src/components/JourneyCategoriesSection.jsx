@@ -56,20 +56,32 @@ export default function JourneyCategoriesSection({ categories }) {
             viewport={{ once: true, amount: 0.2 }}
             style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 18 }}
           >
-            {categories.map((c) => (
-              <m.div
-                key={c}
-                variants={card}
-                whileHover="hover"
-                whileTap={{ scale: 0.98 }}
-                style={{ position: "relative", borderRadius: 18, overflow: "hidden", height: 240, cursor: "pointer", background: "linear-gradient(135deg,#e5e5e5,#c9c9c9)" }}
-              >
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(0,0,0,.75),transparent 60%)", pointerEvents: "none" }} />
-                <m.div variants={label} style={{ position: "absolute", left: 18, bottom: 16, pointerEvents: "none" }}>
-                  <div style={{ fontWeight: 700, fontSize: 18, color: "#fff" }}>{c}</div>
+            {categories.map((c) => {
+              const catLabel = typeof c === "string" ? c : c.label;
+              const catImg = typeof c === "string" ? null : c.img;
+              return (
+                <m.div
+                  key={catLabel}
+                  variants={card}
+                  whileHover="hover"
+                  whileTap={{ scale: 0.98 }}
+                  style={{ position: "relative", borderRadius: 18, overflow: "hidden", height: 240, cursor: "pointer", background: "#1a1a1a" }}
+                >
+                  {catImg && (
+                    <img
+                      src={catImg}
+                      alt={catLabel}
+                      loading="lazy"
+                      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  )}
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(0,0,0,.75),transparent 60%)", pointerEvents: "none" }} />
+                  <m.div variants={label} style={{ position: "absolute", left: 18, bottom: 16, pointerEvents: "none" }}>
+                    <div style={{ fontWeight: 700, fontSize: 18, color: "#fff" }}>{catLabel}</div>
+                  </m.div>
                 </m.div>
-              </m.div>
-            ))}
+              );
+            })}
           </m.div>
         </section>
       </MotionConfig>

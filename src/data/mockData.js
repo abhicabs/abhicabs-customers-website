@@ -1,12 +1,12 @@
 // Prices are starting-from estimates (sedan one-way at ₹19/km). The real fare
 // comes from /fares/estimate for the actual route.
 export const ROUTES = [
-  { from: "Bangalore", to: "Mysore",    km: 145, hrs: "3 – 3.5 hrs", price: 2755, img: "/images/tea-garden-road.jpg",    badge: "Intercity" },
-  { from: "Bangalore", to: "Coorg",     km: 260, hrs: "5 – 6 hrs",   price: 4940, img: "/images/mountain-road-full.jpg", badge: "Outstation" },
-  { from: "Bangalore", to: "Mangalore", km: 350, hrs: "7 – 8 hrs",   price: 6650, img: "/images/coastal-road-sedan.jpg", badge: "Intercity" },
-  { from: "Bangalore", to: "Chennai",   km: 345, hrs: "6 – 7 hrs",   price: 6555, img: "/images/sedan-cityscape.jpg",    badge: "Intercity" },
-  { from: "Bangalore", to: "Hyderabad", km: 570, hrs: "9 – 10 hrs",  price: 10830, img: "/images/airport-family-full.jpg",badge: "Long Distance" },
-  { from: "Bangalore", to: "Goa",       km: 560, hrs: "9 – 10 hrs",  price: 10640, img: "/images/airport-sunset-sedan.jpg",badge: "Outstation" }
+  { from: "Bangalore", to: "Mysore",    km: 145, hrs: "3 – 3.5 hrs", price: 2755, img: "/images/route-1.png",  badge: "Intercity" },
+  { from: "Bangalore", to: "Coorg",     km: 260, hrs: "5 – 6 hrs",   price: 4940, img: "/images/route-5.png",  badge: "Outstation" },
+  { from: "Bangalore", to: "Mangalore", km: 350, hrs: "7 – 8 hrs",   price: 6650, img: "/images/route-4.png",  badge: "Intercity" },
+  { from: "Bangalore", to: "Chennai",   km: 345, hrs: "6 – 7 hrs",   price: 6555, img: "/images/route-3.png",  badge: "Intercity" },
+  { from: "Bangalore", to: "Hyderabad", km: 570, hrs: "9 – 10 hrs",  price: 10830, img: "/images/route-6.png", badge: "Long Distance" },
+  { from: "Bangalore", to: "Goa",       km: 560, hrs: "9 – 10 hrs",  price: 10640, img: "/images/route-2.png", badge: "Outstation" }
 ];
 
 export const DRIVERS = ["Ramesh Kumar","Suresh Naik","Anitha Rao","Mohammed Imran","Deepak Shetty","Lakshmi Prasad"];

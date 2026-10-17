@@ -27,7 +27,7 @@ const STRUCTURED_DATA = [
     name: "AbhiCabs",
     alternateName: "Abhi Cabs 24x7",
     url: SITE,
-    logo: `${SITE}/images/abhi-cabs-logo-full.svg`,
+    logo: `${SITE}/images/abhi-cabs-logo-new.svg`,
     image: IMAGE,
     description: DESC,
     telephone: "+91-80-1234-5678",

@@ -115,18 +115,7 @@ export default function Header() {
         {/* ── Utility bar ─────────────────────────────────────────────── */}
         <div className="ac-util-wrap">
           <div className="ac-util-bar">
-            <span className="ac-util-loc">
-              <span className="ac-util-loc-icon" aria-hidden>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round" />
-                  <circle cx="12" cy="10" r="2.3" stroke="currentColor" strokeWidth="2.4" />
-                </svg>
-              </span>
-              <span>
-                <span className="ac-util-muted">Serving </span>
-                <b>Karnataka</b> <span className="ac-util-muted">&amp;</span> <b>Hyderabad</b>
-              </span>
-            </span>
+            <span className="ac-util-loc" />
 
             <div className="ac-util-hide">
               <a href="/#contact-form" className="ac-util-link">
@@ -179,21 +168,12 @@ export default function Header() {
 
             {/* Logo */}
             <m.a href="/" whileTap={{ scale: 0.97 }} className="ac-logo-link">
-              <m.img
-                src="/images/abhi-cabs-icon.svg?v=3"
+              <img
+                src="/images/abhi-cabs-logo-new.svg"
                 alt="Abhi Cabs"
                 className="ac-logo-img"
-                whileHover={{ rotate: -6, scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                style={{ height: 48, width: "auto", objectFit: "contain" }}
               />
-              <span className="leading-none">
-                <span className="ac-logo-text block font-extrabold text-[17px] sm:text-[20px] tracking-[.01em] text-brand-black" style={{ fontFamily: "'Montserrat',sans-serif" }}>
-                  ABHI<span className="text-primary">CABS</span>
-                </span>
-                <span className="ac-logo-tag block text-[8.5px] font-semibold tracking-[.24em] text-[#999] mt-0.5">
-                  RIDE WITH TRUST
-                </span>
-              </span>
             </m.a>
 
             {/* Desktop nav links — the same #F7F7F7 hover background, now gliding between links */}

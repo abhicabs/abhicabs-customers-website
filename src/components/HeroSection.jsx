@@ -115,25 +115,6 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
               animate="show"
               style={{ maxWidth: 750 }}
             >
-              <m.span
-                variants={fadeUp}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 9,
-                  padding: "8px 15px",
-                  borderRadius: 9999,
-                  background: "rgba(255,213,79,.13)",
-                  border: "1px solid rgba(255,213,79,.35)",
-                  color: "#FFD54F",
-                  fontWeight: 600,
-                  fontSize: 12,
-                  letterSpacing: ".05em",
-                }}
-              >
-                PREMIUM MOBILITY · KARNATAKA &amp; HYDERABAD
-              </m.span>
-
               <h1
                 className="hero-h1"
                 style={{

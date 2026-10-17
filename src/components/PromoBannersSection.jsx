@@ -115,13 +115,13 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                   </m.svg>
                 </m.button>
               </div>
-              {/* Photo — right column, contained */}
-              <div className="promo-group-photo" style={{ position: "relative", overflow: "hidden" }}>
+              {/* Photo — right column, full bus visible */}
+              <div className="promo-group-photo" style={{ position: "relative", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <m.img
                   variants={photo}
-                  src="/images/40seater.jpg"
+                  src="/images/grouptravel.png"
                   alt="Group travel"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", willChange: "transform" }}
+                  style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center center", willChange: "transform" }}
                 />
               </div>
               {/* Subtle edge blend between text and photo */}
@@ -133,10 +133,10 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               @media (max-width: 580px) {
                 .promo-group-card {
                   grid-template-columns: 1fr !important;
-                  grid-template-rows: auto 200px;
+                  grid-template-rows: auto auto;
                 }
                 .promo-group-card .promo-group-text { order: 1; }
-                .promo-group-card .promo-group-photo { order: 2; }
+                .promo-group-card .promo-group-photo { order: 2; min-height: 220px; padding: 10px; }
                 .promo-group-card .promo-group-fade { display: none; }
               }
             `}</style>

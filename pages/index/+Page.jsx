@@ -66,7 +66,14 @@ const COVERAGE = {
 // NEW: "Plan Your Next Journey" categories — image placeholders per the
 // design's own "or browse files" markers; no real photos assigned to these
 // specific use-cases anywhere in this project yet.
-const JOURNEY_CATEGORIES = ["Weekend Escapes", "Business Travel", "Airport Transfers", "Family Trips", "Corporate Travel", "Group Tours"];
+const JOURNEY_CATEGORIES = [
+  { label: "Weekend Escapes",   img: "/images/weekend.png" },
+  { label: "Business Travel",   img: "/images/bussiness.png" },
+  { label: "Airport Transfers",  img: "/images/airport.png" },
+  { label: "Family Trips",      img: "/images/family.png" },
+  { label: "Corporate Travel",  img: "/images/corporate.png" },
+  { label: "Group Tours",       img: "/images/group.png" },
+];
 
 
 // FIX: replaced the old 4-question list with the exact 10 questions from
@@ -212,7 +219,7 @@ export default function Page() {
       />
 
       {/* ============================== WHY CHOOSE US (ABOUT) ============================== */}
-      <WhyAbhiCabsSection reasons={WHY_US} imageSrc="/images/travelling.jpg" />
+      <WhyAbhiCabsSection reasons={WHY_US} imageSrc="/images/morethanjustride.png" />
 
       {/* ============================== POPULAR ROUTES (id="services") ============================== */}
       <PopularRoutesSection routes={ROUTES} onBook={bookRoute} />
