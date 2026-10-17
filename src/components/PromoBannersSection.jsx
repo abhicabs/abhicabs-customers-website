@@ -124,8 +124,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                   style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", willChange: "transform" }}
                 />
               </div>
-              {/* Subtle edge blend between text and photo */}
-              <div aria-hidden style={{ position: "absolute", top: 0, bottom: 0, left: "46%", width: "12%", background: "linear-gradient(90deg,#FFD54F,transparent)", zIndex: 1, pointerEvents: "none" }} className="promo-group-fade" />
+
             </m.div>
 
             {/* Responsive: stack on small screens */}
@@ -137,7 +136,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                 }
                 .promo-group-card .promo-group-text { order: 1; }
                 .promo-group-card .promo-group-photo { order: 2; min-height: 220px; }
-                .promo-group-card .promo-group-fade { display: none; }
+
               }
             `}</style>
           </div>
