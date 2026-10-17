@@ -54,7 +54,7 @@ export default function JourneyCategoriesSection({ categories }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 18 }}
+            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 18 }}
           >
             {categories.map((c) => {
               const catLabel = typeof c === "string" ? c : c.label;
