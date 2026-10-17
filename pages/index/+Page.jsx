@@ -117,8 +117,6 @@ const REVIEWS = [
   { quote: "Used Abhi Cabs for our office team outing — a 33-seater coach to Pondicherry. Smooth booking, on-time pickup, and the driver knew the best routes. Will definitely use again for corporate trips.", name: "Priya Sharma", meta: "Hyderabad", stars: 5 },
   { quote: "Airport pickup at 4 AM and the driver was already waiting 10 minutes early. Very comfortable Innova, clean interiors. Best cab service I've used in Karnataka.", name: "Mohammed Irfan", meta: "Mysuru", stars: 5 },
   { quote: "We travel Bangalore to Mysore almost every weekend and Abhi Cabs has become our go-to. Reliable drivers, fair pricing, and their 24/7 support actually picks up when you call!", name: "Sneha Reddy", meta: "Bengaluru", stars: 5 },
-  { quote: "Had to cancel a trip last minute due to an emergency. Got a full refund within an hour — no questions asked. That's rare and really builds trust. Highly recommended.", name: "Arun Menon", meta: "Mangaluru", stars: 5 },
-  { quote: "Booked a cab for my parents from Hyderabad to Warangal. The driver was patient, helped with luggage, and kept me updated throughout the journey. Excellent service for senior citizens.", name: "Kavitha Nair", meta: "Hyderabad", stars: 5 },
 ];
 
 // NOTE: FLEET_TABS previously configured FleetChooseRideSection's category
