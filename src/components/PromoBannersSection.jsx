@@ -93,13 +93,22 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
               whileHover="hover"
               viewport={{ once: true, amount: 0.35 }}
               className="promo-group-card"
-              style={{ position: "relative", borderRadius: 22, overflow: "hidden", minHeight: 280, display: "grid", gridTemplateColumns: "1fr 1fr", background: "#FFE89A", isolation: "isolate" }}
+              style={{ position: "relative", borderRadius: 22, overflow: "hidden", minHeight: 300, display: "flex", alignItems: "center", isolation: "isolate" }}
             >
-              {/* Text — left column, never overlaps */}
-              <div style={{ position: "relative", padding: "clamp(28px,3.5vw,44px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", zIndex: 2 }} className="promo-group-text">
-                <m.span variants={textItem} style={{ fontWeight: 700, fontSize: 11.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#7a5c00" }}>Group Travel</m.span>
-                <m.h3 variants={textItem} style={{ fontWeight: 800, fontSize: "clamp(24px,2.8vw,34px)", color: "#111", margin: "10px 0 8px", lineHeight: 1.1 }}>Travelling With a Group?</m.h3>
-                <m.p variants={textItem} style={{ fontSize: 14.5, color: "#3a2f00", fontWeight: 500, margin: "0 0 22px", lineHeight: 1.55 }}>
+              {/* Full background image */}
+              <m.img
+                variants={photo}
+                src="/images/grouptravel.png"
+                alt="Group travel"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", willChange: "transform" }}
+              />
+              {/* Subtle yellow gradient overlay — fades left to right */}
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,232,154,0.4) 0%, rgba(255,232,154,0.27) 20%, rgba(255,232,154,0.13) 40%, transparent 55%)", pointerEvents: "none" }} />
+              {/* Text content on top */}
+              <div style={{ position: "relative", padding: "clamp(28px,3.5vw,44px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", zIndex: 2, maxWidth: "45%" }} className="promo-group-text">
+                <m.span variants={textItem} style={{ fontWeight: 700, fontSize: 11.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#7a5c00", textShadow: "0 1px 4px rgba(255,232,154,0.4)" }}>Group Travel</m.span>
+                <m.h3 variants={textItem} style={{ fontWeight: 800, fontSize: "clamp(24px,2.8vw,34px)", color: "#111", margin: "10px 0 8px", lineHeight: 1.1, textShadow: "0 1px 8px rgba(255,232,154,0.5)" }}>Travelling With a Group?</m.h3>
+                <m.p variants={textItem} style={{ fontSize: 14.5, color: "#2a2200", fontWeight: 500, margin: "0 0 22px", lineHeight: 1.55, textShadow: "0 1px 4px rgba(255,232,154,0.4)" }}>
                   Comfortable vehicles for every group size.
                 </m.p>
                 <m.button
@@ -115,28 +124,13 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                   </m.svg>
                 </m.button>
               </div>
-              {/* Photo — right column, fills entire cell edge to edge */}
-              <div className="promo-group-photo" style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "50%", overflow: "hidden" }}>
-                <m.img
-                  variants={photo}
-                  src="/images/grouptravel.png"
-                  alt="Group travel"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", willChange: "transform" }}
-                />
-              </div>
-
             </m.div>
 
-            {/* Responsive: stack on small screens */}
+            {/* Responsive: wider text area on mobile */}
             <style>{`
               @media (max-width: 580px) {
-                .promo-group-card {
-                  grid-template-columns: 1fr !important;
-                }
-                .promo-group-card .promo-group-photo {
-                  position: relative !important;
-                  width: 100% !important;
-                  min-height: 220px;
+                .promo-group-card .promo-group-text {
+                  max-width: 70% !important;
                 }
               }
             `}</style>
