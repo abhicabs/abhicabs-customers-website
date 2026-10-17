@@ -3,7 +3,7 @@
  * Each variable accessed individually so Vike/Vite can statically inline them.
  */
 
-const PROD_API_BASE = 'https://abhicabsbackend-production.up.railway.app/api/v1';
+const PROD_API_BASE = 'https://api.abhicabs24x7.com/api/v1';
 
 // Decide which backend the app talks to, with one firm rule that keeps the
 // deployed site permanently connected:
