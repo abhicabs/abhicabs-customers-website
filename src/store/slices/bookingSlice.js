@@ -1,28 +1,8 @@
 /**
  * src/store/slices/bookingSlice.js
  *
- * FIXES:
- *
- * 1. MOCK DATA IN PREPARE — The old `createBooking.prepare` generated fake
- *    `driver`, `vehicleNumber`, `eta`, `driverRating` fields and a mock
- *    `bookingId` via rid(). These were stored to localStorage and shown in
- *    the UI as if they were real. After checkout wires to the real backend,
- *    these fake fields overwrite the real `bookingId`, `bookingNumber`, and
- *    `status` coming back from the server.
- *    Fixed: `prepare` only stamps `createdAt` — all real fields come from
- *    the caller (checkout page passes the actual server response).
- *
- * 2. REAL BOOKING ID — selectBooking now checks BOTH `b.id` (backend UUID)
- *    AND `b.bookingId` (local alias) so confirmation and tracking pages can
- *    find a booking whether it was stored before or after this fix.
- *
- * 3. CLEAN LOCALSTORAGE — Redux persists only the fields needed for
- *    offline-readable confirmation (bookingId, bookingNumber, status,
- *    pickup, drop, fare, paymentMode). No driver/vehicle mock data.
- *    `saveState` is only called on `createBooking` and `cancelBooking`.
- *
- * 4. CANCEL — Uses the real backend booking `id` (UUID), not the local
- *    `bookingId` alias, for the API call.
+ * SSR FIX: REHYDRATE action restores localStorage values after hydration
+ * instead of during slice init, preventing React #418.
  */
 import { createSlice } from "@reduxjs/toolkit";
 import { loadState, saveState } from "../persist";
@@ -57,7 +37,6 @@ const bookingSlice = createSlice({
     createBooking: {
       reducer(state, action) {
         const booking = action.payload;
-        // Avoid duplicates if checkout retries
         const exists = state.items.some(
           (b) => b.bookingId === booking.bookingId || b.id === booking.id
         );
@@ -69,8 +48,6 @@ const bookingSlice = createSlice({
         saveState("lastBookingId", state.lastBookingId);
       },
       prepare(fields) {
-        // FIX: No fake driver/vehicle/eta fields — only real data from server.
-        // `bookingId` is set to the backend UUID (`id`), with bookingNumber as fallback.
         const booking = slimBooking({
           ...fields,
           bookingId: fields.id || fields.bookingId || fields.bookingNumber,
@@ -92,10 +69,8 @@ const bookingSlice = createSlice({
       }
     },
 
-    // Called by my-booking page to sync server bookings into Redux
-    // without duplicating existing items
     syncBookings(state, action) {
-      const incoming = action.payload; // array from GET /bookings
+      const incoming = action.payload;
       if (!Array.isArray(incoming)) return;
       incoming.forEach((serverBooking) => {
         const slim = slimBooking({
@@ -106,7 +81,6 @@ const bookingSlice = createSlice({
           (b) => b.id === serverBooking.id || b.bookingId === serverBooking.id
         );
         if (idx >= 0) {
-          // Update status and payment info from server
           state.items[idx] = { ...state.items[idx], ...slim };
         } else {
           state.items.push(slim);
@@ -115,13 +89,18 @@ const bookingSlice = createSlice({
       saveState("bookings", state.items);
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase("REHYDRATE", (state, action) => {
+      const p = action.payload;
+      if (Array.isArray(p.bookings) && p.bookings.length) state.items = p.bookings;
+      if (p.lastBookingId) state.lastBookingId = p.lastBookingId;
+    });
+  },
 });
 
 export const { createBooking, cancelBooking, syncBookings } = bookingSlice.actions;
 
 export const selectAllBookings  = (state) => state.booking.items;
-
-// FIX: check both `b.id` (backend UUID) and `b.bookingId` (local alias)
 export const selectBooking      = (id) => (state) =>
   state.booking.items.find((b) => b.id === id || b.bookingId === id) || null;
 

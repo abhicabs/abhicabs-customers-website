@@ -24,7 +24,14 @@ const journeySlice = createSlice({
         return { payload: journey };
       }
     }
-  }
+  },
+  extraReducers: (builder) => {
+    builder.addCase("REHYDRATE", (state, action) => {
+      const p = action.payload;
+      if (p.journeys && Object.keys(p.journeys).length) state.byId = p.journeys;
+      if (p.lastJourneyId) state.lastJourneyId = p.lastJourneyId;
+    });
+  },
 });
 
 export const { createJourney } = journeySlice.actions;

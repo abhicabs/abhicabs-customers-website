@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { loadState, saveState } from "../persist";
 
 const initialState = {
-  selectedCab: loadState("selectedCab", null) // { vehicleId, fare, journeyId }
+  selectedCab: loadState("selectedCab", null)
 };
 
 const selectionSlice = createSlice({
@@ -13,7 +13,12 @@ const selectionSlice = createSlice({
       state.selectedCab = action.payload;
       saveState("selectedCab", state.selectedCab);
     }
-  }
+  },
+  extraReducers: (builder) => {
+    builder.addCase("REHYDRATE", (state, action) => {
+      if (action.payload.selectedCab) state.selectedCab = action.payload.selectedCab;
+    });
+  },
 });
 
 export const { setSelectedCab } = selectionSlice.actions;
