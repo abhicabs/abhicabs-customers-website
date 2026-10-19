@@ -71,17 +71,7 @@ export default function FreeCancellationBannerSection({ bookHref = "/#booking" }
                 up to <b>1 hour</b> before your trip
               </m.p>
 
-              <m.ul variants={item} className="fc-points">
-                {POINTS.map((p) => (
-                  <li key={p}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <circle cx="12" cy="12" r="10" fill="rgba(255,213,79,.18)" />
-                      <path d="M7.5 12.5l3 3 6-6.5" stroke="#FFD54F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    {p}
-                  </li>
-                ))}
-              </m.ul>
+              {/* Bullet points removed */}
 
               <m.div variants={item} className="fc-actions">
                 <a href={bookHref} className="fc-cta">
