@@ -1370,7 +1370,7 @@ function Dropdown({ value, onChange, onBlur, options, placeholder = "Select", ic
   const listId = useId();
   const pop = useAnchoredPopover({
     estimatedHeight: Math.min(options.length * 58 + 16, 336),
-    minWidth: 280,
+    minWidth: 360,
     onClose: onBlur,
   });
   const listRef = useRef(null);
@@ -1479,7 +1479,7 @@ function Dropdown({ value, onChange, onBlur, options, placeholder = "Select", ic
               >
                 {o.badge && <span className={TW.badge}>{o.badge}</span>}
                 <span className="min-w-0 flex-1">
-                  <span className={`block truncate text-[14.5px] text-[#141414] ${isSel ? "font-bold" : "font-semibold"}`}>{o.label}</span>
+                  <span className={`block text-[14.5px] leading-snug text-[#141414] ${isSel ? "font-bold" : "font-semibold"}`}>{o.label}</span>
                   {o.description && <span className="block truncate text-[12.5px] text-[#77736A]">{o.description}</span>}
                 </span>
                 <AnimatePresence initial={false}>
