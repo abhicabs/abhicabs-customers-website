@@ -253,12 +253,7 @@ export default function Page() {
       {/* ============================== FINAL CTA (id="contact") ============================== */}
       <CTASection onBookMode={bookMode} />
 
-      <MobileStickyBar
-        label="Ready to ride?"
-        sub="Book in under a minute"
-        ctaLabel="Book Now"
-        href="#booking"
-      />
+      {/* MobileStickyBar removed — the booking form is already at the top of the page */}
     </div>
   );
 }
