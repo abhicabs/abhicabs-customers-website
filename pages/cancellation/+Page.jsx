@@ -26,7 +26,10 @@ export default function Page() {
       <h2>6. Trip Modifications</h2>
       <p>Changing your pickup time, date, or drop location is treated as a modification rather than a cancellation and does not incur a cancellation fee, subject to driver and cab availability.</p>
 
-      <h2>7. Contact</h2>
+      <h2>7. Vehicle Substitution</h2>
+      <p>ABHI CABS reserves the right to substitute a vehicle of equivalent or superior category in case of unforeseen circumstances.</p>
+
+      <h2>8. Contact</h2>
       <p>For cancellation or refund queries, reach us through <a href="/#contact-form">Contact &amp; Support</a>.</p>
     </LegalLayout>
   );

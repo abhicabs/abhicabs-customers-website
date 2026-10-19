@@ -49,10 +49,12 @@ const INCLUSIONS = [
   "Round-trip fare includes return journey distance",
   "Night driving allowance included where applicable",
   "One pickup and one drop per booking",
+  "Your trip has a KM limit — excess KM will be charged extra",
 ];
 
 const EXCLUSIONS = [
-  "Parking charges at destination — paid by passenger",
+  "Airport entry charge, if applicable, is not included and will be charged extra",
+  "All road toll fees, parking charges, state taxes etc. are charged extra as per actuals",
   "Entry / green tax fees at tourist spots",
   "Extra kilometres beyond the package limit",
   "Extra waiting time beyond the free window",
@@ -60,6 +62,7 @@ const EXCLUSIONS = [
   "Alcohol, smoking, or food damage inside the vehicle",
   "Airport / railway terminal entry charges",
   "Return fare for one-way trips",
+  "Night driving (09:45 PM – 06:00 AM) allowance paid to driver",
 ];
 
 // ── Terms Modal ──────────────────────────────────────────────────────────────
@@ -132,8 +135,14 @@ function TermsModal({ onClose }) {
           {/* General terms */}
           <div style={{ fontSize: 12.5, color: "#666", lineHeight: 1.7 }}>
             <p style={{ fontWeight: 700, color: "#333", fontSize: 13, marginBottom: 8 }}>General Terms</p>
-            <p style={{ margin: "0 0 7px" }}>Cancellations made more than 24 hours before pickup receive a full refund. Cancellations within 24 hours may attract a cancellation fee as per our policy.</p>
+            <p style={{ margin: "0 0 7px" }}>Cancellations made more than 1 hour before pickup receive a full refund. Cancellations within 1 hour may attract a cancellation fee as per our policy.</p>
             <p style={{ margin: "0 0 7px" }}>ABHI CABS reserves the right to substitute a vehicle of equivalent or superior category in case of unforeseen circumstances.</p>
+            <p style={{ margin: "0 0 7px" }}>For driving between 09:45 PM to 06:00 AM, an additional night driving allowance is applicable.</p>
+            <p style={{ margin: "0 0 7px" }}>Please ensure you have covered all cities you plan to visit in your itinerary. Adding a city during the trip may not be possible.</p>
+            <p style={{ margin: "0 0 7px" }}>If your trip has hill climbs, cab AC may be switched off during such climbs.</p>
+            <p style={{ margin: "0 0 7px" }}>The driver would require periodic tea-breaks and meal-breaks, which can be coordinated directly with him.</p>
+            <p style={{ margin: "0 0 7px" }}>At the end of the trip, please check and take all your belongings with you.</p>
+            <p style={{ margin: "0 0 7px" }}>Any discrepancies regarding bill amount will be considered within 24 hrs of Invoice.</p>
             <p style={{ margin: 0 }}>By proceeding with the booking, you agree to these terms and conditions.</p>
           </div>
         </div>
@@ -675,8 +684,14 @@ export default function Page() {
                       {/* General terms */}
                       <div style={{ fontSize: 12.5, color: "#666", lineHeight: 1.7, padding: "0 2px" }}>
                         <p style={{ fontWeight: 700, color: "#333", fontSize: 13, marginBottom: 8 }}>General Terms</p>
-                        <p style={{ margin: "0 0 7px" }}>Cancellations made more than 24 hours before pickup receive a full refund. Cancellations within 24 hours may attract a cancellation fee as per our policy.</p>
+                        <p style={{ margin: "0 0 7px" }}>Cancellations made more than 1 hour before pickup receive a full refund. Cancellations within 1 hour may attract a cancellation fee as per our policy.</p>
                         <p style={{ margin: "0 0 7px" }}>ABHI CABS reserves the right to substitute a vehicle of equivalent or superior category in case of unforeseen circumstances.</p>
+                        <p style={{ margin: "0 0 7px" }}>For driving between 09:45 PM to 06:00 AM, an additional night driving allowance is applicable.</p>
+                        <p style={{ margin: "0 0 7px" }}>Please ensure you have covered all cities you plan to visit in your itinerary. Adding a city during the trip may not be possible.</p>
+                        <p style={{ margin: "0 0 7px" }}>If your trip has hill climbs, cab AC may be switched off during such climbs.</p>
+                        <p style={{ margin: "0 0 7px" }}>The driver would require periodic tea-breaks and meal-breaks, which can be coordinated directly with him.</p>
+                        <p style={{ margin: "0 0 7px" }}>At the end of the trip, please check and take all your belongings with you.</p>
+                        <p style={{ margin: "0 0 7px" }}>Any discrepancies regarding bill amount will be considered within 24 hrs of Invoice.</p>
                         <p style={{ margin: 0 }}>By proceeding with the booking, you agree to these terms and conditions.</p>
                       </div>
                     </div>
