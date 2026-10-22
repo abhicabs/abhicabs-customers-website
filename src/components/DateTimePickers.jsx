@@ -97,6 +97,45 @@ export const BW_CSS = `
 }
 .bw-input::placeholder, .bw-input.is-placeholder { color: var(--bw-faint); font-weight: 400; }
 @media (max-width: 767px) { .bw-input { font-size: 16px; } } /* stops iOS zoom-on-focus */
+
+/* Google Places autocomplete dropdown — wider, readable */
+.pac-container {
+  min-width: 320px !important;
+  max-width: 480px !important;
+  border: 1px solid #E8E5DE !important;
+  border-radius: 14px !important;
+  box-shadow: 0 16px 40px -12px rgba(20,20,20,.22), 0 2px 6px rgba(20,20,20,.06) !important;
+  padding: 6px 0 !important;
+  font-family: inherit !important;
+  margin-top: 6px !important;
+  z-index: 99999 !important;
+}
+.pac-item {
+  padding: 10px 14px !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  border-top: 1px solid #F2F0EB !important;
+  cursor: pointer !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+.pac-item:first-child { border-top: none !important; }
+.pac-item:hover { background: #FFF8DF !important; }
+.pac-item-query {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #141414 !important;
+}
+.pac-matched { font-weight: 700 !important; color: #B07A00 !important; }
+.pac-icon { margin-top: 2px !important; }
+@media (max-width: 480px) {
+  .pac-container {
+    min-width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 16px) !important;
+    left: 8px !important;
+    right: 8px !important;
+  }
+}
 .bw-icon-btn {
   flex: none; width: 32px; height: 32px; border-radius: 9px; border: 0;
   display: grid; place-items: center; background: transparent;
@@ -600,8 +639,28 @@ export function TimePicker12hr({ value, onChange, error = "", placeholder = "Sel
     return `${hh % 12 || 12}:${String(mm).padStart(2, "0")} ${hh < 12 ? "AM" : "PM"}`;
   })();
 
-  const hours = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  const minutes = [0, 15, 30, 45];
+  // Generate time slots every 15 minutes
+  const timeSlots = [];
+  for (let h = 0; h < 24; h++) {
+    for (let m = 0; m < 60; m += 15) {
+      const hh24 = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+      const h12v = h % 12 || 12;
+      const apv = h < 12 ? "AM" : "PM";
+      const label = `${h12v}:${String(m).padStart(2, "0")} ${apv}`;
+      timeSlots.push({ value: hh24, label });
+    }
+  }
+
+  const listRef = useRef(null);
+  useEffect(() => {
+    if (open && listRef.current && value) {
+      const idx = timeSlots.findIndex((s) => s.value === value);
+      if (idx > -1) {
+        const el = listRef.current.children[idx];
+        if (el) el.scrollIntoView({ block: "center", behavior: "instant" });
+      }
+    }
+  }, [open]);
 
   const dropdown = mounted ? createPortal(
     <AnimatePresence>
@@ -610,7 +669,7 @@ export function TimePicker12hr({ value, onChange, error = "", placeholder = "Sel
           key="tp-dropdown"
           ref={dropdownRef}
           className="bw-portal bw-pop"
-          role="dialog"
+          role="listbox"
           aria-label={ariaLabel}
           initial={{ opacity: 0, y: -6, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -623,53 +682,50 @@ export function TimePicker12hr({ value, onChange, error = "", placeholder = "Sel
             width: pos.width,
             zIndex: 99999,
             transformOrigin: "top left",
+            padding: 0,
+            overflow: "hidden",
           }}
         >
-          <div className="flex items-center justify-between mb-3">
-            <span style={{ fontSize: 22, fontWeight: 700, letterSpacing: "-.01em", color: displayTime ? "#141414" : "#C9C5BC", fontVariantNumeric: "tabular-nums" }}>
-              {displayTime || "--:--"}
-            </span>
-            <div className="bw-segment" style={{ padding: 3 }}>
-              {["AM", "PM"].map((ap) => (
-                <button
-                  key={ap}
-                  type="button"
-                  onClick={() => select(h12, minute, ap)}
-                  className={`bw-tcell ${ampm === ap ? "is-active" : ""}`}
-                  style={{ padding: "5px 12px", borderRadius: 999, fontSize: 12.5, background: ampm === ap ? undefined : "transparent" }}
-                >
-                  {ap}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {error && (
-            <p role="alert" className="bw-time-error" style={{ margin: "-4px 0 10px 2px" }}>{error}</p>
+            <p role="alert" className="bw-time-error" style={{ margin: "10px 14px 0" }}>{error}</p>
           )}
-
-          <p className="bw-pop-title">Hour</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 6, marginBottom: 12 }}>
-            {hours.map((hr) => (
+          <div
+            ref={listRef}
+            style={{
+              maxHeight: 260,
+              overflowY: "auto",
+              padding: "6px 0",
+              scrollbarWidth: "thin",
+            }}
+          >
+            {timeSlots.map((slot) => (
               <button
-                key={hr} type="button"
-                onClick={() => select(hr, minute, ampm)}
-                className={`bw-tcell ${hr === h12 && value ? "is-active" : ""}`}
+                key={slot.value}
+                type="button"
+                role="option"
+                aria-selected={slot.value === value}
+                onClick={() => {
+                  onChange({ target: { value: slot.value } });
+                  setOpen(false);
+                }}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  padding: "11px 18px",
+                  border: "none",
+                  background: slot.value === value ? "#FFF8DF" : "transparent",
+                  color: slot.value === value ? "#B07A00" : "#2B2925",
+                  fontWeight: slot.value === value ? 700 : 500,
+                  fontSize: 15,
+                  textAlign: "left",
+                  cursor: "pointer",
+                  transition: "background .15s",
+                  fontVariantNumeric: "tabular-nums",
+                }}
+                onMouseEnter={(e) => { if (slot.value !== value) e.target.style.background = "#F8F7F3"; }}
+                onMouseLeave={(e) => { if (slot.value !== value) e.target.style.background = "transparent"; }}
               >
-                {hr}
-              </button>
-            ))}
-          </div>
-
-          <p className="bw-pop-title">Minute</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6 }}>
-            {minutes.map((mn) => (
-              <button
-                key={mn} type="button"
-                onClick={() => select(h12, mn, ampm, true)}
-                className={`bw-tcell ${mn === minute && value ? "is-active" : ""}`}
-              >
-                :{String(mn).padStart(2, "0")}
+                {slot.label}
               </button>
             ))}
           </div>
