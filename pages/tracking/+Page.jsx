@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import { usePageContext } from "vike-react/usePageContext";
 import { selectBooking, selectActiveBooking } from "../../src/store/slices/bookingSlice";
 import { useToast } from "../../src/hooks/useToast";
-import { getBooking, getBookingSummary } from "../../src/api/services/bookings";
+import { getBooking, getBookingSummary, getCancellationQuote, cancelBooking } from "../../src/api/services/bookings";
 import { fmtINR } from "../../src/data/mockData";
 import { API_BASE_URL, USE_MOCK } from "../../src/api/config";
 import { getAccessToken } from "../../src/api/tokens";
@@ -260,6 +260,49 @@ export default function Page() {
     if (isCompleted) setShowThankYou(true);
   }, [isCompleted]);
 
+  // ── Cancel booking ──
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
+  const [cancelQuote, setCancelQuote] = useState(null);
+  const [cancelLoading, setCancelLoading] = useState(false);
+  const [cancelQuoteLoading, setCancelQuoteLoading] = useState(false);
+  const canCancel = realBooking && ["PENDING", "CONFIRMED", "ALLOCATED"].includes(realBooking.status);
+
+  async function openCancelModal() {
+    setShowCancelModal(true);
+    setCancelQuoteLoading(true);
+    try {
+      const quote = await getCancellationQuote(realBooking.id);
+      setCancelQuote(quote);
+    } catch {
+      setCancelQuote(null);
+    } finally {
+      setCancelQuoteLoading(false);
+    }
+  }
+
+  async function handleCancel() {
+    if (cancelReason.trim().length < 3) {
+      toast("Please enter a reason for cancellation.", "error");
+      return;
+    }
+    setCancelLoading(true);
+    try {
+      await cancelBooking(realBooking.id, cancelReason.trim());
+      toast("Booking cancelled successfully.", "success");
+      setShowCancelModal(false);
+      // Refresh booking data
+      if (realBooking?.id) {
+        const fresh = await getBooking(realBooking.id);
+        setRealBooking(fresh?.booking || fresh);
+      }
+    } catch (err) {
+      toast(err?.message || "Could not cancel. Please try again.", "error");
+    } finally {
+      setCancelLoading(false);
+    }
+  }
+
   return (
     <>
       <section className="pt-9 md:pt-13 pb-9 bg-gradient-to-b from-primary-tint to-bg border-b border-border">
@@ -373,10 +416,95 @@ export default function Page() {
               <Button href="/#contact-form" variant="outline" block className="mt-4">
                 Contact Support
               </Button>
+              {canCancel && (
+                <button
+                  onClick={openCancelModal}
+                  style={{
+                    width: "100%", marginTop: 10, padding: "12px 0",
+                    background: "transparent", border: "1.5px solid #FCA5A5",
+                    borderRadius: 12, color: "#DC2626", fontWeight: 700,
+                    fontSize: 14, cursor: "pointer", transition: "all .15s",
+                  }}
+                  onMouseEnter={(e) => { e.target.style.background = "#FEF2F2"; }}
+                  onMouseLeave={(e) => { e.target.style.background = "transparent"; }}
+                >
+                  Cancel Booking
+                </button>
+              )}
             </Card>
           </div>
         </div>
       </section>
+
+      {/* Cancel booking modal */}
+      {showCancelModal && (
+        <div className="fixed inset-0 bg-black/50 z-[500] flex items-center justify-center p-5" onClick={() => !cancelLoading && setShowCancelModal(false)}>
+          <div className="bg-white rounded-2xl p-7 max-w-[420px] w-full shadow-lifted" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-bold mb-1" style={{ color: "#DC2626" }}>Cancel Booking?</h3>
+            <p className="text-[13.5px] mb-4" style={{ color: "#6B7280" }}>
+              This action cannot be undone.
+            </p>
+
+            {cancelQuoteLoading ? (
+              <p className="text-[13px] mb-4" style={{ color: "#9CA3AF" }}>Checking cancellation fee…</p>
+            ) : cancelQuote ? (
+              <div className="mb-4 p-3.5 rounded-xl" style={{ background: "#FFF7ED", border: "1px solid #FED7AA" }}>
+                {Number(cancelQuote.fee) > 0 ? (
+                  <p className="text-[13.5px] font-semibold" style={{ color: "#92400E" }}>
+                    Cancellation fee: {fmtINR(cancelQuote.fee)}
+                    {cancelQuote.refund > 0 && <> · Refund: {fmtINR(cancelQuote.refund)}</>}
+                  </p>
+                ) : (
+                  <p className="text-[13.5px] font-semibold" style={{ color: "#15803D" }}>
+                    Free cancellation — no charges apply
+                  </p>
+                )}
+              </div>
+            ) : null}
+
+            <textarea
+              value={cancelReason}
+              onChange={(e) => setCancelReason(e.target.value)}
+              placeholder="Why are you cancelling? (required)"
+              rows={3}
+              style={{
+                width: "100%", padding: "12px 14px", border: "1.5px solid #E5E7EB",
+                borderRadius: 12, fontSize: 14, resize: "vertical",
+                fontFamily: "inherit", outline: "none",
+              }}
+              onFocus={(e) => { e.target.style.borderColor = "#FFD54F"; }}
+              onBlur={(e) => { e.target.style.borderColor = "#E5E7EB"; }}
+            />
+
+            <div className="flex gap-3 mt-5">
+              <button
+                onClick={() => setShowCancelModal(false)}
+                disabled={cancelLoading}
+                style={{
+                  flex: 1, padding: "12px 0", borderRadius: 12,
+                  border: "1.5px solid #E5E7EB", background: "#fff",
+                  fontWeight: 600, fontSize: 14, cursor: "pointer",
+                }}
+              >
+                Go Back
+              </button>
+              <button
+                onClick={handleCancel}
+                disabled={cancelLoading || cancelReason.trim().length < 3}
+                style={{
+                  flex: 1, padding: "12px 0", borderRadius: 12,
+                  border: "none", background: cancelLoading ? "#FCA5A5" : "#DC2626",
+                  color: "#fff", fontWeight: 700, fontSize: 14,
+                  cursor: cancelLoading ? "wait" : "pointer",
+                  opacity: cancelReason.trim().length < 3 ? 0.5 : 1,
+                }}
+              >
+                {cancelLoading ? "Cancelling…" : "Yes, Cancel"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* One-time Thank You popup — shown once when the trip is confirmed
           COMPLETED. No real customer mobile app exists yet in this project,
