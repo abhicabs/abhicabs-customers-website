@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { navigate } from "vike/client/router";
 import { fmtINR } from "../../src/data/mockData";
 import { bookingsApi } from "../../src/api";
+import { getCancellationQuote, cancelBooking } from "../../src/api/services/bookings";
 import { normaliseRealBooking } from "../../src/hooks/useBookingLookup";
 import useVehicleLookup from "../../src/hooks/useVehicleLookup";
 import VehicleHero from "../../src/components/VehicleHero";
@@ -61,6 +62,38 @@ export default function Page() {
   const [totalPages, setTotalPages] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
   const [filter, setFilter] = useState("all");
+
+  // ── Cancel booking modal ──
+  const [cancelTarget, setCancelTarget] = useState(null); // booking to cancel
+  const [cancelReason, setCancelReason] = useState("");
+  const [cancelQuote, setCancelQuote] = useState(null);
+  const [cancelQuoteLoading, setCancelQuoteLoading] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
+
+  async function openCancelModal(booking) {
+    setCancelTarget(booking);
+    setCancelReason("");
+    setCancelQuote(null);
+    setCancelQuoteLoading(true);
+    try {
+      const quote = await getCancellationQuote(booking.bookingId);
+      setCancelQuote(quote);
+    } catch { setCancelQuote(null); }
+    finally { setCancelQuoteLoading(false); }
+  }
+
+  async function handleCancel() {
+    if (!cancelTarget || cancelReason.trim().length < 3) return;
+    setCancelLoading(true);
+    try {
+      await cancelBooking(cancelTarget.bookingId, cancelReason.trim());
+      // Refresh list
+      setCancelTarget(null);
+      loadPage(1, false);
+    } catch (err) {
+      alert(err?.message || "Could not cancel. Please try again.");
+    } finally { setCancelLoading(false); }
+  }
 
   // Fetch one page of the signed-in customer's real bookings and normalise each
   // raw record into the one shape both this list and Booking Details render from.
@@ -221,7 +254,7 @@ export default function Page() {
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {visible.map((b) => (
-                <BookingCard key={b.bookingId} booking={b} lookupVehicle={lookupVehicle} />
+                <BookingCard key={b.bookingId} booking={b} lookupVehicle={lookupVehicle} onCancel={openCancelModal} />
               ))}
             </div>
           )}
@@ -237,11 +270,68 @@ export default function Page() {
           )}
         </>
       )}
+      {/* Cancel booking modal */}
+      {cancelTarget && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", zIndex: 500, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          onClick={() => !cancelLoading && setCancelTarget(null)}>
+          <div style={{ background: "#fff", borderRadius: 20, padding: 28, maxWidth: 420, width: "100%", boxShadow: "0 20px 60px rgba(0,0,0,.2)" }}
+            onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ fontSize: 18, fontWeight: 700, color: "#DC2626", marginBottom: 4 }}>Cancel Booking?</h3>
+            <p style={{ fontSize: 13.5, color: "#6B7280", marginBottom: 16 }}>
+              Booking {cancelTarget.bookingId} — this action cannot be undone.
+            </p>
+
+            {cancelQuoteLoading ? (
+              <p style={{ fontSize: 13, color: "#9CA3AF", marginBottom: 16 }}>Checking cancellation fee…</p>
+            ) : cancelQuote ? (
+              <div style={{ marginBottom: 16, padding: 14, borderRadius: 12, background: "#FFF7ED", border: "1px solid #FED7AA" }}>
+                {Number(cancelQuote.fee) > 0 ? (
+                  <p style={{ fontSize: 13.5, fontWeight: 600, color: "#92400E", margin: 0 }}>
+                    Cancellation fee: {fmtINR(cancelQuote.fee)}
+                    {cancelQuote.refund > 0 && <> · Refund: {fmtINR(cancelQuote.refund)}</>}
+                  </p>
+                ) : (
+                  <p style={{ fontSize: 13.5, fontWeight: 600, color: "#15803D", margin: 0 }}>
+                    Free cancellation — no charges apply
+                  </p>
+                )}
+              </div>
+            ) : null}
+
+            <textarea
+              value={cancelReason}
+              onChange={(e) => setCancelReason(e.target.value)}
+              placeholder="Why are you cancelling? (required)"
+              rows={3}
+              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #E5E7EB", borderRadius: 12, fontSize: 14, resize: "vertical", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }}
+              onFocus={(e) => { e.target.style.borderColor = "#FFD54F"; }}
+              onBlur={(e) => { e.target.style.borderColor = "#E5E7EB"; }}
+            />
+
+            <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
+              <button
+                onClick={() => setCancelTarget(null)}
+                disabled={cancelLoading}
+                style={{ flex: 1, padding: "12px 0", borderRadius: 12, border: "1.5px solid #E5E7EB", background: "#fff", fontWeight: 600, fontSize: 14, cursor: "pointer" }}
+              >
+                Go Back
+              </button>
+              <button
+                onClick={handleCancel}
+                disabled={cancelLoading || cancelReason.trim().length < 3}
+                style={{ flex: 1, padding: "12px 0", borderRadius: 12, border: "none", background: cancelLoading ? "#FCA5A5" : "#DC2626", color: "#fff", fontWeight: 700, fontSize: 14, cursor: cancelLoading ? "wait" : "pointer", opacity: cancelReason.trim().length < 3 ? 0.5 : 1 }}
+              >
+                {cancelLoading ? "Cancelling…" : "Yes, Cancel"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
 
-function BookingCard({ booking, lookupVehicle }) {
+function BookingCard({ booking, lookupVehicle, onCancel }) {
   const displayStatus = toDisplayStatus(booking.status);
   const sc = STATUS_COLORS[displayStatus];
   const href = `/booking-details?b=${encodeURIComponent(booking.bookingId)}`;
@@ -285,10 +375,22 @@ function BookingCard({ booking, lookupVehicle }) {
 
         <div className="mbk-foot">
           <span style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: 19 }}>{fmtINR(booking.fare)}</span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 600, fontSize: 13, color: "#B8860B" }}>
-            View details
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            {displayStatus === "upcoming" && (
+              <button
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); onCancel?.(booking); }}
+                style={{ padding: "6px 14px", borderRadius: 8, border: "1.5px solid #FCA5A5", background: "transparent", color: "#DC2626", fontWeight: 600, fontSize: 12.5, cursor: "pointer", transition: "all .15s", whiteSpace: "nowrap" }}
+                onMouseEnter={(e) => { e.target.style.background = "#FEF2F2"; }}
+                onMouseLeave={(e) => { e.target.style.background = "transparent"; }}
+              >
+                Cancel
+              </button>
+            )}
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 600, fontSize: 13, color: "#B8860B" }}>
+              View details
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </span>
+          </div>
         </div>
       </div>
     </a>
