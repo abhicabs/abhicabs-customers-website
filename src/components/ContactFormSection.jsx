@@ -153,12 +153,13 @@ export default function ContactFormSection({ id = "contact-form" }) {
                   href="mailto:support@abhicabs.com"
                   icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.8" /><path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>}
                   title="Email"
-                  sub="support@abhicabs.com"
+                  sub="contact@abhicab.com"
                 />
                 <ContactMethod
                   icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6 7-11.5A7 7 0 005 9.5C5 15 12 21 12 21z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /><circle cx="12" cy="9.5" r="2.4" stroke="currentColor" strokeWidth="1.8" /></svg>}
                   title="Office Address"
-                  sub="#45, 2nd Floor, MG Road, Bengaluru – 560 001, Karnataka"
+                  sub="Aavaas by Nebula
+Bollaram Road, Coca Cola Rd, Ameenpur, Junction, Miyapur, Hyderabad, Telangana 500090"
                 />
               </div>
 
