@@ -41,6 +41,7 @@ export function normaliseRealBooking(b) {
     "Payment pending";
 
   return {
+    id: b.id,
     bookingId: b.bookingNumber || b.id,
     pickup: b.pickupAddress,
     drop: b.dropAddress,

@@ -90,7 +90,7 @@ export default function Page() {
     setCancelError("");
     setCancelQuoteLoading(true);
     try {
-      const quote = await getCancellationQuote(booking.bookingId);
+      const quote = await getCancellationQuote(booking.id || booking.bookingId);
       setCancelQuote(quote);
     } catch { setCancelQuote(null); }
     finally { setCancelQuoteLoading(false); }
@@ -101,7 +101,7 @@ export default function Page() {
     setCancelLoading(true);
     setCancelError("");
     try {
-      await cancelBooking(cancelTarget.bookingId, finalReason);
+      await cancelBooking(cancelTarget.id || cancelTarget.bookingId, finalReason);
       setCancelTarget(null);
       loadPage(1, false);
     } catch (err) {
