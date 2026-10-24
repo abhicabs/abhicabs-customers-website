@@ -261,15 +261,29 @@ export default function Page() {
   }, [isCompleted]);
 
   // ── Cancel booking ──
+  const CANCEL_REASONS = [
+    "Change of plans",
+    "Found a better deal",
+    "Booked by mistake",
+    "Trip date/time changed",
+    "Vehicle type not suitable",
+    "Other",
+  ];
   const [showCancelModal, setShowCancelModal] = useState(false);
-  const [cancelReason, setCancelReason] = useState("");
+  const [selectedReason, setSelectedReason] = useState("");
+  const [otherReason, setOtherReason] = useState("");
   const [cancelQuote, setCancelQuote] = useState(null);
   const [cancelLoading, setCancelLoading] = useState(false);
   const [cancelQuoteLoading, setCancelQuoteLoading] = useState(false);
+  const [cancelError, setCancelError] = useState("");
   const canCancel = realBooking && ["PENDING", "CONFIRMED", "ALLOCATED"].includes(realBooking.status);
+  const finalCancelReason = selectedReason === "Other" ? otherReason.trim() : selectedReason;
 
   async function openCancelModal() {
     setShowCancelModal(true);
+    setSelectedReason("");
+    setOtherReason("");
+    setCancelError("");
     setCancelQuoteLoading(true);
     try {
       const quote = await getCancellationQuote(realBooking.id);
@@ -282,22 +296,22 @@ export default function Page() {
   }
 
   async function handleCancel() {
-    if (cancelReason.trim().length < 3) {
-      toast("Please enter a reason for cancellation.", "error");
+    if (finalCancelReason.length < 3) {
+      setCancelError("Please select a reason for cancellation.");
       return;
     }
     setCancelLoading(true);
+    setCancelError("");
     try {
-      await cancelBooking(realBooking.id, cancelReason.trim());
+      await cancelBooking(realBooking.id, finalCancelReason);
       toast("Booking cancelled successfully.", "success");
       setShowCancelModal(false);
-      // Refresh booking data
       if (realBooking?.id) {
         const fresh = await getBooking(realBooking.id);
         setRealBooking(fresh?.booking || fresh);
       }
     } catch (err) {
-      toast(err?.message || "Could not cancel. Please try again.", "error");
+      setCancelError(err?.response?.data?.message || err?.message || "Could not cancel. Please try again.");
     } finally {
       setCancelLoading(false);
     }
@@ -439,7 +453,7 @@ export default function Page() {
       {/* Cancel booking modal */}
       {showCancelModal && (
         <div className="fixed inset-0 bg-black/50 z-[500] flex items-center justify-center p-5" onClick={() => !cancelLoading && setShowCancelModal(false)}>
-          <div className="bg-white rounded-2xl p-7 max-w-[420px] w-full shadow-lifted" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white rounded-2xl p-7 max-w-[440px] w-full shadow-lifted" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-bold mb-1" style={{ color: "#DC2626" }}>Cancel Booking?</h3>
             <p className="text-[13.5px] mb-4" style={{ color: "#6B7280" }}>
               This action cannot be undone.
@@ -462,42 +476,48 @@ export default function Page() {
               </div>
             ) : null}
 
-            <textarea
-              value={cancelReason}
-              onChange={(e) => setCancelReason(e.target.value)}
-              placeholder="Why are you cancelling? (required)"
-              rows={3}
-              style={{
-                width: "100%", padding: "12px 14px", border: "1.5px solid #E5E7EB",
-                borderRadius: 12, fontSize: 14, resize: "vertical",
-                fontFamily: "inherit", outline: "none",
-              }}
-              onFocus={(e) => { e.target.style.borderColor = "#FFD54F"; }}
-              onBlur={(e) => { e.target.style.borderColor = "#E5E7EB"; }}
-            />
+            <p style={{ fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 10 }}>Select a reason:</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
+              {CANCEL_REASONS.map((r) => (
+                <label key={r} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 10, border: selectedReason === r ? "1.5px solid #FFD54F" : "1.5px solid #F3F4F6", background: selectedReason === r ? "#FFFBEB" : "#FAFAFA", cursor: "pointer", transition: "all .15s" }}>
+                  <input
+                    type="radio" name="cancelReason" value={r} checked={selectedReason === r}
+                    onChange={() => setSelectedReason(r)}
+                    style={{ accentColor: "#B8860B", width: 16, height: 16, margin: 0 }}
+                  />
+                  <span style={{ fontSize: 14, color: "#374151", fontWeight: selectedReason === r ? 600 : 400 }}>{r}</span>
+                </label>
+              ))}
+            </div>
 
-            <div className="flex gap-3 mt-5">
+            {selectedReason === "Other" && (
+              <textarea
+                value={otherReason}
+                onChange={(e) => setOtherReason(e.target.value)}
+                placeholder="Please describe your reason…"
+                rows={3}
+                style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #E5E7EB", borderRadius: 12, fontSize: 14, resize: "vertical", fontFamily: "inherit", outline: "none", boxSizing: "border-box", marginBottom: 6 }}
+                onFocus={(e) => { e.target.style.borderColor = "#FFD54F"; }}
+                onBlur={(e) => { e.target.style.borderColor = "#E5E7EB"; }}
+              />
+            )}
+
+            {cancelError && (
+              <p style={{ fontSize: 13, color: "#DC2626", margin: "8px 0", fontWeight: 500 }}>{cancelError}</p>
+            )}
+
+            <div className="flex gap-3 mt-4">
               <button
                 onClick={() => setShowCancelModal(false)}
                 disabled={cancelLoading}
-                style={{
-                  flex: 1, padding: "12px 0", borderRadius: 12,
-                  border: "1.5px solid #E5E7EB", background: "#fff",
-                  fontWeight: 600, fontSize: 14, cursor: "pointer",
-                }}
+                style={{ flex: 1, padding: "12px 0", borderRadius: 12, border: "1.5px solid #E5E7EB", background: "#fff", fontWeight: 600, fontSize: 14, cursor: "pointer" }}
               >
                 Go Back
               </button>
               <button
                 onClick={handleCancel}
-                disabled={cancelLoading || cancelReason.trim().length < 3}
-                style={{
-                  flex: 1, padding: "12px 0", borderRadius: 12,
-                  border: "none", background: cancelLoading ? "#FCA5A5" : "#DC2626",
-                  color: "#fff", fontWeight: 700, fontSize: 14,
-                  cursor: cancelLoading ? "wait" : "pointer",
-                  opacity: cancelReason.trim().length < 3 ? 0.5 : 1,
-                }}
+                disabled={cancelLoading || finalCancelReason.length < 3}
+                style={{ flex: 1, padding: "12px 0", borderRadius: 12, border: "none", background: cancelLoading ? "#FCA5A5" : "#DC2626", color: "#fff", fontWeight: 700, fontSize: 14, cursor: cancelLoading ? "wait" : "pointer", opacity: finalCancelReason.length < 3 ? 0.5 : 1 }}
               >
                 {cancelLoading ? "Cancelling…" : "Yes, Cancel"}
               </button>

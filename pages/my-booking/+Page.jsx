@@ -64,16 +64,30 @@ export default function Page() {
   const [filter, setFilter] = useState("all");
 
   // ── Cancel booking modal ──
-  const [cancelTarget, setCancelTarget] = useState(null); // booking to cancel
-  const [cancelReason, setCancelReason] = useState("");
+  const CANCEL_REASONS = [
+    "Change of plans",
+    "Found a better deal",
+    "Booked by mistake",
+    "Trip date/time changed",
+    "Vehicle type not suitable",
+    "Other",
+  ];
+  const [cancelTarget, setCancelTarget] = useState(null);
+  const [selectedReason, setSelectedReason] = useState("");
+  const [otherReason, setOtherReason] = useState("");
   const [cancelQuote, setCancelQuote] = useState(null);
   const [cancelQuoteLoading, setCancelQuoteLoading] = useState(false);
   const [cancelLoading, setCancelLoading] = useState(false);
+  const [cancelError, setCancelError] = useState("");
+
+  const finalReason = selectedReason === "Other" ? otherReason.trim() : selectedReason;
 
   async function openCancelModal(booking) {
     setCancelTarget(booking);
-    setCancelReason("");
+    setSelectedReason("");
+    setOtherReason("");
     setCancelQuote(null);
+    setCancelError("");
     setCancelQuoteLoading(true);
     try {
       const quote = await getCancellationQuote(booking.bookingId);
@@ -83,15 +97,15 @@ export default function Page() {
   }
 
   async function handleCancel() {
-    if (!cancelTarget || cancelReason.trim().length < 3) return;
+    if (!cancelTarget || finalReason.length < 3) return;
     setCancelLoading(true);
+    setCancelError("");
     try {
-      await cancelBooking(cancelTarget.bookingId, cancelReason.trim());
-      // Refresh list
+      await cancelBooking(cancelTarget.bookingId, finalReason);
       setCancelTarget(null);
       loadPage(1, false);
     } catch (err) {
-      alert(err?.message || "Could not cancel. Please try again.");
+      setCancelError(err?.response?.data?.message || err?.message || "Could not cancel. Please try again.");
     } finally { setCancelLoading(false); }
   }
 
@@ -274,7 +288,7 @@ export default function Page() {
       {cancelTarget && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", zIndex: 500, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
           onClick={() => !cancelLoading && setCancelTarget(null)}>
-          <div style={{ background: "#fff", borderRadius: 20, padding: 28, maxWidth: 420, width: "100%", boxShadow: "0 20px 60px rgba(0,0,0,.2)" }}
+          <div style={{ background: "#fff", borderRadius: 20, padding: 28, maxWidth: 440, width: "100%", boxShadow: "0 20px 60px rgba(0,0,0,.2)" }}
             onClick={(e) => e.stopPropagation()}>
             <h3 style={{ fontSize: 18, fontWeight: 700, color: "#DC2626", marginBottom: 4 }}>Cancel Booking?</h3>
             <p style={{ fontSize: 13.5, color: "#6B7280", marginBottom: 16 }}>
@@ -298,17 +312,37 @@ export default function Page() {
               </div>
             ) : null}
 
-            <textarea
-              value={cancelReason}
-              onChange={(e) => setCancelReason(e.target.value)}
-              placeholder="Why are you cancelling? (required)"
-              rows={3}
-              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #E5E7EB", borderRadius: 12, fontSize: 14, resize: "vertical", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }}
-              onFocus={(e) => { e.target.style.borderColor = "#FFD54F"; }}
-              onBlur={(e) => { e.target.style.borderColor = "#E5E7EB"; }}
-            />
+            <p style={{ fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 10 }}>Select a reason:</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
+              {CANCEL_REASONS.map((r) => (
+                <label key={r} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 10, border: selectedReason === r ? "1.5px solid #FFD54F" : "1.5px solid #F3F4F6", background: selectedReason === r ? "#FFFBEB" : "#FAFAFA", cursor: "pointer", transition: "all .15s" }}>
+                  <input
+                    type="radio" name="cancelReason" value={r} checked={selectedReason === r}
+                    onChange={() => setSelectedReason(r)}
+                    style={{ accentColor: "#B8860B", width: 16, height: 16, margin: 0 }}
+                  />
+                  <span style={{ fontSize: 14, color: "#374151", fontWeight: selectedReason === r ? 600 : 400 }}>{r}</span>
+                </label>
+              ))}
+            </div>
 
-            <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
+            {selectedReason === "Other" && (
+              <textarea
+                value={otherReason}
+                onChange={(e) => setOtherReason(e.target.value)}
+                placeholder="Please describe your reason…"
+                rows={3}
+                style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #E5E7EB", borderRadius: 12, fontSize: 14, resize: "vertical", fontFamily: "inherit", outline: "none", boxSizing: "border-box", marginBottom: 6 }}
+                onFocus={(e) => { e.target.style.borderColor = "#FFD54F"; }}
+                onBlur={(e) => { e.target.style.borderColor = "#E5E7EB"; }}
+              />
+            )}
+
+            {cancelError && (
+              <p style={{ fontSize: 13, color: "#DC2626", margin: "8px 0", fontWeight: 500 }}>{cancelError}</p>
+            )}
+
+            <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
               <button
                 onClick={() => setCancelTarget(null)}
                 disabled={cancelLoading}
@@ -318,8 +352,8 @@ export default function Page() {
               </button>
               <button
                 onClick={handleCancel}
-                disabled={cancelLoading || cancelReason.trim().length < 3}
-                style={{ flex: 1, padding: "12px 0", borderRadius: 12, border: "none", background: cancelLoading ? "#FCA5A5" : "#DC2626", color: "#fff", fontWeight: 700, fontSize: 14, cursor: cancelLoading ? "wait" : "pointer", opacity: cancelReason.trim().length < 3 ? 0.5 : 1 }}
+                disabled={cancelLoading || finalReason.length < 3}
+                style={{ flex: 1, padding: "12px 0", borderRadius: 12, border: "none", background: cancelLoading ? "#FCA5A5" : "#DC2626", color: "#fff", fontWeight: 700, fontSize: 14, cursor: cancelLoading ? "wait" : "pointer", opacity: finalReason.length < 3 ? 0.5 : 1 }}
               >
                 {cancelLoading ? "Cancelling…" : "Yes, Cancel"}
               </button>
