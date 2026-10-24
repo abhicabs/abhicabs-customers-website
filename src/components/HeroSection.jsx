@@ -155,7 +155,8 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
                   maxWidth: 540,
                 }}
               >
-                Reliable Cabs. Transparent Fares. Comfortable Travel. Book reliable cabs for airport transfers, local travel, one-way trips, round trips, group trips and outstation journeys.
+                Reliable Cabs. Transparent Fares. Comfortable Travel.
+Book reliable cabs for airport transfers, local travel, one-way trip, round trip, group trip and outstation journeys. Choose your route, compare available vehicles and book your next trip with confidence.
               </m.p>
 
               <m.div
