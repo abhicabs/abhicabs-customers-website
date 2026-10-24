@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { navigate } from "vike/client/router";
 import { fmtINR } from "../../src/data/mockData";
 import { bookingsApi } from "../../src/api";
-import { getCancellationQuote, cancelBooking } from "../../src/api/services/bookings";
+import { getCancellationQuote, cancelBooking, getBookingByNumber } from "../../src/api/services/bookings";
 import { normaliseRealBooking } from "../../src/hooks/useBookingLookup";
 import useVehicleLookup from "../../src/hooks/useVehicleLookup";
 import VehicleHero from "../../src/components/VehicleHero";
@@ -82,6 +82,16 @@ export default function Page() {
 
   const finalReason = selectedReason === "Other" ? otherReason.trim() : selectedReason;
 
+  // Resolve UUID — bookings from the list may only have bookingNumber, not UUID
+  async function resolveUUID(booking) {
+    if (booking.id && booking.id.includes("-") && booking.id.length > 30) return booking.id;
+    try {
+      const data = await getBookingByNumber(booking.bookingId);
+      const b = data?.booking || data;
+      return b?.id || booking.bookingId;
+    } catch { return booking.bookingId; }
+  }
+
   async function openCancelModal(booking) {
     setCancelTarget(booking);
     setSelectedReason("");
@@ -90,7 +100,9 @@ export default function Page() {
     setCancelError("");
     setCancelQuoteLoading(true);
     try {
-      const quote = await getCancellationQuote(booking.id || booking.bookingId);
+      const uuid = await resolveUUID(booking);
+      setCancelTarget((prev) => ({ ...prev, _uuid: uuid }));
+      const quote = await getCancellationQuote(uuid);
       setCancelQuote(quote);
     } catch { setCancelQuote(null); }
     finally { setCancelQuoteLoading(false); }
@@ -101,7 +113,8 @@ export default function Page() {
     setCancelLoading(true);
     setCancelError("");
     try {
-      await cancelBooking(cancelTarget.id || cancelTarget.bookingId, finalReason);
+      const uuid = cancelTarget._uuid || await resolveUUID(cancelTarget);
+      await cancelBooking(uuid, finalReason);
       setCancelTarget(null);
       loadPage(1, false);
     } catch (err) {

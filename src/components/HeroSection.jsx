@@ -130,7 +130,7 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
                 {/* Each line is a mask; the inner span slides up into view */}
                 <span style={{ display: "block", overflow: "hidden", paddingBottom: "0.06em" }}>
                   <m.span variants={headlineLine} style={{ display: "block" }}>
-                    Travel Far.
+                    Your Journey,
                   </m.span>
                 </span>
                 <span style={{ display: "block", overflow: "hidden", paddingBottom: "0.06em" }}>
@@ -139,7 +139,7 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
                     className="hero-h1-accent"
                     style={{ display: "block", color: "#FFD54F", whiteSpace: "nowrap" }}
                   >
-                    Travel Comfortably.
+                    Our Priority.
                   </m.span>
                 </span>
               </h1>
@@ -155,8 +155,7 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
                   maxWidth: 540,
                 }}
               >
-                Reliable chauffeur-driven cabs, airport transfers, outstation travel and group
-                transportation — all in one place.
+                Reliable Cabs. Transparent Fares. Comfortable Travel. Book reliable cabs for airport transfers, local travel, one-way trips, round trips, group trips and outstation journeys.
               </m.p>
 
               <m.div

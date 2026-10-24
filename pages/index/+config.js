@@ -1,4 +1,4 @@
 export default {
-  title: "AbhiCabs — Outstation Cab Booking | Karnataka & Hyderabad",
-  description: "Book outstation cabs, airport transfers, local rentals and group transport across Karnataka & Hyderabad. Sedans, SUVs, tempo travellers & buses at transparent prices.",
+  title: "AbhiCabs 24x7 | Local, Outstation Cabs & Airport Taxi",
+  description: "Book local cabs, outstation taxis and airport transfers with AbhiCabs 24x7. Choose AC or non-AC cabs from Andhra Pradesh, Karnataka, Maharashtra and Telangana across India.",
 };

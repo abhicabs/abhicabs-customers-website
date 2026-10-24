@@ -39,12 +39,12 @@ import { IconClock, IconShield, IconTag, IconCar } from "../../src/components/Ic
 // the same trip types are now reachable via ServiceStripSection instead.
 
 const WHY_US = [
-  { title: "Verified & Professional Drivers", desc: "Trained, background-checked chauffeurs.", icon: <IconShield className="w-5 h-5" /> },
-  { title: "Comfortable & Maintained Vehicles", desc: "Clean, serviced and journey-ready.", icon: <IconCar className="w-5 h-5" /> },
-  { title: "Transparent Pricing", desc: "Clear rates, no hidden charges.", icon: <IconTag className="w-5 h-5" /> },
-  { title: "Regional Route Expertise", desc: "Built for Karnataka & Hyderabad.", icon: <IconClock className="w-5 h-5" /> },
-  { title: "Flexible Vehicle Options", desc: "4-seaters to 33-seat coaches.", icon: <IconShield className="w-5 h-5" /> },
-  { title: "24×7 Customer Support", desc: "Help whenever you travel.", icon: <IconClock className="w-5 h-5" /> }
+  { title: "Verified & Professional Drivers", desc: "Trained, background-checked chauffeurs for a safe journey.", icon: <IconShield className="w-5 h-5" /> },
+  { title: "Well-Maintained Vehicles", desc: "Clean, serviced and journey-ready AC & non-AC cabs.", icon: <IconCar className="w-5 h-5" /> },
+  { title: "Transparent Pricing", desc: "Clear rates, no hidden charges — what you see is what you pay.", icon: <IconTag className="w-5 h-5" /> },
+  { title: "Pan-India Coverage", desc: "Serving Andhra Pradesh, Karnataka, Maharashtra & Telangana.", icon: <IconClock className="w-5 h-5" /> },
+  { title: "Flexible Vehicle Options", desc: "4-seaters to 33-seat coaches for every group size.", icon: <IconShield className="w-5 h-5" /> },
+  { title: "24×7 Customer Support", desc: "Help whenever you travel — call or WhatsApp anytime.", icon: <IconClock className="w-5 h-5" /> }
 ];
 
 const STEPS = [
@@ -61,6 +61,8 @@ const SEATER_OPTIONS = ["12", "13", "16", "17", "22", "28", "33"];
 const COVERAGE = {
   Karnataka: ["Bengaluru", "Mysuru", "Mangaluru", "Hubballi", "Dharwad", "Belagavi", "Shivamogga", "Davangere", "Tumakuru", "Hassan", "Udupi", "Coorg"],
   Telangana: ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar", "Khammam", "Nalgonda", "Suryapet"],
+  "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Tirupati", "Guntur", "Nellore", "Kurnool", "Rajahmundry", "Kakinada"],
+  Maharashtra: ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad", "Kolhapur", "Solapur"],
 };
 
 // NEW: "Plan Your Next Journey" categories — image placeholders per the
@@ -246,6 +248,46 @@ export default function Page() {
 
       {/* ============================== CONTACT FORM ============================== */}
       <ContactFormSection />
+
+      {/* ============================== SEO CONTENT SECTIONS ============================== */}
+      <section style={{ maxWidth: 1080, margin: "0 auto", padding: "60px 24px 0" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+          <div>
+            <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#141414", marginBottom: 12, lineHeight: 1.3 }}>Book a Cab Online with AbhiCabs 24x7</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "#555" }}>Looking for a reliable cab service? Book a cab online with AbhiCabs 24x7 for comfortable and convenient travel across India. We provide outstation cab services and airport transfers, with AC and non-AC vehicles to suit your comfort preferences and budget. Book your ride from Andhra Pradesh, Karnataka, Maharashtra, and Telangana to destinations across India. Whether travelling for business, family vacations, or trips with friends, enjoy convenient booking and a smooth travel experience.</p>
+          </div>
+
+          <div>
+            <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#141414", marginBottom: 12, lineHeight: 1.3 }}>Our Cab Booking Services</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "#555" }}>AbhiCabs 24x7 provides reliable cab booking services for airport transfers, outstation trips, and long-distance travel across India. Book your ride from Andhra Pradesh, Karnataka, Maharashtra, or Telangana to destinations anywhere in India. Travel with friends, family, or colleagues and enjoy comfortable rides, flexible travel options, easy online booking, and hassle-free journeys.</p>
+          </div>
+
+          <div>
+            <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#141414", marginBottom: 12, lineHeight: 1.3 }}>Popular Outstation Cab Routes</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "#555" }}>Plan family vacations, trips with friends, weekend getaways, solo trips or business journeys, or airport transfers with AbhiCabs 24x7. Book outstation cabs from Andhra Pradesh, Karnataka, Maharashtra, and Telangana to destinations across India. Enjoy comfortable long-distance taxi services, reliable airport cab booking, and flexible travel options for exploring new cities, visiting loved ones, and creating unforgettable road trip memories.</p>
+          </div>
+
+          <div>
+            <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#141414", marginBottom: 12, lineHeight: 1.3 }}>Airport Cab Service</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "#555" }}>Choose AbhiCabs 24x7 for reliable airport cab services across India. Book a comfortable cab for airport pickups and drop-offs from Andhra Pradesh, Karnataka, Maharashtra, and Telangana. Enjoy easy online booking, convenient travel, and flexible pickup options for airport rides. Reach your airport comfortably and travel stress-free.</p>
+          </div>
+
+          <div>
+            <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#141414", marginBottom: 12, lineHeight: 1.3 }}>Choose the Right Cab for Your Journey</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "#555" }}>Choose the perfect ride with AbhiCabs 24x7 for comfortable travel across India. Book a Swift Dzire, Innova, Ertiga, or Innova Hycross for family trips and business travel, or choose a Tempo Traveller, Urbania, or BharatBenz for group tours and outstation journeys. Select from 4, 8, 12, 13, 16, 17, 22, 28, and 33-seater options, with AC and non-AC vehicles to suit your comfort and budget. Enjoy convenient airport taxi services and outstation cab bookings from Andhra Pradesh, Karnataka, Maharashtra, and Telangana to destinations across India.</p>
+          </div>
+
+          <div>
+            <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#141414", marginBottom: 12, lineHeight: 1.3 }}>Corporate Cab Services</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "#555" }}>Simplify business travel with AbhiCabs 24x7 Corporate Cab Services. We provide convenient employee transportation, airport transfers, and business trip cab bookings from Andhra Pradesh, Karnataka, Maharashtra, and Telangana to destinations across India. Choose AC or non-AC vehicles to suit your requirements and budget, with professional drivers and comfortable travel options for your team.</p>
+          </div>
+
+          <div>
+            <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#141414", marginBottom: 12, lineHeight: 1.3 }}>Book Your Next Journey</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "#555" }}>Every memorable trip begins with the right travel partner. With AbhiCabs 24x7, plan road trips with friends, family holidays, corporate travel, or airport transfers with ease. Start your journey from Andhra Pradesh, Karnataka, Maharashtra, or Telangana and travel to your preferred destinations across India. Choose from vehicles such as Swift Dzire, Ertiga, Innova, Innova Hycross, Tempo Traveller, Urbania, and BharatBenz, with different seating capacities to accommodate individuals and groups. Select AC or non-AC options according to your comfort and budget.</p>
+          </div>
+        </div>
+      </section>
 
       {/* ============================== FAQ ============================== */}
       <FAQSection faqs={FAQS} />
