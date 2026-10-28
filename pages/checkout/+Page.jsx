@@ -53,6 +53,7 @@ const EXCLUSIONS = [
   "Parking charges",
   "Extra km beyond package limit",
   "Airport / railway station entry",
+  "Night driving allowance (9:45 PM – 6 AM) — ₹300/night, paid to driver",
 ];
 
 // ── Terms Modal ──────────────────────────────────────────────────────────────
