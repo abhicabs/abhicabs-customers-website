@@ -18,27 +18,20 @@ export default function Page() {
 
       <h2>3. Fare Inclusions</h2>
       <ul>
-        <li>Driver allowance (bata) included for outstation trips</li>
-        <li>Toll charges covered on the route</li>
-        <li>State tax / permit charges included</li>
-        <li>GST included in the displayed fare (5%)</li>
-        <li>Free waiting time — 30 min at pickup, 15 min at stops</li>
-        <li>Round-trip fare includes return journey distance</li>
-        <li>Night driving allowance included where applicable</li>
-        <li>One pickup and one drop per booking</li>
+        <li>Base fare and fuel charges for the trip</li>
+        <li>Driver allowance (bata)</li>
+        <li>GST (5%)</li>
+        <li>AC vehicle</li>
+        <li>Luggage allowance (2 bags)</li>
       </ul>
 
       <h2>4. Fare Exclusions</h2>
       <ul>
-        <li>Airport entry charge, if applicable, is not included in the fare and will be charged extra</li>
-        <li>All road toll fees, parking charges, state taxes etc. are charged extra and need to be paid to the concerned authorities as per actuals</li>
-        <li>Entry / green tax fees at tourist spots</li>
+        <li>Toll / State tax (charged at actuals)</li>
+        <li>Parking charges</li>
         <li>Extra kilometres beyond the package limit</li>
-        <li>Extra waiting time beyond the free window</li>
-        <li>Intercity or state-border permit fees not on route</li>
-        <li>Alcohol, smoking, or food damage inside the vehicle</li>
-        <li>Airport / railway terminal entry charges</li>
-        <li>Return fare for one-way trips</li>
+        <li>Airport / railway station entry charges</li>
+        <li>Night driving allowance (9:45 PM – 6:00 AM) — ₹300 per night, paid directly to the driver</li>
       </ul>
 
       <h2>5. Night Driving</h2>
