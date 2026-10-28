@@ -41,28 +41,18 @@ import { IconPin } from "../../src/components/Icons";
 import { CouponOffersSection } from "../../src/components/checkout/CouponOffersSection";
 
 const INCLUSIONS = [
-  "Driver allowance (bata) included for outstation trips",
-  "Toll charges covered on the route",
-  "State tax / permit charges included",
-  "GST included in the displayed fare (5%)",
-  "Free waiting time — 30 min at pickup, 15 min at stops",
-  "Round-trip fare includes return journey distance",
-  "Night driving allowance included where applicable",
-  "One pickup and one drop per booking",
-  "Your trip has a KM limit — excess KM will be charged extra",
+  "Base fare and fuel charges",
+  "Driver allowance (bata)",
+  "GST (5%)",
+  "AC vehicle",
+  "Luggage allowance (2 bags)",
 ];
 
 const EXCLUSIONS = [
-  "Airport entry charge, if applicable, is not included and will be charged extra",
-  "All road toll fees, parking charges, state taxes etc. are charged extra as per actuals",
-  "Entry / green tax fees at tourist spots",
-  "Extra kilometres beyond the package limit",
-  "Extra waiting time beyond the free window",
-  "Intercity or state-border permit fees not on route",
-  "Alcohol, smoking, or food damage inside the vehicle",
-  "Airport / railway terminal entry charges",
-  "Return fare for one-way trips",
-  "Night driving (09:45 PM – 06:00 AM) allowance paid to driver",
+  "Toll / State tax (as per actuals)",
+  "Parking charges",
+  "Extra km beyond package limit",
+  "Airport / railway station entry",
 ];
 
 // ── Terms Modal ──────────────────────────────────────────────────────────────
