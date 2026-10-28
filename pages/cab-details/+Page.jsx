@@ -108,7 +108,11 @@ export default function Page() {
               <ul style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 13.5, color: "#B91C1C", paddingLeft: 18, margin: 0 }}>
                 <li>Toll / State tax (as per actuals)</li>
                 <li>Parking charges</li>
-                <li>Extra km beyond package limit</li>
+                {selected?.extraPerKm > 0 ? (
+                  <li>{vehicle?.name || selected?.vehicleName || "Selected vehicle"} — Extra km beyond {selected.includedKm > 0 ? <b>{selected.includedKm} km</b> : "package limit"} charged at <b>₹{selected.extraPerKm}/km</b></li>
+                ) : (
+                  <li>Extra km beyond package limit</li>
+                )}
                 <li>Airport / railway station entry</li>
                 <li>Night driving allowance (9:45 PM – 6 AM) — ₹300/night, paid to driver</li>
               </ul>
