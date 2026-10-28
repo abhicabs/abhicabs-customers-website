@@ -95,12 +95,22 @@ export default function Page() {
                 </>
               )}
 
-              <h3 style={{ fontSize: 15.5, fontWeight: 700, margin: "22px 0 10px" }}>Included Services</h3>
-              <ul style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: 14, color: "#666", paddingLeft: 18, margin: 0 }}>
-                <li>Fuel &amp; driver charges included</li>
-                <li>All applicable taxes included</li>
-                <li>Free cancellation up to 1 hour before pickup</li>
-                <li>24×7 in-trip support</li>
+              <h3 style={{ fontSize: 15.5, fontWeight: 700, margin: "22px 0 10px", color: "#166534" }}>✓ Inclusions</h3>
+              <ul style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 13.5, color: "#15803D", paddingLeft: 18, margin: 0 }}>
+                <li>Base fare and fuel charges</li>
+                <li>Driver allowance (bata)</li>
+                <li>GST (5%)</li>
+                <li>AC vehicle</li>
+                <li>Luggage allowance (2 bags)</li>
+              </ul>
+
+              <h3 style={{ fontSize: 15.5, fontWeight: 700, margin: "22px 0 10px", color: "#991B1B" }}>✗ Exclusions</h3>
+              <ul style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 13.5, color: "#B91C1C", paddingLeft: 18, margin: 0 }}>
+                <li>Toll / State tax (as per actuals)</li>
+                <li>Parking charges</li>
+                <li>Extra km beyond package limit</li>
+                <li>Airport / railway station entry</li>
+                <li>Night driving allowance (9:45 PM – 6 AM) — ₹300/night, paid to driver</li>
               </ul>
 
               <h3 style={{ fontSize: 15.5, fontWeight: 700, margin: "22px 0 10px" }}>Cancellation Policy</h3>
