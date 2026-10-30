@@ -128,6 +128,18 @@ function toBookingRequest(p) {
   const promo = p.promoCode || p.discountCode;
   if (promo) body.promoCode = String(promo).trim().toUpperCase();
 
+  // Customer GSTIN for THIS booking (createBookingSchema: gstin,
+  // gstCompanyName). Stored on the booking so the tax invoice carries the
+  // number the customer typed — including for a guest with no account to
+  // hang it on. Only sent when well-formed: the schema 400s a bad one and
+  // that would fail the whole booking at the last step.
+  const gstin = String(p.gstNumber || p.gstin || "").trim().toUpperCase();
+  if (/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(gstin)) {
+    body.gstin = gstin;
+    const company = String(p.companyName || "").trim();
+    if (company.length >= 2) body.gstCompanyName = company;
+  }
+
   return body;
 }
 
