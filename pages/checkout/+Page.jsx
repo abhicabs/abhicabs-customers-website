@@ -20,12 +20,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { useGoogleMapsReady, bindPlacesAutocomplete, pointFromPlace as mapsPointFromPlace } from "../../src/lib/googleMaps";
 import { useSelector, useDispatch } from "react-redux";
 import { navigate } from "vike/client/router";
-import { selectSelectedCab } from "../../src/store/slices/selectionSlice";
+import { selectSelectedCab, setSelectedCab } from "../../src/store/slices/selectionSlice";
 import { selectJourney } from "../../src/store/slices/journeySlice";
 import { selectCheckoutDetails, setCheckoutDetails } from "../../src/store/slices/checkoutSlice";
 import { API_BASE_URL } from "../../src/api/config";
 import { isAuthenticated, getStoredUserName } from "../../src/api/tokens";
-import { authApi, bookingsApi } from "../../src/api";
+import { authApi, bookingsApi, faresApi, customersApi } from "../../src/api";
 import BackLink, { recordNavStep } from "../../src/components/BackLink";
 import { fmtINR } from "../../src/data/mockData";
 import useSelectedVehicle from "../../src/hooks/useSelectedVehicle";
@@ -43,7 +43,7 @@ import { CouponOffersSection } from "../../src/components/checkout/CouponOffersS
 const INCLUSIONS = [
   "Base fare and fuel charges",
   "Driver allowance (bata)",
-  "GST (5%)",
+  "GST where applicable (shown in fare breakup)",
   "AC vehicle",
   "Luggage allowance (2 bags)",
 ];
@@ -215,6 +215,21 @@ export default function Page() {
   const [companyName, setCompanyName] = useState(saved.companyName || "");
   const [notes, setNotes] = useState(saved.notes || "");
   const [customerType, setCustomerType] = useState(saved.customerType || "retail");
+  // GST billing status. Typing a GSTIN is not enough: the backend only taxes
+  // CORPORATE accounts, so "Apply" switches the account via
+  // POST /customers/me/gstin and then re-quotes so the GST lines appear.
+  // { state: "idle" | "applying" | "applied" | "error", msg }
+  // Starts "applied" when the persisted quote already carries GST (e.g. the
+  // customer applied it, went to payment and came back), so they are not
+  // asked to apply it a second time.
+  const [gstStatus, setGstStatus] = useState(() =>
+    selected?.tax?.applies && (saved.customerType === "corporate")
+      ? { state: "applied", msg: "" }
+      : { state: "idle", msg: "" }
+  );
+  const gstAppliedHereRef = useRef(false);
+  // Latest refreshTax for effects registered once (sign-in listener).
+  const refreshTaxRef = useRef(null);
   const [errors, setErrors] = useState({});
   const [showTerms, setShowTerms] = useState(false);
   // The applied promo, if any — { ok, code, description, amount, payable }
@@ -256,6 +271,16 @@ export default function Page() {
     const onAuth = () => {
       setIsGuest(!isAuthenticated());
       prefillFromProfile();
+      // The fare on screen was quoted under the guest session. A signed-in
+      // account may be GST-billed, so re-quote or its GST never shows.
+      refreshTaxRef.current?.()
+        .then((tax) => {
+          if (tax?.applies) {
+            setCustomerType("corporate");
+            setGstStatus({ state: "applied", msg: `GST @${tax.ratePct}% applies to your account.` });
+          }
+        })
+        .catch(() => {});
       toast("You're signed in — continue your booking.", "success");
     };
     window.addEventListener(AUTH_CHANGED, onAuth);
@@ -263,31 +288,103 @@ export default function Page() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefillFromProfile]);
 
-  if (!selected || !vehicle || !journey) {
-    return (
-      <main style={{ maxWidth: 1120, margin: "0 auto", padding: "24px 22px 60px" }}>
-        <StateBlock tone="empty" icon={<IconPin className="w-6.5 h-6.5" />}
-          title="Nothing to check out yet"
-          description="Please choose a journey and a cab first."
-          action={<Button href="/#booking">Start a Search</Button>}
-        />
-      </main>
-    );
-  }
+  // Hooks below must run on EVERY render (rules of hooks), so the empty state
+  // is returned only after them — see `if (missing)` further down. Returning
+  // here used to skip the draft/abandonment effects on some renders, which
+  // crashes React with "Rendered more hooks than during the previous render".
+  const missing = !selected || !vehicle || !journey;
 
   const isCorporate = customerType === "corporate";
   const discountAmount = discount?.ok ? Number(discount.amount || 0) : 0;
   // Same single source of truth the Payment page and invoice use, so the
   // total quoted here is exactly the total charged there.
-  const fare = buildFareLines(selected, {
+  const fare = missing ? {} : buildFareLines(selected, {
     isCorporate,
     discountAmount,
     discountCode: discount?.code || null,
   });
   const { lines: fareLines, tripTotal: quotedTotal, cgst, sgst, taxLines, taxIncluded, taxRatePct, totalPayable } = fare;
   const baseFare = quotedTotal;
-  const surgeFee = Math.round(Number(selected.surgeFee || selected.surgeAmount || 0));
-  const driverBhata = Math.round(Number(selected.driverBhata || selected.driverAllowance || 0));
+
+  // Re-price the selected class so `selected.tax` reflects the account's
+  // CURRENT billing type. Same endpoint that produced the selection, matched
+  // on the quoted class, so only the tax can move.
+  const refreshTax = async () => {
+    const options = await faresApi.getFareOptions(journey);
+    const match = options.find((o) => o.vehicleClass === selected.vehicleClass);
+    if (!match) throw new Error("Could not re-price this cab. Please go back and select it again.");
+    dispatch(setSelectedCab({ ...selected, tax: match.tax || null }));
+    return match.tax;
+  };
+
+  refreshTaxRef.current = missing ? null : refreshTax;
+
+  const applyGst = async () => {
+    const gstin = gstNumber.trim().toUpperCase();
+    if (!customersApi.isValidGstin(gstin)) {
+      setGstStatus({ state: "error", msg: "Enter a valid 15-character GSTIN (e.g. 29AABCT1332L1ZU)." });
+      return;
+    }
+    setGstStatus({ state: "applying", msg: "" });
+    try {
+      // GUEST: the account must exist BEFORE the GSTIN is attached.
+      // continueToPayment() silently registers guests, which swaps the token
+      // to a NEW account. If GST were applied to the guest session first, the
+      // booking would then be created under that new RETAIL account (priced
+      // with no GST), and the GSTIN would already be claimed by the throwaway
+      // guest user. So register here, then attach the GSTIN to the real
+      // account. continueToPayment() then sees a signed-in user and skips its
+      // own registration.
+      if (!isAuthenticated()) {
+        if (fullName.trim().length < 2 || !isIndianMobile(mobile)) {
+          setGstStatus({ state: "error", msg: "Enter your full name and mobile number above first, then Apply." });
+          return;
+        }
+        try {
+          await authApi.register({ name: fullName.trim(), email: email.trim() || undefined, phone: mobile.trim() });
+        } catch (err) {
+          const code = String(err?.code || err?.message || "");
+          if (/TAKEN|already/i.test(code)) {
+            setGstStatus({ state: "error", msg: "This mobile number already has an account. Sign in, then click Apply again." });
+            signInClick();
+            return;
+          }
+          throw err;
+        }
+        if (!isAuthenticated()) {
+          throw new Error("Could not create your account. Please sign in to add GST.");
+        }
+        setIsGuest(false);
+      }
+      await customersApi.addGstin({ gstin, companyName });
+      gstAppliedHereRef.current = true;
+      const tax = await refreshTax();
+      if (tax && tax.applies) {
+        setGstStatus({ state: "applied", msg: `GST @${tax.ratePct}% applied to this fare.` });
+      } else {
+        // Account switched, but gst_config says no tax for this trip
+        // (state not registered, trip type switched off, or approval pending).
+        setGstStatus({ state: "applied", msg: "GSTIN saved. GST does not apply to this trip type/pickup state, so the fare is unchanged." });
+      }
+    } catch (err) {
+      setGstStatus({ state: "error", msg: err?.message || "Could not apply GST. Please try again." });
+    }
+  };
+
+  const removeGst = async () => {
+    setCustomerType("retail"); setCompanyName(""); setGstNumber("");
+    setGstStatus({ state: "idle", msg: "" });
+    if (!gstAppliedHereRef.current) return;
+    try {
+      await customersApi.removeGstin();
+      gstAppliedHereRef.current = false;
+      await refreshTax();
+    } catch (err) {
+      toast(err?.message || "Could not remove GST billing.", "error");
+    }
+  };
+  const surgeFee = missing ? 0 : Math.round(Number(selected.surgeFee || selected.surgeAmount || 0));
+  const driverBhata = missing ? 0 : Math.round(Number(selected.driverBhata || selected.driverAllowance || 0));
 
   // ── Progressive save ──────────────────────────────────────────────────────
   // Previously nothing left this page until "Continue to Payment", and the
@@ -299,7 +396,7 @@ export default function Page() {
   const draftTimerRef = useRef(null);
   const lastDraftRef = useRef("");
   useEffect(() => {
-    if (bookingCompletedRef.current) return;
+    if (missing || bookingCompletedRef.current) return;
     // Nothing worth recording until there's at least one contact detail.
     const name = fullName.trim();
     const phone = mobile.trim();
@@ -352,6 +449,7 @@ export default function Page() {
   ]);
 
   useEffect(() => {
+    if (missing) return undefined;
     function trySendAbandonment() {
       if (bookingCompletedRef.current || abandonmentSentRef.current) return;
       const nameOk = fullName.trim().length >= 2;
@@ -445,12 +543,30 @@ export default function Page() {
     journey, selected, vehicle, totalPayable,
   ]);
 
+  if (missing) {
+    return (
+      <main style={{ maxWidth: 1120, margin: "0 auto", padding: "24px 22px 60px" }}>
+        <StateBlock tone="empty" icon={<IconPin className="w-6.5 h-6.5" />}
+          title="Nothing to check out yet"
+          description="Please choose a journey and a cab first."
+          action={<Button href="/#booking">Start a Search</Button>}
+        />
+      </main>
+    );
+  }
+
   function validate() {
     const e = {};
     if (!fullName.trim()) e.fullName = "Please enter your full name";
     if (!isIndianMobile(mobile)) e.mobile = "Enter a valid 10-digit mobile number (starts with 6, 7, 8 or 9)";
     if (email.trim() && !/^\S+@\S+\.\S+$/.test(email.trim())) e.email = "Enter a valid email address";
     if (isCorporate && !companyName.trim()) e.companyName = "Company name is required for corporate invoices";
+    // A GSTIN that was typed but never applied would leave the fare untaxed
+    // while the customer believes they are getting a GST invoice.
+    if (isCorporate && gstStatus.state !== "applied") {
+      e.gstNumber = "Click Apply to add GST to this fare, or remove GST.";
+      setGstStatus({ state: "error", msg: e.gstNumber });
+    }
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -539,7 +655,7 @@ export default function Page() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (isCorporate) { setCustomerType("retail"); setCompanyName(""); setGstNumber(""); }
+                    if (isCorporate) removeGst();
                     else setCustomerType("corporate");
                   }}
                   style={{
@@ -622,8 +738,32 @@ export default function Page() {
                     <FormField label="Company Name" required error={errors.companyName}>
                       <input className={FIELD_INPUT} placeholder="Your company name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
                     </FormField>
-                    <FormField label="GSTIN (optional)">
-                      <input className={FIELD_INPUT} placeholder="e.g. 29AABCT1332L1ZU" value={gstNumber} onChange={(e) => setGstNumber(e.target.value)} />
+                    <FormField label="GSTIN" required>
+                      <div style={{ display: "flex", gap: 8 }}>
+                        <input
+                          className={FIELD_INPUT}
+                          placeholder="e.g. 29AABCT1332L1ZU"
+                          value={gstNumber}
+                          maxLength={15}
+                          onChange={(e) => {
+                            setGstNumber(e.target.value.toUpperCase());
+                            if (gstStatus.state !== "applying") setGstStatus({ state: "idle", msg: "" });
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={applyGst}
+                          disabled={gstStatus.state === "applying"}
+                          style={{ flexShrink: 0, padding: "0 16px", borderRadius: 10, border: "none", fontWeight: 700, fontSize: 13, cursor: "pointer", background: "#111", color: "#fff", opacity: gstStatus.state === "applying" ? 0.6 : 1 }}
+                        >
+                          {gstStatus.state === "applying" ? "Applying…" : gstStatus.state === "applied" ? "Applied ✓" : "Apply"}
+                        </button>
+                      </div>
+                      {gstStatus.msg && (
+                        <p style={{ fontSize: 12, marginTop: 6, color: gstStatus.state === "error" ? "#DC2626" : "#15803D" }}>
+                          {gstStatus.msg}
+                        </p>
+                      )}
                     </FormField>
                   </>
                 )}
