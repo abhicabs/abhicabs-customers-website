@@ -10,3 +10,4 @@ export * as vehiclesApi from "./services/vehicles";
 export * as discountsApi from "./services/discounts";
 export * as bookingRequestsApi from "./services/bookingRequests";
 export * as serviceStatesApi from "./services/serviceStates";
+export * as customersApi from "./services/customers";
