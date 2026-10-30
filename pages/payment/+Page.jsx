@@ -642,7 +642,6 @@ function InvoiceModal({ journey, vehicle, details, fareLines, tripTotal, cgst, s
             <div className="text-right text-[11px] text-white/80 leading-relaxed">
               <div>#45, 2nd Floor, MG Road, Bangalore – 560 001</div>
               <div>Karnataka, India</div>
-              <div>GSTIN: 29AABCA1234B1ZU</div>
             </div>
           </div>
 
