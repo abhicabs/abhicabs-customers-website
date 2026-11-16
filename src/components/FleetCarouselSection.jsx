@@ -297,7 +297,7 @@ export default function FleetCarouselSection({ vehicles = [], loading = false, e
                         aria-label={`Show image ${i + 1}`}
                         style={{ width: 64, height: 44, borderRadius: 8, overflow: "hidden", border: activeImg === i ? "2px solid #FFD54F" : "2px solid transparent", opacity: activeImg === i ? 1 : 0.55, cursor: "pointer", padding: 0, transition: "opacity .2s, border-color .2s" }}
                       >
-                        <img src={src} alt="" onError={(e) => { if (modal.imgFallback && e.currentTarget.src !== modal.imgFallback) e.currentTarget.src = modal.imgFallback; }} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        <img loading="lazy" decoding="async" src={src} alt="" onError={(e) => { if (modal.imgFallback && e.currentTarget.src !== modal.imgFallback) e.currentTarget.src = modal.imgFallback; }} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       </m.button>
                     ))}
                   </div>

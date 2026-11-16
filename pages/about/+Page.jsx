@@ -175,7 +175,7 @@ export default function Page() {
             <div className="relative flex items-center justify-center lg:justify-end ac-car-scroll">
               <div className="relative w-full max-w-[620px] lg:max-w-none ac-car-enter">
                
-                <img src="/images/aboutus.png" alt="Abhi Cabs premium sedan" fetchPriority="high" className="relative w-full rounded-2xl object-cover"  />
+                <img src="/images/aboutus.webp" alt="Abhi Cabs premium sedan" fetchPriority="high" className="relative w-full rounded-2xl object-cover"  />
                 
               </div>
             </div>
@@ -195,7 +195,7 @@ export default function Page() {
             </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <img src="/images/who-we-are-fleet.png" alt="Abhi Cabs fleet — 4 Seater, 7 Seater, 14 Seater and 50 Seater vehicles" loading="lazy" className="rounded-[22px] w-full" style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.14)" }} />
+            <img src="/images/who-we-are-fleet.webp" alt="Abhi Cabs fleet — 4 Seater, 7 Seater, 14 Seater and 50 Seater vehicles" loading="lazy" className="rounded-[22px] w-full" style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.14)" }} />
           </Reveal>
         </div>
       </section>
@@ -208,7 +208,7 @@ export default function Page() {
             <SectionHead center className="mb-2" title="Our Cab Services" />
             <p className="text-center text-[17px] md:text-[20px] font-bold text-text-secondary mb-11">Flexible Travel Solutions for Every Need</p>
           </Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="ac-fgrid ac-c4 gap-5">
             {SERVICES.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.06}>
                 <Card className="p-6 h-full ac-card-hover">
@@ -232,7 +232,7 @@ export default function Page() {
             <SectionHead center className="mb-2" title="Why Choose Abhi Cabs 24×7?" />
             <p className="text-center text-[17px] md:text-[20px] font-bold text-text-secondary mb-11">Safe, Comfortable & Hassle-Free Travel Across India</p>
           </Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="ac-fgrid ac-c4 gap-5">
             {WHY_CHOOSE.map((w, i) => (
               <Reveal key={w.title} delay={i * 0.06}>
                 <Card className="p-6 h-full ac-card-hover">

@@ -1,6 +1,7 @@
 import React from "react";
 import Section from "./ui/Section";
 import SectionHead from "./ui/SectionHead";
+import Reveal from "./ui/Reveal";
 import { useAllPages } from "../hooks/usePageContent";
 import { buildDirectory } from "../lib/servicePage";
 
@@ -16,15 +17,15 @@ export default function ServiceDirectory({ exclude, tone = "white", heading = "E
     <Section id="service-directory" tone={tone} className="!py-12 md:!py-14">
       <SectionHead id="service-directory" eyebrow="Service directory" title={heading} className="mb-8" />
       <div className="space-y-8">
-        {groups.map(({ group, links }) => (
-          <nav key={group} aria-label={group}>
+        {groups.map(({ group, links }, gi) => (
+          <Reveal as="nav" key={group} aria-label={group} delay={gi * 0.06}>
             <h3 className="text-[15px] font-extrabold text-text">{group}</h3>
             <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-2">
               {links.map((l) => (
                 <li key={l.href}><a href={l.href} className="text-[14.5px] text-text-secondary underline-offset-4 hover:text-[#B58500] hover:underline transition-colors">{l.label}</a></li>
               ))}
             </ul>
-          </nav>
+          </Reveal>
         ))}
       </div>
     </Section>

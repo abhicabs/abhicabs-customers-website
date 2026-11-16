@@ -7,7 +7,7 @@ import BlogSearch from "./BlogSearch";
 export default function BlogHero({ query, onQuery, onClear, onExplore }) {
   return (
     <PageHero
-      image="/images/tea-garden-road.jpg" imageAlt="A mountain road winding through green hills"
+      image="/images/hero-blog-travel.webp" imagePosition="center 82%" imageAlt="Travel map, camera and hat on a rock overlooking Hampi temples at sunset"
       breadcrumb={[["Home", "/"], ["Blog", null]]}
       title="Explore Stories" accent="Beyond the Journey"
       description="Discover inspiring destinations, practical travel tips, road-trip ideas, and useful travel guides. Get inspired for your next journey with Abhi Cabs."

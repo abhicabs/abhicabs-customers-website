@@ -1555,7 +1555,7 @@ export default function Page() {
                         </div>
                       )}
                       <div className="vehicle-card-image" style={{ flex: "1 1 240px", minWidth: "min(100%, 220px)", minHeight: 200, position: "relative" }}>
-                        <img className="vehicle-photo" src={v.img || v.imgFallback} alt={v.name} onError={(e) => { const fb = v.imgFallback; if (fb && e.currentTarget.src !== fb) { e.currentTarget.src = fb; } }} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", position: "absolute", inset: 0 }} />
+                        <img loading="lazy" decoding="async" className="vehicle-photo" src={v.img || v.imgFallback} alt={v.name} onError={(e) => { const fb = v.imgFallback; if (fb && e.currentTarget.src !== fb) { e.currentTarget.src = fb; } }} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", position: "absolute", inset: 0 }} />
                       </div>
                       <div style={{ flex: "2 1 320px", padding: "20px 22px", display: "flex", flexDirection: "column" }}>
                         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
@@ -1763,7 +1763,7 @@ function SeaterStepTwo({ vehicle, seats, onChange, form }) {
       <h2 style={{ fontWeight: 800, fontSize: 22, margin: "4px 0 14px" }}>Add your trip details</h2>
 
       <div style={{ display: "flex", alignItems: "center", gap: 16, background: "#fff", border: "2px solid #FFD54F", borderRadius: 18, padding: 14, marginBottom: 18, flexWrap: "wrap" }}>
-        <img
+        <img loading="lazy" decoding="async"
           className="vehicle-photo"
           src={vehicle.img}
           alt={vehicle.name}

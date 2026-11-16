@@ -779,3 +779,238 @@ img.vehicle-photo--thumb { padding: 3px; }
 /* Swipeable card rows on phones (see .snap-row in ServiceLanding) */
 .snap-row { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .snap-row::-webkit-scrollbar { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOTION & POLISH LAYER — presentation only, no content changes.
+   Everything here is CSS (GPU-friendly transform/opacity) so it costs no JS,
+   and every effect is switched off for prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Cinematic hero (PageHero, outstation, services, fleet) ── */
+.ac-kenburns { animation: ac-kenburns 30s ease-in-out infinite; transform-origin: 50% 45%; will-change: transform; }
+@keyframes ac-kenburns {
+  0%   { transform: scale(1) translate(0, 0); }
+  25%  { transform: scale(1.1) translate(-1.5%, -1%); }
+  50%  { transform: scale(1.16) translate(.8%, -2%); }
+  75%  { transform: scale(1.08) translate(1.2%, -.6%); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+.ac-hero-glow { animation: ac-breathe 7s ease-in-out infinite; }
+@keyframes ac-breathe { 0%, 100% { opacity: .55; scale: 1; } 50% { opacity: 1; scale: 1.08; } }
+.ac-hero-sweep {
+  background: linear-gradient(115deg, transparent 40%, rgba(255,213,79,.07) 50%, transparent 60%);
+  background-size: 250% 100%;
+  animation: ac-sweep 9s ease-in-out infinite;
+}
+@keyframes ac-sweep { 0% { background-position: 120% 0; } 60%, 100% { background-position: -120% 0; } }
+
+/* Shimmering gold text (hero accents & subtitles) */
+.ac-gold-shimmer {
+  background: linear-gradient(110deg, #FFD54F 0%, #FFB300 30%, #FFF1B8 50%, #FFB300 70%, #FFD54F 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: #FFD54F;
+  animation: ac-shimmer 5s linear infinite;
+}
+@keyframes ac-shimmer { from { background-position: 0% center; } to { background-position: -220% center; } }
+
+/* Frosted glass chips */
+.ac-glass {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s, background .35s;
+}
+.ac-glass:hover { transform: translateY(-3px); border-color: rgba(255,213,79,.45); background: rgba(255,255,255,.1); }
+
+/* ── Cards (every <Card>) — lift, gold edge, soft glow ── */
+.ac-card {
+  position: relative;
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .4s ease;
+}
+.ac-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(255,213,79,.12), transparent 45%);
+  opacity: 0; transition: opacity .4s ease;
+}
+@media (hover: hover) {
+  .ac-card:hover { transform: translateY(-6px); border-color: rgba(230,172,0,.45); box-shadow: 0 18px 40px -12px rgba(17,17,17,.18), 0 0 0 1px rgba(255,213,79,.15); }
+  .ac-card:hover::before { opacity: 1; }
+  .ac-card:hover svg.lucide { animation: ac-icon-wiggle .6s cubic-bezier(.22,1,.36,1); }
+}
+@keyframes ac-icon-wiggle { 0% { transform: rotate(0) scale(1); } 30% { transform: rotate(-12deg) scale(1.15); } 60% { transform: rotate(8deg) scale(1.08); } 100% { transform: rotate(0) scale(1); } }
+
+/* ── Buttons — light sweep on hover ── */
+.ac-btn { transition-property: all; transition-duration: .3s; transition-timing-function: cubic-bezier(.22,1,.36,1); }
+.ac-btn-shine::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%);
+  transform: translateX(-120%); transition: transform .7s cubic-bezier(.22,1,.36,1);
+}
+.ac-btn-shine:hover::after { transform: translateX(120%); }
+
+/* ── Accordion rows ── */
+.ac-acc-row button { transition: padding-left .3s ease, color .3s ease; }
+@media (hover: hover) { .ac-acc-row button:hover { padding-left: 1.6rem; } }
+
+/* ── Native <details> FAQs (city pages) — smooth reveal + hover ── */
+details[open] > :not(summary) { animation: ac-fade-up .5s cubic-bezier(.22,1,.36,1) both; }
+details { transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease; }
+@media (hover: hover) { details:hover { border-color: rgba(230,172,0,.45); box-shadow: 0 10px 28px -14px rgba(17,17,17,.2); } }
+
+/* ── Links inside body copy — animated underline ── */
+main p a:not(.ac-btn), main li a:not(.ac-btn) { background-image: linear-gradient(currentColor, currentColor); background-size: 0 1.5px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .35s ease; }
+main p a:not(.ac-btn):hover, main li a:not(.ac-btn):hover { background-size: 100% 1.5px; }
+
+/* ── Images — gentle zoom on hover inside rounded containers ── */
+@media (hover: hover) {
+  .rounded-\[22px\] > img, .rounded-2xl > img, .rounded-\[20px\] > img { transition: transform .8s cubic-bezier(.22,1,.36,1); }
+  .rounded-\[22px\]:hover > img, .rounded-2xl:hover > img, .rounded-\[20px\]:hover > img { transform: scale(1.04); }
+}
+
+/* ── Scroll-driven entrances (zero JS). Browsers without support simply show
+      everything statically — progressive enhancement, never hidden content. ── */
+@supports (animation-timeline: view()) {
+  main li > svg.lucide:first-child,
+  main li > span > svg.lucide {
+    animation: ac-tick-pop linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+  main .ac-cv img:not(.ac-kenburns) {
+    animation: ac-img-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+  .ac-cv .rounded-full.border,
+  .ac-cv [class*="rounded-full"][class*="px-4"] {
+    animation: ac-chip-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+}
+@supports (animation-timeline: view()) {
+  main article {
+    animation: ac-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+}
+@keyframes ac-rise { from { opacity: 0; transform: translateY(40px) scale(.97); } to { opacity: 1; transform: none; } }
+@media (hover: hover) {
+  main article { transition: box-shadow .4s ease, transform .4s cubic-bezier(.22,1,.36,1); }
+  main article:hover { box-shadow: 0 20px 44px -18px rgba(17,17,17,.3); }
+}
+@keyframes ac-tick-pop { 0% { transform: scale(0) rotate(-120deg); opacity: 0; } 70% { transform: scale(1.25) rotate(10deg); opacity: 1; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes ac-img-in { from { transform: scale(1.08); filter: saturate(.6) brightness(.9); } to { transform: scale(1); filter: none; } }
+@keyframes ac-chip-in { from { opacity: 0; transform: translateY(14px) scale(.9); } to { opacity: 1; transform: none; } }
+
+/* ── Performance: skip rendering off-screen sections until needed ── */
+.ac-cv { content-visibility: auto; contain-intrinsic-size: auto 720px; }
+
+/* ── Reduced motion: turn every decorative animation off ── */
+@media (prefers-reduced-motion: reduce) {
+  .ac-kenburns, .ac-hero-glow, .ac-hero-sweep, .ac-gold-shimmer,
+  main li > svg.lucide, main .ac-cv img, main article, .ac-cv .rounded-full.border, details[open] > :not(summary) { animation: none !important; }
+  .ac-card, .ac-card:hover, .ac-glass:hover, .ac-btn:hover { transform: none !important; }
+  .ac-btn-shine::after { display: none; }
+}
+
+/* The base `img { height: auto }` rule (unlayered) beats Tailwind's `h-full`
+   utility, so full-bleed background photos rendered at natural height and only
+   ever showed their top. This restores the intended cover-crop everywhere. */
+img.h-full { height: 100%; }
+
+/* ── Balanced card grids ──
+   CSS grid leaves an incomplete last row stuck to the left (e.g. 4 + 3, or 3 + 1).
+   .ac-fgrid lays cards out as a wrapping flex row instead, so the last row is
+   centred, while every card in a row still stretches to equal height.
+   Column count per breakpoint: ac-c2 (sm→2), ac-c3 (sm→2, lg→3), ac-c4 (sm→2, lg→4). */
+.ac-fgrid { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; }
+.ac-fgrid > * { flex: 0 0 100%; min-width: 0; }
+@media (min-width: 640px) { .ac-fgrid > * { flex-basis: calc(50% - .63rem); } }
+@media (min-width: 1024px) {
+  .ac-fgrid.ac-c3 > * { flex-basis: calc(33.333% - .84rem); }
+  .ac-fgrid.ac-c4 > * { flex-basis: calc(25% - .94rem); }
+}
+.ac-fgrid > * > .ac-card, .ac-fgrid > .ac-card { height: 100%; }
+/* Same, but only from the sm breakpoint up (mobile keeps its swipe carousel). */
+@media (min-width: 640px) {
+  .ac-fgrid-sm { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; }
+  .ac-fgrid-sm > * { flex: 0 0 calc(50% - .63rem); min-width: 0; }
+}
+@media (min-width: 1024px) {
+  .ac-fgrid-sm.ac-c3 > * { flex-basis: calc(33.333% - .84rem); }
+  .ac-fgrid-sm.ac-c4 > * { flex-basis: calc(25% - .94rem); }
+}
+
+/* Cards with a call-to-action: push the CTA to the bottom so every button in a
+   row lines up, whatever the length of the text above it. */
+.ac-card.flex-col > a:last-child, .ac-card.flex-col > button:last-child, .ac-card.flex-col > div:last-child:has(> a, > button) { margin-top: auto; }
+
+/* ═══ DYNAMIC LAYER 2 ═══════════════════════════════════════════════════════ */
+
+/* Gold reading-progress bar along the top of the window (pure CSS scroll timeline). */
+.ac-progress { display: none; }
+@supports (animation-timeline: scroll()) {
+  .ac-progress {
+    display: block; position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 9999; pointer-events: none;
+    background: linear-gradient(90deg, #E6AC00, #FFD54F, #FFF1B8);
+    transform-origin: 0 50%; transform: scaleX(0);
+    animation: ac-progress linear both; animation-timeline: scroll(root);
+    box-shadow: 0 0 10px rgba(255,213,79,.6);
+  }
+}
+@keyframes ac-progress { to { transform: scaleX(1); } }
+
+/* 3D tilt — cursor position (set in Layout) tilts the hovered card a few degrees. */
+@media (hover: hover) {
+  .ac-card:hover {
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px);
+  }
+}
+
+/* Button micro-interactions: trailing arrow nudges forward, press feedback, click ripple. */
+.ac-btn svg:last-child { transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.ac-btn:hover svg:last-child { transform: translateX(4px); }
+.ac-btn:active { transform: scale(.97); }
+.ac-ripple {
+  position: absolute; border-radius: 50%; pointer-events: none; z-index: 0;
+  background: rgba(255,255,255,.55); transform: scale(0); animation: ac-ripple .65s ease-out forwards;
+}
+@keyframes ac-ripple { to { transform: scale(4); opacity: 0; } }
+
+/* Tinted sections get two slow-drifting gold light orbs for depth. */
+.bg-\[\#FFFBEA\].ac-cv { position: relative; overflow: hidden; isolation: isolate; }
+.bg-\[\#FFFBEA\].ac-cv::before, .bg-\[\#FFFBEA\].ac-cv::after {
+  content: ""; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; filter: blur(10px);
+  width: 420px; height: 420px; background: radial-gradient(circle, rgba(255,213,79,.28), transparent 65%);
+}
+.bg-\[\#FFFBEA\].ac-cv::before { top: -140px; left: -120px; animation: ac-orb 18s ease-in-out infinite; }
+.bg-\[\#FFFBEA\].ac-cv::after { bottom: -160px; right: -120px; animation: ac-orb 22s ease-in-out infinite reverse; }
+@keyframes ac-orb { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,40px) scale(1.15); } }
+
+/* Gentle parallax on photos inside content sections as they cross the viewport. */
+@supports (animation-timeline: view()) {
+  main .ac-cv .overflow-hidden.rounded-\[22px\] > img, main .ac-cv .overflow-hidden.rounded-2xl > img, main .ac-cv .overflow-hidden.rounded-\[20px\] > img {
+    animation: ac-parallax linear both; animation-timeline: view(); animation-range: cover;
+  }
+}
+@keyframes ac-parallax { from { transform: scale(1.12) translateY(-4%); } to { transform: scale(1.12) translateY(4%); } }
+
+/* Section numbers / step badges pulse once when they appear. */
+@supports (animation-timeline: view()) {
+  .ac-cv .w-11.h-11.rounded-xl, .ac-cv .w-14.h-14.rounded-full {
+    animation: ac-badge-pop linear both; animation-timeline: view(); animation-range: entry 10% entry 90%;
+  }
+}
+@keyframes ac-badge-pop { 0% { transform: scale(.4) rotate(-20deg); opacity: 0; } 70% { transform: scale(1.15) rotate(4deg); opacity: 1; } 100% { transform: none; opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-progress, .ac-ripple { display: none !important; }
+  .bg-\[\#FFFBEA\].ac-cv::before, .bg-\[\#FFFBEA\].ac-cv::after,
+  .ac-cv .rounded-\[22px\] > img, .ac-cv .rounded-2xl > img,
+  .ac-cv .w-11.h-11.rounded-xl, .ac-cv .w-14.h-14.rounded-full { animation: none !important; }
+  .ac-card:hover { transform: none !important; }
+  .ac-btn:hover svg:last-child, .ac-btn:active { transform: none !important; }
+}

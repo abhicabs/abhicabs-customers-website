@@ -120,7 +120,7 @@ export default function Page() {
       {/* ═══ HERO ═══ */}
       <section style={{ position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
-          <img src="/images/tea-garden-road.jpg" alt="Cab booking services across India" fetchPriority="high" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <img src="/images/hero-fleet-hills.webp" srcSet="/images/hero-fleet-hills-900.webp 900w, /images/hero-fleet-hills.webp 1672w" sizes="100vw" alt="Cab booking services across India" fetchPriority="high" className="ac-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "60% center" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(118deg, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.66) 48%, rgba(17,17,17,0.35) 100%)" }} />
         </div>
         <div style={{ position: "relative", maxWidth: 1264, margin: "0 auto", padding: "clamp(56px,7vw,92px) 24px" }}>

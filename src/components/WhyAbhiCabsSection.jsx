@@ -4,8 +4,8 @@ import { LazyMotion, domAnimation, m, MotionConfig } from "framer-motion";
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
 const reveal = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE_OUT } },
+  hidden: { opacity: 0, y: 40, scale: 0.94, clipPath: "inset(8% 8% 8% 8% round 24px)" },
+  show: { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0% 0% 0% round 24px)", transition: { duration: 1.1, ease: EASE_OUT } },
 };
 
 export default function WhyAbhiCabsSection({ imageSrc, imageAlt = "Why Abhi Cabs", id = "about" }) {
@@ -20,7 +20,7 @@ export default function WhyAbhiCabsSection({ imageSrc, imageAlt = "Why Abhi Cabs
             viewport={{ once: true, amount: 0.3 }}
             style={{ borderRadius: 24, overflow: "hidden" }}
           >
-            <img
+            <img loading="lazy" decoding="async"
               src={imageSrc}
               alt={imageAlt}
               style={{ width: "100%", height: "auto", display: "block" }}

@@ -125,7 +125,7 @@ export default function BlogDetails({ vikeSlug }) {
         <div>
           {/* Mobile / tablet table of contents */}
           {toc.length > 0 && (
-            <details className="lg:hidden mb-8 border border-border rounded-[8px] p-4 bg-[#FAFAFA]">
+            <details data-no-hover className="lg:hidden mb-8 border border-border rounded-[8px] p-4 bg-[#FAFAFA]">
               <summary className="font-extrabold text-[15px] cursor-pointer">In this article</summary>
               <ul className="mt-3 space-y-2 text-[14.5px]">{toc.map((t) => <li key={t.id} className={t.sub ? "pl-4" : ""}><a href={`#${t.id}`} className="hover:text-[#E6AC00]">{t.text}</a></li>)}</ul>
             </details>

@@ -91,7 +91,7 @@ export default function ContactForm({ content, subject, onSubjectChange, message
   const ai = (k, id) => ({ id, "aria-invalid": show(k) ? "true" : "false", "aria-describedby": show(k) ? `${id}-err` : undefined, required: true, className: `${input} ${show(k) ? "border-error" : "border-border"}` });
 
   return (
-    <Section id="contact-form" tone="white">
+    <Section id="contact-form" tone="white" lazyPaint={false}>
       <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] rounded-[26px] overflow-hidden border border-[#EFEFEF] shadow-[0_20px_60px_rgba(0,0,0,.08)]">
         {/* Assurance side */}
         <div className="relative bg-[#111] text-white p-7 md:p-10 flex flex-col justify-between min-h-[320px] overflow-hidden">

@@ -969,7 +969,7 @@ export default function Page() {
             <div style={{ background: "#fff", border: "1px solid #EFEFEF", borderRadius: 20, overflow: "hidden" }}>
               {/* Vehicle banner — actual selected vehicle photo */}
               <div style={{ height: 180, overflow: "hidden", position: "relative", background: "#F6F6F4" }}>
-                <img
+                <img loading="lazy" decoding="async"
                   className="vehicle-photo"
                   src={selected.vehicleImg || vehicle.img}
                   alt={selected.vehicleName || vehicle.name}

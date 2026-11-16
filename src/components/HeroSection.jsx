@@ -12,40 +12,67 @@ import {
 import BookingWidget from "./BookingWidget";
 
 /* ------------------------------------------------------------------ */
-/* Motion tokens — one orchestrated page-load sequence, nothing else. */
+/* Motion tokens                                                       */
 /* ------------------------------------------------------------------ */
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
 const heroContent = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
+  show: { transition: { staggerChildren: 0.14, delayChildren: 0.3 } },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT } },
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE_OUT } },
 };
 
-// Headline lines reveal from under a mask (parent has overflow: hidden)
 const headlineLine = {
-  hidden: { y: "105%" },
-  show: { y: "0%", transition: { duration: 0.85, ease: EASE_OUT } },
+  hidden: { y: "110%", opacity: 0 },
+  show: { y: "0%", opacity: 1, transition: { duration: 0.9, ease: EASE_OUT } },
+};
+
+const featureItem = {
+  hidden: { opacity: 0, y: 14, scale: 0.92 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: EASE_OUT } },
 };
 
 const featureGrid = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
-
-const featureItem = {
-  hidden: { opacity: 0, x: -12 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE_OUT } },
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
 };
 
 const checkIcon = {
-  hidden: { scale: 0 },
-  show: { scale: 1, transition: { type: "spring", stiffness: 420, damping: 18 } },
+  hidden: { scale: 0, rotate: -45 },
+  show: { scale: 1, rotate: 0, transition: { type: "spring", stiffness: 420, damping: 18 } },
 };
+
+/* Ken Burns CSS keyframes — injected once */
+const KEN_BURNS_CSS = `
+@keyframes kenBurns {
+  0%   { transform: scale(1.0) translate(0%, 0%); }
+  25%  { transform: scale(1.12) translate(-1.5%, -1%); }
+  50%  { transform: scale(1.18) translate(0.5%, -2%); }
+  75%  { transform: scale(1.10) translate(1%, -0.5%); }
+  100% { transform: scale(1.0) translate(0%, 0%); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 0.7; transform: scale(1.08); }
+}
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ken-burns-img { animation: none !important; }
+  .hero-glow { animation: none !important; }
+  .hero-badge { animation: none !important; }
+}
+`;
 
 const DEFAULT_FEATURES = ["Verified Drivers", "Transparent Pricing", "Comfortable Vehicles", "24×7 Support"];
 
@@ -60,135 +87,186 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
   const heroRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
 
-  // Subtle parallax on the background photo while the hero scrolls out.
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "12%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", prefersReducedMotion ? "0%" : "14%"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.6]);
 
   return (
-    // LazyMotion + `m` keeps the bundle small (~5kb vs ~34kb for full `motion`).
-    // reducedMotion="user" auto-disables transform animations for users who opt out.
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
-        {/* HERO */}
+        {/* Inject Ken Burns + shimmer keyframes */}
+        <style dangerouslySetInnerHTML={{ __html: KEN_BURNS_CSS }} />
+
         <section
           ref={heroRef}
-          style={{ position: "relative", background: "#0d0d0d", overflow: "hidden" }}
+          style={{ position: "relative", background: "#0a0a0a", overflow: "hidden" }}
         >
-          {/* Photo layer: extended 15% above so parallax never exposes a gap */}
+          {/* ── Ken Burns animated background ── */}
           <m.div
             style={{
               position: "absolute",
-              top: "-15%",
-              left: 0,
-              right: 0,
-              bottom: 0,
+              top: "-18%",
+              left: "-5%",
+              right: "-5%",
+              bottom: "-5%",
               y: bgY,
               willChange: "transform",
             }}
           >
-            <m.img
+            <img
+              className="ken-burns-img"
               src={heroImage || "/images/Herosection.jpg"}
               alt=""
               fetchPriority="high"
               decoding="async"
-              initial={{ scale: 1.1, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.6, ease: EASE_OUT }}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                animation: "kenBurns 28s ease-in-out infinite",
+              }}
             />
           </m.div>
 
-          <div
+          {/* ── Multi-layer gradient overlay for depth ── */}
+          <m.div
             style={{
               position: "absolute",
               inset: 0,
-              background:
-                "linear-gradient(180deg,rgba(13,13,13,.85) 0%,rgba(13,13,13,.6) 40%,rgba(13,13,13,.5) 65%,rgba(13,13,13,.75) 100%)",
+              opacity: overlayOpacity,
               pointerEvents: "none",
             }}
-          />
+          >
+            {/* Main darkness overlay */}
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(180deg, rgba(8,8,8,0.88) 0%, rgba(8,8,8,0.5) 35%, rgba(8,8,8,0.42) 55%, rgba(8,8,8,0.7) 85%, rgba(8,8,8,0.92) 100%)",
+            }} />
+            {/* Vignette */}
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(ellipse 70% 60% at 50% 40%, transparent 40%, rgba(0,0,0,0.5) 100%)",
+            }} />
+            {/* Warm gold ambient glow behind heading */}
+            <div
+              className="hero-glow"
+              style={{
+                position: "absolute",
+                top: "18%",
+                left: "50%",
+                width: "min(600px, 80vw)",
+                height: "min(350px, 40vw)",
+                transform: "translateX(-50%)",
+                background: "radial-gradient(ellipse, rgba(255,213,79,0.08) 0%, transparent 70%)",
+                animation: "pulseGlow 6s ease-in-out infinite",
+                pointerEvents: "none",
+              }}
+            />
+          </m.div>
 
+          {/* ── Content ── */}
           <div
             style={{
               position: "relative",
               maxWidth: 1280,
               margin: "0 auto",
-              padding: "clamp(48px,6vw,72px) 22px clamp(40px,5vw,60px)",
+              padding: "clamp(52px,7vw,80px) 22px clamp(44px,5.5vw,64px)",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
             }}
           >
-            {/* ── Hero text — centered ── */}
             <m.div
               variants={heroContent}
               initial="hidden"
               animate="show"
               style={{ maxWidth: 1200, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}
             >
+              {/* ── Headline ── */}
               <h1
                 className="hero-h1"
                 style={{
                   fontWeight: 800,
-                  fontSize: "clamp(34px,5.5vw,64px)",
+                  fontSize: "clamp(36px,5.8vw,68px)",
                   lineHeight: 1.05,
                   color: "#fff",
                   margin: 0,
-                  letterSpacing: "-.025em",
-                  whiteSpace: "nowrap",
+                  letterSpacing: "-.03em",
+                  overflow: "hidden",
                 }}
               >
                 <m.span variants={headlineLine} style={{ display: "inline" }}>
                   {heroTitle}
-                </m.span>
-                {" "}
+                </m.span>{" "}
                 <m.span
                   variants={headlineLine}
                   className="hero-h1-accent"
-                  style={{ display: "inline", color: "#FFD54F" }}
+                  style={{
+                    display: "inline",
+                    background: "linear-gradient(135deg, #FFD54F 0%, #FFB300 50%, #FFD54F 100%)",
+                    backgroundSize: "200% auto",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    animation: "shimmer 4s linear infinite",
+                  }}
                 >
                   {heroAccent}
                 </m.span>
               </h1>
 
+              {/* ── Description — split into two lines for impact ── */}
               <m.p
                 variants={fadeUp}
                 style={{
-                  fontSize: "clamp(14px,1.5vw,17px)",
-                  lineHeight: 1.65,
-                  color: "rgba(255,255,255,.7)",
+                  fontSize: "clamp(15px,1.6vw,18px)",
+                  lineHeight: 1.7,
+                  color: "rgba(255,255,255,0.8)",
                   fontWeight: 400,
-                  margin: "16px 0 0",
-                  maxWidth: 700,
+                  margin: "20px 0 0",
+                  maxWidth: 680,
+                  textShadow: "0 2px 20px rgba(0,0,0,0.5)",
                 }}
               >
                 {heroDesc}
               </m.p>
 
+              {/* ── Feature badges — glassmorphism pills ── */}
               <m.div
                 variants={featureGrid}
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
                   justifyContent: "center",
-                  gap: "10px 28px",
-                  marginTop: 20,
+                  gap: "10px",
+                  marginTop: 26,
                 }}
               >
-                {FEATURES.map((f) => (
+                {FEATURES.map((f, i) => (
                   <m.span
                     key={f}
                     variants={featureItem}
+                    className="hero-badge"
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 8,
                       color: "#fff",
-                      fontWeight: 500,
+                      fontWeight: 600,
                       fontSize: 13.5,
+                      padding: "8px 16px",
+                      borderRadius: 100,
+                      background: "rgba(255,255,255,0.08)",
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      animation: `floatBadge ${3 + i * 0.4}s ease-in-out infinite`,
+                      animationDelay: `${i * 0.3}s`,
                     }}
                   >
                     <m.svg variants={checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -207,20 +285,19 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
               </m.div>
             </m.div>
 
-            {/* ── Booking widget — centered inside hero ── */}
+            {/* ── Booking widget ── */}
             <m.div
               id="booking"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.75, ease: EASE_OUT }}
+              initial={{ opacity: 0, y: 50, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.8, ease: EASE_OUT }}
               style={{
                 width: "100%",
                 maxWidth: 1120,
-                marginTop: "clamp(28px,4vw,44px)",
+                marginTop: "clamp(30px,4.5vw,48px)",
                 background: "#fff",
                 borderRadius: 22,
-                boxShadow: "0 30px 70px rgba(0,0,0,.28)",
-                border: "1px solid rgba(255,255,255,.12)",
+                boxShadow: "0 30px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06)",
                 overflow: "hidden",
               }}
             >

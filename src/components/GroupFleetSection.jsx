@@ -91,7 +91,7 @@ export default function GroupFleetSection({ vehicles, id = "group-fleet" }) {
                 style={{ background: "#fff", border: "1px solid #EFEFEF", borderRadius: 18, overflow: "hidden", display: "flex", flexDirection: "column" }}
               >
                 <div style={{ aspectRatio: "16/9", background: "#F0F0F0", position: "relative", overflow: "hidden" }}>
-                  <img src={v.img} alt={v.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                  <img loading="lazy" decoding="async" src={v.img} alt={v.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                   <span style={{ position: "absolute", top: 9, left: 10, fontSize: 10, fontWeight: 600, color: "#111", background: "#FFD54F", padding: "3px 9px", borderRadius: 9999 }}>
                     {v.seats}
                   </span>
@@ -171,7 +171,7 @@ export default function GroupFleetSection({ vehicles, id = "group-fleet" }) {
                         aria-label={`Show image ${i + 1}`}
                         style={{ width: 64, height: 44, borderRadius: 8, overflow: "hidden", border: activeImg === i ? "2px solid #FFD54F" : "2px solid transparent", opacity: activeImg === i ? 1 : 0.55, cursor: "pointer", padding: 0, transition: "opacity .2s, border-color .2s" }}
                       >
-                        <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                        <img loading="lazy" decoding="async" src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                       </m.button>
                     ))}
                   </div>

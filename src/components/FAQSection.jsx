@@ -1,4 +1,4 @@
-import React, { useId, useState } from "react";
+import React, { useId, useRef, useState } from "react";
 import { LazyMotion, domAnimation, m, MotionConfig, AnimatePresence } from "framer-motion";
 
 // FAQ accordion — same props as before, plus an optional `contactHref`
@@ -19,6 +19,7 @@ const itemIn = {
 
 export default function FAQSection({ faqs, defaultOpenIndex = 0, contactHref = "/contact-us#contact-form" }) {
   const [openIdx, setOpenIdx] = useState(defaultOpenIndex);
+  const hoverT = useRef(0);
   const baseId = useId();
 
   return (
@@ -50,6 +51,8 @@ export default function FAQSection({ faqs, defaultOpenIndex = 0, contactHref = "
                 a={f.a}
                 open={openIdx === i}
                 onToggle={() => setOpenIdx(openIdx === i ? -1 : i)}
+                onHover={() => { clearTimeout(hoverT.current); hoverT.current = setTimeout(() => setOpenIdx(i), 160); }}
+                onHoverEnd={() => clearTimeout(hoverT.current)}
                 id={`${baseId}-${i}`}
               />
             ))}
@@ -93,13 +96,15 @@ export default function FAQSection({ faqs, defaultOpenIndex = 0, contactHref = "
   );
 }
 
-function FAQItem({ q, a, open, onToggle, id }) {
+function FAQItem({ q, a, open, onToggle, id, onHover, onHoverEnd }) {
   const btnId = `${id}-q`;
   const panelId = `${id}-a`;
 
   return (
     <m.div
       variants={itemIn}
+      onMouseEnter={typeof window !== "undefined" && window.matchMedia?.("(hover: hover)").matches ? onHover : undefined}
+      onMouseLeave={onHoverEnd}
       className={`relative overflow-hidden rounded-2xl border transition-[border-color,box-shadow,background-color] duration-300 ${
         open
           ? "border-[#F0D27A] bg-[linear-gradient(180deg,#FFFFFF_0%,#FFFBEE_100%)] shadow-[0_18px_36px_-24px_rgba(240,165,0,0.55)]"

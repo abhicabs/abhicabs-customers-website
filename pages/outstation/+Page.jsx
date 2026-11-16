@@ -6,6 +6,7 @@ import { EYEBROW } from "../../src/components/ui/classNames";
 import SectionHead from "../../src/components/ui/SectionHead";
 import Button from "../../src/components/ui/Button";
 import Card from "../../src/components/ui/Card";
+import Reveal from "../../src/components/ui/Reveal";
 import ServiceBooking from "../../src/components/ServiceBooking";
 import ServiceInterlink, { BlogInterlink } from "../../src/components/ServiceInterlink";
 import useBlogs from "../../src/hooks/useBlogs";
@@ -82,23 +83,25 @@ export default function Page() {
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/images/tea-garden-road.jpg" alt="Open highway through Western Ghats" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
+          <img fetchPriority="high" src="/images/hero-hill-road.webp" srcSet="/images/hero-hill-road-900.webp 900w, /images/hero-hill-road.webp 1672w" sizes="100vw" alt="Open highway through Western Ghats" className="w-full h-full object-cover ac-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 60%" }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
+          <div aria-hidden className="ac-hero-glow absolute -left-24 -bottom-24 w-[420px] h-[420px] rounded-full" style={{ background: "radial-gradient(circle,rgba(255,213,79,.22),transparent 65%)" }} />
+          <div aria-hidden className="ac-hero-sweep absolute inset-0" />
         </div>
         <div className="relative max-w-[1264px] mx-auto px-6 py-20 md:py-32">
           <Breadcrumb items={[["Home", "/"], ["Outstation Cabs", null]]} light />
-          <h1 className="text-[32px] md:text-[52px] font-bold tracking-tight text-white leading-tight max-w-[1200px]">
-            {heroTitle} {heroAccent}
+          <h1 className="ac-hero-fade-up text-[32px] md:text-[52px] font-bold tracking-tight text-white leading-tight max-w-[1200px]" style={{ textShadow: "0 4px 30px rgba(0,0,0,.45)" }}>
+            {heroTitle} <span className="ac-gold-shimmer">{heroAccent}</span>
           </h1>
-          <p className="mt-4 text-white/80 text-[17px] max-w-[800px]">
+          <p className="ac-hero-fade-up ac-hero-fade-up-delay mt-4 text-white/85 text-[17px] max-w-[800px]" style={{ textShadow: "0 2px 18px rgba(0,0,0,.6)" }}>
             {heroDesc}
           </p>
-          <div className="mt-10">
+          <div className="ac-hero-fade-up ac-hero-fade-up-delay2 mt-10">
             <ServiceBooking widgetKey="outstation" initialMode="one-way" />
           </div>
-          <div className="flex flex-wrap gap-6 mt-9">
+          <div className="ac-hero-fade-up ac-hero-fade-up-delay3 flex flex-wrap gap-3 mt-9">
             {[["Fare shown first","Before you confirm"],["Round trips","Driver stays with you"],["4 states","Karnataka, AP, Telangana & Maharashtra"]].map(([big,small])=>(
-              <div key={big} className="text-white/90">
+              <div key={big} className="ac-glass rounded-2xl px-4 py-2.5 text-white/90">
                 <div className="text-[15px] font-bold">{big}</div>
                 <div className="text-[12px] text-white/60">{small}</div>
               </div>
@@ -108,7 +111,7 @@ export default function Page() {
       </section>
 
       {/* ── Trip Types ─────────────────────────────────────────────────── */}
-      <section className="py-14 md:py-20">
+      <section className="ac-cv py-14 md:py-20">
         <div className="max-w-[1264px] mx-auto px-6">
           <SectionHead
             center
@@ -118,8 +121,9 @@ export default function Page() {
             description="Whether you need a quick one-way drop or a week-long road trip with multiple stops — the booking is the same."
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5.5">
-            {TRIP_TYPES.map((t) => (
-              <Card key={t.title} className="p-6 flex flex-col">
+            {TRIP_TYPES.map((t, i) => (
+              <Reveal key={t.title} variant="zoom" delay={i * 0.1}>
+              <Card className="p-6 flex flex-col h-full">
                 <div className="w-11 h-11 rounded-xl bg-primary-tint text-primary flex items-center justify-center mb-4">{t.icon}</div>
                 <h3 className="text-[18px] font-bold">{t.title}</h3>
                 <p className="text-[14.5px] text-text-secondary mt-2 flex-1">{t.desc}</p>
@@ -127,23 +131,24 @@ export default function Page() {
                   <IconCheck className="w-4 h-4" /> {t.highlight}
                 </div>
               </Card>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── How It Works ───────────────────────────────────────────────── */}
-      <section className="py-14 md:py-20 bg-white border-y border-border">
+      <section className="ac-cv py-14 md:py-20 bg-white border-y border-border">
         <div className="max-w-[1264px] mx-auto px-6">
           <SectionHead center className="mb-12" eyebrow="How It Works" title="Book in under a minute" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[880px] mx-auto">
             {STEPS.map((s, i) => (
-              <div key={s.n} className="text-center">
-                <div className="w-14 h-14 rounded-full bg-primary text-white text-[22px] font-extrabold flex items-center justify-center mx-auto shadow-brand">{s.n}</div>
+              <Reveal key={s.n} variant="up" delay={i * 0.15} className="text-center">
+                <div className="w-14 h-14 rounded-full bg-primary text-white text-[22px] font-extrabold flex items-center justify-center mx-auto shadow-brand transition-transform duration-500 hover:scale-110 hover:rotate-6">{s.n}</div>
                 {i < STEPS.length - 1 && <div className="hidden md:block h-0.5 bg-border w-full mt-7 -mb-7" />}
                 <h4 className="mt-5 text-[16px] font-bold">{s.title}</h4>
                 <p className="mt-2 text-[14px] text-text-secondary max-w-[240px] mx-auto">{s.desc}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
           <div className="text-center mt-10">
@@ -153,18 +158,18 @@ export default function Page() {
       </section>
 
       {/* ── Popular Routes ─────────────────────────────────────────────── */}
-      <section className="py-14 md:py-20">
+      <section className="ac-cv py-14 md:py-20">
         <div className="max-w-[1264px] mx-auto px-6">
           <SectionHead className="mb-10" eyebrow="Popular Routes" title="Most booked outstation routes from Bangalore" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {ROUTES.map((r) => (
+            {ROUTES.map((r, i) => (
+              <Reveal key={`${r.from}-${r.to}`} variant="zoom" delay={(i % 3) * 0.08}>
               <a
-                key={`${r.from}-${r.to}`}
                 href="#booking"
-                className="group bg-white border border-border rounded-[16px] overflow-hidden hover:shadow-lifted transition-shadow flex flex-col"
+                className="ac-card group bg-white border border-border rounded-[16px] overflow-hidden flex flex-col h-full"
               >
                 <div className="relative aspect-[16/8] overflow-hidden">
-                  <img src={r.img} alt={`${r.from} to ${r.to}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img loading="lazy" decoding="async" src={r.img} alt={`${r.from} to ${r.to}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   {r.tag && (
                     <span className="absolute top-2.5 left-2.5 text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/90 text-primary">{r.tag}</span>
                   )}
@@ -184,35 +189,36 @@ export default function Page() {
                   </div>
                 </div>
               </a>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── What's Included ────────────────────────────────────────────── */}
-      <section className="py-14 md:py-20 bg-primary-tint border-y border-border">
+      <section className="ac-cv py-14 md:py-20 bg-primary-tint border-y border-border">
         <div className="max-w-[1264px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <SectionHead eyebrow="Transparent Pricing" title="Everything included in your fare" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-7">
-              {INCLUDED.map((item) => (
-                <div key={item} className="flex items-start gap-2.5">
+              {INCLUDED.map((item, i) => (
+                <Reveal key={item} variant="left" delay={i * 0.05} className="flex items-start gap-2.5">
                   <div className="w-5 h-5 rounded-full bg-success text-white flex items-center justify-center shrink-0 mt-0.5">
                     <IconCheck className="w-3 h-3" />
                   </div>
                   <span className="text-[14.5px] text-text">{item}</span>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
           <div>
             <h3 className="text-[20px] font-bold mt-1 mb-5">Charged separately (at actuals)</h3>
             <div className="space-y-3">
-              {EXTRAS.map((item) => (
-                <div key={item} className="flex items-center gap-2.5 text-[14.5px] text-text-secondary">
+              {EXTRAS.map((item, i) => (
+                <Reveal key={item} variant="right" delay={i * 0.05} className="flex items-center gap-2.5 text-[14.5px] text-text-secondary">
                   <IconChevronRight className="w-4 h-4 text-text-secondary shrink-0" />
                   {item}
-                </div>
+                </Reveal>
               ))}
             </div>
             <div className="bg-white border border-border rounded-[14px] p-4 mt-6">
@@ -225,7 +231,7 @@ export default function Page() {
       </section>
 
       {/* ── Why AbhiCabs ───────────────────────────────────────────────── */}
-      <section className="py-14 md:py-20 bg-white">
+      <section className="ac-cv py-14 md:py-20 bg-white">
         <div className="max-w-[1264px] mx-auto px-6">
           <SectionHead center className="mb-11" eyebrow="Why AbhiCabs" title="Built for outstation, not retrofitted" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -235,11 +241,13 @@ export default function Page() {
               ["Live GPS tracking", "Track your cab in real time. Share the trip link with family so they know you're safe.", "📍"],
               ["24×7 support", "A real person picks up the phone — not a chatbot. Call, WhatsApp, or email, any hour.", "📞"],
             ].map(([title, desc, emoji]) => (
-              <Card key={title} className="p-5.5 text-center">
+              <Reveal key={title} variant="zoom" delay={["Upfront fares","Verified drivers","Live GPS tracking","24×7 support"].indexOf(title) * 0.08}>
+              <Card className="p-5.5 text-center h-full">
                 <div className="mb-3 flex justify-center"><EmojiIcon glyph={emoji} size={32} color="#F5A623" /></div>
                 <h4 className="text-[16px] font-bold">{title}</h4>
                 <p className="text-[13.5px] text-text-secondary mt-2">{desc}</p>
               </Card>
+              </Reveal>
             ))}
           </div>
         </div>

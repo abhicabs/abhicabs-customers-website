@@ -10,7 +10,7 @@ import React from "react";
 //   lg  → 56px tall — primary page CTAs (Search, Confirm, Pay)
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-full font-bold whitespace-nowrap leading-none " +
+  "ac-btn relative isolate overflow-hidden inline-flex items-center justify-center gap-2 rounded-full font-bold whitespace-nowrap leading-none " +
   "transition-all active:scale-[.97] focus-visible:outline-2 focus-visible:outline-offset-2 " +
   "focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
 
@@ -22,13 +22,13 @@ const SIZES = {
 };
 
 const VARIANTS = {
-  primary: "bg-primary text-brand-black shadow-brand hover:bg-primary-dark",
+  primary: "ac-btn-shine bg-primary text-brand-black shadow-brand hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(230,172,0,.35)]",
   outline: "bg-white text-brand-black border-2 border-brand-black hover:bg-primary hover:border-primary hover:text-brand-black",
   outlineInverse: "bg-transparent text-white border-2 border-white/30 hover:bg-white/10 hover:border-white/50",
   ghost: "bg-transparent text-text hover:bg-black/5",
   danger: "bg-error text-white hover:opacity-90",
   dangerOutline: "bg-white text-error border-2 border-red-200 hover:bg-red-50",
-  inverse: "bg-primary text-brand-black hover:bg-primary-dark font-bold",
+  inverse: "ac-btn-shine bg-primary text-brand-black hover:bg-primary-dark font-bold hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(230,172,0,.35)]",
 };
 
 export default function Button({

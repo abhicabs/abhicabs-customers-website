@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, ArrowLeft, Quote, Play, ExternalLink } from "lucide-react";
 import { EYEBROW } from "./ui/classNames";
 import Section from "./ui/Section";
@@ -119,7 +120,7 @@ function CustomTestimonialSection({ data }) {
         {data.heading && <SectionHead center className="mb-2" title={data.heading} />}
         {data.subtitle && <p className="text-center text-[14px] text-text-secondary mb-9">{data.subtitle}</p>}
         {!data.subtitle && data.heading && <div className="mb-9" />}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="ac-fgrid ac-c3 gap-5">
           {(data.items || []).map((t, i) => (
             <Card key={i} className="p-6">
               <Quote size={20} className="text-[#E6AC00] mb-3" aria-hidden />
@@ -261,9 +262,9 @@ function CustomIconListSection({ data }) {
         {data.heading && <SectionHead center className="mb-2" title={data.heading} />}
         {data.subtitle && <p className="text-center text-[14px] text-text-secondary mb-9">{data.subtitle}</p>}
         {!data.subtitle && data.heading && <div className="mb-9" />}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="ac-fgrid ac-c3 gap-5">
           {(data.items || []).map((item, i) => (
-            <Reveal key={i} delay={i * 0.05}>
+            <Reveal key={i} variant="zoom" delay={(i % 4) * 0.06}>
               <Card className="p-5 h-full">
                 <div className="flex items-start gap-3.5">
                   <div className="w-10 h-10 rounded-[11px] bg-primary-tint flex items-center justify-center text-[18px] shrink-0">{item.emoji || "✦"}</div>
@@ -520,7 +521,7 @@ export default function ServiceLanding({ cfg }) {
   const SECTIONS = {
     hero: () => (
       <PageHero
-        center={canBook} image={c.hero.image} imageAlt={cfg.hero.alt || ""}
+        center={canBook} image={c.hero.image} imagePosition={c.hero.image === cfg.hero.image ? cfg.hero.imagePosition : undefined} imageAlt={cfg.hero.alt || ""}
         breadcrumb={cfg.breadcrumb || [["Home", "/"], ["Services", "/services"], [cfg.hero.eyebrow, null]]}
         title={c.hero.title} subtitle={cfg.hero.subheading} description={c.hero.description}
         actions={!canBook && <>
@@ -535,7 +536,7 @@ export default function ServiceLanding({ cfg }) {
     intro: () => (
       <Section tone={getTone("intro", "page")}>
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-11 lg:gap-16 items-center">
-          <Reveal>
+          <Reveal variant="left">
             <div className={EYEBROW}>{cfg.intro.eyebrow}</div>
             <h2 className="text-[27px] md:text-[34px] font-bold tracking-tight leading-tight">{cfg.intro.heading}</h2>
             {(cfg.intro.body || []).map((p, i) => <p key={i} className="mt-4 text-text-secondary text-[15.5px] leading-relaxed">{renderInline(p)}</p>)}
@@ -552,7 +553,7 @@ export default function ServiceLanding({ cfg }) {
             )}
             <div className="mt-7"><BookBtn size="lg" /></div>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} variant="right">
             <img src={cfg.intro.image} alt={cfg.intro.alt || ""} loading="lazy" className="rounded-[22px] w-full aspect-[5/4] object-cover" style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.14)" }} />
           </Reveal>
         </div>
@@ -563,9 +564,9 @@ export default function ServiceLanding({ cfg }) {
       <Section tone={getTone("features", "white")}>
         <Reveal><SectionHead center className="mb-11" eyebrow={cfg.features.eyebrow || "What You Get"} title={cfg.features.heading} subheading={cfg.features.subheading} /></Reveal>
         {cfg.features.intro && <Reveal><p className="max-w-[780px] mx-auto text-center -mt-6 mb-10 text-text-secondary text-[15.5px] leading-relaxed">{renderInline(cfg.features.intro)}</p></Reveal>}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        <div className="ac-fgrid ac-c4 gap-3 sm:gap-5">
           {cfg.features.items.map((f, i) => { const FeatureIcon = resolveIcon(f); return (
-            <Reveal key={f.title} delay={i * 0.06}>
+            <Reveal key={f.title} variant="zoom" delay={(i % 4) * 0.07}>
               <Card className="p-4 sm:p-6 h-full flex sm:block items-start gap-3.5">
                 <div className="w-10 h-10 sm:w-[46px] sm:h-[46px] shrink-0 rounded-[12px] sm:rounded-[13px] bg-primary-tint flex items-center justify-center sm:mb-3"><FeatureIcon size={20} className="text-[#E6AC00]" aria-hidden /></div>
                 <div className="min-w-0">
@@ -579,57 +580,112 @@ export default function ServiceLanding({ cfg }) {
       </Section>
     ),
 
-    pricing: () => (
-      <Section tone={getTone("pricing", "tint")} narrow>
-        <Reveal><SectionHead center className="mb-9" eyebrow={cfg.pricing.eyebrow || "Pricing"} title={cfg.pricing.heading} subheading={cfg.pricing.subheading} description={cfg.pricing.description} /></Reveal>
-        <div className="rounded-[22px] overflow-hidden border border-border grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] bg-white">
-          <div className="p-5 sm:p-8 md:p-10">
-            {cfg.pricing.listHeading !== null && <h3 className="text-[17px] font-bold">{cfg.pricing.listHeading || "What affects your fare"}</h3>}
-            {cfg.pricing.intro && <p className="text-[14.5px] text-text-secondary leading-relaxed">{renderInline(cfg.pricing.intro)}</p>}
-            <ul className="mt-4 space-y-3">
-              {cfg.pricing.points.map((t) => (<li key={t} className="flex items-start gap-3 text-[14.5px] leading-relaxed"><CheckCircle2 size={18} className="text-[#E6AC00] shrink-0 mt-[3px]" aria-hidden /> <span>{labelled(t)}</span></li>))}
-            </ul>
-            <p className="text-[13px] text-text-secondary mt-5 leading-relaxed">{cfg.pricing.note || "Amounts are indicative. Get an exact, all-inclusive quote in the booking flow — the same pricing used at checkout."}</p>
-            {(cfg.pricing.links || []).map((l, i) => <p key={i} className="text-[14px] mt-3 leading-relaxed">{renderInline(l)}</p>)}
+    pricing: () => {
+      const EASE = [0.22, 1, 0.36, 1];
+      const slideLeft = { hidden: { opacity: 0, x: -120 }, show: { opacity: 1, x: [null, 8, -4, 2, 0], transition: { duration: 0.9, ease: EASE, x: { duration: 1.1, times: [0, 0.6, 0.75, 0.88, 1], ease: "easeOut" } } } };
+      const slideRight = { hidden: { opacity: 0, x: 120 }, show: { opacity: 1, x: [null, -8, 4, -2, 0], transition: { duration: 0.9, ease: EASE, x: { duration: 1.1, times: [0, 0.6, 0.75, 0.88, 1], ease: "easeOut" } } } };
+      const tickPop = { hidden: { scale: 0, rotate: -90 }, show: (i) => ({ scale: 1, rotate: 0, transition: { type: "spring", stiffness: 500, damping: 15, delay: 0.9 + i * 0.12 } }) };
+      return (
+        <Section tone={getTone("pricing", "tint")} narrow>
+          <Reveal><SectionHead center className="mb-9" eyebrow={cfg.pricing.eyebrow || "Pricing"} title={cfg.pricing.heading} subheading={cfg.pricing.subheading} description={cfg.pricing.description} /></Reveal>
+          <div className="rounded-[22px] overflow-hidden border border-border grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] bg-white">
+            <motion.div
+              className="p-5 sm:p-8 md:p-10"
+              variants={slideLeft}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+            >
+              {cfg.pricing.listHeading !== null && <h3 className="text-[17px] font-bold">{cfg.pricing.listHeading || "What affects your fare"}</h3>}
+              {cfg.pricing.intro && <p className="text-[14.5px] text-text-secondary leading-relaxed">{renderInline(cfg.pricing.intro)}</p>}
+              <ul className="mt-4 space-y-3">
+                {cfg.pricing.points.map((t, i) => (
+                  <li key={t} className="flex items-start gap-3 text-[14.5px] leading-relaxed">
+                    <motion.span variants={tickPop} custom={i} initial="hidden" whileInView="show" viewport={{ once: true }}>
+                      <CheckCircle2 size={18} className="text-[#E6AC00] shrink-0 mt-[3px]" aria-hidden />
+                    </motion.span>
+                    <span>{labelled(t)}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[13px] text-text-secondary mt-5 leading-relaxed">{cfg.pricing.note || "Amounts are indicative. Get an exact, all-inclusive quote in the booking flow — the same pricing used at checkout."}</p>
+              {(cfg.pricing.links || []).map((l, i) => <p key={i} className="text-[14px] mt-3 leading-relaxed">{renderInline(l)}</p>)}
+            </motion.div>
+            <motion.div
+              className="p-6 sm:p-8 md:p-10 flex flex-col justify-center text-white"
+              style={{ background: "linear-gradient(140deg,#1C1C1C,#0a0a0a)" }}
+              variants={slideRight}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+            >
+              <div className="text-[13px] font-bold text-primary">No hidden charges</div>
+              <p className="text-[21px] font-bold mt-2 leading-tight">See your exact fare before you book</p>
+              <div className="mt-6"><BookBtn variant="inverse" size="lg">{cfg.pricing.ctaLabel || (canBook ? "Calculate My Fare" : "Talk to Us")}</BookBtn></div>
+            </motion.div>
           </div>
-          <div className="p-6 sm:p-8 md:p-10 flex flex-col justify-center text-white" style={{ background: "linear-gradient(140deg,#1C1C1C,#0a0a0a)" }}>
-            <div className="text-[13px] font-bold text-primary">No hidden charges</div>
-            <p className="text-[21px] font-bold mt-2 leading-tight">See your exact fare before you book</p>
-            <div className="mt-6"><BookBtn variant="inverse" size="lg">{cfg.pricing.ctaLabel || (canBook ? "Calculate My Fare" : "Talk to Us")}</BookBtn></div>
-          </div>
-        </div>
-      </Section>
-    ),
+        </Section>
+      );
+    },
 
-    fleet: () => cfg.fleet ? (
-      <Section tone={getTone("fleet", "white")} narrow>
-        <Reveal><SectionHead center className="mb-9" eyebrow={cfg.fleet.eyebrow || "Our Fleet"} title={cfg.fleet.heading} subheading={cfg.fleet.subheading} /></Reveal>
-        <div className="rounded-[22px] overflow-hidden border border-border grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] bg-white">
-          <div className="p-5 sm:p-8 md:p-10">
-            {cfg.fleet.intro && <p className="text-[14.5px] text-text-secondary leading-relaxed">{renderInline(cfg.fleet.intro)}</p>}
-            <ul className="mt-4 space-y-3">
-              {(cfg.fleet.points || []).map((t) => (<li key={t} className="flex items-start gap-3 text-[14.5px] leading-relaxed"><CheckCircle2 size={18} className="text-[#E6AC00] shrink-0 mt-[3px]" aria-hidden /> <span>{labelled(t)}</span></li>))}
-            </ul>
-            {cfg.fleet.note && <p className="text-[13px] text-text-secondary mt-5 leading-relaxed">{cfg.fleet.note}</p>}
-            {(cfg.fleet.links || []).map((l, i) => <p key={i} className="text-[14px] mt-3 leading-relaxed">{renderInline(l)}</p>)}
+    fleet: () => {
+      if (!cfg.fleet) return null;
+      const EASE = [0.22, 1, 0.36, 1];
+      const slideLeft = { hidden: { opacity: 0, x: -120 }, show: { opacity: 1, x: [null, 8, -4, 2, 0], transition: { duration: 0.9, ease: EASE, x: { duration: 1.1, times: [0, 0.6, 0.75, 0.88, 1], ease: "easeOut" } } } };
+      const slideRight = { hidden: { opacity: 0, x: 120 }, show: { opacity: 1, x: [null, -8, 4, -2, 0], transition: { duration: 0.9, ease: EASE, x: { duration: 1.1, times: [0, 0.6, 0.75, 0.88, 1], ease: "easeOut" } } } };
+      const tickPop = { hidden: { scale: 0, rotate: -90 }, show: (i) => ({ scale: 1, rotate: 0, transition: { type: "spring", stiffness: 500, damping: 15, delay: 0.9 + i * 0.12 } }) };
+      return (
+        <Section tone={getTone("fleet", "white")} narrow>
+          <Reveal><SectionHead center className="mb-9" eyebrow={cfg.fleet.eyebrow || "Our Fleet"} title={cfg.fleet.heading} subheading={cfg.fleet.subheading} /></Reveal>
+          <div className="rounded-[22px] overflow-hidden border border-border grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] bg-white">
+            <motion.div
+              className="p-5 sm:p-8 md:p-10"
+              variants={slideLeft}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+            >
+              {cfg.fleet.intro && <p className="text-[14.5px] text-text-secondary leading-relaxed">{renderInline(cfg.fleet.intro)}</p>}
+              <ul className="mt-4 space-y-3">
+                {(cfg.fleet.points || []).map((t, i) => (
+                  <li key={t} className="flex items-start gap-3 text-[14.5px] leading-relaxed">
+                    <motion.span variants={tickPop} custom={i} initial="hidden" whileInView="show" viewport={{ once: true }}>
+                      <CheckCircle2 size={18} className="text-[#E6AC00] shrink-0 mt-[3px]" aria-hidden />
+                    </motion.span>
+                    <span>{labelled(t)}</span>
+                  </li>
+                ))}
+              </ul>
+              {cfg.fleet.note && <p className="text-[13px] text-text-secondary mt-5 leading-relaxed">{cfg.fleet.note}</p>}
+              {(cfg.fleet.links || []).map((l, i) => <p key={i} className="text-[14px] mt-3 leading-relaxed">{renderInline(l)}</p>)}
+            </motion.div>
+            <motion.div
+              className="p-6 sm:p-8 md:p-10 flex flex-col justify-center text-white"
+              style={{ background: "linear-gradient(140deg,#1C1C1C,#0a0a0a)" }}
+              variants={slideRight}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+            >
+              <p className="text-[21px] font-bold mt-2 leading-tight">Find the right vehicle for your journey</p>
+              <div className="mt-6"><BookBtn variant="inverse" size="lg" href="/fleet">{cfg.fleet.ctaLabel || "Explore Our Fleet"}</BookBtn></div>
+            </motion.div>
           </div>
-          <div className="p-6 sm:p-8 md:p-10 flex flex-col justify-center text-white" style={{ background: "linear-gradient(140deg,#1C1C1C,#0a0a0a)" }}>
-            <p className="text-[21px] font-bold mt-2 leading-tight">Find the right vehicle for your journey</p>
-            <div className="mt-6"><BookBtn variant="inverse" size="lg" href="/fleet">{cfg.fleet.ctaLabel || "Explore Our Fleet"}</BookBtn></div>
-          </div>
-        </div>
-      </Section>
-    ) : null,
+        </Section>
+      );
+    },
 
     routes: () => cfg.routes?.length > 0 ? (
       <Section tone={getTone("routes", "white")}>
         <Reveal><SectionHead center className="mb-11" eyebrow="Popular Routes" title={cfg.routesHeading || "Frequently booked routes"} /></Reveal>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {cfg.routes.map((r) => (
-            <button type="button" key={`${r.from}-${r.to}`} onClick={() => pickRoute(r.from, r.to)} className="group flex items-center justify-between rounded-[16px] border border-border bg-primary-tint p-4 hover:shadow-md transition-shadow text-left w-full">
+        <div className="ac-fgrid ac-c4 gap-4">
+          {cfg.routes.map((r, ri) => (
+            <Reveal key={`${r.from}-${r.to}`} variant="zoom" delay={(ri % 4) * 0.06}>
+            <button type="button" onClick={() => pickRoute(r.from, r.to)} className="ac-card w-full group flex items-center justify-between rounded-[16px] border border-border bg-primary-tint p-4 hover:shadow-md transition-shadow text-left w-full">
               <span className="text-[14px] font-bold">{r.from} → {r.to}</span>
               <ArrowRight size={16} className="text-[#E6AC00] group-hover:translate-x-1 transition-transform" aria-hidden />
             </button>
+            </Reveal>
           ))}
         </div>
       </Section>
@@ -644,7 +700,7 @@ export default function ServiceLanding({ cfg }) {
           </div>
         </Reveal>
         {cfg.routes?.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
+          <div className="ac-fgrid ac-c3 gap-4 mt-10">
             {cfg.routes.map((r) => (
               <button type="button" key={`${r.from}-${r.to}`} onClick={() => pickRoute(r.from, r.to)} className="group flex items-center justify-between rounded-[16px] border border-border bg-primary-tint p-4 hover:shadow-md transition-shadow text-left w-full">
                 <span className="text-[14px] font-bold">{r.from} → {r.to}</span>
@@ -680,7 +736,7 @@ export default function ServiceLanding({ cfg }) {
         <Reveal><SectionHead center className="mb-12" eyebrow="How It Works" title={cfg.how?.heading || "Booked in a few simple steps"} subheading={cfg.how?.subheading} /></Reveal>
         <div className={`grid grid-cols-1 sm:grid-cols-2 ${(cfg.how?.steps || DEFAULT_STEPS).length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"} gap-6`}>
           {(cfg.how?.steps || DEFAULT_STEPS).map((s, i) => (
-            <Reveal key={s.title} delay={i * 0.1}>
+            <Reveal key={s.title} variant="left" delay={i * 0.12}>
               <div className="w-11 h-11 rounded-xl bg-[#111] text-primary flex items-center justify-center font-extrabold text-[18px] mb-3.5">{i + 1}</div>
               <h4 className="text-[15.5px] font-bold">{s.title}</h4>
               <p className="text-[13.5px] text-text-secondary mt-1.5 leading-relaxed">{s.desc}</p>
@@ -742,7 +798,7 @@ export default function ServiceLanding({ cfg }) {
   const renderBlock = (key, b) => {
     if (!b) return null;
     const cols = b.columns || (b.cards?.length % 3 === 0 || b.cards?.length > 4 ? 3 : 2);
-    const gridCols = cols === 4 ? "lg:grid-cols-4" : cols === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2";
+    const gridCols = cols === 4 ? "ac-c4" : cols === 3 ? "ac-c3" : "ac-c2";
     return (
       <Section tone={getTone(`block:${key}`, b.tone || "white")} narrow={!b.cards && b.columns !== 2}>
         <Reveal><SectionHead center className="mb-8" eyebrow={b.eyebrow} title={b.heading} subheading={b.subheading} /></Reveal>
@@ -754,10 +810,10 @@ export default function ServiceLanding({ cfg }) {
         {b.cards?.length > 0 && (
           <>
           <div className={b.cards.length > 3
-            ? `snap-row max-sm:flex max-sm:overflow-x-auto max-sm:snap-x max-sm:snap-mandatory max-sm:-mx-5 max-sm:px-5 max-sm:scroll-px-5 max-sm:pb-2 max-sm:gap-3.5 sm:grid sm:grid-cols-2 ${gridCols} sm:gap-5`
-            : `grid grid-cols-1 sm:grid-cols-2 ${gridCols} gap-4 sm:gap-5`}>
+            ? `snap-row max-sm:flex max-sm:overflow-x-auto max-sm:snap-x max-sm:snap-mandatory max-sm:-mx-5 max-sm:px-5 max-sm:scroll-px-5 max-sm:pb-2 max-sm:gap-3.5 ac-fgrid-sm ${gridCols} sm:gap-5`
+            : `ac-fgrid ${gridCols} gap-4 sm:gap-5`}>
             {b.cards.map((cd, i) => (
-              <Reveal key={cd.title} delay={(i % 3) * 0.06} className={b.cards.length > 3 ? "max-sm:shrink-0 max-sm:w-[84%] max-sm:snap-start" : undefined}>
+              <Reveal key={cd.title} variant="zoom" delay={(i % 3) * 0.08} className={b.cards.length > 3 ? "max-sm:shrink-0 max-sm:w-[84%] max-sm:snap-start" : undefined}>
                 <Card className="p-5 sm:p-6 h-full">
                   <h3 className="text-[16.5px] font-bold leading-snug">{cd.title}</h3>
                   {[].concat(cd.body || []).map((p, j) => <p key={j} className="text-[14px] text-text-secondary mt-2 leading-relaxed">{renderInline(p)}</p>)}

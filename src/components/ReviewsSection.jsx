@@ -112,7 +112,7 @@ export default function ReviewsSection({ reviews }) {
 
                 <figcaption className="flex items-center gap-3 border-t border-[#EFECE6] pt-4">
                   {r.avatar ? (
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={r.avatar}
                       alt=""
                       className="h-11 w-11 flex-none rounded-full object-cover ring-2 ring-white shadow-[0_0_0_1px_#ECE9E2]"

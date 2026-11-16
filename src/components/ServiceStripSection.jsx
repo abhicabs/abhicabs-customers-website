@@ -80,7 +80,7 @@ export default function ServiceStripSection({ onSelect, activeMode }) {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
-              className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
+              className="grid grid-cols-2 gap-3 sm:grid-cols-6 lg:grid-cols-5"
             >
               {ITEMS.map((it, i) => (
                 <ServiceCard
@@ -88,8 +88,13 @@ export default function ServiceStripSection({ onSelect, activeMode }) {
                   item={it}
                   active={selected === it.mode}
                   onSelect={handleSelect}
-                  // 5 cards in a 2-col grid: the last one spans the row on mobile
-                  className={i === ITEMS.length - 1 ? "col-span-2 sm:col-span-1" : ""}
+                  // mobile: 2 cols, last card spans the row · tablet: 3 + 2 with the
+                  // second row centred (6-col track, cards span 2) · desktop: 5 in a row
+                  className={[
+                    "sm:col-span-2 lg:col-span-1",
+                    i === ITEMS.length - 1 ? "col-span-2" : "",
+                    i === 3 ? "sm:col-start-2 lg:col-start-auto" : "",
+                  ].join(" ")}
                 />
               ))}
             </m.div>

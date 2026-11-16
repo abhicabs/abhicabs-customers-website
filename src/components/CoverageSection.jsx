@@ -237,7 +237,7 @@ export default function CoverageSection({ id = "cities", coverage }) { // eslint
                 </m.p>
 
                 {/* State cards grid */}
-                <m.div variants={stagger(0.08)} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(118px,1fr))", gap: 14 }}>
+                <m.div variants={stagger(0.08)} style={{ display: "grid", gridTemplateColumns: "repeat(2,minmax(0,1fr))", gap: 14 }}>
                   {cardStates.map(name => (
                     // Animated wrapper; the card below keeps its own styles and hover lift
                     <m.div key={name} variants={cardIn} style={{ display: "grid" }}>

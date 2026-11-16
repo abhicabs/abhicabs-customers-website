@@ -94,7 +94,7 @@ export default function FleetPage() {
       {/* ═══ HERO ═══ */}
       <section style={{ position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
-          <img src="/images/tea-garden-road.jpg" alt="Abhi Cabs fleet" fetchPriority="high" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <img src="/images/hero-fleet-hills.webp" srcSet="/images/hero-fleet-hills-900.webp 900w, /images/hero-fleet-hills.webp 1672w" sizes="100vw" alt="Abhi Cabs fleet" fetchPriority="high" className="ac-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "60% center" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(118deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.72) 48%, rgba(10,10,10,0.40) 100%)" }} />
         </div>
         <div style={{ position: "relative", maxWidth: 1264, margin: "0 auto", padding: "clamp(52px,7vw,96px) 24px" }}>
@@ -188,7 +188,7 @@ export default function FleetPage() {
             <div className="ac-section-divider" />
             <SectionHead center className="mb-11" title="Cab Rental Options for Every Travel Need" />
           </Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="ac-fgrid ac-c3 gap-5">
             {RENTAL_OPTIONS.map((o, i) => (
               <Reveal key={o.label} delay={i * 0.06}>
                 <Card className="p-6 h-full ac-card-hover">
@@ -209,7 +209,7 @@ export default function FleetPage() {
             <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight leading-tight text-center">Why Choose the Abhi Cabs 24×7 Fleet?</h2>
             <h3 className="text-[18px] md:text-[22px] font-bold text-text-secondary mt-2 text-center">The Right Vehicle for Every Travel Need</h3>
           </Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+          <div className="ac-fgrid ac-c4 gap-5 mt-10">
             {WHY_CHOOSE.map((w, i) => (
               <Reveal key={w.title} delay={i * 0.06}>
                 <Card className="p-6 h-full ac-card-hover">
@@ -351,13 +351,13 @@ function VehicleModal({ vehicle: v, activeImg, setActiveImg, onClose, onSwitchVa
         <div className="p-6 grid grid-cols-1 md:grid-cols-[1fr_340px] gap-6">
           <div>
             <div className="rounded-[14px] overflow-hidden aspect-[16/9] mb-3">
-              <img src={v.gallery?.[activeImg] || v.img} alt={v.name} onError={(e) => { if (v.imgFallback && e.currentTarget.src !== v.imgFallback) e.currentTarget.src = v.imgFallback; }} className="vehicle-photo w-full h-full object-cover object-center" />
+              <img loading="lazy" decoding="async" src={v.gallery?.[activeImg] || v.img} alt={v.name} onError={(e) => { if (v.imgFallback && e.currentTarget.src !== v.imgFallback) e.currentTarget.src = v.imgFallback; }} className="vehicle-photo w-full h-full object-cover object-center" />
             </div>
             {v.gallery?.length > 1 && (
               <div className="flex gap-2">
                 {v.gallery.map((src, i) => (
                   <button key={i} onClick={() => setActiveImg(i)} className={`rounded-[8px] overflow-hidden w-20 aspect-[4/3] border-2 transition-all ${activeImg === i ? "border-primary" : "border-transparent opacity-60 hover:opacity-100"}`}>
-                    <img src={src} alt="" onError={(e) => { if (v.imgFallback && e.currentTarget.src !== v.imgFallback) e.currentTarget.src = v.imgFallback; }} className="w-full h-full object-cover object-center" />
+                    <img loading="lazy" decoding="async" src={src} alt="" onError={(e) => { if (v.imgFallback && e.currentTarget.src !== v.imgFallback) e.currentTarget.src = v.imgFallback; }} className="w-full h-full object-cover object-center" />
                   </button>
                 ))}
               </div>

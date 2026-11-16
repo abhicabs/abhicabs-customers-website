@@ -16,7 +16,7 @@ export const SERVICE_DEFAULTS = {
     heading: "Local Cab Booking Services \u2013 Hourly & City Taxi Rentals",
     subheading: "Explore Your City with Abhi Cabs 24\u00d77",
     description: "Looking for a convenient local cab booking service? Abhi Cabs 24\u00d77 offers local taxi services for city sightseeing, shopping, office travel, business meetings, and family outings. Choose from comfortable sedans, spacious SUVs, and group vehicles with professional drivers. Whether you need a short city ride or an hourly cab rental, find a suitable vehicle for your journey.",
-    image: "/images/dashboard-pov.jpg",
+    image: "/images/hero-local-chauffeur.webp", imagePosition: "72% center",
     alt: "Local cab for city travel",
   },
   intro: {
@@ -165,7 +165,7 @@ export const SERVICE_DEFAULTS = {
     heading: "Airport Taxi Booking & Pickup Drop Services – Abhi Cabs 24×7",
     subheading: "Comfortable Airport Taxi Services for Every Journey",
     description: "Looking for reliable airport taxi booking services? Abhi Cabs 24×7 provides convenient airport pickup and drop-off services for business travellers, families, individuals, and groups. Choose from comfortable sedans, spacious SUVs, and group vehicles with professional drivers for your airport journey. Whether you have an early-morning departure or a late-night arrival, book a suitable airport cab and plan your travel with ease.",
-    image: "/images/coastal-road-sedan.jpg",
+    image: "/images/hero-airport-coast.webp", imagePosition: "45% center",
     alt: "Abhi Cabs 24×7 airport taxi on the road for airport pickup and drop",
   },
   intro: {
@@ -300,7 +300,7 @@ export const SERVICE_DEFAULTS = {
   "one-way-outstation": {
     ...({
   slug: "one-way-outstation", mode: "one-way",
-  hero: { eyebrow: "One-Way Outstation", heading: "Travel Further with One-Way Cabs", image: "/images/mountain-road-full.jpg",
+  hero: { eyebrow: "One-Way Outstation", heading: "Travel Further with One-Way Cabs", image: "/images/hero-hill-road.webp", imagePosition: "50% center",
     description: "Going intercity in one direction? Enter your route, add stops and see the fare before you confirm — with a verified driver for the long drive." },
   intro: { eyebrow: "One-Way Travel", heading: "One direction, one booking", image: "/images/coastal-road-sedan.jpg",
     body: ["A one-way outstation cab is ideal when you don't need a return — relocations, airport cities, or a trip where you're coming back another way.",
@@ -343,7 +343,7 @@ export const SERVICE_DEFAULTS = {
     heading: "Round-Trip Cab Booking \u2013 Outstation Taxi Services Across India",
     subheading: "Book Your Return Journey with Abhi Cabs 24\u00d77",
     description: "Planning a family vacation, weekend getaway, or business trip? Abhi Cabs 24\u00d77 offers convenient round-trip cab booking services for comfortable intercity and interstate travel. Choose from sedans, SUVs, Tempo Travellers, and other available vehicles with professional drivers. Book your outstation round-trip taxi with pickups from Karnataka, Andhra Pradesh, Maharashtra, and Telangana to destinations across India.",
-    image: "/images/tea-garden-road.jpg",
+    image: "/images/hero-fleet-hills.webp", imagePosition: "62% center",
     alt: "Round-trip cab on highway",
   },
   intro: {
@@ -462,7 +462,7 @@ export const SERVICE_DEFAULTS = {
   "corporate": {
     ...({
   slug: "corporate", mode: null,
-  hero: { eyebrow: "Corporate", heading: "Reliable Transportation for Your Business", image: "/images/coastal-road-sedan.jpg",
+  hero: { eyebrow: "Corporate", heading: "Reliable Transportation for Your Business", image: "/images/hero-local-chauffeur.webp", imagePosition: "72% center",
     description: "Dependable travel for teams, client visits and events — with GST invoicing, monthly billing and a dedicated point of contact." },
   intro: { eyebrow: "Business Travel", heading: "Travel your business can rely on", image: "/images/dashboard-pov.jpg",
     body: ["From daily employee commutes to client pickups and event logistics, corporate travel with Abhi Cabs means consistent, verified drivers and billing that works for finance teams.",

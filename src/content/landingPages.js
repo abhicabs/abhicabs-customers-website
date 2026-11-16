@@ -31,7 +31,7 @@ export const LANDING_PAGES = {
       heading: "Car Rental in Bangalore with Driver – Abhi Cabs 24×7",
       subheading: "Book Comfortable Chauffeur-Driven Cars in Bangalore",
       description: "Looking for a reliable car rental in Bangalore with driver? Abhi Cabs 24×7 offers convenient chauffeur-driven car rental services for local sightseeing, business meetings, airport pickups, shopping, family outings and outstation trips. Choose from sedans, SUVs, Innova vehicles and group transportation options to suit your travel needs. Whether you need a car for a few hours, a full-day trip or a weekend getaway, explore flexible Bangalore car rental services with professional drivers.",
-      image: "/images/weekend.jpg",
+      image: "/images/hero-local-chauffeur.webp", imagePosition: "72% center",
       alt: "Chauffeur-driven rental car in Bangalore by Abhi Cabs 24×7",
     },
     intro: { eyebrow: "", heading: "", image: "", body: [] },

@@ -64,7 +64,7 @@ export default function HeadDefault() {
       {/* ── Performance resource hints ──
           Preload the LCP hero so it starts downloading before the JS bundle,
           and warm up connections to the hosts the pages actually hit. */}
-      <link rel="preload" as="image" href="/images/Herosection.jpg" fetchPriority="high" />
+      {path === "" && <link rel="preload" as="image" href="/images/Herosection.jpg" fetchPriority="high" />}
       <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://api.abhicabs24x7.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://res.cloudinary.com" />

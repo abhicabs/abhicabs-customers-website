@@ -121,7 +121,7 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.15 }}
-              className="relative flex flex-wrap justify-start gap-5"
+              className="relative flex flex-wrap justify-center gap-5"
             >
               <AnimatePresence mode="popLayout">
                 {visible.map((r) => {
@@ -137,18 +137,18 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
                       className="grid w-full flex-none sm:w-[calc((100%_-_20px)/2)] lg:w-[calc((100%_-_40px)/3)] xl:w-[calc((100%_-_60px)/4)]"
                     >
                       {/* ── Card: unchanged ── */}
-                      <div style={{ borderRadius: 20, overflow: "hidden", border: "1px solid #EFEFEF", background: "#fff" }} className="hover:-translate-y-1.5 transition-transform">
+                      <div style={{ borderRadius: 20, overflow: "hidden", border: "1px solid #EFEFEF", background: "#fff", display: "flex", flexDirection: "column", height: "100%" }} className="ac-card group">
                         <div style={{ position: "relative", height: 172, overflow: "hidden" }}>
-                          <img src={r.img} alt={`${r.from} to ${r.to}`} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                          <img loading="lazy" decoding="async" src={r.img} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                           <span style={{ position: "absolute", top: 12, left: 12, padding: "5px 11px", borderRadius: 9999, background: badge.bg, color: badge.fg, fontWeight: 600, fontSize: 11, zIndex: 2 }}>
                             {r.badge}
                           </span>
                         </div>
-                        <div style={{ padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                        <div style={{ padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flex: 1 }}>
                           <div style={{ fontWeight: 700, fontSize: 16 }}>{r.from} → {r.to}</div>
                           <button
                             onClick={() => onBook(r)}
-                            className="hover:!bg-black"
+                            className="ac-btn ac-btn-shine relative overflow-hidden isolate hover:!bg-black hover:-translate-y-0.5"
                             style={{ flex: "none", padding: "9px 15px", borderRadius: 9999, background: "#111", color: "#fff", fontWeight: 600, fontSize: 12.5, border: "none", cursor: "pointer" }}
                           >
                             Book Route

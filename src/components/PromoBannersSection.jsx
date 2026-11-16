@@ -103,7 +103,7 @@ export default function PromoBannersSection({ onOutstation, onGroup }) {
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", willChange: "transform" }}
               />
               {/* Subtle yellow gradient overlay — fades left to right */}
-              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,232,154,0.4) 0%, rgba(255,232,154,0.27) 20%, rgba(255,232,154,0.13) 40%, transparent 55%)", pointerEvents: "none" }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,226,130,0.97) 0%, rgba(255,228,140,0.9) 32%, rgba(255,232,154,0.55) 52%, transparent 72%)", pointerEvents: "none" }} />
               {/* Text content on top */}
               <div style={{ position: "relative", padding: "clamp(28px,3.5vw,44px)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", zIndex: 2, maxWidth: "45%" }} className="promo-group-text">
                 <m.span variants={textItem} style={{ fontWeight: 700, fontSize: 11.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#7a5c00", textShadow: "0 1px 4px rgba(255,232,154,0.4)" }}>Group Travel</m.span>

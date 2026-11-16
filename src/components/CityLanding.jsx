@@ -15,14 +15,14 @@ const iconMap = { pin: MapPin, car: Car, plane: Plane, clock: Clock, users: User
 
 function Section({ children, className = "", white, dark, id }) {
   const bg = dark ? "py-14 md:py-20" : white ? "py-14 md:py-20 bg-white border-y border-border" : "py-14 md:py-20";
-  return <section id={id} className={`${bg} ${className}`} style={dark ? { background: "linear-gradient(135deg,#1C1C1C,#0a0a0a)" } : undefined}>{children}</section>;
+  return <section id={id} className={`${bg} ac-cv ${className}`} style={dark ? { background: "linear-gradient(135deg,#1C1C1C,#0a0a0a)" } : undefined}>{children}</section>;
 }
 
 function PlaceGrid({ places }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
-      {places.map((p) => (
-        <Reveal key={p.name}>
+    <div className="ac-fgrid ac-c4 gap-5 mt-10">
+      {places.map((p, i) => (
+        <Reveal key={p.name} variant="zoom" delay={(i % 4) * 0.07}>
           <Card className="p-6 h-full">
             <h4 className="text-[15px] font-bold">{p.name}</h4>
             <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{p.desc}</p>
@@ -40,7 +40,8 @@ export default function CityLanding({ cfg }) {
       {/* ═══ HERO ═══ */}
       <PageHero
         center
-        image="/images/dashboard-pov.jpg"
+        image="/images/hero-hill-road.webp"
+        imagePosition="50% center"
         imageAlt={`Cab services in ${c.cityName}`}
         breadcrumb={[["Home", "/"], ["Cities", "/cities"], [c.cityName, null]]}
         title={c.hero.heading}
@@ -55,8 +56,8 @@ export default function CityLanding({ cfg }) {
         <div className="max-w-[1264px] mx-auto px-6">
           <Reveal><SectionHead center className="mb-11" title={c.services.heading} /></Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {c.services.items.map((s) => (
-              <Reveal key={s.title}>
+            {c.services.items.map((s, i) => (
+              <Reveal key={s.title} variant={i % 2 ? "right" : "left"} delay={Math.floor(i / 2) * 0.06}>
                 <Card className="p-6 h-full">
                   <h3 className="text-[16px] font-bold">{s.title}</h3>
                   <p className="text-[14px] text-text-secondary mt-2 leading-relaxed">{s.desc}</p>
@@ -76,11 +77,11 @@ export default function CityLanding({ cfg }) {
             <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-4">{c.fleet.subheading}</p></Reveal>
             <Reveal><p className="text-center text-text-secondary text-[15px] max-w-[700px] mx-auto">{c.fleet.intro}</p></Reveal>
             <div className="max-w-[800px] mx-auto mt-8 space-y-3">
-              {c.fleet.vehicles.map((v) => (
-                <div key={v.label} className="flex items-start gap-3 p-3">
+              {c.fleet.vehicles.map((v, i) => (
+                <Reveal key={v.label} variant="left" delay={i * 0.06} className="flex items-start gap-3 p-3 rounded-xl hover:bg-[rgba(230,172,0,0.06)] transition-colors">
                   <CheckCircle2 size={18} style={{ color: GOLD }} className="shrink-0 mt-0.5" />
                   <p className="text-[15px]"><span className="font-bold">{v.label}:</span> <span className="text-text-secondary">{v.desc}</span></p>
-                </div>
+                </Reveal>
               ))}
               {c.fleet.note && <p className="text-[14px] text-text-secondary mt-4">{c.fleet.note}</p>}
             </div>
@@ -103,12 +104,14 @@ export default function CityLanding({ cfg }) {
             )}
             {c.tirumala.note && <Reveal><p className="text-center text-text-secondary text-[14px] mt-6 max-w-[640px] mx-auto">{c.tirumala.note}</p></Reveal>}
             {c.tirumala.important && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-                {c.tirumala.important.map((item) => (
-                  <Card key={item.title} className="p-5">
-                    <h4 className="text-[14px] font-bold">{item.title}</h4>
-                    <p className="text-[13px] text-text-secondary mt-1 leading-relaxed">{item.desc}</p>
-                  </Card>
+              <div className="ac-fgrid ac-c3 gap-5 mt-10">
+                {c.tirumala.important.map((item, i) => (
+                  <Reveal key={item.title} variant="zoom" delay={(i % 3) * 0.08}>
+                    <Card className="p-5 h-full">
+                      <h4 className="text-[14px] font-bold">{item.title}</h4>
+                      <p className="text-[13px] text-text-secondary mt-1 leading-relaxed">{item.desc}</p>
+                    </Card>
+                  </Reveal>
                 ))}
               </div>
             )}
@@ -144,11 +147,11 @@ export default function CityLanding({ cfg }) {
           <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-2">{c.outstationRoutes.subheading}</p></Reveal>
           <Reveal><p className="text-center text-text-secondary text-[15px] max-w-[700px] mx-auto mb-8">{c.outstationRoutes.intro}</p></Reveal>
           <div className="max-w-[800px] mx-auto space-y-2">
-            {c.outstationRoutes.routes.map((r) => (
-              <div key={r.label} className="flex items-start gap-3 p-3 rounded-xl hover:bg-[rgba(230,172,0,0.04)] transition-colors">
+            {c.outstationRoutes.routes.map((r, i) => (
+              <Reveal key={r.label} variant="left" delay={Math.min(i, 8) * 0.04} className="flex items-start gap-3 p-3 rounded-xl hover:bg-[rgba(230,172,0,0.06)] transition-colors duration-300">
                 <ChevronRight size={18} className="mt-0.5 shrink-0" style={{ color: GOLD }} />
                 <p className="text-[15px]"><span className="font-bold">{r.label}:</span> <span className="text-text-secondary">{r.desc}</span></p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -176,9 +179,9 @@ export default function CityLanding({ cfg }) {
         <div className="max-w-[1264px] mx-auto px-6">
           <Reveal><SectionHead center className="mb-2" title={c.whyChoose.heading} /></Reveal>
           <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-11">{c.whyChoose.subheading}</p></Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {c.whyChoose.items.map((w) => (
-              <Reveal key={w.title}>
+          <div className="ac-fgrid ac-c4 gap-5">
+            {c.whyChoose.items.map((w, i) => (
+              <Reveal key={w.title} variant="zoom" delay={(i % 4) * 0.07}>
                 <Card className="p-6 h-full">
                   <h4 className="text-[15px] font-bold">{w.title}</h4>
                   <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{w.desc}</p>
@@ -196,8 +199,8 @@ export default function CityLanding({ cfg }) {
           <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-10">{c.howToBook.subheading}</p></Reveal>
           <div className="space-y-6">
             {c.howToBook.steps.map((s, i) => (
-              <Reveal key={s.title}>
-                <div className="flex gap-5 items-start p-5 rounded-2xl border border-border bg-white">
+              <Reveal key={s.title} variant="left" delay={i * 0.12}>
+                <div className="ac-card flex gap-5 items-start p-5 rounded-2xl border border-border bg-white">
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center font-bold text-[18px] shrink-0" style={{ background: "#111", color: GOLD }}>{i + 1}</div>
                   <div><h4 className="text-[16px] font-bold">{s.title}</h4><p className="text-[14px] text-text-secondary mt-1.5 leading-relaxed">{s.desc}</p></div>
                 </div>
@@ -212,12 +215,14 @@ export default function CityLanding({ cfg }) {
         <div className="max-w-[1264px] mx-auto px-6">
           <Reveal><SectionHead center className="mb-2" title={c.tips.heading} /></Reveal>
           <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-11">{c.tips.subheading}</p></Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[960px] mx-auto">
-            {c.tips.items.map((t) => (
-              <Card key={t.title} className="p-5">
-                <h4 className="text-[14px] font-bold">{t.title}</h4>
-                <p className="text-[13px] text-text-secondary mt-1 leading-relaxed">{t.desc}</p>
-              </Card>
+          <div className="ac-fgrid ac-c3 gap-5 max-w-[960px] mx-auto">
+            {c.tips.items.map((t, i) => (
+              <Reveal key={t.title} variant="zoom" delay={(i % 3) * 0.08}>
+                <Card className="p-5 h-full">
+                  <h4 className="text-[14px] font-bold">{t.title}</h4>
+                  <p className="text-[13px] text-text-secondary mt-1 leading-relaxed">{t.desc}</p>
+                </Card>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -228,14 +233,16 @@ export default function CityLanding({ cfg }) {
         <div className="max-w-[860px] mx-auto px-6">
           <Reveal><SectionHead center className="mb-9" title={`Frequently Asked Questions About Cab Booking in ${c.cityName}`} /></Reveal>
           <div className="space-y-3">
-            {c.faqs.map(([q, a]) => (
-              <details key={q} className="group bg-[#FAFAFA] border border-border rounded-[16px] p-5 [&_summary]:cursor-pointer">
+            {c.faqs.map(([q, a], i) => (
+              <Reveal key={q} delay={Math.min(i, 6) * 0.05}>
+              <details className="group bg-[#FAFAFA] border border-border rounded-[16px] p-5 [&_summary]:cursor-pointer">
                 <summary className="flex items-center justify-between text-[15px] font-bold list-none">
                   {q}
                   <span className="text-[color:var(--color-primary-dark)] text-[20px] leading-none group-open:rotate-45 transition-transform">+</span>
                 </summary>
                 <p className="text-[14px] text-text-secondary mt-3 leading-relaxed">{a}</p>
               </details>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -244,7 +251,7 @@ export default function CityLanding({ cfg }) {
       {/* ═══ CTA ═══ */}
       <section className="py-14 md:py-20">
         <div className="max-w-[1264px] mx-auto px-6">
-          <div className="rounded-[22px] p-9 md:p-14 text-white grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-8 items-center" style={{ background: "linear-gradient(135deg,#1C1C1C,#0a0a0a)" }}>
+          <Reveal variant="zoom"><div className="relative overflow-hidden rounded-[22px] p-9 md:p-14 text-white grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-8 items-center" style={{ background: "linear-gradient(135deg,#1C1C1C,#0a0a0a)" }}>
             <div>
               <h2 className="text-[28px] md:text-[32px] font-bold tracking-tight leading-tight">{c.cta.heading}</h2>
               {c.cta.subheading && <p className="mt-2 text-[#FFD54F] font-bold text-[16px]">{c.cta.subheading}</p>}
@@ -254,7 +261,8 @@ export default function CityLanding({ cfg }) {
               <Button href="#booking" variant="inverse" size="lg">{c.cta.ctaLabel}</Button>
               <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
             </div>
-          </div>
+            <div aria-hidden className="ac-hero-sweep absolute inset-0 pointer-events-none" />
+          </div></Reveal>
         </div>
       </section>
     </>
