@@ -217,14 +217,14 @@ export default function Page() {
 
       {/* ═══ CAB BOOKING FROM 4 STATES ═══ */}
       <StatesCoverageBand>
-            <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 800, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.2, maxWidth: 620, margin: 0, textWrap: "balance" }}>
+            <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 800, color: "#111", letterSpacing: "-0.02em", lineHeight: 1.2, maxWidth: 620, margin: 0, textWrap: "balance" }}>
               Cab Booking from Karnataka, Andhra Pradesh, Maharashtra & Telangana
             </h2>
-            <h3 style={{ fontSize: "clamp(15px,1.5vw,18px)", fontWeight: 600, color: "#FFD54F", marginTop: 12 }}>
+            <h3 style={{ fontSize: "clamp(15px,1.5vw,18px)", fontWeight: 600, color: "#9A6B00", marginTop: 12 }}>
               Travel from Supported Pickup Locations to Destinations Across India
             </h3>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.78)", lineHeight: 1.8, maxWidth: 600, margin: "16px 0 0" }}>
-              Abhi Cabs 24×7 provides <span className="ac-mark-d">interstate cab booking services</span> with pickups from <span className="ac-mark-d">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</span> to destinations across India. Whether you need an airport transfer, local taxi, hourly rental, or outstation cab, choose a travel service that matches your requirements.
+            <p style={{ fontSize: 15, color: "#4B5563", lineHeight: 1.8, maxWidth: 600, margin: "16px 0 0" }}>
+              Abhi Cabs 24×7 provides <span className="ac-hl">interstate cab booking services</span> with pickups from <span className="ac-hl">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</span> to destinations across India. Whether you need an airport transfer, local taxi, hourly rental, or outstation cab, choose a travel service that matches your requirements.
             </p>
       </StatesCoverageBand>
 

@@ -882,8 +882,8 @@ main p a:not(.ac-btn):hover, main li a:not(.ac-btn):hover { background-size: 100
     animation-timeline: view();
     animation-range: entry 0% cover 30%;
   }
-  .ac-cv .rounded-full.border,
-  .ac-cv [class*="rounded-full"][class*="px-4"] {
+  .ac-cv .rounded-full.border:not(.ac-orbit-counter),
+  .ac-cv [class*="rounded-full"][class*="px-4"]:not(.ac-orbit-counter) {
     animation: ac-chip-in linear both;
     animation-timeline: view();
     animation-range: entry 0% entry 80%;
@@ -1070,3 +1070,8 @@ img.h-full { height: 100%; }
 @keyframes ac-hub-pulse { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(2.4); opacity: 0; } }
 .ac-hub:hover .ac-orbit, .ac-hub:hover .ac-orbit-counter { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .ac-orbit, .ac-orbit-counter, .ac-hub-pulse { animation: none !important; } }
+
+/* States band (light) sits directly on the dark CTA — no white gap between them,
+   and a gold seam marks the hand-off. */
+.ac-states + .ac-cta, .ac-states + * > .ac-cta:first-child { margin-top: 0 !important; }
+.ac-states { box-shadow: inset 0 -1px 0 rgba(154,107,0,.15); }

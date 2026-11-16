@@ -251,14 +251,14 @@ export default function Page() {
 
       {/* ═══ 4 STATES ═══ */}
       <StatesCoverageBand>
-            <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.2, maxWidth: 620, margin: 0, textWrap: "balance" }}>
+            <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 700, color: "#111", letterSpacing: "-0.02em", lineHeight: 1.2, maxWidth: 620, margin: 0, textWrap: "balance" }}>
               Cab Booking Services from Karnataka, Andhra Pradesh, Maharashtra & Telangana
             </h2>
-            <h3 style={{ fontSize: "clamp(15px,1.5vw,18px)", fontWeight: 600, color: GOLDF,  marginTop: 12 }}>
+            <h3 style={{ fontSize: "clamp(15px,1.5vw,18px)", fontWeight: 600, color: "#9A6B00",  marginTop: 12 }}>
               Travel from Your City to Destinations Across India
             </h3>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.78)", lineHeight: 1.8, maxWidth: 600, margin: "16px 0 0" }}>
-              Abhi Cabs 24×7 offers <span className="ac-mark-d">Pan-India taxi services</span>, with pickups from <span className="ac-mark-d">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</span>. Whether you're planning an airport transfer, local journey, hourly cab rental, outstation trip, or round-trip booking, we provide convenient travel options to destinations across India.
+            <p style={{ fontSize: 15, color: "#4B5563", lineHeight: 1.8, maxWidth: 600, margin: "16px 0 0" }}>
+              Abhi Cabs 24×7 offers <span className="ac-hl">Pan-India taxi services</span>, with pickups from <span className="ac-hl">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</span>. Whether you're planning an airport transfer, local journey, hourly cab rental, outstation trip, or round-trip booking, we provide convenient travel options to destinations across India.
             </p>
       </StatesCoverageBand>
 
