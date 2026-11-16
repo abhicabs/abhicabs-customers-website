@@ -1055,3 +1055,9 @@ img.h-full { height: 100%; }
 }
 @keyframes ac-line-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) { .ac-step-line > span { animation: none !important; } }
+
+/* States band: slow counter-rotating rings around the map */
+.ac-ring { animation: ac-spin 40s linear infinite; }
+.ac-ring-rev { animation: ac-spin 60s linear infinite reverse; }
+@keyframes ac-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ac-ring, .ac-ring-rev { animation: none !important; } }

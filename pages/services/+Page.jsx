@@ -1,4 +1,5 @@
 import React from "react";
+import StatesCoverageBand from "../../src/components/StatesCoverageBand";
 import {
   Plane, Navigation, Car, Repeat, Timer, MapPin, Users, UserCheck,
   ShieldCheck, Headset, Route, Truck, CalendarCheck, Sparkles, Info,
@@ -215,21 +216,17 @@ export default function Page() {
       </section>
 
       {/* ═══ CAB BOOKING FROM 4 STATES ═══ */}
-      <section className="py-14 md:py-20" style={{ background: "linear-gradient(135deg,#1C1C1C,#0a0a0a)" }}>
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal>
-            <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 800, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.2, textAlign: "center", maxWidth: 800, margin: "0 auto" }}>
+      <StatesCoverageBand>
+            <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 800, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.2, maxWidth: 620, margin: 0, textWrap: "balance" }}>
               Cab Booking from Karnataka, Andhra Pradesh, Maharashtra & Telangana
             </h2>
-            <h3 style={{ fontSize: "clamp(15px,1.5vw,18px)", fontWeight: 600, color: "#FFD54F", marginTop: 10, textAlign: "center" }}>
+            <h3 style={{ fontSize: "clamp(15px,1.5vw,18px)", fontWeight: 600, color: "#FFD54F", marginTop: 12 }}>
               Travel from Supported Pickup Locations to Destinations Across India
             </h3>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.7)", lineHeight: 1.8, maxWidth: 740, margin: "16px auto 0", textAlign: "center" }}>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.78)", lineHeight: 1.8, maxWidth: 600, margin: "16px 0 0" }}>
               Abhi Cabs 24×7 provides <span className="ac-mark-d">interstate cab booking services</span> with pickups from <span className="ac-mark-d">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</span> to destinations across India. Whether you need an airport transfer, local taxi, hourly rental, or outstation cab, choose a travel service that matches your requirements.
             </p>
-          </Reveal>
-        </div>
-      </section>
+      </StatesCoverageBand>
 
       {/* ═══ IMPORTANT INFORMATION BEFORE BOOKING ═══ */}
       <section className="py-14 md:py-20">

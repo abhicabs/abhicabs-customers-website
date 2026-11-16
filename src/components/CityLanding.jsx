@@ -9,6 +9,7 @@ import Reveal from "./ui/Reveal";
 import Button from "./ui/Button";
 import PageHero from "./ui/PageHero";
 import ServiceBooking from "./ServiceBooking";
+import CtaBand from "./CtaBand";
 
 const GOLD = "#E6AC00";
 const iconMap = { pin: MapPin, car: Car, plane: Plane, clock: Clock, users: Users, shield: ShieldCheck, headset: Headset, building: Building, compass: Compass, calendar: Calendar, route: RouteIcon, star: Star };
@@ -249,22 +250,16 @@ export default function CityLanding({ cfg }) {
       </Section>
 
       {/* ═══ CTA ═══ */}
-      <section className="py-14 md:py-20">
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal variant="zoom"><div className="relative overflow-hidden rounded-[22px] p-9 md:p-14 text-white grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-8 items-center" style={{ background: "linear-gradient(135deg,#1C1C1C,#0a0a0a)" }}>
-            <div>
-              <h2 className="text-[28px] md:text-[32px] font-bold tracking-tight leading-tight">{c.cta.heading}</h2>
-              {c.cta.subheading && <p className="mt-2 text-[#FFD54F] font-bold text-[16px]">{c.cta.subheading}</p>}
-              <p className="mt-3 text-white/75 text-[15px] leading-relaxed">{c.cta.description}</p>
-            </div>
-            <div className="flex flex-wrap lg:justify-end gap-3">
-              <Button href="#booking" variant="inverse" size="lg">{c.cta.ctaLabel}</Button>
-              <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
-            </div>
-            <div aria-hidden className="ac-hero-sweep absolute inset-0 pointer-events-none" />
-          </div></Reveal>
-        </div>
-      </section>
+      <CtaBand
+        image="/images/hero-hill-road.webp"
+        title={c.cta.heading}
+        subheading={c.cta.subheading}
+        description={c.cta.description}
+        actions={<>
+          <Button href="#booking" variant="inverse" size="lg">{c.cta.ctaLabel}</Button>
+          <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
+        </>}
+      />
     </>
   );
 }

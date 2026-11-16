@@ -6,6 +6,7 @@ import {
 import SectionHead from "../../src/components/ui/SectionHead";
 import Card from "../../src/components/ui/Card";
 import Reveal from "../../src/components/ui/Reveal";
+import StatesCoverageBand from "../../src/components/StatesCoverageBand";
 import CTASection from "../../src/components/CTASection";
 
 const GOLD = "#E6AC00";
@@ -249,21 +250,17 @@ export default function Page() {
       </section>
 
       {/* ═══ 4 STATES ═══ */}
-      <section className="py-14 md:py-20" style={{ background: "linear-gradient(135deg,#1C1C1C,#0a0a0a)" }}>
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal>
-            <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.2, textAlign: "center", maxWidth: 800, margin: "0 auto" }}>
+      <StatesCoverageBand>
+            <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.2, maxWidth: 620, margin: 0, textWrap: "balance" }}>
               Cab Booking Services from Karnataka, Andhra Pradesh, Maharashtra & Telangana
             </h2>
-            <h3 style={{ fontSize: "clamp(15px,1.5vw,18px)", fontWeight: 600, color: GOLDF, marginTop: 10, textAlign: "center" }}>
+            <h3 style={{ fontSize: "clamp(15px,1.5vw,18px)", fontWeight: 600, color: GOLDF,  marginTop: 12 }}>
               Travel from Your City to Destinations Across India
             </h3>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.7)", lineHeight: 1.8, maxWidth: 740, margin: "16px auto 0", textAlign: "center" }}>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.78)", lineHeight: 1.8, maxWidth: 600, margin: "16px 0 0" }}>
               Abhi Cabs 24×7 offers <span className="ac-mark-d">Pan-India taxi services</span>, with pickups from <span className="ac-mark-d">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</span>. Whether you're planning an airport transfer, local journey, hourly cab rental, outstation trip, or round-trip booking, we provide convenient travel options to destinations across India.
             </p>
-          </Reveal>
-        </div>
-      </section>
+      </StatesCoverageBand>
 
       {/* ═══ CTA ═══ */}
       <CTASection
