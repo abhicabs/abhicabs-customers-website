@@ -11,61 +11,81 @@ import { Car, MapPin } from "lucide-react";
 const STATES = ["Karnataka", "Andhra Pradesh", "Maharashtra", "Telangana"];
 const EASE = [0.22, 1, 0.36, 1];
 const VIEW = { once: true, amount: 0.2 };
-const R = 41; // orbit radius, % of the box
+const R = 29;        // pickup ring radius (% of box)
+const RD = 46;       // destination ring radius
+const DESTS = 16;    // destination nodes around the outer ring
+const PIN_ANGLES = [-45, 45, 135, 225];
+const P = (r, deg) => { const a = (deg * Math.PI) / 180; return [50 + r * Math.cos(a), 50 + r * Math.sin(a)]; };
+
+/** routes fanning out from each pickup state to the destinations nearest it */
+function routesFor(pinDeg) {
+  return [-33.75, -11.25, 11.25, 33.75].map((off) => {
+    const [x1, y1] = P(R, pinDeg), [x2, y2] = P(RD, pinDeg + off), [cx, cy] = P((R + RD) / 2 + 2, pinDeg + off * 0.35);
+    return { d: `M${x1.toFixed(2)} ${y1.toFixed(2)} Q${cx.toFixed(2)} ${cy.toFixed(2)} ${x2.toFixed(2)} ${y2.toFixed(2)}`, end: [x2, y2] };
+  });
+}
 
 function RouteHub({ reduce }) {
   return (
     <div className="ac-hub relative aspect-square w-full" aria-hidden>
-      {/* outer compass ring with ticks (rotates slowly) */}
+      {/* outer compass ring with ticks (counter-rotates slowly) */}
       <svg viewBox="0 0 100 100" className="ac-ring-rev absolute inset-0" style={{ width: "100%", height: "100%" }}>
-        <circle cx="50" cy="50" r="49" fill="none" stroke="rgba(255,213,79,.18)" strokeWidth=".3" />
-        {Array.from({ length: 60 }, (_, i) => {
-          const a = (i * 6 * Math.PI) / 180, long = i % 5 === 0;
-          const r1 = long ? 45.5 : 47, r2 = 49;
-          return <line key={i} x1={50 + r1 * Math.cos(a)} y1={50 + r1 * Math.sin(a)} x2={50 + r2 * Math.cos(a)} y2={50 + r2 * Math.sin(a)} stroke={long ? "rgba(255,213,79,.45)" : "rgba(255,255,255,.12)"} strokeWidth={long ? ".5" : ".3"} />;
+        <circle cx="50" cy="50" r="49.5" fill="none" stroke="rgba(255,213,79,.14)" strokeWidth=".3" />
+        {Array.from({ length: 72 }, (_, i) => {
+          const long = i % 6 === 0; const [x1, y1] = P(long ? 47.6 : 48.6, i * 5); const [x2, y2] = P(49.5, i * 5);
+          return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={long ? "rgba(255,213,79,.4)" : "rgba(255,255,255,.1)"} strokeWidth={long ? ".45" : ".25"} />;
         })}
       </svg>
 
-      {/* orbit: ring + spokes + travelling dots + state pins (whole layer rotates) */}
+      {/* orbit layer: spokes, outward routes, destination nodes, pickup pins */}
       <div className="ac-orbit absolute inset-0">
         <svg viewBox="0 0 100 100" className="absolute inset-0" style={{ width: "100%", height: "100%" }}>
-          <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(255,213,79,.28)" strokeWidth=".35" strokeDasharray="1 2" />
-          <circle cx="50" cy="50" r="26" fill="none" stroke="rgba(255,255,255,.07)" strokeWidth=".3" />
-          {STATES.map((_, i) => {
-            const a = ((i * 90 - 45) * Math.PI) / 180;
-            const x = 50 + R * Math.cos(a), y = 50 + R * Math.sin(a);
-            const d = `M50 50 L${x.toFixed(2)} ${y.toFixed(2)}`;
+          <circle cx="50" cy="50" r={RD} fill="none" stroke="rgba(255,255,255,.08)" strokeWidth=".3" strokeDasharray=".8 1.6" />
+          <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(255,213,79,.3)" strokeWidth=".35" strokeDasharray="1 2" />
+
+          {/* hub → pickup spokes */}
+          {PIN_ANGLES.map((deg, i) => { const [x, y] = P(R, deg); return <line key={`s${i}`} x1="50" y1="50" x2={x} y2={y} stroke="rgba(255,213,79,.3)" strokeWidth=".4" strokeDasharray=".6 1.4" />; })}
+
+          {/* pickup → destinations across India, with cars travelling outward */}
+          {PIN_ANGLES.map((deg, i) => routesFor(deg).map((r, k) => (
+            <g key={`r${i}-${k}`}>
+              <path d={r.d} fill="none" stroke="rgba(255,213,79,.32)" strokeWidth=".35" strokeDasharray=".5 1.3" />
+              {!reduce && (
+                <circle r=".9" fill="#FFE27A">
+                  <animateMotion dur={`${2.4 + ((i + k) % 4) * 0.45}s`} begin={`${(i * 4 + k) * 0.23}s`} repeatCount="indefinite" path={r.d} />
+                </circle>
+              )}
+            </g>
+          )))}
+
+          {/* destination nodes (twinkle) */}
+          {Array.from({ length: DESTS }, (_, i) => {
+            const [x, y] = P(RD, -45 + 11.25 + i * 22.5);
             return (
-              <g key={i}>
-                <path d={d} stroke="rgba(255,213,79,.35)" strokeWidth=".4" strokeDasharray=".6 1.6" fill="none" />
-                {!reduce && (
-                  <>
-                    <circle r="1.1" fill="#FFD54F">
-                      <animateMotion dur={`${2.6 + i * 0.35}s`} repeatCount="indefinite" path={d} keyPoints={i % 2 ? "1;0" : "0;1"} keyTimes="0;1" calcMode="linear" />
-                    </circle>
-                    <circle r="2.6" fill="rgba(255,213,79,.18)">
-                      <animateMotion dur={`${2.6 + i * 0.35}s`} repeatCount="indefinite" path={d} keyPoints={i % 2 ? "1;0" : "0;1"} keyTimes="0;1" calcMode="linear" />
-                    </circle>
-                  </>
-                )}
+              <g key={`d${i}`}>
+                <circle cx={x} cy={y} r="2.2" fill="rgba(255,213,79,.12)" />
+                <circle cx={x} cy={y} r="1" fill="#fff" opacity=".85">
+                  {!reduce && <animate attributeName="opacity" values=".35;1;.35" dur="3s" begin={`${(i % 5) * 0.6}s`} repeatCount="indefinite" />}
+                </circle>
               </g>
             );
           })}
         </svg>
 
+        {/* pickup state pins */}
         {STATES.map((n, i) => {
-          const a = ((i * 90 - 45) * Math.PI) / 180;
+          const [x, y] = P(R, PIN_ANGLES[i]);
           return (
-            <div key={n} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${50 + R * Math.cos(a)}%`, top: `${50 + R * Math.sin(a)}%` }}>
+            <div key={n} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${x}%`, top: `${y}%` }}>
               <motion.div
                 initial={reduce ? false : { opacity: 0, scale: 0.4 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={VIEW}
                 transition={{ type: "spring", stiffness: 320, damping: 18, delay: 0.5 + i * 0.15 }}
               >
-                <div className="ac-orbit-counter ac-glass flex items-center gap-2 rounded-full pl-2 pr-3.5 py-2 whitespace-nowrap shadow-[0_10px_30px_rgba(0,0,0,.45)]">
-                  <span className="grid place-items-center w-7 h-7 rounded-full bg-[#FFD54F] text-[#111] shrink-0"><MapPin size={15} strokeWidth={2.4} /></span>
-                  <span className="text-[13px] font-bold text-white">{n}</span>
+                <div className="ac-orbit-counter ac-glass flex items-center gap-2 rounded-full pl-1.5 pr-3 py-1.5 whitespace-nowrap shadow-[0_10px_30px_rgba(0,0,0,.5)] !bg-[rgba(20,20,20,.75)]">
+                  <span className="grid place-items-center w-6 h-6 rounded-full bg-[#FFD54F] text-[#111] shrink-0"><MapPin size={13} strokeWidth={2.5} /></span>
+                  <span className="text-[12px] font-bold text-white leading-none">{n}</span>
                 </div>
               </motion.div>
             </div>
@@ -83,10 +103,19 @@ function RouteHub({ reduce }) {
       >
         <span className="ac-hub-pulse absolute inset-0 rounded-full" />
         <span className="ac-hub-pulse ac-hub-pulse-2 absolute inset-0 rounded-full" />
-        <div className="relative grid place-items-center w-[clamp(84px,9vw,112px)] h-[clamp(84px,9vw,112px)] rounded-full bg-gradient-to-br from-[#FFE27A] via-[#FFD54F] to-[#E6AC00] text-[#111] shadow-[0_0_60px_rgba(255,213,79,.45),inset_0_2px_0_rgba(255,255,255,.5)]">
-          <Car size={40} strokeWidth={2.2} />
+        <div className="relative grid place-items-center w-[clamp(64px,7vw,88px)] h-[clamp(64px,7vw,88px)] rounded-full bg-gradient-to-br from-[#FFE27A] via-[#FFD54F] to-[#E6AC00] text-[#111] shadow-[0_0_60px_rgba(255,213,79,.45),inset_0_2px_0_rgba(255,255,255,.5)]">
+          <Car size={32} strokeWidth={2.2} />
         </div>
       </motion.div>
+    </div>
+  );
+}
+
+function Legend() {
+  return (
+    <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[12.5px] font-semibold text-white/70" aria-hidden>
+      <span className="inline-flex items-center gap-2"><span className="grid place-items-center w-5 h-5 rounded-full bg-[#FFD54F] text-[#111]"><MapPin size={11} strokeWidth={2.6} /></span>Pickup states</span>
+      <span className="inline-flex items-center gap-2"><span className="relative w-5 h-5 grid place-items-center"><span className="absolute inset-0 rounded-full bg-[#FFD54F]/15" /><span className="w-2 h-2 rounded-full bg-white" /></span>Destinations across India</span>
     </div>
   );
 }
@@ -125,6 +154,7 @@ export default function StatesCoverageBand({ children }) {
           className="relative mx-auto w-full max-w-[440px] lg:max-w-[520px] px-10 sm:px-12"
         >
           <RouteHub reduce={reduce} />
+          <Legend />
         </motion.div>
       </div>
     </section>
