@@ -1084,3 +1084,13 @@ img.h-full { height: 100%; }
 .ac-route-flow { animation: ac-swoosh 6s linear infinite; }
 @keyframes ac-swoosh { to { stroke-dashoffset: -240; } }
 @media (prefers-reduced-motion: reduce) { .ac-float, .ac-swoosh, .ac-route-flow { animation: none !important; } }
+
+/* Highway scene (states band) */
+.ac-lane { animation: ac-lane 1.6s linear infinite; }
+@keyframes ac-lane { from { background-position: 0 0; } to { background-position: -120px 0; } }
+.ac-cab { left: 0; animation: ac-cab 11s linear infinite; }
+@keyframes ac-cab { from { transform: translateX(-180px); } to { transform: translateX(calc(100vw + 40px)); } }
+.ac-wheel { animation: ac-wheel .5s linear infinite; }
+@keyframes ac-wheel { to { transform: rotate(360deg); } }
+.ac-sun { animation: ac-breathe 7s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .ac-lane, .ac-cab, .ac-wheel, .ac-sun { animation: none !important; } }

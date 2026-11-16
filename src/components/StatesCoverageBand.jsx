@@ -1,83 +1,107 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { MapPin, Navigation } from "lucide-react";
 
 /**
- * "States we serve" band — copy on the left (passed in untouched as children),
- * a ride-booking visual on the right: a real photo with a floating "Pickup from"
- * card (the four states) and a "Drop to" card (destinations across India), joined
- * by a dotted route a little car keeps driving along. Decorative only.
+ * "States we serve" band — a highway scene. Copy on top (passed in untouched as
+ * children); below it a sunset landscape with Indian roadside milestones for the
+ * four pickup states and a final "INDIA" stone for destinations across India,
+ * while a cab drives past on the road. Decorative scene is aria-hidden.
  */
-const STATES = ["Karnataka", "Andhra Pradesh", "Maharashtra", "Telangana"];
+const STONES = [
+  { code: "KA", name: "Karnataka" },
+  { code: "AP", name: "Andhra Pradesh" },
+  { code: "MH", name: "Maharashtra" },
+  { code: "TG", name: "Telangana" },
+];
 const EASE = [0.22, 1, 0.36, 1];
 const VIEW = { once: true, amount: 0.25 };
-const ROUTE = "M22 46 C 8 68, 82 60, 76 88";
 
-function RideVisual({ reduce }) {
-  const pop = (d, from = { opacity: 0, y: 30, scale: 0.94 }) =>
-    reduce ? {} : { initial: from, whileInView: { opacity: 1, y: 0, x: 0, scale: 1 }, viewport: VIEW, transition: { duration: 0.8, delay: d, ease: EASE } };
-
+function Milestone({ code, label, name, dark, i, reduce }) {
   return (
-    <div className="relative w-full max-w-[520px] mx-auto" aria-hidden>
-      {/* photo */}
-      <motion.div {...pop(0, { opacity: 0, scale: 0.92 })} className="relative overflow-hidden rounded-[28px] aspect-[5/6] shadow-[0_40px_80px_-30px_rgba(120,80,0,.55)] ring-1 ring-black/5">
-        <img src="/images/hero-hill-road.webp" srcSet="/images/hero-hill-road-900.webp 900w, /images/hero-hill-road.webp 1672w" sizes="(min-width:1024px) 520px, 100vw" alt="" loading="lazy" decoding="async" className="ac-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 60%" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)" }} />
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={VIEW}
+      transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.25 + i * 0.14 }}
+      className="ac-stone group relative flex flex-col items-center shrink-0 snap-center"
+    >
+      <div className={`relative w-full transition-transform duration-500 group-hover:-translate-y-2 ${dark ? "" : ""}`}>
+        {/* dome cap */}
+        <div className={`h-[50px] md:h-[66px] rounded-t-[999px] grid place-items-center font-black tracking-[0.08em] ${dark ? "bg-gradient-to-b from-[#2a2a2a] to-[#0b0b0b] text-[#FFD54F] text-[14px] md:text-[15px] tracking-[0.2em]" : "bg-gradient-to-b from-[#FFDA47] to-[#F2B705] text-[#111] text-[19px] md:text-[24px]"} shadow-[inset_0_3px_0_rgba(255,255,255,.45),inset_0_-2px_0_rgba(0,0,0,.08)]`}>
+          {code}
+        </div>
+        {/* white body */}
+        <div className="bg-gradient-to-b from-white to-[#F4F1EA] px-2 pt-3 pb-5 md:pt-4 md:pb-7 text-center border-x border-[#E7E0CF] shadow-[inset_0_-6px_10px_-6px_rgba(0,0,0,.12)]">
+          <div className={`text-[9.5px] md:text-[10px] font-black tracking-[0.22em] ${dark ? "text-[#111]" : "text-[#9A6B00]"}`}>{label}</div>
+          <div className="mt-1 text-[12px] md:text-[14px] font-extrabold text-[#111] leading-tight">{name}</div>
+        </div>
+        {/* plinth */}
+        <div className="h-[10px] -mx-[6px] rounded-[3px] bg-gradient-to-b from-[#CFC8B8] to-[#A9A291]" />
+      </div>
+      {/* ground shadow */}
+      <div className="mt-[-2px] h-[10px] w-[120%] rounded-[50%] bg-black/25 blur-[5px]" />
+    </motion.div>
+  );
+}
 
-        {/* dotted route + a car driving it, between the two cards (same SVG → always aligned) */}
-        <svg viewBox="0 0 100 120" preserveAspectRatio="xMidYMid slice" className="absolute inset-0" style={{ width: "100%", height: "100%" }}>
-          <path d={ROUTE} fill="none" stroke="rgba(0,0,0,.35)" strokeWidth="2.6" strokeLinecap="round" />
-          <path d={ROUTE} fill="none" stroke="#FFD54F" strokeWidth="1.1" strokeDasharray="1.6 2.6" strokeLinecap="round" className="ac-route-flow" />
-          <circle cx="22" cy="46" r="2.2" fill="#FFD54F" stroke="#111" strokeWidth=".8" />
-          <circle cx="76" cy="88" r="2.2" fill="#111" stroke="#FFD54F" strokeWidth=".8" />
-          {!reduce && (
-            <g>
-              <animateMotion dur="5.5s" repeatCount="indefinite" path={ROUTE} keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".45 .05 .55 .95" />
-              <circle r="7" fill="rgba(255,213,79,.35)" />
-              <circle r="5" fill="#FFD54F" stroke="#111" strokeWidth=".5" />
-              <g transform="translate(-3.3 -3.3) scale(.275)" fill="none" stroke="#111" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
-                <circle cx="7" cy="17" r="2" /><path d="M9 17h6" /><circle cx="17" cy="17" r="2" />
-              </g>
+function Cab() {
+  return (
+    <svg viewBox="0 0 120 48" style={{ width: "100%", height: "100%", display: "block" }}>
+      <ellipse cx="60" cy="45" rx="50" ry="3" fill="rgba(0,0,0,.35)" />
+      <rect x="44" y="4" width="22" height="7" rx="2" fill="#FFD54F" stroke="#111" strokeWidth="1" />
+      <text x="55" y="9.6" textAnchor="middle" fontSize="4.6" fontWeight="900" fill="#111" fontFamily="sans-serif">TAXI</text>
+      <path d="M10 34 L12 24 Q14 20 20 19 L34 18 L44 11 Q48 9 54 9 L76 9 Q82 9 86 12 L96 19 L106 21 Q112 22 112 28 L112 34 Q112 37 109 37 L13 37 Q10 37 10 34 Z" fill="#fff" stroke="#1a1a1a" strokeWidth="1.2" />
+      <path d="M38 18 L46 12.5 Q49 11 54 11 L63 11 L63 18 Z" fill="#9CC3E6" opacity=".9" />
+      <path d="M66 11 L76 11 Q81 11 84 13.5 L91 18 L66 18 Z" fill="#9CC3E6" opacity=".9" />
+      <rect x="12" y="26" width="99" height="3.2" fill="#FFD54F" />
+      <circle cx="104" cy="25" r="2" fill="#FFF1B8" />
+      <g className="ac-wheel" style={{ transformOrigin: "30px 37px" }}><circle cx="30" cy="37" r="8" fill="#1a1a1a" /><circle cx="30" cy="37" r="3.4" fill="#cfcfcf" /><path d="M30 31v12M24 37h12" stroke="#888" strokeWidth="1" /></g>
+      <g className="ac-wheel" style={{ transformOrigin: "92px 37px" }}><circle cx="92" cy="37" r="8" fill="#1a1a1a" /><circle cx="92" cy="37" r="3.4" fill="#cfcfcf" /><path d="M92 31v12M86 37h12" stroke="#888" strokeWidth="1" /></g>
+    </svg>
+  );
+}
+
+function Scene({ reduce }) {
+  return (
+    <div className="relative mt-10 md:mt-6" aria-hidden>
+      {/* landscape */}
+      <div className="absolute inset-x-0 bottom-[96px] md:bottom-[112px] h-[260px] md:h-[300px] -z-0 pointer-events-none">
+        <div className="ac-sun absolute right-[10%] top-[8%] w-[120px] h-[120px] md:w-[160px] md:h-[160px] rounded-full" style={{ background: "radial-gradient(circle at 50% 50%,#FFF3B0 0%,#FFD54F 45%,rgba(255,213,79,0) 72%)" }} />
+        <svg viewBox="0 0 1440 300" preserveAspectRatio="none" className="absolute inset-0" style={{ width: "100%", height: "100%" }}>
+          <path d="M0 170 C 160 110, 300 150, 420 120 S 700 60, 860 110 S 1150 70, 1300 100 S 1440 90, 1440 90 L1440 300 L0 300 Z" fill="#F6E3A6" />
+          <path d="M0 210 C 200 160, 340 200, 520 170 S 820 130, 980 175 S 1260 150, 1440 165 L1440 300 L0 300 Z" fill="#EFD37F" />
+          <path d="M0 250 C 180 225, 380 245, 560 228 S 900 205, 1080 232 S 1320 220, 1440 228 L1440 300 L0 300 Z" fill="#E4BF58" />
+          {[[40, 238], [120, 232], [210, 230], [330, 226], [470, 222], [560, 218], [690, 214], [800, 220], [930, 224], [1050, 226], [1170, 222], [1270, 224], [1360, 226], [1420, 230]].map(([x, y], k) => (
+            <g key={k} transform={`translate(${x} ${y})`}>
+              <rect x="-2" y="-4" width="4" height="16" fill="#8a6a1c" />
+              <circle cx="0" cy="-14" r={k % 2 ? 13 : 16} fill={k % 3 ? "#B9952E" : "#A8841F"} />
             </g>
-          )}
-        </svg>
-      </motion.div>
-
-      {/* Pickup card */}
-      <motion.div {...pop(0.35, { opacity: 0, x: -30, y: 0 })} className="ac-float absolute -left-3 sm:-left-8 top-[7%] w-[78%] sm:w-[72%] rounded-2xl bg-white/95 backdrop-blur p-4 shadow-[0_24px_50px_-18px_rgba(0,0,0,.45)] ring-1 ring-black/5">
-        <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.16em] text-[#9A6B00]">
-          <span className="relative grid place-items-center w-5 h-5 rounded-full bg-[#FFD54F] text-[#111]"><MapPin size={11} strokeWidth={2.8} /></span>
-          Pickup from
-        </div>
-        <div className="mt-3 grid grid-cols-2 gap-2">
-          {STATES.map((n, i) => (
-            <motion.span
-              key={n}
-              {...(reduce ? {} : { initial: { opacity: 0, scale: 0.8 }, whileInView: { opacity: 1, scale: 1 }, viewport: VIEW, transition: { type: "spring", stiffness: 380, damping: 18, delay: 0.6 + i * 0.1 } })}
-              className="flex items-center gap-1.5 rounded-xl bg-[#FFF8DC] ring-1 ring-[#F5E3A8] px-2.5 py-2 text-[12.5px] font-bold text-[#111] leading-tight"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E6AC00] shrink-0" />
-              {n}
-            </motion.span>
           ))}
-        </div>
-      </motion.div>
+        </svg>
+      </div>
 
-      {/* Drop card */}
-      <motion.div {...pop(0.6, { opacity: 0, x: 30, y: 0 })} className="ac-float ac-float-2 absolute -right-3 sm:-right-8 bottom-[8%] w-[70%] sm:w-[62%] rounded-2xl bg-[#111] text-white p-4 shadow-[0_24px_50px_-18px_rgba(0,0,0,.6)] ring-1 ring-white/10">
-        <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.16em] text-[#FFD54F]">
-          <Navigation size={13} strokeWidth={2.6} />
-          Drop to
+      {/* milestones on the roadside */}
+      <div className="relative z-10 max-w-[1264px] mx-auto px-5 sm:px-6">
+        <div className="flex items-end gap-4 md:gap-0 md:justify-between overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-1 -mx-5 px-5 md:mx-0 md:px-0 [scrollbar-width:none] [&>*]:w-[108px] md:[&>*]:w-[128px] lg:[&>*]:w-[138px] md:px-[3%]">
+          {STONES.map((s, i) => <Milestone key={s.code} {...s} label="PICKUP" i={i} reduce={reduce} />)}
+          <div className="!w-[150px] md:!w-[176px] lg:!w-[196px] shrink-0 snap-center">
+            <Milestone code="INDIA" label="DROP" name="Destinations across India" dark i={4} reduce={reduce} />
+          </div>
         </div>
-        <div className="mt-2.5 flex items-center gap-3">
-          <span className="relative grid place-items-center w-10 h-10 rounded-full bg-[#FFD54F] text-[#111] shrink-0">
-            <span className="ac-hub-pulse absolute inset-0 rounded-full" />
-            <MapPin size={18} strokeWidth={2.5} className="relative" />
-          </span>
-          <span className="text-[16px] font-extrabold leading-tight">Destinations across India</span>
-        </div>
-      </motion.div>
+      </div>
+
+      {/* road */}
+      <div className="relative h-[96px] md:h-[112px] bg-gradient-to-b from-[#353535] to-[#232323] overflow-hidden">
+        <div className="absolute inset-x-0 top-0 h-[7px] bg-[#E8DFC8]" />
+        <div className="absolute inset-x-0 top-[7px] h-[3px] bg-white/70" />
+        <div className="ac-lane absolute inset-x-0 top-1/2 h-[6px] -translate-y-1/2" style={{ background: "repeating-linear-gradient(90deg,#FFD54F 0 64px,transparent 64px 120px)" }} />
+        <div className="absolute inset-x-0 bottom-[8px] h-[2px] bg-white/30" />
+        {!reduce && (
+          <div className="ac-cab absolute bottom-[14px] md:bottom-[18px] w-[120px] md:w-[150px] h-[48px] md:h-[60px]">
+            <Cab />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -85,18 +109,13 @@ function RideVisual({ reduce }) {
 export default function StatesCoverageBand({ children }) {
   const reduce = useReducedMotion();
   return (
-    <section className="ac-states ac-cv relative overflow-hidden isolate py-16 md:py-24" style={{ background: "linear-gradient(160deg,#FFFBEA 0%,#FFF3C9 50%,#FFFDF5 100%)" }}>
-      <div aria-hidden className="absolute inset-0 -z-10 opacity-[.09]" style={{ backgroundImage: "radial-gradient(#9A6B00 1px, transparent 1px)", backgroundSize: "26px 26px" }} />
-      <div aria-hidden className="ac-hero-glow absolute -z-10 right-[6%] top-1/2 -translate-y-1/2 w-[620px] h-[620px] rounded-full" style={{ background: "radial-gradient(circle, rgba(255,213,79,.55), transparent 62%)" }} />
-      {/* big faint route swoosh behind everything */}
-      <svg aria-hidden viewBox="0 0 1200 500" preserveAspectRatio="none" className="absolute inset-0 -z-10" style={{ width: "100%", height: "100%" }}>
-        <path className="ac-swoosh" d="M-50 420 C 250 300, 420 470, 700 300 S 1100 120, 1260 160" fill="none" stroke="rgba(230,172,0,.35)" strokeWidth="2" strokeDasharray="2 10" strokeLinecap="round" />
-      </svg>
-
-      <div className="max-w-[1264px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-14 lg:gap-16 items-center">
+    <section className="ac-states ac-cv relative overflow-hidden isolate pt-16 md:pt-24" style={{ background: "linear-gradient(180deg,#FFFCF0 0%,#FFF4CF 55%,#FFE9A8 100%)" }}>
+      <div aria-hidden className="absolute inset-0 -z-10 opacity-[.07]" style={{ backgroundImage: "radial-gradient(#9A6B00 1px, transparent 1px)", backgroundSize: "26px 26px" }} />
+      <div className="relative z-10 max-w-[1264px] mx-auto px-5 sm:px-6">
         <motion.div
-          initial={reduce ? false : { opacity: 0, x: -40, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+          className="max-w-[760px]"
+          initial={reduce ? false : { opacity: 0, y: 30, filter: "blur(6px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={VIEW}
           transition={{ duration: 0.9, ease: EASE }}
         >
@@ -110,9 +129,8 @@ export default function StatesCoverageBand({ children }) {
           />
           {children}
         </motion.div>
-
-        <div className="px-4 sm:px-8"><RideVisual reduce={reduce} /></div>
       </div>
+      <Scene reduce={reduce} />
     </section>
   );
 }
