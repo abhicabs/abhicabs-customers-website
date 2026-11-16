@@ -6,71 +6,9 @@ import Footer from "./Footer";
 import ToastStack from "./ToastStack";
 import LoginPopup from "./LoginPopup";
 import WhatsAppFloat from "./WhatsAppFloat";
-import BookingWidget from "./BookingWidget";
 import { usePageContext } from "vike-react/usePageContext";
 import { PagesContext } from "../hooks/usePageContent";
 import "../styles/global.css";
-
-/* Pages where the global booking strip should NOT appear */
-const HIDE_BOOKING_ON = ["/about", "/contact", "/contact-us"];
-
-function GlobalBookingStrip() {
-  const { urlPathname } = usePageContext();
-  const path = (urlPathname || "/").replace(/\/+$/, "") || "/";
-
-  const hide = HIDE_BOOKING_ON.some(
-    (p) => path === p || path.startsWith(p + "/")
-  );
-  if (hide) return null;
-
-  /* Don't double-render on pages that already embed their own widget */
-  const pageAlreadyHasWidget =
-    path === "/" ||
-    path.startsWith("/booking") ||
-    path.startsWith("/checkout") ||
-    path.startsWith("/confirmation") ||
-    path.startsWith("/payment") ||
-    path.startsWith("/cab-details") ||
-    path.startsWith("/tracking") ||
-    path.startsWith("/my-booking") ||
-    path.startsWith("/login") ||
-    path.startsWith("/delete-account") ||
-    path.startsWith("/support-tickets") ||
-    path.startsWith("/admin") ||
-    path.startsWith("/offers") ||
-    path.startsWith("/outstation") ||
-    path.startsWith("/cities/") ||
-    (path.startsWith("/services/") && path !== "/services");
-
-  if (pageAlreadyHasWidget) return null;
-
-  return (
-    <div
-      id="booking"
-      style={{
-        width: "100%",
-        maxWidth: 1120,
-        margin: "-48px auto 0",
-        position: "relative",
-        zIndex: 20,
-        padding: "0 16px",
-        scrollMarginTop: 96,
-      }}
-    >
-      <div
-        style={{
-          background: "#fff",
-          borderRadius: 22,
-          overflow: "hidden",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.18)",
-          border: "1px solid rgba(0,0,0,0.06)",
-        }}
-      >
-        <BookingWidget initialMode="one-way" />
-      </div>
-    </div>
-  );
-}
 
 export default function Layout({ children }) {
   const serverPages = usePageContext().data?.allPages ?? null;
@@ -127,7 +65,23 @@ export default function Layout({ children }) {
       setTimeout(() => span.remove(), 700);
     };
     document.addEventListener("pointerdown", onDown, { passive: true });
-    return () => { document.removeEventListener("pointermove", onMove); document.removeEventListener("mouseover", onOver); document.removeEventListener("pointerdown", onDown); clearTimeout(hoverT); cancelAnimationFrame(raf); };
+
+    // "Book" links/buttons point at #booking. Pages that don't carry a booking
+    // form (services, fleet, blogs, legal…) send the visitor to the home form.
+    const hasForm = () => !!document.getElementById("booking");
+    const onClickBook = (e) => {
+      const a = e.target.closest?.("a[href]");
+      if (!a) return;
+      const href = a.getAttribute("href");
+      if ((href === "#booking" || href === `${window.location.pathname}#booking`) && !hasForm()) {
+        e.preventDefault();
+        window.location.href = "/#booking";
+      }
+    };
+    const onHash = () => { if (window.location.hash === "#booking" && !hasForm()) window.location.href = "/#booking"; };
+    document.addEventListener("click", onClickBook);
+    window.addEventListener("hashchange", onHash);
+    return () => { document.removeEventListener("pointermove", onMove); document.removeEventListener("mouseover", onOver); document.removeEventListener("pointerdown", onDown); document.removeEventListener("click", onClickBook); window.removeEventListener("hashchange", onHash); clearTimeout(hoverT); cancelAnimationFrame(raf); };
   }, []);
 
   return (
@@ -138,7 +92,6 @@ export default function Layout({ children }) {
         <Header />
         <main className="flex-1">
           {children}
-          <GlobalBookingStrip />
         </main>
         <Footer />
       </div>

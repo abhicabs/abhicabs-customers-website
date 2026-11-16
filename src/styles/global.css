@@ -1014,3 +1014,8 @@ img.h-full { height: 100%; }
   .ac-card:hover { transform: none !important; }
   .ac-btn:hover svg:last-child, .ac-btn:active { transform: none !important; }
 }
+
+/* ── CTA → footer: no white gap ──
+   Pages that end on the dark CTA band run straight into the (dark) footer.
+   If the global booking strip follows the CTA, it sits on the same dark band. */
+.min-h-screen:has(main .ac-cta) > footer { margin-top: 0; }

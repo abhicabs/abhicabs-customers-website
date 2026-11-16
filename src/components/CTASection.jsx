@@ -48,6 +48,7 @@ export default function CTASection({ onBookMode, id = "contact", line1 = "Wherev
         <section
           ref={ref}
           id={id}
+          className="ac-cta"
           style={{ margin: "clamp(46px,6vw,80px) 0 0", position: "relative", overflow: "hidden", background: "#0d0d0d", isolation: "isolate" }}
         >
           {/* Photo — parallax + slow settle-in zoom */}

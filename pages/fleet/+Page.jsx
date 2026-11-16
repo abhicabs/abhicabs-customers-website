@@ -260,7 +260,7 @@ export default function FleetPage() {
       {/* ═══ CTA ═══ */}
       <CTASection
         id="fleet-cta"
-        onBookMode={() => { if (typeof window !== "undefined") document.getElementById("booking")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+        onBookMode={() => { if (typeof window !== "undefined") window.location.href = document.getElementById("booking") ? "#booking" : "/#booking"; }}
         line1="Book Your Cab Online"
         line2="with Abhi Cabs 24×7"
         description="Your Journey, Your Choice of Vehicle. Looking for a suitable vehicle for your next trip? Abhi Cabs 24×7 offers sedans, SUVs, Tempo Travellers, Urbania, and buses for local travel, airport transfers, outstation journeys, hourly rentals, and round trips. Explore our fleet, select your preferred vehicle, and book your next journey with Abhi Cabs 24×7."
