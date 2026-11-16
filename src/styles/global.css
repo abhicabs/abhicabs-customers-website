@@ -1019,3 +1019,39 @@ img.h-full { height: 100%; }
    Pages that end on the dark CTA band run straight into the (dark) footer.
    If the global booking strip follows the CTA, it sits on the same dark band. */
 .min-h-screen:has(main .ac-cta) > footer { margin-top: 0; }
+
+/* ── Card rows: edge-to-edge alignment ──
+   An incomplete last row now stretches to the full width, so its outer edges
+   line up exactly with the rows above (e.g. 4 + 3 → the 3 share the full row).
+   Item counts that would leave a lonely card get a better column count. */
+.ac-fgrid > *, .ac-fgrid-sm > * { flex-grow: 1; }
+@media (min-width: 1024px) {
+  /* 4-col grids */
+  .ac-fgrid.ac-c4:has(> :nth-child(9):last-child) > *,
+  .ac-fgrid.ac-c4:has(> :nth-child(6):last-child) > *,
+  .ac-fgrid.ac-c4:has(> :nth-child(5):last-child) > *,
+  .ac-fgrid-sm.ac-c4:has(> :nth-child(9):last-child) > *,
+  .ac-fgrid-sm.ac-c4:has(> :nth-child(6):last-child) > *,
+  .ac-fgrid-sm.ac-c4:has(> :nth-child(5):last-child) > * { flex-basis: calc(33.333% - .84rem); }     /* 3×3 · 3+3 · 3+2 */
+  /* 3-col grids */
+  .ac-fgrid.ac-c3:has(> :nth-child(4):last-child) > *,
+  .ac-fgrid-sm.ac-c3:has(> :nth-child(4):last-child) > *,
+  .ac-fgrid.ac-c3:has(> :nth-child(10):last-child) > *,
+  .ac-fgrid-sm.ac-c3:has(> :nth-child(10):last-child) > * { flex-basis: calc(50% - .63rem); }        /* 2×2 · 2×5 */
+  .ac-fgrid.ac-c3:has(> :nth-child(7):last-child) > *,
+  .ac-fgrid-sm.ac-c3:has(> :nth-child(7):last-child) > * { flex-basis: calc(25% - .94rem); }         /* 4+3 */
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* 2-col tablets: odd counts stretch the last card full width — swap to 3 cols for 3/9 */
+  .ac-fgrid:has(> :nth-child(3):last-child) > *,
+  .ac-fgrid:has(> :nth-child(5):last-child) > *,
+  .ac-fgrid:has(> :nth-child(9):last-child) > *,
+  .ac-fgrid-sm:has(> :nth-child(5):last-child) > * { flex-basis: calc(33.333% - .84rem); }
+}
+
+/* Step connector fill draws left→right when the steps scroll into view */
+@supports (animation-timeline: view()) {
+  .ac-step-line > span { animation: ac-line-draw linear both; animation-timeline: view(); animation-range: entry 40% cover 45%; }
+}
+@keyframes ac-line-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .ac-step-line > span { animation: none !important; } }

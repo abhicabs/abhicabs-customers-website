@@ -143,9 +143,14 @@ export default function Page() {
           <SectionHead center className="mb-12" eyebrow="How It Works" title="Book in under a minute" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[880px] mx-auto">
             {STEPS.map((s, i) => (
-              <Reveal key={s.n} variant="up" delay={i * 0.15} className="text-center">
-                <div className="w-14 h-14 rounded-full bg-primary text-white text-[22px] font-extrabold flex items-center justify-center mx-auto shadow-brand transition-transform duration-500 hover:scale-110 hover:rotate-6">{s.n}</div>
-                {i < STEPS.length - 1 && <div className="hidden md:block h-0.5 bg-border w-full mt-7 -mb-7" />}
+              <Reveal key={s.n} variant="up" delay={i * 0.15} className="relative text-center">
+                {/* connector: from this circle's edge to the next circle's edge, on the circles' centre line */}
+                {i < STEPS.length - 1 && (
+                  <div aria-hidden className="ac-step-line hidden md:block absolute top-7 h-0.5 -translate-y-1/2 rounded-full bg-border overflow-hidden" style={{ left: "calc(50% + 40px)", width: "calc(100% + 2rem - 80px)" }}>
+                    <span className="block h-full w-full bg-gradient-to-r from-[#E6AC00] to-[#FFD54F] origin-left" style={{ animationDelay: `${0.35 + i * 0.3}s` }} />
+                  </div>
+                )}
+                <div className="relative w-14 h-14 rounded-full bg-primary text-white text-[22px] font-extrabold flex items-center justify-center mx-auto shadow-brand transition-transform duration-500 hover:scale-110 hover:rotate-6">{s.n}</div>
                 <h4 className="mt-5 text-[16px] font-bold">{s.title}</h4>
                 <p className="mt-2 text-[14px] text-text-secondary max-w-[240px] mx-auto">{s.desc}</p>
               </Reveal>
