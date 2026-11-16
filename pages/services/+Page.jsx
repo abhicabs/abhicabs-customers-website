@@ -153,13 +153,13 @@ export default function Page() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {SERVICE_CARDS.map((s, i) => (
               <Reveal key={s.title} delay={i * 0.05}>
-                <Card className="p-6 h-full ac-card-hover">
+                <Card className="p-6 h-full ac-card-hover flex flex-col">
                   <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--color-primary-tint)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
                     <s.Icon size={21} style={{ color: GOLD }} />
                   </div>
                   <h3 className="text-[17px] font-bold">{s.title}</h3>
                   <p className="text-[14px] text-text-secondary mt-2 leading-relaxed">{s.desc}</p>
-                  <a href="#booking" className="inline-block mt-4 text-[14px] font-bold" style={{ color: GOLD }}>{s.cta} →</a>
+                  <a href="#booking" className="self-start mt-auto pt-4 text-[14px] font-bold" style={{ color: GOLD }}>{s.cta} →</a>
                 </Card>
               </Reveal>
             ))}

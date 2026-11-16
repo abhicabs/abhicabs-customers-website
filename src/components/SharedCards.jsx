@@ -100,7 +100,7 @@ export function OfferCard({ discount, title, code, meta, ctaHref, ctaLabel }) {
   return (
     <div className="bg-white border border-border rounded-2xl overflow-hidden flex flex-col">
       {/* Top colour band */}
-      <div className="bg-primary px-6 py-5">
+      <div className="bg-primary px-6 py-5 min-h-[104px]">
         <p className="text-[28px] font-extrabold text-brand-black leading-none mb-1">{discount}</p>
         <p className="text-[14px] font-semibold text-brand-black/80">{title}</p>
       </div>
@@ -108,6 +108,7 @@ export function OfferCard({ discount, title, code, meta, ctaHref, ctaLabel }) {
       <div className="flex flex-col gap-3 p-5 flex-1">
         <p className="text-[13px] text-text-secondary leading-relaxed">{meta}</p>
 
+        <div className="mt-auto flex flex-col gap-3">
         {/* Coupon code copy pill */}
         <button
           onClick={copy}
@@ -122,11 +123,12 @@ export function OfferCard({ discount, title, code, meta, ctaHref, ctaLabel }) {
         {ctaHref && (
           <a
             href={ctaHref}
-            className="mt-auto text-center py-2.5 rounded-xl bg-brand-black text-white text-[13.5px] font-semibold hover:!bg-[#333]"
+            className="text-center py-2.5 rounded-xl bg-brand-black text-white text-[13.5px] font-semibold hover:!bg-[#333]"
           >
             {ctaLabel || "Learn More"}
           </a>
         )}
+        </div>
       </div>
     </div>
   );

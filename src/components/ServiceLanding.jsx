@@ -814,9 +814,9 @@ export default function ServiceLanding({ cfg }) {
             : `ac-fgrid ${gridCols} gap-4 sm:gap-5`}>
             {b.cards.map((cd, i) => (
               <Reveal key={cd.title} variant="zoom" delay={(i % 3) * 0.08} className={b.cards.length > 3 ? "max-sm:shrink-0 max-sm:w-[84%] max-sm:snap-start" : undefined}>
-                <Card className="p-5 sm:p-6 h-full">
+                <Card className="p-5 sm:p-6 h-full flex flex-col">
                   <h3 className="text-[16.5px] font-bold leading-snug">{cd.title}</h3>
-                  {[].concat(cd.body || []).map((p, j) => <p key={j} className="text-[14px] text-text-secondary mt-2 leading-relaxed">{renderInline(p)}</p>)}
+                  {[].concat(cd.body || []).map((p, j, arr) => <p key={j} className={`text-[14px] text-text-secondary leading-relaxed ${arr.length > 1 && j === arr.length - 1 ? "mt-auto pt-3" : "mt-2"}`}>{renderInline(p)}</p>)}
                 </Card>
               </Reveal>
             ))}

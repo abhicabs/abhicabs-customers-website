@@ -58,10 +58,10 @@ export default function CityLanding({ cfg }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {c.services.items.map((s, i) => (
               <Reveal key={s.title} variant={i % 2 ? "right" : "left"} delay={Math.floor(i / 2) * 0.06}>
-                <Card className="p-6 h-full">
+                <Card className="p-6 h-full flex flex-col">
                   <h3 className="text-[16px] font-bold">{s.title}</h3>
                   <p className="text-[14px] text-text-secondary mt-2 leading-relaxed">{s.desc}</p>
-                  {s.link && <a href={s.link} className="inline-block mt-3 text-[14px] font-bold" style={{ color: GOLD }}>Learn more →</a>}
+                  {s.link && <a href={s.link} className="self-start mt-auto pt-3 text-[14px] font-bold" style={{ color: GOLD }}>Learn more →</a>}
                 </Card>
               </Reveal>
             ))}
