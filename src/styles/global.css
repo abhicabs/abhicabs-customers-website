@@ -1061,3 +1061,12 @@ img.h-full { height: 100%; }
 .ac-ring-rev { animation: ac-spin 60s linear infinite reverse; }
 @keyframes ac-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .ac-ring, .ac-ring-rev { animation: none !important; } }
+
+/* Route hub (states band): orbit turns, pins counter-turn to stay upright, hub pulses */
+.ac-orbit { animation: ac-spin 48s linear infinite; }
+.ac-orbit-counter { animation: ac-spin 48s linear infinite reverse; }
+.ac-hub-pulse { background: rgba(255,213,79,.35); animation: ac-hub-pulse 2.8s ease-out infinite; }
+.ac-hub-pulse-2 { animation-delay: 1.4s; }
+@keyframes ac-hub-pulse { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(2.4); opacity: 0; } }
+.ac-hub:hover .ac-orbit, .ac-hub:hover .ac-orbit-counter { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .ac-orbit, .ac-orbit-counter, .ac-hub-pulse { animation: none !important; } }
