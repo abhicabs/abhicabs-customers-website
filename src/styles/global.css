@@ -1075,3 +1075,12 @@ img.h-full { height: 100%; }
    and a gold seam marks the hand-off. */
 .ac-states + .ac-cta, .ac-states + * > .ac-cta:first-child { margin-top: 0 !important; }
 .ac-states { box-shadow: inset 0 -1px 0 rgba(154,107,0,.15); }
+
+/* Ride visual (states band): floating cards bob, car drives the route, swoosh flows */
+.ac-float { animation: ac-bob 6s ease-in-out infinite; }
+.ac-float-2 { animation-duration: 7s; animation-delay: -2s; }
+@keyframes ac-bob { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+.ac-swoosh { animation: ac-swoosh 14s linear infinite; }
+.ac-route-flow { animation: ac-swoosh 6s linear infinite; }
+@keyframes ac-swoosh { to { stroke-dashoffset: -240; } }
+@media (prefers-reduced-motion: reduce) { .ac-float, .ac-swoosh, .ac-route-flow { animation: none !important; } }
