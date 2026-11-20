@@ -15,11 +15,30 @@ const API_BASE = API_ROOT;
 let _cache = null;
 let _promise = null;
 
+// If the backend doesn't have this endpoint yet (404), remember that for an hour
+// so every page load doesn't repeat the request and log a red 404 in the console.
+// Any other failure (offline, 5xx) is NOT remembered, so it retries next load.
+const MISSING_KEY = "ac:site-settings:404";
+const MISSING_TTL = 60 * 60 * 1000;
+const knownMissing = () => {
+  try { const t = Number(localStorage.getItem(MISSING_KEY)); return t && Date.now() - t < MISSING_TTL; } catch { return false; }
+};
+const markMissing = () => { try { localStorage.setItem(MISSING_KEY, String(Date.now())); } catch { /* storage blocked */ } };
+const clearMissing = () => { try { localStorage.removeItem(MISSING_KEY); } catch { /* storage blocked */ } };
+
 function fetchSettings() {
   if (_promise) return _promise;
+  if (typeof window !== "undefined" && knownMissing()) {
+    _cache = {};
+    _promise = Promise.resolve(_cache);
+    return _promise;
+  }
   _promise = fetch(`${API_BASE}/api/v1/blog/site-settings`)
-    .then((r) => (r.ok ? r.json() : Promise.reject()))
-    .then((json) => { _cache = json?.data || {}; return _cache; })
+    .then((r) => {
+      if (r.status === 404) { markMissing(); return Promise.reject(); }
+      return r.ok ? r.json() : Promise.reject();
+    })
+    .then((json) => { clearMissing(); _cache = json?.data || {}; return _cache; })
     .catch(() => { _cache = {}; return _cache; });
   return _promise;
 }

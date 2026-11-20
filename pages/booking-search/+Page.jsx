@@ -21,6 +21,7 @@ import BackLink, { recordNavStep } from "../../src/components/BackLink";
 import LocationMapPicker from "../../src/components/LocationMapPicker";
 import BookingRequestForm from "../../src/components/BookingRequestForm";
 import { isOutsideServiceStates } from "../../src/api/services/bookingRequests";
+import useRentalPackages, { nearestPackageValue } from "../../src/hooks/useRentalPackages";
 
 
 // Derives a customer-facing "type" from the vehicle's real name, since the
@@ -164,6 +165,14 @@ export default function Page() {
     tripType: "one-way", pickup: "", drop: "", date: today, time: "", returnDate: "", returnTime: "", dropDate: "", package: "8 hrs / 80 km",
     airport: "", airportTerminal: "", airportDirection: "drop", stops: [],
   });
+  // Local packages live from the backend (same 4/8/12 hrs list as before while loading or offline).
+  const rentalPackages = useRentalPackages();
+  useEffect(() => {
+    setInlineTrip((f) => {
+      const v = nearestPackageValue(f.package, rentalPackages);
+      return v === f.package ? f : { ...f, package: v };
+    });
+  }, [rentalPackages]);
   // Pre-fill the trip panel from the saved trip whenever one is loaded (e.g.
   // coming back from checkout), so any edit starts from what the customer
   // already chose instead of blank fields.
@@ -1138,9 +1147,7 @@ export default function Page() {
                         onChange={setInline("package")}
                         style={{ width: "100%", height: 42, borderRadius: 9, border: "1px solid #E5E5E5", padding: "0 10px", fontSize: 13, outline: "none", background: "#fff" }}
                       >
-                        <option value="4 hrs / 40 km">4 hrs / 40 km</option>
-                        <option value="8 hrs / 80 km">8 hrs / 80 km</option>
-                        <option value="12 hrs / 120 km">12 hrs / 120 km</option>
+                        {rentalPackages.map((p) => <option key={p.value} value={p.value}>{p.label}</option>)}
                       </select>
                     </div>
                   )}
@@ -1668,11 +1675,7 @@ export default function Page() {
                     description: p.label,
                     id: p.rentalPackageId,
                   }))
-                : [
-                    { value: "4 hrs / 40 km",   description: "Half day" },
-                    { value: "8 hrs / 80 km",   description: "Full day" },
-                    { value: "12 hrs / 120 km", description: "Extended day" },
-                  ]
+                : rentalPackages.map((p) => ({ value: p.value, description: p.description }))
               ).map((p) => (
                 <button
                   key={p.id || p.value}

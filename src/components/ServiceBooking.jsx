@@ -8,8 +8,9 @@ import Reveal from "./ui/Reveal";
  * same live fare lookup + booking flow as the Home page. No separate logic.
  *
  * Remount (via `widgetKey`) to switch trip type / preset a route.
+ * `presetJourney` ({ tripType, package, pickup, drop, … }) presets a full journey.
  */
-export default function ServiceBooking({ widgetKey, initialMode = "one-way", presetPickup = "", presetDrop = "", id = "booking", className = "" }) {
+export default function ServiceBooking({ widgetKey, initialMode = "one-way", presetPickup = "", presetDrop = "", presetJourney = null, id = "booking", className = "" }) {
   return (
     <Reveal y={28}>
       <div
@@ -21,7 +22,7 @@ export default function ServiceBooking({ widgetKey, initialMode = "one-way", pre
           boxShadow: "0 30px 70px rgba(0,0,0,.28)", border: "1px solid rgba(255,255,255,.12)",
         }}
       >
-        <BookingWidget key={widgetKey} initialMode={initialMode} presetPickup={presetPickup} presetDrop={presetDrop} />
+        <BookingWidget key={widgetKey} initialMode={initialMode} presetPickup={presetPickup} presetDrop={presetDrop} presetJourney={presetJourney} />
       </div>
     </Reveal>
   );
@@ -29,5 +30,6 @@ export default function ServiceBooking({ widgetKey, initialMode = "one-way", pre
 
 export function scrollToBooking(id = "booking") {
   if (typeof document === "undefined") return;
+  if (typeof id !== "string") id = "booking"; // guard: called directly as an onClick handler (receives the click event)
   setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "center" }), 60);
 }

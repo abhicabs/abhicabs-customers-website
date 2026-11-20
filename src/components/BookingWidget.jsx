@@ -33,6 +33,7 @@ import {
 import { toISODate, pickupTimeError, returnTimeError } from "../lib/dateTime";
 import { isIndianMobile, cleanPhoneInput } from "../lib/phone";
 import useServiceStates from "../hooks/useServiceStates";
+import useRentalPackages from "../hooks/useRentalPackages";
 
 // The states we pick up in come LIVE from GET /service-states (useServiceStates
 // below). There is deliberately no client-side allowlist: the backend refuses a
@@ -89,11 +90,9 @@ function terminalOptions(code) {
   });
 }
 
-const PACKAGE_OPTIONS = [
-  { value: "4 hrs / 40 km",   label: "4 hrs / 40 km",   description: "Half day" },
-  { value: "8 hrs / 80 km",   label: "8 hrs / 80 km",   description: "Full day" },
-  { value: "12 hrs / 120 km", label: "12 hrs / 120 km", description: "Extended day" },
-];
+// Local packages come live from the backend (GET /fares/rental-packages) via
+// useRentalPackages — same 4 / 8 / 12 hrs list as before while it loads or if
+// the backend is unreachable, so the dropdown never looks different.
 
 
 function emptyFields() {
@@ -159,6 +158,7 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
     ensureCitiesLoaded();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const PACKAGE_OPTIONS = useRentalPackages();
   const [fields, setFields] = useState(() => ({
     ...emptyFields(),
     ...(presetJourney
@@ -311,6 +311,14 @@ export default function BookingWidget({ initialMode = "one-way", presetPickup = 
     });
   }, [mapsLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
   const stopAutocomplete = (id) => (GOOGLE_MAPS_API_KEY ? { attachTo: attachStop(id) } : null);
+
+  // If the live package list doesn't include the chosen package, switch to the nearest one.
+  useEffect(() => {
+    if (!PACKAGE_OPTIONS.length || PACKAGE_OPTIONS.some((p) => p.value === fields.package)) return;
+    const want = parseInt(fields.package, 10) || 8;
+    const nearest = PACKAGE_OPTIONS.reduce((a, b) => (Math.abs(b.hours - want) < Math.abs(a.hours - want) ? b : a));
+    setFields((f) => ({ ...f, package: nearest.value }));
+  }, [PACKAGE_OPTIONS]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const set = (key) => (e) => {
     // Typing over a chosen place makes its coordinates stale. Drop them, so

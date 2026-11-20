@@ -5,9 +5,31 @@
 [build.environment]
   NODE_VERSION = "20"
   VITE_API_BASE_URL = "https://api.abhicabs24x7.com/api/v1"
+  # Images from Cloudinary: set your cloud name here (or in Netlify → Site settings → Environment variables).
+  # Empty = images are served from /public/images as before.
+  # VITE_CLOUDINARY_CLOUD_NAME = "your-cloud-name"
 
 # SPA fallback — all routes that don't match a static file
 # are served by index.html so Vike's client-side router handles them.
+# Blog article pages were removed — old article URLs go to the /blogs listing; /blog → home (301).
+[[redirects]]
+  from = "/blogs/*"
+  to = "/blogs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

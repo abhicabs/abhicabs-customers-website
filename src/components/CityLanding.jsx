@@ -1,262 +1,109 @@
-import React from "react";
-import {
-  MapPin, Car, Plane, Clock, Users, ShieldCheck, Headset, ChevronRight,
-  Building, Compass, Calendar, Route as RouteIcon, Star, CheckCircle2,
-} from "lucide-react";
-import SectionHead from "./ui/SectionHead";
-import Card from "./ui/Card";
-import Reveal from "./ui/Reveal";
+import React, { useState } from "react";
 import Button from "./ui/Button";
 import PageHero from "./ui/PageHero";
-import ServiceBooking from "./ServiceBooking";
+import ServiceBooking, { scrollToBooking } from "./ServiceBooking";
 import CtaBand from "./CtaBand";
+import { AIRPORTS } from "../data/airports";
+import placeImages from "../content/placeImages.json";
+import { UsesSection } from "./landing/bangalore/TravelSections";
+import { HowSection } from "./landing/bangalore/TrustSections";
+import { AttractionsGrid, DayTripCarousel } from "./landing/city/PlaceCards";
+import { FleetLineup, TirumalaBand, RoutesBoard, PickupMap, WhyBand, TipsSlip, FaqCentered } from "./landing/city/CitySections";
 
-const GOLD = "#E6AC00";
-const iconMap = { pin: MapPin, car: Car, plane: Plane, clock: Clock, users: Users, shield: ShieldCheck, headset: Headset, building: Building, compass: Compass, calendar: Calendar, route: RouteIcon, star: Star };
+/**
+ * /cities/<slug> — city destination pages. Content comes untouched from src/content/cityDefaults.js;
+ * section layouts live in src/components/landing/city (stacked, no left/right splits).
+ * Tourist places and one-day trips show Wikimedia Commons photos from src/content/placeImages.json
+ * (generate with `npm run images:places`). Every action prefills the hero booking widget.
+ */
 
-function Section({ children, className = "", white, dark, id }) {
-  const bg = dark ? "py-14 md:py-20" : white ? "py-14 md:py-20 bg-white border-y border-border" : "py-14 md:py-20";
-  return <section id={id} className={`${bg} ac-cv ${className}`} style={dark ? { background: "linear-gradient(135deg,#1C1C1C,#0a0a0a)" } : undefined}>{children}</section>;
+/** Which booking each service row starts — derived from the service's existing title / link. */
+function serviceJourney(item, city) {
+  const t = item.title;
+  if (/tirumala/i.test(t)) return { tripType: "one-way", pickup: city, drop: "Tirumala" };
+  if (/airport/i.test(t)) {
+    const ap = AIRPORTS.find((a) => a.city.toLowerCase() === city.toLowerCase());
+    return ap ? { tripType: "airport", airport: ap.code } : { tripType: "airport" };
+  }
+  if (/corporate|group/i.test(t)) return null;
+  if (/hourly|local|sightseeing/i.test(t)) return { tripType: "local" };
+  if (/round-trip|one-way|outstation/i.test(t)) return { tripType: "one-way", pickup: city };
+  return { tripType: "local" };
 }
 
-function PlaceGrid({ places }) {
-  return (
-    <div className="ac-fgrid ac-c4 gap-5 mt-10">
-      {places.map((p, i) => (
-        <Reveal key={p.name} variant="zoom" delay={(i % 4) * 0.07}>
-          <Card className="p-6 h-full">
-            <h4 className="text-[15px] font-bold">{p.name}</h4>
-            <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{p.desc}</p>
-          </Card>
-        </Reveal>
-      ))}
-    </div>
-  );
+/** Turn an item's existing `links` into inline links inside its description (renderInline syntax).
+ *  A label that isn't in the text is kept as its own link line. */
+function linkify(desc, links = []) {
+  let d = desc; const extra = [];
+  for (const l of links) {
+    const i = d.indexOf(l.label);
+    if (i >= 0) d = `${d.slice(0, i)}[${l.label}](${l.href})${d.slice(i + l.label.length)}`;
+    else extra.push(`[${l.label}](${l.href})`);
+  }
+  return [d, ...extra];
 }
 
-export default function CityLanding({ cfg }) {
-  const c = cfg;
+/** "Mangaluru to Udupi" → "Udupi" */
+const destOf = (name) => (/ to (.+)$/.exec(name)?.[1] || name).trim();
+
+export default function CityLanding({ cfg: c }) {
+  const city = c.cityName;
+  const [booking, setBooking] = useState({ key: "city-default", journey: null });
+  const book = (journey) => { setBooking({ key: `b-${Date.now()}`, journey }); scrollToBooking(); };
+
+  const imageFor = (name) => placeImages[name] || null;
+  const services = {
+    heading: c.services.heading,
+    cards: c.services.items.map((s) => {
+      const journey = serviceJourney(s, city);
+      return { title: s.title, body: linkify(s.desc, s.links), book: journey || undefined, href: journey ? undefined : (s.link || "/contact-us"), link: journey ? s.link : undefined };
+    }),
+  };
+
+  // Order matches the previous page; light sections alternate, coloured/dark bands are fixed.
+  const blocks = [
+    ["services", (bg) => <UsesSection data={services} onBook={book} bg={bg} center />],
+    c.fleet && ["fleet", (bg) => <FleetLineup data={c.fleet} bg={bg} />],
+    c.tirumala && ["tirumala", () => <TirumalaBand data={c.tirumala} city={city} onBook={book} />, "fixed"],
+    ["attractions", (bg) => <AttractionsGrid data={c.attractions} imageFor={imageFor} onBook={book} bg={bg} />],
+    ["daytrips", (bg) => <DayTripCarousel data={c.dayTrips} imageFor={imageFor} destOf={destOf} origin={city} onBook={book} bg={bg} />],
+    ["routes", () => <RoutesBoard data={c.outstationRoutes} origin={city} onBook={book} />, "fixed"],
+    ["pickup", (bg) => <PickupMap data={c.pickupLocations} region={city} onBook={book} bg={bg} />],
+    ["why", () => <WhyBand data={c.whyChoose} />, "fixed"],
+    ["how", (bg) => <HowSection data={c.howToBook} onBook={book} bg={bg} />],
+    ["tips", (bg) => <TipsSlip data={c.tips} bg={bg} />],
+    ["faq", (bg) => <FaqCentered heading={`Frequently Asked Questions About Cab Booking in ${city}`} items={c.faqs.map(([q, a]) => ({ q, a }))} bg={bg} />],
+  ].filter(Boolean);
+  let light = 0;
+
   return (
     <>
-      {/* ═══ HERO ═══ */}
       <PageHero
         center
         image="/images/hero-hill-road.webp"
         imagePosition="50% center"
-        imageAlt={`Cab services in ${c.cityName}`}
-        breadcrumb={[["Home", "/"], ["Cities", "/cities"], [c.cityName, null]]}
+        imageAlt={`Cab services in ${city}`}
+        breadcrumb={[["Home", "/"], [city, null]]}
         title={c.hero.heading}
         subtitle={c.hero.subheading}
         description={c.hero.description}
       >
-        <ServiceBooking widgetKey="city-default" initialMode="one-way" />
+        <ServiceBooking widgetKey={booking.key} initialMode="one-way" presetJourney={booking.journey} />
       </PageHero>
 
-      {/* ═══ SERVICES ═══ */}
-      <Section white>
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal><SectionHead center className="mb-11" title={c.services.heading} /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {c.services.items.map((s, i) => (
-              <Reveal key={s.title} variant={i % 2 ? "right" : "left"} delay={Math.floor(i / 2) * 0.06}>
-                <Card className="p-6 h-full flex flex-col">
-                  <h3 className="text-[16px] font-bold">{s.title}</h3>
-                  <p className="text-[14px] text-text-secondary mt-2 leading-relaxed">{s.desc}</p>
-                  {s.link && <a href={s.link} className="self-start mt-auto pt-3 text-[14px] font-bold" style={{ color: GOLD }}>Learn more →</a>}
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
+      {blocks.map(([key, render, fixed]) => {
+        if (fixed) { light = 0; return <React.Fragment key={key}>{render()}</React.Fragment>; }
+        const bg = light++ % 2 === 0 ? "bg-bg" : "bg-white";
+        return <React.Fragment key={key}>{render(bg)}</React.Fragment>;
+      })}
 
-      {/* ═══ FLEET / VEHICLES (Pune, Vizag) ═══ */}
-      {c.fleet && (
-        <Section>
-          <div className="max-w-[1264px] mx-auto px-6">
-            <Reveal><SectionHead center className="mb-2" title={c.fleet.heading} /></Reveal>
-            <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-4">{c.fleet.subheading}</p></Reveal>
-            <Reveal><p className="text-center text-text-secondary text-[15px] max-w-[700px] mx-auto">{c.fleet.intro}</p></Reveal>
-            <div className="max-w-[800px] mx-auto mt-8 space-y-3">
-              {c.fleet.vehicles.map((v, i) => (
-                <Reveal key={v.label} variant="left" delay={i * 0.06} className="flex items-start gap-3 p-3 rounded-xl hover:bg-[rgba(230,172,0,0.06)] transition-colors">
-                  <CheckCircle2 size={18} style={{ color: GOLD }} className="shrink-0 mt-0.5" />
-                  <p className="text-[15px]"><span className="font-bold">{v.label}:</span> <span className="text-text-secondary">{v.desc}</span></p>
-                </Reveal>
-              ))}
-              {c.fleet.note && <p className="text-[14px] text-text-secondary mt-4">{c.fleet.note}</p>}
-            </div>
-          </div>
-        </Section>
-      )}
-
-      {/* ═══ TIRUMALA (Tirupati only) ═══ */}
-      {c.tirumala && (
-        <Section>
-          <div className="max-w-[1264px] mx-auto px-6">
-            <Reveal><SectionHead center className="mb-4" title={c.tirumala.heading} /></Reveal>
-            <Reveal><p className="text-center text-text-secondary text-[15px] max-w-[700px] mx-auto leading-relaxed">{c.tirumala.intro}</p></Reveal>
-            {c.tirumala.pickups && (
-              <div className="max-w-[600px] mx-auto mt-6">
-                {c.tirumala.pickups.map((p) => (
-                  <div key={p} className="flex items-center gap-3 py-2 text-[14px] text-text-secondary"><CheckCircle2 size={16} style={{ color: GOLD }} className="shrink-0" />{p}</div>
-                ))}
-              </div>
-            )}
-            {c.tirumala.note && <Reveal><p className="text-center text-text-secondary text-[14px] mt-6 max-w-[640px] mx-auto">{c.tirumala.note}</p></Reveal>}
-            {c.tirumala.important && (
-              <div className="ac-fgrid ac-c3 gap-5 mt-10">
-                {c.tirumala.important.map((item, i) => (
-                  <Reveal key={item.title} variant="zoom" delay={(i % 3) * 0.08}>
-                    <Card className="p-5 h-full">
-                      <h4 className="text-[14px] font-bold">{item.title}</h4>
-                      <p className="text-[13px] text-text-secondary mt-1 leading-relaxed">{item.desc}</p>
-                    </Card>
-                  </Reveal>
-                ))}
-              </div>
-            )}
-            {c.tirumala.disclaimer && <p className="text-center text-[13px] text-text-secondary mt-6 italic">{c.tirumala.disclaimer}</p>}
-          </div>
-        </Section>
-      )}
-
-      {/* ═══ ATTRACTIONS ═══ */}
-      <Section white>
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal><SectionHead center className="mb-2" title={c.attractions.heading} /></Reveal>
-          <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-2">{c.attractions.subheading}</p></Reveal>
-          <Reveal><p className="text-center text-text-secondary text-[15px] max-w-[700px] mx-auto">{c.attractions.intro}</p></Reveal>
-          <PlaceGrid places={c.attractions.places} />
-        </div>
-      </Section>
-
-      {/* ═══ DAY TRIPS ═══ */}
-      <Section>
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal><SectionHead center className="mb-2" title={c.dayTrips.heading} /></Reveal>
-          <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-2">{c.dayTrips.subheading}</p></Reveal>
-          <Reveal><p className="text-center text-text-secondary text-[15px] max-w-[700px] mx-auto">{c.dayTrips.intro}</p></Reveal>
-          <PlaceGrid places={c.dayTrips.places} />
-        </div>
-      </Section>
-
-      {/* ═══ OUTSTATION ROUTES ═══ */}
-      <Section white>
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal><SectionHead center className="mb-2" title={c.outstationRoutes.heading} /></Reveal>
-          <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-2">{c.outstationRoutes.subheading}</p></Reveal>
-          <Reveal><p className="text-center text-text-secondary text-[15px] max-w-[700px] mx-auto mb-8">{c.outstationRoutes.intro}</p></Reveal>
-          <div className="max-w-[800px] mx-auto space-y-2">
-            {c.outstationRoutes.routes.map((r, i) => (
-              <Reveal key={r.label} variant="left" delay={Math.min(i, 8) * 0.04} className="flex items-start gap-3 p-3 rounded-xl hover:bg-[rgba(230,172,0,0.06)] transition-colors duration-300">
-                <ChevronRight size={18} className="mt-0.5 shrink-0" style={{ color: GOLD }} />
-                <p className="text-[15px]"><span className="font-bold">{r.label}:</span> <span className="text-text-secondary">{r.desc}</span></p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ═══ PICKUP LOCATIONS ═══ */}
-      <Section>
-        <div className="max-w-[860px] mx-auto px-6 text-center">
-          <Reveal><SectionHead center className="mb-2" title={c.pickupLocations.heading} /></Reveal>
-          <Reveal><p className="text-[17px] font-bold text-text-secondary mb-4">{c.pickupLocations.subheading}</p></Reveal>
-          <Reveal><p className="text-text-secondary text-[15px] leading-relaxed">{c.pickupLocations.intro}</p></Reveal>
-          {c.pickupLocations.areas && (
-            <div className="flex flex-wrap justify-center gap-2 mt-6">
-              {c.pickupLocations.areas.map((a) => (
-                <span key={a} className="px-4 py-2 rounded-full border border-border bg-white text-[13px] font-bold text-text-secondary">{a}</span>
-              ))}
-            </div>
-          )}
-          {c.pickupLocations.note && <Reveal><p className="text-text-secondary text-[14px] mt-6 leading-relaxed">{c.pickupLocations.note}</p></Reveal>}
-        </div>
-      </Section>
-
-      {/* ═══ WHY CHOOSE ═══ */}
-      <Section white>
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal><SectionHead center className="mb-2" title={c.whyChoose.heading} /></Reveal>
-          <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-11">{c.whyChoose.subheading}</p></Reveal>
-          <div className="ac-fgrid ac-c4 gap-5">
-            {c.whyChoose.items.map((w, i) => (
-              <Reveal key={w.title} variant="zoom" delay={(i % 4) * 0.07}>
-                <Card className="p-6 h-full">
-                  <h4 className="text-[15px] font-bold">{w.title}</h4>
-                  <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">{w.desc}</p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ═══ HOW TO BOOK ═══ */}
-      <Section>
-        <div className="max-w-[860px] mx-auto px-6">
-          <Reveal><SectionHead center className="mb-2" title={c.howToBook.heading} /></Reveal>
-          <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-10">{c.howToBook.subheading}</p></Reveal>
-          <div className="space-y-6">
-            {c.howToBook.steps.map((s, i) => (
-              <Reveal key={s.title} variant="left" delay={i * 0.12}>
-                <div className="ac-card flex gap-5 items-start p-5 rounded-2xl border border-border bg-white">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center font-bold text-[18px] shrink-0" style={{ background: "#111", color: GOLD }}>{i + 1}</div>
-                  <div><h4 className="text-[16px] font-bold">{s.title}</h4><p className="text-[14px] text-text-secondary mt-1.5 leading-relaxed">{s.desc}</p></div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ═══ TIPS ═══ */}
-      <Section white>
-        <div className="max-w-[1264px] mx-auto px-6">
-          <Reveal><SectionHead center className="mb-2" title={c.tips.heading} /></Reveal>
-          <Reveal><p className="text-center text-[17px] font-bold text-text-secondary mb-11">{c.tips.subheading}</p></Reveal>
-          <div className="ac-fgrid ac-c3 gap-5 max-w-[960px] mx-auto">
-            {c.tips.items.map((t, i) => (
-              <Reveal key={t.title} variant="zoom" delay={(i % 3) * 0.08}>
-                <Card className="p-5 h-full">
-                  <h4 className="text-[14px] font-bold">{t.title}</h4>
-                  <p className="text-[13px] text-text-secondary mt-1 leading-relaxed">{t.desc}</p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ═══ FAQs ═══ */}
-      <Section>
-        <div className="max-w-[860px] mx-auto px-6">
-          <Reveal><SectionHead center className="mb-9" title={`Frequently Asked Questions About Cab Booking in ${c.cityName}`} /></Reveal>
-          <div className="space-y-3">
-            {c.faqs.map(([q, a], i) => (
-              <Reveal key={q} delay={Math.min(i, 6) * 0.05}>
-              <details className="group bg-[#FAFAFA] border border-border rounded-[16px] p-5 [&_summary]:cursor-pointer">
-                <summary className="flex items-center justify-between text-[15px] font-bold list-none">
-                  {q}
-                  <span className="text-[color:var(--color-primary-dark)] text-[20px] leading-none group-open:rotate-45 transition-transform">+</span>
-                </summary>
-                <p className="text-[14px] text-text-secondary mt-3 leading-relaxed">{a}</p>
-              </details>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ═══ CTA ═══ */}
       <CtaBand
         image="/images/hero-hill-road.webp"
         title={c.cta.heading}
         subheading={c.cta.subheading}
         description={c.cta.description}
         actions={<>
-          <Button href="#booking" variant="inverse" size="lg">{c.cta.ctaLabel}</Button>
+          <Button variant="inverse" size="lg" className="whitespace-normal! h-auto! min-h-14 py-3.5 text-center" onClick={() => book(null)}>{c.cta.ctaLabel}</Button>
           <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
         </>}
       />

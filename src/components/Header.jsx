@@ -19,7 +19,6 @@ import { useToast } from "../hooks/useToast";
 import { useSiteSettings } from "../hooks/useSiteSettings";
 import { usePageContext } from "vike-react/usePageContext";
 import { NAV_LINKS as NAV_LINKS_DEFAULT, isActivePath } from "../data/siteLinks";
-import useServiceLinks from "../hooks/useServiceLinks";
 import { PHONES } from "../data/businessInfo";
 
 const DEFAULT_NAV_LINKS = NAV_LINKS_DEFAULT;
@@ -54,7 +53,6 @@ function UserIcon({ size = 18, color = "#111" }) {
 export default function Header() {
   const dispatch = useDispatch();
   const currentPath = usePageContext().urlPathname || "/";
-  const SERVICE_SUBLINKS = useServiceLinks(); // all featured service pages for the "More" dropdown
   const siteSettings = useSiteSettings();
   const NAV_LINKS = siteSettings.getList("header", "nav", DEFAULT_NAV_LINKS);
   const HELPLINES = siteSettings.getList("header", "phones", DEFAULT_HELPLINES);
@@ -187,7 +185,7 @@ export default function Header() {
               />
             </m.a>
 
-            {/* Desktop nav links — flat service links + "More" dropdown for all service pages */}
+            {/* Desktop nav links */}
             <nav className="ac-nav-links" aria-label="Primary" onMouseLeave={() => setHoveredLink(null)}>
               {NAV_LINKS.map((l) => {
                 const active = isActivePath(l.href, currentPath);
@@ -206,33 +204,6 @@ export default function Header() {
                 );
               })}
 
-              {/* "More" dropdown — shows all service pages dynamically */}
-              {SERVICE_SUBLINKS.length > 0 && (
-                <div className="relative" onMouseEnter={() => setHoveredLink("__more")} onMouseLeave={() => setHoveredLink(null)}>
-                  <button
-                    type="button"
-                    onFocus={() => setHoveredLink("__more")}
-                    onBlur={() => setHoveredLink(null)}
-                    className={`relative px-2.5 py-2 font-medium text-[13.5px] rounded-lg hover:bg-[#F7F7F7] hover:!text-brand-black text-[#555] inline-flex items-center gap-1 whitespace-nowrap transition-colors duration-150`}
-                  >
-                    More
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className="mt-px"><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  </button>
-                  {hoveredLink === "__more" && (
-                    <div className="absolute left-0 top-full pt-2 z-50" style={{ minWidth: 240 }}>
-                      <div className="bg-white rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.12)] border border-[#EFEFEF] py-2 overflow-hidden max-h-[70vh] overflow-y-auto">
-                        <div className="px-4 py-2 text-[11px] font-bold text-[#9CA3AF] uppercase tracking-wider">All Services</div>
-                        {SERVICE_SUBLINKS.map((sl) => (
-                          <a key={sl.href} href={sl.href} className="block px-4 py-2.5 text-[13.5px] font-medium text-[#555] hover:bg-[#F7F7F7] hover:text-brand-black transition-colors">{sl.label}</a>
-                        ))}
-                        <div className="border-t border-[#F0F0F0] mt-1 pt-1">
-                          <a href="/services" className="block px-4 py-2.5 text-[13.5px] font-bold text-[#E6AC00] hover:bg-[#FFFBEB] transition-colors">View All Services →</a>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
             </nav>
 
             {/* Desktop right actions */}
@@ -383,17 +354,6 @@ export default function Header() {
                 {NAV_LINKS.map((l) => (
                   <m.a key={l.label} variants={drawerItem} href={l.href} onClick={() => dispatch(setMobileNavOpen(false))} className="block py-3.5 text-[15px] font-semibold border-b border-[#F0F0F0] text-brand-black active:bg-[#F7F7F7] rounded-lg px-2 -mx-2">{l.label}</m.a>
                 ))}
-
-                {/* More Services — all service pages */}
-                {SERVICE_SUBLINKS.length > 0 && (
-                  <>
-                    <m.div variants={drawerItem} className="pt-4 pb-1 text-[11px] font-bold text-[#9CA3AF] uppercase tracking-wider">More Services</m.div>
-                    {SERVICE_SUBLINKS.map((sl) => (
-                      <m.a key={sl.href} variants={drawerItem} href={sl.href} onClick={() => dispatch(setMobileNavOpen(false))} className="block py-2.5 pl-3 text-[14px] font-medium border-b border-[#F0F0F0] text-[#555] active:bg-[#F7F7F7] rounded-lg px-2 -mx-2">{sl.label}</m.a>
-                    ))}
-                    <m.a variants={drawerItem} href="/services" onClick={() => dispatch(setMobileNavOpen(false))} className="block py-3 text-[14px] font-bold text-[#E6AC00] active:bg-[#FFFBEB] rounded-lg px-2 -mx-2">View All Services →</m.a>
-                  </>
-                )}
 
                 <m.div variants={drawerItem} className="flex flex-col gap-3 mt-6">
                   {loggedIn ? (

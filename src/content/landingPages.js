@@ -38,12 +38,13 @@ export const LANDING_PAGES = {
     blocks: {
       vehicles: {
         eyebrow: "Our Vehicles", tone: "page", columns: 2,
+        image: "/images/who-we-are-fleet.webp", imageAlt: "Abhi Cabs sedan, SUV, tempo traveller and bus lined up on a hill road",
         heading: "Explore Our Car Rental Options in Bangalore",
         cards: [
-          { title: "Sedan Car Rental in Bangalore", body: "Book a Swift Dzire or similar sedan car with driver for city travel, airport drops, business meetings and personal journeys. A convenient choice for individuals, couples and small families." },
-          { title: "SUV Car Rental in Bangalore", body: "Need more space for your journey? Explore Ertiga, Innova and Innova Hycross rentals in Bangalore for family outings, corporate travel and long-distance trips." },
-          { title: "Tempo Traveller Rental in Bangalore", body: "Planning a group journey? Choose [Tempo Traveller rentals](/vehicles/tempo-traveller) for family tours, pilgrimages, sightseeing trips and corporate outings." },
-          { title: "Urbania & Bus Rentals in Bangalore", body: "Organising transportation for a larger group? Abhi Cabs 24×7 offers Force Urbania and bus rental options for weddings, company outings, educational trips and group tours." },
+          { kind: "sedan", title: "Sedan Car Rental in Bangalore", body: "Book a Swift Dzire or similar sedan car with driver for city travel, airport drops, business meetings and personal journeys. A convenient choice for individuals, couples and small families." },
+          { kind: "suv", title: "SUV Car Rental in Bangalore", body: "Need more space for your journey? Explore Ertiga, Innova and Innova Hycross rentals in Bangalore for family outings, corporate travel and long-distance trips." },
+          { kind: "tempo", title: "Tempo Traveller Rental in Bangalore", body: "Planning a group journey? Choose [Tempo Traveller rentals](/vehicles/tempo-traveller) for family tours, pilgrimages, sightseeing trips and corporate outings." },
+          { kind: "bus", title: "Urbania & Bus Rentals in Bangalore", body: "Organising transportation for a larger group? Abhi Cabs 24×7 offers Force Urbania and bus rental options for weddings, company outings, educational trips and group tours." },
         ],
         note: "Vehicle models, seating capacities and luggage space depend on availability.",
         links: ["Explore our complete [vehicle fleet](/fleet) before choosing your rental vehicle."],
@@ -59,6 +60,7 @@ export const LANDING_PAGES = {
           "8-Hour Car Rental: Convenient for business visits, multiple stops and Bangalore sightseeing.",
           "12-Hour Car Rental: Suitable for extended city travel, family outings and full-day schedules.",
         ],
+        packages: ["4 hrs / 40 km", "8 hrs / 80 km", "12 hrs / 120 km"], // must match PACKAGE_OPTIONS in BookingWidget
         note: "Choose a suitable package based on your travel requirements. Confirm included kilometres, extra-hour charges, parking fees and other applicable costs before booking.",
         links: ["For detailed rental information, explore our [local cab and hourly rental services](/services/local)."],
         cta: { label: "Check Hourly Rental Packages", href: "/services/local" },
@@ -67,11 +69,11 @@ export const LANDING_PAGES = {
         eyebrow: "Ways to Travel", tone: "white",
         heading: "Hire a Car in Bangalore for Local, Airport & Outstation Travel",
         cards: [
-          { title: "Local Car Rental in Bangalore", body: "Book [local car rental services](/services/local) in Bangalore for office travel, hospital visits, shopping, personal appointments and city sightseeing. Choose a vehicle and rental duration according to your schedule." },
-          { title: "Bangalore Airport Taxi Booking", body: ["Travelling to or from Kempegowda International Airport? Abhi Cabs 24×7 offers airport pickup and drop-off options for individuals, families and business travellers.", "Explore our [airport taxi booking services](/services/airport-taxi) to plan your airport journey."] },
-          { title: "One-Way Outstation Car Rental", body: ["Travelling from Bangalore to another city without a return trip? Book a one-way outstation cab for personal journeys, business visits or family travel.", "Explore our [one-way outstation taxi services](/services/one-way-outstation)."] },
-          { title: "Round-Trip Car Rental from Bangalore", body: ["Planning a weekend getaway or family holiday? Choose round-trip car rentals from Bangalore for return journeys and multi-day travel.", "Learn more about our [round-trip cab booking](/services/round-trip) options."] },
-          { title: "Corporate Car Rental in Bangalore", body: ["Need transportation for business meetings, executives or employee travel? Abhi Cabs 24×7 offers corporate car rental enquiries for local travel, airport pickups, company outings and business visits.", "Explore our [corporate cab rental services](/services/corporate)."] },
+          { book: "local", title: "Local Car Rental in Bangalore", body: "Book [local car rental services](/services/local) in Bangalore for office travel, hospital visits, shopping, personal appointments and city sightseeing. Choose a vehicle and rental duration according to your schedule." },
+          { book: "airport", title: "Bangalore Airport Taxi Booking", body: ["Travelling to or from Kempegowda International Airport? Abhi Cabs 24×7 offers airport pickup and drop-off options for individuals, families and business travellers.", "Explore our [airport taxi booking services](/services/airport-taxi) to plan your airport journey."] },
+          { book: "one-way", title: "One-Way Outstation Car Rental", body: ["Travelling from Bangalore to another city without a return trip? Book a one-way outstation cab for personal journeys, business visits or family travel.", "Explore our [one-way outstation taxi services](/services/one-way-outstation)."] },
+          { book: "round-trip", title: "Round-Trip Car Rental from Bangalore", body: ["Planning a weekend getaway or family holiday? Choose round-trip car rentals from Bangalore for return journeys and multi-day travel.", "Learn more about our [round-trip cab booking](/services/round-trip) options."] },
+          { href: "/services/corporate", title: "Corporate Car Rental in Bangalore", body: ["Need transportation for business meetings, executives or employee travel? Abhi Cabs 24×7 offers corporate car rental enquiries for local travel, airport pickups, company outings and business visits.", "Explore our [corporate cab rental services](/services/corporate)."] },
         ],
       },
       pickup: {
@@ -87,6 +89,7 @@ export const LANDING_PAGES = {
       },
       places: {
         eyebrow: "Sightseeing", tone: "white",
+        image: "/images/route-6.webp", imageAlt: "Aerial view of a Bangalore lake and bridge",
         heading: "Explore Famous Places in Bangalore with a Rental Car",
         subheading: "Bangalore Sightseeing with a Professional Driver",
         intro: ["Planning to explore the Garden City? Choose a Bangalore sightseeing car rental for comfortable city travel and multiple-stop journeys."],
@@ -106,14 +109,15 @@ export const LANDING_PAGES = {
         subheading: "Discover Scenic Destinations Around Bengaluru",
         intro: ["Looking for a short getaway? Abhi Cabs 24×7 offers rental enquiries for nearby sightseeing destinations and one-day trips."],
         cards: [
-          { title: "Bangalore to Nandi Hills Car Rental", body: "Plan a sunrise outing, family trip or scenic drive to Nandi Hills with a chauffeur-driven car." },
-          { title: "Bangalore to Avalabetta Cab Booking", body: "Explore the beautiful hill scenery and rocky landscapes of Avalabetta on a day trip from Bangalore." },
-          { title: "Bangalore to Muthyala Maduvu Taxi", body: "Visit Pearl Valley near Anekal, known for its peaceful surroundings and seasonal waterfall." },
-          { title: "Bangalore to Mandaragiri Hills Car Rental", body: "Discover the Jain temples, scenic hilltop and distinctive meditation hall at Mandaragiri Hills near Tumakuru." },
-          { title: "Bangalore to Devarayanadurga Car Hire", body: "Plan a temple visit and hill sightseeing trip to Devarayanadurga with family or friends." },
-          { title: "Bangalore to Savandurga Cab Rental", body: "Explore the natural landscapes around Savandurga on a convenient one-day outing." },
+          { place: "Nandi Hills", km: 60, title: "Bangalore to Nandi Hills Car Rental", body: "Plan a sunrise outing, family trip or scenic drive to Nandi Hills with a chauffeur-driven car." },
+          { place: "Avalabetta", km: 90, title: "Bangalore to Avalabetta Cab Booking", body: "Explore the beautiful hill scenery and rocky landscapes of Avalabetta on a day trip from Bangalore." },
+          { place: "Muthyala Maduvu", km: 45, title: "Bangalore to Muthyala Maduvu Taxi", body: "Visit Pearl Valley near Anekal, known for its peaceful surroundings and seasonal waterfall." },
+          { place: "Mandaragiri Hills", km: 65, title: "Bangalore to Mandaragiri Hills Car Rental", body: "Discover the Jain temples, scenic hilltop and distinctive meditation hall at Mandaragiri Hills near Tumakuru." },
+          { place: "Devarayanadurga", km: 70, title: "Bangalore to Devarayanadurga Car Hire", body: "Plan a temple visit and hill sightseeing trip to Devarayanadurga with family or friends." },
+          { place: "Savandurga", km: 55, title: "Bangalore to Savandurga Cab Rental", body: "Explore the natural landscapes around Savandurga on a convenient one-day outing." },
         ],
         note: "Check vehicle availability, attraction access and travel conditions before confirming your trip.",
+        distanceNote: "Distances are approximate road distances from central Bangalore.",
         cta: { label: "Explore One-Day Trip Cabs" },
       },
       routes: {
@@ -129,11 +133,13 @@ export const LANDING_PAGES = {
           "Bangalore to Hyderabad Car Rental: Long-distance journeys between Karnataka and Telangana.",
           "Bangalore to Goa Car Rental: Family holidays, group outings and coastal road trips.",
         ],
+        km: { Mysore: 145, Coorg: 250, Mangalore: 350, Chennai: 345, Hyderabad: 570, Goa: 560 }, // approximate road distance
         note: "Choose [one-way](/services/one-way-outstation) or [round-trip](/services/round-trip) options according to your journey and check route availability.",
         cta: { label: "Explore Outstation Car Rentals", href: "/outstation" },
       },
       chauffeur: {
         eyebrow: "Chauffeur-Driven", tone: "tint",
+        image: "/images/dashboard-pov.jpg", imageAlt: "Professional driver at the wheel on a Bangalore road",
         heading: "Why Choose Chauffeur-Driven Car Rental in Bangalore?",
         subheading: "Enjoy City Travel Without Driving Yourself",
         intro: ["Choosing a car rental in Bangalore with driver lets you focus on your journey while a professional driver handles the road."],

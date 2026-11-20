@@ -7,6 +7,7 @@ import { SEO_ARTICLES } from "../data/seoArticles";
 
 /** "Helpful guides" — 3 contextual links from a service page to the matching blog articles (renders nothing if none apply). */
 export default function RelatedGuides({ mode }) {
+  return null; // blog removed — guides strip hidden (its links pointed to /blogs/*)
   const slugs = GUIDES_BY_MODE[mode || ""] || [];
   const guides = slugs.map((s) => SEO_ARTICLES.find((a) => a.slug === s)).filter(Boolean);
   if (!guides.length) return null;

@@ -15,7 +15,7 @@ export default function CtaBand({ title, subheading, description, actions, image
   const reduce = useReducedMotion();
   const rise = (d) => (reduce ? {} : { initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 }, viewport: VIEW, transition: { duration: 0.8, delay: d, ease: EASE } });
   return (
-    <section className="ac-cta relative overflow-hidden isolate bg-[#0d0d0d] mt-14 md:mt-20">
+    <section className="ac-cta relative overflow-hidden isolate bg-[#0d0d0d]">
       {image && (
         <div aria-hidden className="absolute -inset-[4%] -z-20">
           <img src={image} alt="" loading="lazy" decoding="async" className="ac-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.32 }} />

@@ -59,9 +59,15 @@ async function fetchLiveBlogs() {
 }
 
 /** Merge blogs from multiple sources, dedup by slug, filter published, sort. */
+// Placeholder articles (the bundled SEO_ARTICLES + dev sample posts) are switched OFF for now:
+// only real posts published from the Blog Builder (BLOGS / live GitHub) are shown.
+// Set to true to show the placeholder articles again.
+const SHOW_PLACEHOLDER_ARTICLES = false;
+
 function mergeBlogs(liveBlogs) {
-  // Priority: live GitHub > bundled BLOGS > SEO_ARTICLES
+  // Priority: live GitHub > bundled BLOGS > (placeholders, when enabled)
   const primary = (liveBlogs || BLOGS || []).filter(isPublished);
+  if (!SHOW_PLACEHOLDER_ARTICLES) return { blogs: sortBlogs(primary), isSample: false };
   const taken = new Set(primary.map((b) => b.slug));
   const seo = (SEO_ARTICLES || []).filter((a) => isPublished(a) && !taken.has(a.slug));
   const merged = [...primary, ...seo];

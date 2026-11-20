@@ -1,34 +1,37 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
-import Section from "../ui/Section";
-import Reveal from "../ui/Reveal";
 import BlogImage from "./BlogImage";
 import ArticleMeta, { CategoryTag } from "./ArticleMeta";
 import { blogUrl, titleOf } from "../../lib/blog";
 
-/** Large editorial feature: image bleeds left, headline panel overlaps it. */
+/** Magazine cover: full-width photo, headline and summary set on it. */
 export default function FeaturedArticle({ blog }) {
   if (!blog) return null;
   const url = blogUrl(blog);
   return (
-    <Section id="featured" tone="tint">
-      <Reveal>
-        <div className="flex items-center gap-2.5 mb-6"><span className="h-[3px] w-8 bg-primary rounded-full" /><h2 id="featured-title" className="text-[12px] font-black uppercase tracking-[0.2em] text-text-secondary">Featured Story</h2></div>
-      </Reveal>
-      <Reveal>
-        <article className="group relative grid lg:grid-cols-12 items-center">
-          <a href={url} aria-label={titleOf(blog)} className="lg:col-span-8 block overflow-hidden rounded-[6px] lg:rounded-[10px]">
-            <BlogImage blog={blog} width={1400} priority className="w-full aspect-[16/10] lg:aspect-[16/9] object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+    <section id="featured" aria-labelledby="featured-title" className="bg-white pt-12 md:pt-16 scroll-mt-28">
+      <div className="max-w-[1264px] mx-auto px-5 sm:px-6">
+        <h2 id="featured-title" className="flex items-center gap-2.5 mb-5 text-[12px] font-black uppercase tracking-[0.2em] text-text-secondary"><span aria-hidden className="h-[3px] w-8 bg-primary rounded-full" />Featured Story</h2>
+        <article className="group relative overflow-hidden rounded-[28px] bg-[#111] isolate">
+          <a href={url} aria-label={titleOf(blog)} tabIndex={-1} className="block">
+            <BlogImage blog={blog} width={1600} priority className="w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9] object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04] motion-reduce:transition-none" />
           </a>
-          <div className="lg:col-span-5 lg:col-start-8 lg:-ml-16 relative z-10 -mt-10 mx-4 lg:mx-0 lg:mt-0 bg-white p-6 md:p-9 border-t-4 border-t-primary shadow-[0_20px_50px_rgba(0,0,0,.1)]">
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14 text-white">
             <CategoryTag blog={blog} href={`/blogs?category=${encodeURIComponent((blog.category || "").toLowerCase().replace(/\s+/g, "-"))}`} />
-            <h3 className="mt-4 text-[24px] md:text-[32px] font-black leading-[1.15] tracking-tight"><a href={url} className="hover:text-[#E6AC00] transition-colors">{titleOf(blog)}</a></h3>
-            {blog.description && <p className="mt-3 text-[15px] text-text-secondary leading-relaxed line-clamp-4">{blog.description}</p>}
-            <ArticleMeta blog={blog} className="mt-4" />
-            <a href={url} className="mt-6 inline-flex items-center gap-2 h-12 px-7 rounded-full bg-primary text-[#111] font-bold text-[15px] hover:bg-[#E6AC00] transition-colors">Read Full Article <ArrowRight size={16} aria-hidden /></a>
+            <h3 className="mt-4 max-w-[860px] text-[28px] sm:text-[40px] lg:text-[54px] font-black leading-[1.02] tracking-[-0.035em] [text-wrap:balance]">
+              <a href={url} className="hover:text-primary transition-colors">{titleOf(blog)}</a>
+            </h3>
+            {blog.description && <p className="mt-4 max-w-[640px] text-[15px] md:text-[17px] text-white/80 leading-relaxed line-clamp-3">{blog.description}</p>}
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+              {url && (
+              <a href={url} className="inline-flex items-center gap-2 h-12 px-7 rounded-full bg-primary text-[#111] font-bold text-[15px] hover:bg-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Read Full Article <ArrowRight size={16} aria-hidden /></a>
+              )}
+              <ArticleMeta blog={blog} light />
+            </div>
           </div>
         </article>
-      </Reveal>
-    </Section>
+      </div>
+    </section>
   );
 }

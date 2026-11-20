@@ -507,6 +507,10 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 /* Stop stray horizontal scrolling on phones. Wide, intentionally-scrolling
    strips (fleet cards, tables) keep their OWN inner overflow containers. */
 html, body { max-width: 100%; overflow-x: hidden; }
+/* body uses clip, not hidden: hidden makes <body> a scroll container, which stops every
+   position: sticky element (the header, sticky page sections) from sticking. html keeps
+   hidden, so browsers without clip support still never scroll sideways. */
+@supports (overflow-x: clip) { body { overflow-x: clip; } }
 
 /* Media never overflows its column. */
 img, svg, video, canvas, iframe { max-width: 100%; height: auto; }
@@ -1088,9 +1092,64 @@ img.h-full { height: 100%; }
 /* Highway scene (states band) */
 .ac-lane { animation: ac-lane 1.6s linear infinite; }
 @keyframes ac-lane { from { background-position: 0 0; } to { background-position: -120px 0; } }
-.ac-cab { left: 0; animation: ac-cab 11s linear infinite; }
+.ac-cab { left: 0; animation: ac-cab 7s linear infinite; }
 @keyframes ac-cab { from { transform: translateX(-180px); } to { transform: translateX(calc(100vw + 40px)); } }
 .ac-wheel { animation: ac-wheel .5s linear infinite; }
 @keyframes ac-wheel { to { transform: rotate(360deg); } }
 .ac-sun { animation: ac-breathe 7s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .ac-lane, .ac-cab, .ac-wheel, .ac-sun { animation: none !important; } }
+/* Number-plate band (Services) */
+.ac-plate-shine { mix-blend-mode: soft-light; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.7) 50%, transparent 60%); background-size: 260% 100%; animation: ac-sweep 6s ease-in-out infinite; }
+.ac-drop-arrow { display: inline-block; animation: ac-arrow-nudge 1.4s ease-in-out infinite; }
+@keyframes ac-arrow-nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+/* Gauge band (Fleet) */
+.ac-twinkle { animation: ac-twinkle 2.8s ease-in-out infinite; }
+@keyframes ac-twinkle { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .ac-plate-shine, .ac-drop-arrow, .ac-twinkle { animation: none !important; } }
+
+/* Route ticket cards (Services): car drives FROM → TO on hover; idles at the start */
+.ac-route-car { left: 0; transform: translate(-25%, -50%); transition: left 1.1s cubic-bezier(.45,.05,.55,.95); }
+.ac-route:hover .ac-route-car { left: calc(100% - 28px); }
+@media (hover: none) { .ac-route-car { animation: ac-route-drive 4s ease-in-out infinite; } }
+@keyframes ac-route-drive { 0%,15% { left: 0; } 55%,70% { left: calc(100% - 28px); } 100% { left: 0; } }
+@media (prefers-reduced-motion: reduce) { .ac-route-car { transition: none; animation: none !important; } }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PERFORMANCE MODE — inner pages only.
+   The home page keeps its full original motion (Layout.jsx sets data-perf="off"
+   on the home page wrapper and data-perf="on" everywhere else). On inner pages,
+   motion is reserved for the hero and the three showcase sections (.ac-states:
+   About highway, Services plates, Fleet speedometer); site-wide decorative
+   effects that looped forever or ran on every scroll frame are switched off.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 1. Endless loops outside the showcase sections → static */
+[data-perf="on"] .ac-hero-glow, [data-perf="on"] .ac-hero-sweep, [data-perf="on"] .ac-gold-shimmer, [data-perf="on"] .ac-glass,
+[data-perf="on"] .ac-route-car, [data-perf="on"] .ac-orbit, [data-perf="on"] .ac-orbit-counter, [data-perf="on"] .ac-ring, [data-perf="on"] .ac-ring-rev,
+[data-perf="on"] .ac-float, [data-perf="on"] .ac-swoosh, [data-perf="on"] .ac-route-flow { animation: none !important; }
+[data-perf="on"] .ac-hero-sweep { display: none !important; }
+/* Ken Burns only on real page heroes — not on CTA bands */
+[data-perf="on"] .ac-cta .ac-kenburns { animation: none !important; }
+
+/* 2. Scroll-driven effects that ran on every scroll frame → off */
+[data-perf="on"] main li > svg.lucide:first-child, [data-perf="on"] main li > span > svg.lucide,
+[data-perf="on"] main .ac-cv img,
+[data-perf="on"] .ac-cv .rounded-full.border, [data-perf="on"] .ac-cv [class*="rounded-full"][class*="px-4"],
+[data-perf="on"] main article, [data-perf="on"] .ac-cv .w-11.h-11.rounded-xl, [data-perf="on"] .ac-cv .w-14.h-14.rounded-full { animation: none !important; }
+/* drifting gold orbs behind tinted sections → off */
+[data-perf="on"] .bg-\[\#FFFBEA\].ac-cv::before, [data-perf="on"] .bg-\[\#FFFBEA\].ac-cv::after { content: none !important; }
+
+/* 3. Cards: simple lift on hover (no 3D tilt, no cursor spotlight) */
+[data-perf="on"] .ac-card::before { content: none !important; }
+@media (hover: hover) {
+  [data-perf="on"] .ac-card:hover { transform: translateY(-4px) !important; }
+  [data-perf="on"] .ac-card:hover svg.lucide { animation: none !important; }
+}
+[data-perf="on"] .ac-ripple { display: none !important; }
+
+/* 4. Showcase sections: keep their story, trim the extra loops */
+[data-perf="on"] .ac-states .ac-twinkle { animation: none !important; opacity: .9; }
+[data-perf="on"] .ac-states .ac-plate-shine { animation-iteration-count: 1 !important; }
+
+/* 5. Route cards: car moves only while hovering (no endless loop on touch) */
+@media (hover: none) { [data-perf="on"] .ac-route-car { left: calc(100% - 28px) !important; } }

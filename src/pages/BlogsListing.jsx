@@ -7,7 +7,6 @@ import useBlogQuery from "../hooks/useBlogQuery";
 import { categoriesOf, filterBlogs, paginate, isFeatured, isPopular, isDestination, isTip, isRoute, categorySlug } from "../lib/blog";
 import BlogHero from "../components/blog/BlogHero";
 import FeaturedArticle from "../components/blog/FeaturedArticle";
-import BlogCategories from "../components/blog/BlogCategories";
 import LatestArticles from "../components/blog/LatestArticles";
 import PopularArticles from "../components/blog/PopularArticles";
 import DestinationGuides from "../components/blog/DestinationGuides";
@@ -66,15 +65,15 @@ export default function BlogsListing() {
       </Head>
 
       {isSample && <SampleBanner />}
-      <BlogHero query={qs.qLive} onQuery={qs.setQuery} onClear={qs.clearSearch} onExplore={() => scrollTo("latest")} />
+      <BlogHero query={qs.qLive} onQuery={qs.setQuery} onClear={qs.clearSearch} onExplore={() => scrollTo("latest")} blogs={blogs} categoryCount={categories.length} />
 
       {blogs.length === 0 ? <EmptyBlog /> : (
         <>
           {!filtering && page === 1 && <FeaturedArticle blog={featured} />}
-          <BlogCategories categories={categories} active={category} total={blogs.length} onSelect={pickCategory} />
           <LatestArticles
             result={result} filtering={filtering} query={q} category={category} categoryName={activeCategory?.name}
             onClear={qs.clearAll} onPage={goPage}
+            categories={categories} total={blogs.length} onSelect={pickCategory}
           />
           {!filtering && (
             <>

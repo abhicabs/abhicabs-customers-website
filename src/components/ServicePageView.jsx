@@ -5,6 +5,7 @@ import { usePageContext } from "vike-react/usePageContext";
 import EmojiIcon from "./ui/EmojiIcon";
 import SectionRenderer from "./SectionRenderer";
 import ServiceLanding from "./ServiceLanding";
+import LocalCarRental from "./landing/local/LocalCarRental";
 import { useAllPagesState } from "../hooks/usePageContent";
 import { SERVICE_DEFAULTS } from "../content/serviceDefaults";
 import { isTemplatePage, toServiceCfg } from "../lib/servicePage";
@@ -18,7 +19,11 @@ import { isTemplatePage, toServiceCfg } from "../lib/servicePage";
  *   4. "Page not found"
  * Built-ins render instantly (including on the server) and swap to the CMS version if one exists.
  */
-export default function ServicePageView({ slug }) {
+export default function ServicePageView({ slug, Layout }) {
+  // Which layout draws the page: a page-specific one passed in by the route
+  // (e.g. <ServicePageView slug="airport-taxi" Layout={AirportTaxi} />),
+  // the local car-rental layout for /services/local, else the shared ServiceLanding.
+  const View = Layout || (slug === "local" ? LocalCarRental : ServiceLanding);
   const config = useConfig();
   const { data } = usePageContext();          // from +data: { page, allPages, loadFailed } — fetched on the server
   const { pages, loading } = useAllPagesState();
@@ -28,9 +33,10 @@ export default function ServicePageView({ slug }) {
   if (found && isTemplatePage(found)) {
     const c = found._content;
     config({ title: c.seo?.title || `${found._label || slug} | Abhi Cabs`, description: c.seo?.description });
-    return <ServiceLanding key={slug} cfg={toServiceCfg(slug, c)} />;
+    const cfg = toServiceCfg(slug, c);
+    return <View key={slug} cfg={cfg} />;
   }
-  if (builtIn) return <ServiceLanding key={slug} cfg={builtIn} />;
+  if (builtIn) return <View key={slug} cfg={builtIn} />;
   if (found?.sections?.length) return <SectionRenderer sections={found.sections} />;
 
   // Only reached when the server could not load the page list (API outage) or a legacy client-only route: keep it out of the index.
