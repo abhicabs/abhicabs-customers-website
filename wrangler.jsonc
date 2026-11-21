@@ -1,0 +1,16 @@
+// Cloudflare Workers config — deploys the pre-built site as static assets.
+// Build:  npm run build   →  output in dist/client
+// Deploy: npx wrangler deploy
+// public/_redirects and public/_headers are copied into dist/client and applied by Cloudflare.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "abhicabs-customer-website",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./dist/client",
+    // /about serves about.html; /about/ redirects to /about
+    "html_handling": "drop-trailing-slash",
+    // unknown URLs get the site's 404 page (with a real 404 status)
+    "not_found_handling": "404-page"
+  }
+}
