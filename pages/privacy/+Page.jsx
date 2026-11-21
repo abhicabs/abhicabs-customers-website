@@ -3,7 +3,7 @@ import LegalLayout from "../../src/components/LegalLayout";
 
 export default function Page() {
   return (
-    <LegalLayout title="Privacy Policy">
+    <LegalLayout title="Privacy Policy" showBooking={false}>
       <h2>1. Introduction</h2>
       <p>Abhi Cabs ("we", "us", "our") respects your privacy. This policy explains what information we collect when you use our website and booking services, how we use it, and the choices you have.</p>
 

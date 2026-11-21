@@ -20,7 +20,7 @@ const path = require("path");
 const SITE = "https://www.abhicabs24x7.com";
 const API_BASE = (process.env.VITE_API_BASE_URL || "https://api.abhicabs24x7.com/api/v1").replace(/\/api\/v1\/?$/, "");
 const GH_TOKEN = process.env.VITE_GH_TOKEN;
-const GH_REPO = process.env.VITE_GH_REPO || "skyupdigitalsolutions-cpu/abhicabs-customer-website";
+const GH_REPO = process.env.VITE_GH_REPO || "abhicabs/abhicabs-customers-website";
 
 // ── 1. Static routes ────────────────────────────────────────────────────────
 const STATIC_URLS = [

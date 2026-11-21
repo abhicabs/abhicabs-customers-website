@@ -11,22 +11,29 @@
 
 # SPA fallback — all routes that don't match a static file
 # are served by index.html so Vike's client-side router handles them.
-# Blog article pages were removed — old article URLs go to the /blogs listing; /blog → home (301).
+# Duplicate URLs → one canonical address (permanent). These used to be full pages
+# with their own canonical, so search engines saw two copies.
 [[redirects]]
-  from = "/blogs/*"
-  to = "/blogs"
+  from = "/contact"
+  to = "/contact-us"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/airport-transfer"
+  to = "/services/airport-taxi"
   status = 301
   force = true
 
 [[redirects]]
   from = "/blog"
-  to = "/"
+  to = "/blogs"
   status = 301
   force = true
 
 [[redirects]]
   from = "/blog/*"
-  to = "/"
+  to = "/blogs"
   status = 301
   force = true
 

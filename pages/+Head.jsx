@@ -1,5 +1,6 @@
 import React from "react";
 import { usePageContext } from "vike-react/usePageContext";
+import { SITE_ORIGIN } from "../src/lib/seo/constants";
 
 /**
  * Global <head> — renders on every page.
@@ -14,7 +15,7 @@ import { usePageContext } from "vike-react/usePageContext";
  *  • Structured data (JSON-LD) — Organization + WebSite (verified facts only; see the note above STRUCTURED_DATA)
  */
 
-const SITE  = "https://www.abhicabs24x7.com";
+const SITE = SITE_ORIGIN;
 const TITLE = "Abhi Cabs | Outstation, Local & Airport Cab Booking";
 const DESC  = "Book outstation, one-way, round-trip, local and airport cabs online with Abhi Cabs. Pickups across Karnataka, Andhra Pradesh, Telangana and Maharashtra.";
 const IMAGE = `${SITE}/images/Herosection.jpg`;
@@ -50,9 +51,15 @@ const STRUCTURED_DATA = [
 ];
 
 export default function HeadDefault() {
-  const { urlPathname } = usePageContext();
+  const { urlPathname, is404, abortStatusCode } = usePageContext();
   const path = (urlPathname || "/").replace(/\/+$/, "");
-  const pageUrl = SITE + path; // per-page canonical (was the homepage URL on every page)
+  // Self-referencing canonical: https://www.abhicabs24x7.com + path, no trailing slash, no query string.
+  // Pages are pre-rendered as <path>.html (pages/+config.js → prerender.noExtraDir), so Netlify serves
+  // exactly this URL (no /path → /path/ redirect) and it matches the sitemap and every internal link.
+  const pageUrl = SITE + path;
+  const isErrorPage = Boolean(is404 || abortStatusCode);
+  // App / transactional screens: keep them out of search results (robots.txt also blocks crawling).
+  const isPrivate = /^\/(checkout|payment|confirmation|login|my-booking|booking-details|support-tickets|tracking|delete-account|admin)(\/|$)/.test(path);
   const isArticle = /^\/blogs\/[^/]+$/.test(path);
   return (
     <>
@@ -84,12 +91,13 @@ export default function HeadDefault() {
           so every page shipped two descriptions. Only things vike-react does not emit stay here. The old meta keywords tag is
           gone: search engines ignore it and it listed an outdated service area. */}
       <meta name="author" content="Abhi Cabs" />
-      <link rel="canonical" href={pageUrl} />
+      {!isErrorPage && <link rel="canonical" href={pageUrl} />}
+      {isPrivate && <meta name="robots" content="noindex, follow" />}
 
       {/* ── Open Graph (only the parts vike-react does not generate) ── */}
       <meta property="og:type" content={isArticle ? "article" : "website"} />
       <meta property="og:site_name" content="Abhi Cabs" />
-      <meta property="og:url" content={pageUrl} />
+      {!isErrorPage && <meta property="og:url" content={pageUrl} />}
       <meta property="og:locale" content="en_IN" />
 
       {/* ── Google Search Console verification ──

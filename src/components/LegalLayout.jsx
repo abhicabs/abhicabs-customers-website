@@ -1,7 +1,7 @@
 import React from "react";
 import ServiceBooking from "./ServiceBooking";
 
-export default function LegalLayout({ title, children }) {
+export default function LegalLayout({ title, children, showBooking = true }) {
   return (
     <>
       <section className="pt-9 md:pt-13 pb-9 bg-gradient-to-b from-primary-tint to-bg border-b border-border">
@@ -10,7 +10,7 @@ export default function LegalLayout({ title, children }) {
             <a href="/" className="font-semibold hover:text-primary">Home</a><span>/</span><span>{title}</span>
           </div>
           <h1 className="text-[28px] md:text-[42px] font-bold tracking-tight">{title}</h1>
-          <div className="mt-7"><ServiceBooking widgetKey="legal-hero" initialMode="one-way" /></div>
+          {showBooking && <div className="mt-7"><ServiceBooking widgetKey="legal-hero" initialMode="one-way" /></div>}
         </div>
       </section>
       <section className="py-14">

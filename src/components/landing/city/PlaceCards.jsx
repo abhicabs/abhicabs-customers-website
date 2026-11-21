@@ -14,10 +14,10 @@ export function PlacePhoto({ img, alt, className = "", creditPos = "bottom" }) {
       {img?.src ? (
         <>
           <img src={img.src} width={img.width} height={img.height} alt={alt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
-          <a href={img.source} target="_blank" rel="noopener noreferrer"
+          {img.author && <a href={img.source} target="_blank" rel="noopener noreferrer"
             className={`absolute ${creditPos === "top" ? "top-2" : "bottom-2"} right-2 z-[2] max-w-[85%] truncate rounded-md bg-black/60 px-2 py-0.5 text-[10.5px] font-medium text-white/90 hover:text-white focus-visible:outline-2 focus-visible:outline-primary`}>
-            {img.author}, {img.license}
-          </a>
+            {img.author}{img.license ? `, ${img.license}` : ""}
+          </a>}
         </>
       ) : (
         <div aria-hidden className="absolute inset-0 grid place-items-center" style={{ backgroundImage: "linear-gradient(#E3DCC4 1px, transparent 1px), linear-gradient(90deg, #E3DCC4 1px, transparent 1px)", backgroundSize: "28px 28px" }}>

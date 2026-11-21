@@ -8,7 +8,9 @@ export default {
   // so transactional pages (checkout, payment, my-booking) still work as
   // SPAs while public pages get proper meta tags in the crawled HTML.
   ssr: true,
-  prerender: true,
+  // noExtraDir: write /about.html (not /about/index.html) so Netlify serves /about directly —
+  // matching the canonical, the sitemap and internal links (no /about → /about/ redirect).
+  prerender: { noExtraDir: true },
   // Defaults only — every page sets its own title/description (+config.js or useConfig); vike-react emits <title>, meta description,
   // og:title/og:description/og:image and the Twitter card from these, so the global <Head> must NOT repeat them.
   title: "Abhi Cabs | Outstation, Local & Airport Cab Booking",

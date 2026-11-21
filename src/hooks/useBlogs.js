@@ -17,7 +17,7 @@ const SAMPLE_ALLOWED = import.meta.env.DEV || String(import.meta.env.VITE_BLOG_S
 const isPublished = (b) => b && b.slug && !b.draft && (!b.status || String(b.status).toLowerCase() === "published");
 
 const GH_TOKEN = import.meta.env.VITE_GH_TOKEN;
-const GH_REPO = import.meta.env.VITE_GH_REPO || "skyupdigitalsolutions-cpu/abhicabs-customer-website";
+const GH_REPO = import.meta.env.VITE_GH_REPO || "abhicabs/abhicabs-customers-website";
 const GH_FILE = "src/data/blogs.js";
 
 // In-memory cache so we don't refetch on every component mount

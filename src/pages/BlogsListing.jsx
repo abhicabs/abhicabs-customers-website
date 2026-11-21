@@ -16,8 +16,9 @@ import NewsletterSubscription from "../components/blog/NewsletterSubscription";
 import SampleBanner from "../components/blog/SampleBanner";
 import EmptyBlog from "../components/blog/EmptyBlog";
 import ServiceInterlink, { QuickBookStrip } from "../components/ServiceInterlink";
+import { SITE_ORIGIN } from "../lib/seo/constants";
 
-const SITE = "https://www.abhicabs24x7.com";
+const SITE = SITE_ORIGIN;
 const PER_PAGE = 6; // 3×2 grid, every card the same size
 const SEO_TITLE = "Abhi Cabs Travel Blog | Travel Tips, Destinations & Road Trips";
 const SEO_DESC = "Explore the Abhi Cabs travel blog for destination guides, road-trip inspiration, travel tips, popular routes, and useful travel information.";

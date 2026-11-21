@@ -1,3 +1,4 @@
+import { SITE_ORIGIN } from "../lib/seo/constants";
 // src/utils/schema.js
 // Schema.org templates for the Blog Builder.
 // Each schema can be edited two ways:
@@ -67,8 +68,8 @@ export const SCHEMA_DEFS = [
       mainEntityOfPage: { "@type": "WebPage", "@id": "" },
       headline: "",
       image: "",
-      author: { "@type": "Organization", name: "Novara Nature Estates", url: "https://www.novaranatureestates.com/" },
-      publisher: { "@type": "Organization", name: "Novara Nature Estates", logo: { "@type": "ImageObject", url: "https://www.novaranatureestates.com/images/logo.svg" } },
+      author: { "@type": "Organization", name: "Abhi Cabs", url: `${SITE_ORIGIN}/` },
+      publisher: { "@type": "Organization", name: "Abhi Cabs", logo: { "@type": "ImageObject", url: `${SITE_ORIGIN}/images/abhi-cabs-logo-new.svg` } },
       datePublished: "",
       dateModified: "",
     },
@@ -198,15 +199,15 @@ export function normalizeSchemas(saved) {
 // Cleans JSON-LD right before it's injected, fixing three common problems that
 // crept into stored schema data:
 //   • image/url doubled with the site domain
-//     ("https://www.novaranatureestates.comhttps://res.cloudinary.com/…")
+//     ("https://www.abhicabs24x7.comhttps://res.cloudinary.com/…")
 //   • dates without a time/timezone ("2026-01-01" → full ISO 8601)
 //   • Organization/Person author missing a "url"
-const SANITIZE_SITE = "https://www.novaranatureestates.com";
+const SANITIZE_SITE = SITE_ORIGIN;
 
 // Strip an accidentally-prepended site domain from an otherwise-absolute URL.
 function fixSchemaUrl(u) {
   if (typeof u !== "string") return u;
-  const m = u.trim().match(/^https?:\/\/(?:www\.)?novaranatureestates\.com(https?:\/\/.+)$/i);
+  const m = u.trim().match(/^https?:\/\/(?:www\.)?(?:abhicabs24x7|novaranatureestates)\.com(https?:\/\/.+)$/i);
   return m ? m[1] : u.trim();
 }
 
@@ -273,7 +274,7 @@ export function buildBlogSchema(blog = {}) {
     const graph = buildSchemaGraph(blog.schemas);
     if (graph.length) return graph;
   }
-  const SITE = "https://www.novaranatureestates.com";
+  const SITE = SITE_ORIGIN;
   const date = blog.date && !Number.isNaN(Date.parse(blog.date))
     ? new Date(blog.date).toISOString() : undefined;
   return [{
@@ -283,11 +284,11 @@ export function buildBlogSchema(blog = {}) {
     description: blog.description || "",
     ...((blog.heroImage || blog.image) ? { image: fixSchemaUrl(blog.heroImage || blog.image) } : {}),
     ...(date ? { datePublished: date, dateModified: date } : {}),
-    author: { "@type": "Organization", name: blog.author || "Novara Nature Estates", url: `${SITE}/` },
+    author: { "@type": "Organization", name: blog.author || "Abhi Cabs", url: `${SITE}/` },
     publisher: {
       "@type": "Organization",
-      name: "Novara Nature Estates",
-      logo: { "@type": "ImageObject", url: `${SITE}/images/logo.svg` },
+      name: "Abhi Cabs",
+      logo: { "@type": "ImageObject", url: `${SITE}/images/abhi-cabs-logo-new.svg` },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE}/blogs/${blog.slug || ""}` },
   }].map(sanitizeSchema);
