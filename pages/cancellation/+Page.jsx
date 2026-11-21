@@ -3,7 +3,7 @@ import LegalLayout from "../../src/components/LegalLayout";
 
 export default function Page() {
   return (
-    <LegalLayout title="Cancellation & Refund Policy">
+    <LegalLayout title="Cancellation & Refund Policy" showBooking={false}>
       <h2>1. Free Cancellation Window</h2>
       <p>You can cancel any booking free of charge up to 1 hour before the scheduled pickup time. Any amount already paid will be refunded in full.</p>
 

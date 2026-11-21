@@ -12,7 +12,7 @@ export default function BlogLivePreview({ meta, sections, onPlayVideo }) {
   const [device, setDevice] = useState("desktop");
   const empty = !meta.title && sections.length === 0;
   const seoTitle = (meta.metaTitle || meta.title || "Untitled post").trim();
-  const host = "www.abhicabs24x7.com";
+  const host = "abhicabs24x7.com";
   const tab = (id, Icon, label) => (
     <button type="button" onClick={() => setDevice(id)} aria-pressed={device === id}
       className="flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg transition-colors"

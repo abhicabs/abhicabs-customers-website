@@ -11,15 +11,17 @@ import { PagesContext } from "../hooks/usePageContent";
 import "../styles/global.css";
 
 export default function Layout({ children }) {
-  const serverPages = usePageContext().data?.allPages ?? null;
+  const pageCtx = usePageContext();
+  const serverPages = pageCtx.data?.allPages ?? null;
+  // Home page keeps its full original motion; every other page runs in performance mode.
+  const isHome = ((pageCtx.urlPathname || "/").replace(/\/+$/, "") || "/") === "/";
   useEffect(() => {
     rehydrateStore();
   }, []);
 
-  // Card spotlight: one delegated, rAF-throttled listener feeds the cursor
-  // position to .ac-card (see global.css). Mouse-only, skipped on touch.
+  // Home page only: card spotlight + 3D tilt and button click ripple (original behaviour).
   useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia("(hover: hover)").matches) return;
+    if (!isHome || typeof window === "undefined") return;
     let raf = 0;
     const onMove = (e) => {
       if (raf) return;
@@ -30,13 +32,29 @@ export default function Layout({ children }) {
         const r = card.getBoundingClientRect();
         card.style.setProperty("--mx", `${e.clientX - r.left}px`);
         card.style.setProperty("--my", `${e.clientY - r.top}px`);
-        // subtle 3D tilt, max ±4°
         card.style.setProperty("--ry", `${(((e.clientX - r.left) / r.width) - 0.5) * 8}deg`);
         card.style.setProperty("--rx", `${(0.5 - ((e.clientY - r.top) / r.height)) * 8}deg`);
       });
     };
-    document.addEventListener("pointermove", onMove, { passive: true });
+    const onDown = (e) => {
+      const btn = e.target.closest?.(".ac-btn");
+      if (!btn || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const r = btn.getBoundingClientRect(), d = Math.max(r.width, r.height);
+      const span = document.createElement("span");
+      span.className = "ac-ripple";
+      span.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
+      btn.appendChild(span);
+      setTimeout(() => span.remove(), 700);
+    };
+    if (window.matchMedia("(hover: hover)").matches) document.addEventListener("pointermove", onMove, { passive: true });
+    document.addEventListener("pointerdown", onDown, { passive: true });
+    return () => { document.removeEventListener("pointermove", onMove); document.removeEventListener("pointerdown", onDown); cancelAnimationFrame(raf); };
+  }, [isHome]);
 
+  // Site-wide behaviour (kept light on purpose: no pointermove/scroll listeners).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const canHover = window.matchMedia("(hover: hover)").matches;
     // FAQ <details> (city pages, services, fleet, CMS blocks): open on hover,
     // one at a time per section. Tap/click still works everywhere.
     let hoverT = 0;
@@ -51,20 +69,7 @@ export default function Layout({ children }) {
         d.open = true;
       }, 160);
     };
-    document.addEventListener("mouseover", onOver, { passive: true });
-
-    // Click ripple on brand buttons
-    const onDown = (e) => {
-      const btn = e.target.closest?.(".ac-btn");
-      if (!btn || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const r = btn.getBoundingClientRect(), d = Math.max(r.width, r.height);
-      const span = document.createElement("span");
-      span.className = "ac-ripple";
-      span.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
-      btn.appendChild(span);
-      setTimeout(() => span.remove(), 700);
-    };
-    document.addEventListener("pointerdown", onDown, { passive: true });
+    if (canHover) document.addEventListener("mouseover", onOver, { passive: true });
 
     // "Book" links/buttons point at #booking. Pages that don't carry a booking
     // form (services, fleet, blogs, legal…) send the visitor to the home form.
@@ -81,14 +86,14 @@ export default function Layout({ children }) {
     const onHash = () => { if (window.location.hash === "#booking" && !hasForm()) window.location.href = "/#booking"; };
     document.addEventListener("click", onClickBook);
     window.addEventListener("hashchange", onHash);
-    return () => { document.removeEventListener("pointermove", onMove); document.removeEventListener("mouseover", onOver); document.removeEventListener("pointerdown", onDown); document.removeEventListener("click", onClickBook); window.removeEventListener("hashchange", onHash); clearTimeout(hoverT); cancelAnimationFrame(raf); };
+    return () => { document.removeEventListener("mouseover", onOver); document.removeEventListener("click", onClickBook); window.removeEventListener("hashchange", onHash); clearTimeout(hoverT); };
   }, []);
 
   return (
     <Provider store={store}>
      <PagesContext.Provider value={serverPages}>
-      <div aria-hidden className="ac-progress" />
-      <div className="min-h-screen flex flex-col">
+      {isHome && <div aria-hidden className="ac-progress" />}
+      <div className="min-h-screen flex flex-col" data-perf={isHome ? "off" : "on"}>
         <Header />
         <main className="flex-1">
           {children}

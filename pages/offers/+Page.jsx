@@ -1,4 +1,5 @@
 import React from "react";
+import ServiceBooking from "../../src/components/ServiceBooking";
 import { OfferCard } from "../../src/components/SharedCards";
 
 const OFFERS = [
@@ -18,6 +19,7 @@ export default function Page() {
           <Breadcrumb items={[["Home", "/"], ["Offers", null]]} />
           <h1 className="text-[28px] md:text-[42px] font-bold tracking-tight">Current Offers</h1>
           <p className="mt-2.5 text-text-secondary text-[16px]">Demo offers shown for development — replace with live offers once connected to the promotions API.</p>
+          <div className="mt-7"><ServiceBooking widgetKey="offers-hero" initialMode="one-way" /></div>
         </div>
       </section>
 

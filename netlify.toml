@@ -5,9 +5,45 @@
 [build.environment]
   NODE_VERSION = "20"
   VITE_API_BASE_URL = "https://api.abhicabs24x7.com/api/v1"
+  # Images from Cloudinary: set your cloud name here (or in Netlify → Site settings → Environment variables).
+  # Empty = images are served from /public/images as before.
+  # VITE_CLOUDINARY_CLOUD_NAME = "your-cloud-name"
 
 # SPA fallback — all routes that don't match a static file
 # are served by index.html so Vike's client-side router handles them.
+# Duplicate URLs → one canonical address (permanent). These used to be full pages
+# with their own canonical, so search engines saw two copies.
+# www → canonical non-www domain (permanent). Only applies to requests on the www host.
+[[redirects]]
+  from = "https://www.abhicabs24x7.com/*"
+  to = "https://abhicabs24x7.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact-us"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/airport-transfer"
+  to = "/services/airport-taxi"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog"
+  to = "/blogs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/blogs"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

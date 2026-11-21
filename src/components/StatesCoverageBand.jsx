@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 /**
@@ -15,16 +15,28 @@ const STONES = [
 ];
 const EASE = [0.22, 1, 0.36, 1];
 const VIEW = { once: true, amount: 0.25 };
+const DRIVE = 7; // seconds for the cab to cross the road (first pass is synced with the stones)
 
-function Milestone({ code, label, name, dark, i, reduce }) {
+function Milestone({ code, label, name, dark, i, reduce, go, delay = 0 }) {
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={VIEW}
-      transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.25 + i * 0.14 }}
+      data-stone={i}
+      initial={reduce ? false : { opacity: 0, y: 70, scale: 0.6 }}
+      animate={reduce || go ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 70, scale: 0.6 }}
+      transition={{ type: "spring", stiffness: 340, damping: 14, mass: 0.9, delay }}
+      style={{ transformOrigin: "50% 100%" }}
       className="ac-stone group relative flex flex-col items-center shrink-0 snap-center"
     >
+      {/* dust puff when the stone lands */}
+      {!reduce && go && (
+        <motion.span
+          aria-hidden
+          initial={{ opacity: 0.7, scale: 0.4 }}
+          animate={{ opacity: 0, scale: 1.8 }}
+          transition={{ duration: 0.9, delay: delay + 0.12, ease: "easeOut" }}
+          className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[110%] h-6 rounded-[50%] pointer-events-none" style={{ background: "radial-gradient(closest-side, rgba(228,191,88,.75), transparent)" }}
+        />
+      )}
       <div className={`relative w-full transition-transform duration-500 group-hover:-translate-y-2 ${dark ? "" : ""}`}>
         {/* dome cap */}
         <div className={`h-[50px] md:h-[66px] rounded-t-[999px] grid place-items-center font-black tracking-[0.08em] ${dark ? "bg-gradient-to-b from-[#2a2a2a] to-[#0b0b0b] text-[#FFD54F] text-[14px] md:text-[15px] tracking-[0.2em]" : "bg-gradient-to-b from-[#FFDA47] to-[#F2B705] text-[#111] text-[19px] md:text-[24px]"} shadow-[inset_0_3px_0_rgba(255,255,255,.45),inset_0_-2px_0_rgba(0,0,0,.08)]`}>
@@ -39,7 +51,7 @@ function Milestone({ code, label, name, dark, i, reduce }) {
         <div className="h-[10px] -mx-[6px] rounded-[3px] bg-gradient-to-b from-[#CFC8B8] to-[#A9A291]" />
       </div>
       {/* ground shadow */}
-      <div className="mt-[-2px] h-[10px] w-[120%] rounded-[50%] bg-black/25 blur-[5px]" />
+      <div className="mt-[-2px] h-[12px] w-[120%] rounded-[50%]" style={{ background: "radial-gradient(closest-side, rgba(0,0,0,.28), transparent)" }} />
     </motion.div>
   );
 }
@@ -48,12 +60,13 @@ function Cab() {
   return (
     <svg viewBox="0 0 120 48" style={{ width: "100%", height: "100%", display: "block" }}>
       <ellipse cx="60" cy="45" rx="50" ry="3" fill="rgba(0,0,0,.35)" />
-      <rect x="44" y="4" width="22" height="7" rx="2" fill="#FFD54F" stroke="#111" strokeWidth="1" />
-      <text x="55" y="9.6" textAnchor="middle" fontSize="4.6" fontWeight="900" fill="#111" fontFamily="sans-serif">TAXI</text>
+      <rect x="38" y="2.5" width="36" height="8" rx="2" fill="#FFD54F" stroke="#111" strokeWidth="1" />
+      <text x="56" y="8.4" textAnchor="middle" fontSize="4.6" fontWeight="900" fill="#111" fontFamily="Montserrat, Arial, sans-serif" letterSpacing=".2">ABHI CABS</text>
       <path d="M10 34 L12 24 Q14 20 20 19 L34 18 L44 11 Q48 9 54 9 L76 9 Q82 9 86 12 L96 19 L106 21 Q112 22 112 28 L112 34 Q112 37 109 37 L13 37 Q10 37 10 34 Z" fill="#fff" stroke="#1a1a1a" strokeWidth="1.2" />
       <path d="M38 18 L46 12.5 Q49 11 54 11 L63 11 L63 18 Z" fill="#9CC3E6" opacity=".9" />
       <path d="M66 11 L76 11 Q81 11 84 13.5 L91 18 L66 18 Z" fill="#9CC3E6" opacity=".9" />
       <rect x="12" y="26" width="99" height="3.2" fill="#FFD54F" />
+      <text x="61" y="23.6" textAnchor="middle" fontSize="4.2" fontWeight="900" fill="#111" fontFamily="Montserrat, Arial, sans-serif" letterSpacing=".3">ABHI CABS</text>
       <circle cx="104" cy="25" r="2" fill="#FFF1B8" />
       <g className="ac-wheel" style={{ transformOrigin: "30px 37px" }}><circle cx="30" cy="37" r="8" fill="#1a1a1a" /><circle cx="30" cy="37" r="3.4" fill="#cfcfcf" /><path d="M30 31v12M24 37h12" stroke="#888" strokeWidth="1" /></g>
       <g className="ac-wheel" style={{ transformOrigin: "92px 37px" }}><circle cx="92" cy="37" r="8" fill="#1a1a1a" /><circle cx="92" cy="37" r="3.4" fill="#cfcfcf" /><path d="M92 31v12M86 37h12" stroke="#888" strokeWidth="1" /></g>
@@ -62,8 +75,33 @@ function Cab() {
 }
 
 function Scene({ reduce }) {
+  const ref = useRef(null);
+  const [go, setGo] = useState(false);
+  const [delays, setDelays] = useState([0, 0, 0, 0, 0]);
+
+  // When the scene scrolls into view: work out when the cab (crossing the road
+  // in DRIVE seconds, starting 180px off-screen) passes each stone's centre, and
+  // pop each stone up at that moment.
+  const start = () => {
+    if (go) return;
+    const road = ref.current;
+    if (road) {
+      const r = road.getBoundingClientRect();
+      const cabW = window.innerWidth >= 768 ? 150 : 120;
+      const travel = window.innerWidth + 40 + 180;
+      const d = [...road.querySelectorAll("[data-stone]")].map((el) => {
+        const b = el.getBoundingClientRect();
+        const cx = b.left + b.width / 2 - r.left;
+        const t = ((cx + 180 - cabW * 0.6) / travel) * DRIVE;
+        return Math.max(0.15, Math.min(t, DRIVE));
+      });
+      if (d.length === 5) setDelays(d);
+    }
+    setGo(true);
+  };
+
   return (
-    <div className="relative mt-10 md:mt-6" aria-hidden>
+    <motion.div ref={ref} className="relative mt-10 md:mt-6" aria-hidden onViewportEnter={start} viewport={{ once: true, amount: 0.45 }}>
       {/* landscape */}
       <div className="absolute inset-x-0 bottom-[96px] md:bottom-[112px] h-[260px] md:h-[300px] -z-0 pointer-events-none">
         <div className="ac-sun absolute right-[10%] top-[8%] w-[120px] h-[120px] md:w-[160px] md:h-[160px] rounded-full" style={{ background: "radial-gradient(circle at 50% 50%,#FFF3B0 0%,#FFD54F 45%,rgba(255,213,79,0) 72%)" }} />
@@ -83,9 +121,9 @@ function Scene({ reduce }) {
       {/* milestones on the roadside */}
       <div className="relative z-10 max-w-[1264px] mx-auto px-5 sm:px-6">
         <div className="flex items-end gap-4 md:gap-0 md:justify-between overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-1 -mx-5 px-5 md:mx-0 md:px-0 [scrollbar-width:none] [&>*]:w-[108px] md:[&>*]:w-[128px] lg:[&>*]:w-[138px] md:px-[3%]">
-          {STONES.map((s, i) => <Milestone key={s.code} {...s} label="PICKUP" i={i} reduce={reduce} />)}
+          {STONES.map((s, i) => <Milestone key={s.code} {...s} label="PICKUP" i={i} reduce={reduce} go={go} delay={delays[i]} />)}
           <div className="!w-[150px] md:!w-[176px] lg:!w-[196px] shrink-0 snap-center">
-            <Milestone code="INDIA" label="DROP" name="Destinations across India" dark i={4} reduce={reduce} />
+            <Milestone code="INDIA" label="DROP" name="Destinations across India" dark i={4} reduce={reduce} go={go} delay={delays[4]} />
           </div>
         </div>
       </div>
@@ -96,13 +134,13 @@ function Scene({ reduce }) {
         <div className="absolute inset-x-0 top-[7px] h-[3px] bg-white/70" />
         <div className="ac-lane absolute inset-x-0 top-1/2 h-[6px] -translate-y-1/2" style={{ background: "repeating-linear-gradient(90deg,#FFD54F 0 64px,transparent 64px 120px)" }} />
         <div className="absolute inset-x-0 bottom-[8px] h-[2px] bg-white/30" />
-        {!reduce && (
+        {!reduce && go && (
           <div className="ac-cab absolute bottom-[14px] md:bottom-[18px] w-[120px] md:w-[150px] h-[48px] md:h-[60px]">
             <Cab />
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -114,8 +152,8 @@ export default function StatesCoverageBand({ children }) {
       <div className="relative z-10 max-w-[1264px] mx-auto px-5 sm:px-6">
         <motion.div
           className="max-w-[760px]"
-          initial={reduce ? false : { opacity: 0, y: 30, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={reduce ? false : { opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={VIEW}
           transition={{ duration: 0.9, ease: EASE }}
         >

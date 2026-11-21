@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { CheckCircle2, ArrowRight, ArrowLeft, Quote, Play, ExternalLink } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { CheckCircle2, ArrowRight, ArrowLeft, Quote, Play, ExternalLink, Car, CarFront, Caravan, BusFront, CarTaxiFront } from "lucide-react";
 import { EYEBROW } from "./ui/classNames";
 import Section from "./ui/Section";
 import SectionHead from "./ui/SectionHead";
@@ -492,6 +492,90 @@ export const CUSTOM_SECTION_TYPES = [
 /* ═══════════════════════════════════════════════════════════════════════
    MAIN COMPONENT
    ═══════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Pricing split card that assembles itself: the white (details) and black (CTA)
+ * panels start apart as two separate cards, slide in from opposite sides
+ * (top/bottom on mobile), snap together with a small bounce, and a gold seam
+ * flashes along the join. Content is unchanged; presentation only.
+ */
+function PricingConnect({ cfg, BookBtn, canBook, tone }) {
+  const reduce = useReducedMotion();
+  const [wide, setWide] = useState(true);
+  React.useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const on = () => setWide(mq.matches);
+    on(); mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  const D = 0.2;                // start delay once in view
+  const DUR = 1.3;              // glide + bounce
+  const MEET = D + DUR * 0.62;  // moment the panels touch
+  const panel = (side) => {
+    if (reduce) return {};
+    const axis = wide ? "x" : "y";
+    const dist = wide ? 160 : 70;
+    return {
+      initial: { opacity: 0, [axis]: side * dist, scale: 0.96 },
+      whileInView: { opacity: 1, [axis]: [side * dist, side * -10, side * 4, 0], scale: 1 },
+      viewport: { once: true, amount: 0.35 },
+      transition: {
+        delay: D,
+        opacity: { duration: 0.45, delay: D },
+        scale: { duration: 0.6, delay: D },
+        [axis]: { duration: DUR, delay: D, times: [0, 0.62, 0.82, 1], ease: ["easeIn", "easeOut", "easeInOut"] },
+      },
+    };
+  };
+  const tickPop = { hidden: { scale: 0, rotate: -90 }, show: (i) => ({ scale: 1, rotate: 0, transition: { type: "spring", stiffness: 500, damping: 15, delay: MEET + 0.2 + i * 0.12 } }) };
+
+  return (
+    <Section tone={tone} narrow>
+      <Reveal><SectionHead center className="mb-9" eyebrow={cfg.pricing.eyebrow || "Pricing"} title={cfg.pricing.heading} subheading={cfg.pricing.subheading} description={cfg.pricing.description} /></Reveal>
+      <div className="relative grid grid-cols-1 lg:grid-cols-[1.2fr_1fr]">
+        {/* white details panel */}
+        <motion.div {...panel(-1)} className="relative z-[1] bg-white border border-border rounded-t-[22px] lg:rounded-t-none lg:rounded-l-[22px] lg:border-r-0 p-5 sm:p-8 md:p-10 shadow-[0_24px_50px_-30px_rgba(120,80,0,.35)]">
+          {cfg.pricing.listHeading !== null && <h3 className="text-[17px] font-bold">{cfg.pricing.listHeading || "What affects your fare"}</h3>}
+          {cfg.pricing.intro && <p className="text-[14.5px] text-text-secondary leading-relaxed">{renderInline(cfg.pricing.intro)}</p>}
+          <ul className="mt-4 space-y-3">
+            {cfg.pricing.points.map((t, i) => (
+              <li key={t} className="flex items-start gap-3 text-[14.5px] leading-relaxed">
+                <motion.span variants={tickPop} custom={i} initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true }} className="shrink-0 flex w-[18px] h-[18px] mt-[3px]">
+                  <CheckCircle2 size={18} className="text-[#E6AC00]" aria-hidden />
+                </motion.span>
+                <span className="min-w-0">{labelled(t)}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[13px] text-text-secondary mt-5 leading-relaxed">{cfg.pricing.note || "Amounts are indicative. Get an exact, all-inclusive quote in the booking flow — the same pricing used at checkout."}</p>
+          {(cfg.pricing.links || []).map((l, i) => <p key={i} className="text-[14px] mt-3 leading-relaxed">{renderInline(l)}</p>)}
+        </motion.div>
+
+        {/* black CTA panel */}
+        <motion.div {...panel(1)} className="relative z-[1] overflow-hidden rounded-b-[22px] lg:rounded-b-none lg:rounded-r-[22px] p-6 sm:p-8 md:p-10 flex flex-col justify-center text-white shadow-[0_24px_50px_-24px_rgba(0,0,0,.55)]" style={{ background: "linear-gradient(140deg,#1C1C1C,#0a0a0a)" }}>
+          <div aria-hidden className="ac-hero-glow absolute -right-16 -bottom-16 w-56 h-56 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(255,213,79,.22),transparent 65%)" }} />
+          <div className="relative text-[13px] font-bold text-primary">No hidden charges</div>
+          <p className="relative text-[21px] font-bold mt-2 leading-tight">See your exact fare before you book</p>
+          <div className="relative mt-6"><BookBtn variant="inverse" size="lg" className="w-full whitespace-normal! h-auto! min-h-14 py-3.5 px-6 leading-snug! text-center">{cfg.pricing.ctaLabel || (canBook ? "Calculate My Fare" : "Talk to Us")}</BookBtn></div>
+        </motion.div>
+
+        {/* gold seam: flashes where the panels meet */}
+        {!reduce && wide && (
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute z-[2] top-[6%] bottom-[6%] w-[3px] rounded-full bg-gradient-to-b from-transparent via-[#FFD54F] to-transparent shadow-[0_0_18px_4px_rgba(255,213,79,.65)]"
+            style={{ left: "54.5%", translate: "-50% 0" }}
+            initial={{ opacity: 0, scaleY: 0 }}
+            whileInView={{ opacity: [0, 1, 1, 0], scaleY: 1 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 1.1, delay: MEET - 0.05, times: [0, 0.2, 0.55, 1], ease: "easeOut" }}
+          />
+        )}
+      </div>
+    </Section>
+  );
+}
+
 export default function ServiceLanding({ cfg }) {
   const canBook = !!cfg.mode;
   const related = [...useServiceLinks().filter((l) => l.href !== `/services/${cfg.slug}`).map((l) => ({ label: l.short, href: l.href })), { label: "All Services", href: "/services" }];
@@ -509,7 +593,7 @@ export default function ServiceLanding({ cfg }) {
   const pickRoute = (pickup, drop) => { setWidget({ key: `r-${Date.now()}`, pickup, drop }); scrollToBooking(); };
   const goBook = () => (canBook ? scrollToBooking() : (window.location.href = contactFormHref(cfg.enquirySubject || "corporate")));
   const BookBtn = ({ children = primaryLabel, ...p }) => canBook
-    ? <Button onClick={scrollToBooking} {...p}>{children}</Button>
+    ? <Button onClick={() => scrollToBooking()} {...p}>{children}</Button>
     : <Button href={contactFormHref(cfg.enquirySubject || "corporate")} {...p}>{children}</Button>;
 
   // Helper: get tone override from layout item, or use default
@@ -518,11 +602,13 @@ export default function ServiceLanding({ cfg }) {
     return item?.tone || fallback;
   };
 
+  const richRoutes = (cfg.routes || []).some((r) => r.desc); // routes with a label + description (e.g. one-way page)
+
   // ── Built-in section renderers ──
   const SECTIONS = {
     hero: () => (
       <PageHero
-        center={canBook} image={c.hero.image} imagePosition={c.hero.image === cfg.hero.image ? cfg.hero.imagePosition : undefined} imageAlt={cfg.hero.alt || ""}
+        center image={c.hero.image} imagePosition={c.hero.image === cfg.hero.image ? cfg.hero.imagePosition : undefined} imageAlt={cfg.hero.alt || ""}
         breadcrumb={cfg.breadcrumb || [["Home", "/"], ["Services", "/services"], [cfg.hero.eyebrow, null]]}
         title={c.hero.title} subtitle={cfg.hero.subheading} description={c.hero.description}
         actions={!canBook && <>
@@ -530,7 +616,9 @@ export default function ServiceLanding({ cfg }) {
           <Button href="/services" variant="outlineInverse" size="lg">All Services</Button>
         </>}
       >
-        {canBook && <ServiceBooking widgetKey={widget.key} initialMode={cfg.mode} presetPickup={widget.pickup} presetDrop={widget.drop} />}
+        {canBook
+          ? <ServiceBooking widgetKey={widget.key} initialMode={cfg.mode} presetPickup={widget.pickup} presetDrop={widget.drop} />
+          : <ServiceBooking widgetKey={`${cfg.slug || "service"}-hero`} initialMode="one-way" />}
       </PageHero>
     ),
 
@@ -581,114 +669,80 @@ export default function ServiceLanding({ cfg }) {
       </Section>
     ),
 
-    pricing: () => {
-      const EASE = [0.22, 1, 0.36, 1];
-      const slideLeft = { hidden: { opacity: 0, x: -120 }, show: { opacity: 1, x: [null, 8, -4, 2, 0], transition: { duration: 0.9, ease: EASE, x: { duration: 1.1, times: [0, 0.6, 0.75, 0.88, 1], ease: "easeOut" } } } };
-      const slideRight = { hidden: { opacity: 0, x: 120 }, show: { opacity: 1, x: [null, -8, 4, -2, 0], transition: { duration: 0.9, ease: EASE, x: { duration: 1.1, times: [0, 0.6, 0.75, 0.88, 1], ease: "easeOut" } } } };
-      const tickPop = { hidden: { scale: 0, rotate: -90 }, show: (i) => ({ scale: 1, rotate: 0, transition: { type: "spring", stiffness: 500, damping: 15, delay: 0.9 + i * 0.12 } }) };
-      return (
-        <Section tone={getTone("pricing", "tint")} narrow>
-          <Reveal><SectionHead center className="mb-9" eyebrow={cfg.pricing.eyebrow || "Pricing"} title={cfg.pricing.heading} subheading={cfg.pricing.subheading} description={cfg.pricing.description} /></Reveal>
-          <div className="rounded-[22px] overflow-hidden border border-border grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] bg-white">
-            <motion.div
-              className="p-5 sm:p-8 md:p-10"
-              variants={slideLeft}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-            >
-              {cfg.pricing.listHeading !== null && <h3 className="text-[17px] font-bold">{cfg.pricing.listHeading || "What affects your fare"}</h3>}
-              {cfg.pricing.intro && <p className="text-[14.5px] text-text-secondary leading-relaxed">{renderInline(cfg.pricing.intro)}</p>}
-              <ul className="mt-4 space-y-3">
-                {cfg.pricing.points.map((t, i) => (
-                  <li key={t} className="flex items-start gap-3 text-[14.5px] leading-relaxed">
-                    <motion.span variants={tickPop} custom={i} initial="hidden" whileInView="show" viewport={{ once: true }}>
-                      <CheckCircle2 size={18} className="text-[#E6AC00] shrink-0 mt-[3px]" aria-hidden />
-                    </motion.span>
-                    <span>{labelled(t)}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-[13px] text-text-secondary mt-5 leading-relaxed">{cfg.pricing.note || "Amounts are indicative. Get an exact, all-inclusive quote in the booking flow — the same pricing used at checkout."}</p>
-              {(cfg.pricing.links || []).map((l, i) => <p key={i} className="text-[14px] mt-3 leading-relaxed">{renderInline(l)}</p>)}
-            </motion.div>
-            <motion.div
-              className="p-6 sm:p-8 md:p-10 flex flex-col justify-center text-white"
-              style={{ background: "linear-gradient(140deg,#1C1C1C,#0a0a0a)" }}
-              variants={slideRight}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-            >
-              <div className="text-[13px] font-bold text-primary">No hidden charges</div>
-              <p className="text-[21px] font-bold mt-2 leading-tight">See your exact fare before you book</p>
-              <div className="mt-6"><BookBtn variant="inverse" size="lg">{cfg.pricing.ctaLabel || (canBook ? "Calculate My Fare" : "Talk to Us")}</BookBtn></div>
-            </motion.div>
-          </div>
-        </Section>
-      );
-    },
+    pricing: () => <PricingConnect cfg={cfg} BookBtn={BookBtn} canBook={canBook} tone={getTone("pricing", "tint")} />,
 
     fleet: () => {
       if (!cfg.fleet) return null;
-      const EASE = [0.22, 1, 0.36, 1];
-      const slideLeft = { hidden: { opacity: 0, x: -120 }, show: { opacity: 1, x: [null, 8, -4, 2, 0], transition: { duration: 0.9, ease: EASE, x: { duration: 1.1, times: [0, 0.6, 0.75, 0.88, 1], ease: "easeOut" } } } };
-      const slideRight = { hidden: { opacity: 0, x: 120 }, show: { opacity: 1, x: [null, -8, 4, -2, 0], transition: { duration: 0.9, ease: EASE, x: { duration: 1.1, times: [0, 0.6, 0.75, 0.88, 1], ease: "easeOut" } } } };
-      const tickPop = { hidden: { scale: 0, rotate: -90 }, show: (i) => ({ scale: 1, rotate: 0, transition: { type: "spring", stiffness: 500, damping: 15, delay: 0.9 + i * 0.12 } }) };
+      // Vehicle cards (distinct from the split "pricing" block above it).
+      const iconFor = (label = "") => {
+        const l = label.toLowerCase();
+        if (/sedan|hatch/.test(l)) return Car;
+        if (/suv|muv|innova|ertiga/.test(l)) return CarFront;
+        if (/tempo|traveller/.test(l)) return Caravan;
+        if (/bus|coach|urbania/.test(l)) return BusFront;
+        return CarTaxiFront;
+      };
+      const split = (t) => { const i = typeof t === "string" ? t.indexOf(": ") : -1; return i > 0 && i < 60 ? [t.slice(0, i), t.slice(i + 2)] : [null, t]; };
+      const pts = cfg.fleet.points || [];
       return (
-        <Section tone={getTone("fleet", "white")} narrow>
-          <Reveal><SectionHead center className="mb-9" eyebrow={cfg.fleet.eyebrow || "Our Fleet"} title={cfg.fleet.heading} subheading={cfg.fleet.subheading} /></Reveal>
-          <div className="rounded-[22px] overflow-hidden border border-border grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] bg-white">
-            <motion.div
-              className="p-5 sm:p-8 md:p-10"
-              variants={slideLeft}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-            >
-              {cfg.fleet.intro && <p className="text-[14.5px] text-text-secondary leading-relaxed">{renderInline(cfg.fleet.intro)}</p>}
-              <ul className="mt-4 space-y-3">
-                {(cfg.fleet.points || []).map((t, i) => (
-                  <li key={t} className="flex items-start gap-3 text-[14.5px] leading-relaxed">
-                    <motion.span variants={tickPop} custom={i} initial="hidden" whileInView="show" viewport={{ once: true }}>
-                      <CheckCircle2 size={18} className="text-[#E6AC00] shrink-0 mt-[3px]" aria-hidden />
-                    </motion.span>
-                    <span>{labelled(t)}</span>
-                  </li>
-                ))}
-              </ul>
-              {cfg.fleet.note && <p className="text-[13px] text-text-secondary mt-5 leading-relaxed">{cfg.fleet.note}</p>}
-              {(cfg.fleet.links || []).map((l, i) => <p key={i} className="text-[14px] mt-3 leading-relaxed">{renderInline(l)}</p>)}
-            </motion.div>
-            <motion.div
-              className="p-6 sm:p-8 md:p-10 flex flex-col justify-center text-white"
-              style={{ background: "linear-gradient(140deg,#1C1C1C,#0a0a0a)" }}
-              variants={slideRight}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-            >
-              <p className="text-[21px] font-bold mt-2 leading-tight">Find the right vehicle for your journey</p>
-              <div className="mt-6"><BookBtn variant="inverse" size="lg" href="/fleet">{cfg.fleet.ctaLabel || "Explore Our Fleet"}</BookBtn></div>
-            </motion.div>
+        <Section tone={getTone("fleet", "white")}>
+          <Reveal><SectionHead center className="mb-4" eyebrow={cfg.fleet.eyebrow || "Our Fleet"} title={cfg.fleet.heading} subheading={cfg.fleet.subheading} /></Reveal>
+          {cfg.fleet.intro && <Reveal><p className="text-center text-[15px] text-text-secondary leading-relaxed max-w-[680px] mx-auto">{renderInline(cfg.fleet.intro)}</p></Reveal>}
+
+          <div className="ac-fgrid ac-c4 gap-4 sm:gap-5 mt-10">
+            {pts.map((t, i) => {
+              const [label, desc] = split(t); const Icon = iconFor(label || t);
+              return (
+                <Reveal key={t} variant="up" delay={i * 0.1}>
+                  <div className="ac-card group relative h-full overflow-hidden rounded-[22px] bg-white border border-[#EFEFEF] p-6 pt-7 flex flex-col">
+                    <span aria-hidden className="absolute -right-6 -top-6 w-28 h-28 rounded-full bg-[#FFF4CC] transition-transform duration-500 group-hover:scale-125" />
+                    <span aria-hidden className="absolute right-4 top-4 text-[11px] font-black tracking-[0.18em] text-[#C99A1A]">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="relative grid place-items-center w-14 h-14 rounded-2xl bg-[#111] text-[#FFD54F] shadow-[0_12px_24px_-10px_rgba(0,0,0,.5)] transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-4deg]">
+                      <Icon size={26} strokeWidth={2} aria-hidden />
+                    </span>
+                    {label && <h3 className="relative mt-5 text-[16.5px] font-extrabold text-text leading-snug">{label}</h3>}
+                    <p className="relative mt-2 text-[14px] text-text-secondary leading-relaxed">{renderInline(desc)}</p>
+                    <span aria-hidden className="relative mt-auto pt-5 block"><span className="block h-[3px] w-10 rounded-full bg-gradient-to-r from-[#E6AC00] to-[#FFD54F] transition-all duration-500 group-hover:w-16" /></span>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
+
+          {cfg.fleet.note && <p className="text-center text-[13px] text-text-secondary mt-6">{cfg.fleet.note}</p>}
+          {(cfg.fleet.links || []).map((l, i) => <p key={i} className="text-center text-[14px] mt-2 leading-relaxed">{renderInline(l)}</p>)}
+
+          <Reveal variant="zoom">
+            <div className="relative mt-8 overflow-hidden rounded-2xl bg-[#111] text-white px-6 py-5 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-[18px] md:text-[20px] font-bold leading-tight text-center sm:text-left">Find the right vehicle for your journey</p>
+              <BookBtn variant="inverse" size="lg" href="/fleet" className="shrink-0">{cfg.fleet.ctaLabel || "Explore Our Fleet"}</BookBtn>
+              <span aria-hidden className="ac-hero-sweep absolute inset-0 pointer-events-none" />
+            </div>
+          </Reveal>
         </Section>
       );
     },
 
     routes: () => cfg.routes?.length > 0 ? (
       <Section tone={getTone("routes", "white")}>
-        <Reveal><SectionHead center className="mb-11" eyebrow="Popular Routes" title={cfg.routesHeading || "Frequently booked routes"} /></Reveal>
-        <div className="ac-fgrid ac-c4 gap-4">
+        <Reveal><SectionHead center className="mb-11" eyebrow="Popular Routes" title={cfg.routesHeading || "Frequently booked routes"} subheading={cfg.routesSubheading} description={cfg.routesIntro} /></Reveal>
+        <div className={`ac-fgrid ${richRoutes ? "ac-c3" : "ac-c4"} gap-4`}>
           {cfg.routes.map((r, ri) => (
             <Reveal key={`${r.from}-${r.to}`} variant="zoom" delay={(ri % 4) * 0.06}>
             <button type="button" onClick={() => pickRoute(r.from, r.to)} className="ac-card w-full group flex items-center justify-between rounded-[16px] border border-border bg-primary-tint p-4 hover:shadow-md transition-shadow text-left w-full">
-              <span className="text-[14px] font-bold">{r.from} → {r.to}</span>
-              <ArrowRight size={16} className="text-[#E6AC00] group-hover:translate-x-1 transition-transform" aria-hidden />
+              {r.desc ? (
+                <span className="text-left min-w-0">
+                  <span className="block text-[14px] font-bold">{r.label || `${r.from} → ${r.to}`}</span>
+                  <span className="block mt-1 text-[13px] text-text-secondary leading-snug">{r.desc}</span>
+                </span>
+              ) : <span className="text-[14px] font-bold">{r.from} → {r.to}</span>}
+              <ArrowRight size={16} className="shrink-0 ml-3 text-[#E6AC00] group-hover:translate-x-1 transition-transform" aria-hidden />
             </button>
             </Reveal>
           ))}
         </div>
+        {cfg.routesNote && <p className="mt-8 text-center text-[14px] text-text-secondary leading-relaxed">{renderInline(cfg.routesNote)}</p>}
+        {cfg.routesCtaLabel && <div className="mt-6 text-center"><BookBtn size="lg">{cfg.routesCtaLabel}</BookBtn></div>}
       </Section>
     ) : null,
 
@@ -700,7 +754,7 @@ export default function ServiceLanding({ cfg }) {
             {(cfg.coverage.body || []).map((p, i) => <p key={i} className="mt-3 text-text-secondary text-[15.5px] leading-relaxed">{renderInline(p)}</p>)}
           </div>
         </Reveal>
-        {cfg.routes?.length > 0 && (
+        {cfg.routes?.length > 0 && !richRoutes && (
           <div className="ac-fgrid ac-c3 gap-4 mt-10">
             {cfg.routes.map((r) => (
               <button type="button" key={`${r.from}-${r.to}`} onClick={() => pickRoute(r.from, r.to)} className="group flex items-center justify-between rounded-[16px] border border-border bg-primary-tint p-4 hover:shadow-md transition-shadow text-left w-full">

@@ -74,7 +74,6 @@ function FooterLink({ href, children, external }) {
 
 export default function Footer() {
   const reduce = useReducedMotion();
-  const toTop = () => window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
 
   // Editable from the CMS (Site Settings), with the current values as fallback.
   const services = useServiceLinks();
@@ -229,28 +228,10 @@ export default function Footer() {
                 <span className="text-[13px] text-white/45">{copyright}</span>
                 <span className="text-[12px] text-white/35">Designed &amp; Developed by SkyUp Digital Solutions</span>
               </div>
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pr-16 sm:pr-0">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pr-16 md:pr-24">
                 {LEGAL_LINKS.map(([l, h]) => (
                   <a key={l} href={h} className="text-[13px] text-white/45 no-underline transition-colors duration-200 hover:text-[#FFD54F]">{l}</a>
                 ))}
-                <m.button
-                  type="button"
-                  onClick={toTop}
-                  aria-label="Back to top"
-                  initial="rest"
-                  animate="rest"
-                  whileHover="hover"
-                  whileTap={{ scale: 0.88 }}
-                  className="ml-2 hidden sm:grid h-12 w-12 place-items-center rounded-full border-2 border-[#FFD54F] bg-[#FFD54F]/15 text-[#FFD54F] shadow-[0_0_18px_rgba(255,213,79,0.35),0_4px_14px_rgba(0,0,0,0.3)] backdrop-blur-sm transition-all duration-300 hover:bg-[#FFD54F] hover:text-[#141414] hover:shadow-[0_0_28px_rgba(255,213,79,0.5),0_6px_20px_rgba(0,0,0,0.3)]"
-                >
-                  <m.svg
-                    variants={{ rest: { y: 0 }, hover: { y: -3 } }}
-                    transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden
-                  >
-                    <path d="M12 19V5M6 11l6-6 6 6" />
-                  </m.svg>
-                </m.button>
               </div>
             </m.div>
           </div>

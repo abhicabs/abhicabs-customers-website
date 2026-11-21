@@ -1,5 +1,5 @@
 # Abhi Cabs — search engine crawling rules
-# https://www.abhicabs24x7.com
+# https://abhicabs24x7.com
 
 User-agent: *
 Allow: /
@@ -16,4 +16,4 @@ Disallow: /tracking
 # CMS (Blog Builder, Site Settings, SEO audit)
 Disallow: /admin
 
-Sitemap: https://www.abhicabs24x7.com/sitemap.xml
+Sitemap: https://abhicabs24x7.com/sitemap.xml

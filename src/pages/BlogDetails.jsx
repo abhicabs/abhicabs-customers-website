@@ -19,8 +19,9 @@ import RelatedArticles from "../components/blog/RelatedArticles";
 import SampleBanner from "../components/blog/SampleBanner";
 import Breadcrumb from "../components/ui/Breadcrumb";
 import ServiceInterlink, { QuickBookStrip } from "../components/ServiceInterlink";
+import { SITE_ORIGIN } from "../lib/seo/constants";
 
-const SITE = "https://www.abhicabs24x7.com";
+const SITE = SITE_ORIGIN;
 
 /** Which Abhi Cabs page/action fits this article. */
 function serviceCta(blog) {

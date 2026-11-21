@@ -17,10 +17,10 @@
 const fs = require("fs");
 const path = require("path");
 
-const SITE = "https://www.abhicabs24x7.com";
+const SITE = "https://abhicabs24x7.com"; // must match SITE_ORIGIN in src/lib/seo/constants.js
 const API_BASE = (process.env.VITE_API_BASE_URL || "https://api.abhicabs24x7.com/api/v1").replace(/\/api\/v1\/?$/, "");
 const GH_TOKEN = process.env.VITE_GH_TOKEN;
-const GH_REPO = process.env.VITE_GH_REPO || "skyupdigitalsolutions-cpu/abhicabs-customer-website";
+const GH_REPO = process.env.VITE_GH_REPO || "abhicabs/abhicabs-customers-website";
 
 // ── 1. Static routes ────────────────────────────────────────────────────────
 const STATIC_URLS = [
@@ -29,6 +29,7 @@ const STATIC_URLS = [
   { path: "/services/one-way-outstation", priority: "0.9", changefreq: "weekly" },
   { path: "/services/round-trip",         priority: "0.9", changefreq: "weekly" },
   { path: "/services/local",              priority: "0.9", changefreq: "weekly" },
+  { path: "/services/local/bangalore",    priority: "0.8", changefreq: "weekly" },
   { path: "/services/airport-taxi",   priority: "0.9", changefreq: "weekly" },
   { path: "/services/corporate",          priority: "0.8", changefreq: "monthly" },
   { path: "/bangalore/car-rental",        priority: "0.9", changefreq: "weekly" },
@@ -117,7 +118,8 @@ async function fetchBlogUrls() {
   const cms = parseBlogsArray(blogsSource).filter(isPublished);
   const seo = parseBlogsArray(seoSource).filter(isPublished);
   const taken = new Set(cms.map((b) => b.slug));
-  const merged = [...cms, ...seo.filter((a) => !taken.has(a.slug))];
+  // Placeholder SEO articles are switched off on the site (useBlogs.js) — list real posts only.
+  const merged = cms;
   return merged.map((b) => ({
     path: `/blogs/${b.slug}`,
     priority: "0.6",

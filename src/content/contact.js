@@ -7,8 +7,8 @@ export const CONTACT_ORDER = ["info", "form", "business", "office", "hours", "fa
 
 export const CONTACT = {
   hero: {
-    image: "/images/airport-sunset-sedan.jpg",
-    imageAlt: "An Abhi Cabs sedan on the road at sunset",
+    image: "/images/hero-local-chauffeur.webp",
+    imageAlt: "An Abhi Cabs chauffeur standing by a white Innova in Bangalore",
     title: "Let's Make Your",
     accent: "Journey Easier",
     description: "Have a question, need assistance with a booking, or want to explore our transportation services? We're here to help. Connect with the Abhi Cabs team and let us make your travel experience smoother.",
@@ -37,7 +37,7 @@ export const CONTACT = {
       { icon: "handshake", title: "Partnerships & Business Opportunities", cta: "Partnership Enquiry", subject: "Other", prefill: "Partnership enquiry: ", points: ["Business partnerships", "Transportation collaborations", "Fleet-related business opportunities", "Other commercial enquiries"] },
     ],
   },
-  office: { eyebrow: "Location", title: "Visit Our Office", description: "Find our office location and connect with the Abhi Cabs team.", fallbackImage: "/images/mountain-road-full.jpg" },
+  office: { eyebrow: "Location", title: "Visit Our Office", description: "Find our office location and connect with the Abhi Cabs team.", fallbackImage: "/images/hero-hill-road.webp" },
   hours: { eyebrow: "Availability", title: "When Can You Reach Us?", description: "Check our customer support availability before getting in touch.", bookingNote: "Online cab booking on this website is also available at any time." },
   faqsHeading: { eyebrow: "FAQ", title: "Frequently Asked Questions", description: "Find answers to common questions about contacting and getting assistance from Abhi Cabs." },
   // `{address}` is filled in when an office address is configured

@@ -7,7 +7,6 @@ import useBlogQuery from "../hooks/useBlogQuery";
 import { categoriesOf, filterBlogs, paginate, isFeatured, isPopular, isDestination, isTip, isRoute, categorySlug } from "../lib/blog";
 import BlogHero from "../components/blog/BlogHero";
 import FeaturedArticle from "../components/blog/FeaturedArticle";
-import BlogCategories from "../components/blog/BlogCategories";
 import LatestArticles from "../components/blog/LatestArticles";
 import PopularArticles from "../components/blog/PopularArticles";
 import DestinationGuides from "../components/blog/DestinationGuides";
@@ -17,8 +16,9 @@ import NewsletterSubscription from "../components/blog/NewsletterSubscription";
 import SampleBanner from "../components/blog/SampleBanner";
 import EmptyBlog from "../components/blog/EmptyBlog";
 import ServiceInterlink, { QuickBookStrip } from "../components/ServiceInterlink";
+import { SITE_ORIGIN } from "../lib/seo/constants";
 
-const SITE = "https://www.abhicabs24x7.com";
+const SITE = SITE_ORIGIN;
 const PER_PAGE = 6; // 3×2 grid, every card the same size
 const SEO_TITLE = "Abhi Cabs Travel Blog | Travel Tips, Destinations & Road Trips";
 const SEO_DESC = "Explore the Abhi Cabs travel blog for destination guides, road-trip inspiration, travel tips, popular routes, and useful travel information.";
@@ -66,15 +66,15 @@ export default function BlogsListing() {
       </Head>
 
       {isSample && <SampleBanner />}
-      <BlogHero query={qs.qLive} onQuery={qs.setQuery} onClear={qs.clearSearch} onExplore={() => scrollTo("latest")} />
+      <BlogHero query={qs.qLive} onQuery={qs.setQuery} onClear={qs.clearSearch} onExplore={() => scrollTo("latest")} blogs={blogs} categoryCount={categories.length} />
 
       {blogs.length === 0 ? <EmptyBlog /> : (
         <>
           {!filtering && page === 1 && <FeaturedArticle blog={featured} />}
-          <BlogCategories categories={categories} active={category} total={blogs.length} onSelect={pickCategory} />
           <LatestArticles
             result={result} filtering={filtering} query={q} category={category} categoryName={activeCategory?.name}
             onClear={qs.clearAll} onPage={goPage}
+            categories={categories} total={blogs.length} onSelect={pickCategory}
           />
           {!filtering && (
             <>

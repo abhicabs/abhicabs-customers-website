@@ -13,6 +13,13 @@ import Breadcrumb from "./Breadcrumb";
  */
 const EASE = [0.22, 1, 0.36, 1];
 
+/** Phone-sized source for the hero photo: Cloudinary resizes on the fly; local hero-*.webp files have a -900 twin. */
+function heroSrcSet(image = "") {
+  if (image.includes("res.cloudinary.com") && image.includes("w_1920")) return `${image.replace("w_1920", "w_900")} 900w, ${image} 1920w`;
+  if (/\/hero-[a-z-]+\.webp$/.test(image)) return `${image.replace(/\.webp$/, "-900.webp")} 900w, ${image} 1672w`;
+  return undefined;
+}
+
 export default function PageHero({ image, imageAlt = "", imagePosition = "center", breadcrumb, title, accent, subtitle, description, actions, stats, center = false, children }) {
   const reduce = useReducedMotion();
   const [more, setMore] = useState(false);
@@ -21,8 +28,8 @@ export default function PageHero({ image, imageAlt = "", imagePosition = "center
     reduce
       ? {}
       : {
-          initial: { opacity: 0, y: 26, filter: "blur(8px)", ...extra.from },
-          animate: { opacity: 1, y: 0, filter: "blur(0px)", ...extra.to },
+          initial: { opacity: 0, y: 26, ...extra.from },
+          animate: { opacity: 1, y: 0, ...extra.to },
           transition: { duration: 0.8, delay: d, ease: EASE },
         };
 
@@ -30,7 +37,7 @@ export default function PageHero({ image, imageAlt = "", imagePosition = "center
     <section className="ac-hero relative overflow-hidden bg-[#0a0a0a] isolate">
       {/* Photo — eager + high priority: this is the LCP element */}
       <div aria-hidden={!imageAlt} className="absolute -inset-[4%]">
-        <img src={image} srcSet={/\/hero-[a-z-]+\.webp$/.test(image || "") ? `${image.replace(/\.webp$/, "-900.webp")} 900w, ${image} 1672w` : undefined} sizes="100vw" alt={imageAlt} fetchPriority="high" decoding="async" className="ac-kenburns w-full h-full object-cover" style={{ width: "100%", height: "100%", objectPosition: imagePosition }} />
+        <img src={image} srcSet={heroSrcSet(image)} sizes="100vw" alt={imageAlt} fetchPriority="high" decoding="async" className="ac-kenburns w-full h-full object-cover" style={{ width: "100%", height: "100%", objectPosition: imagePosition }} />
       </div>
 
       {/* Depth layers */}
@@ -72,20 +79,7 @@ export default function PageHero({ image, imageAlt = "", imagePosition = "center
           />
         )}
 
-        {description && (
-          <motion.p
-            {...rise(0.28)}
-            className={`mt-4 text-white/85 leading-[1.75] [text-wrap:pretty] max-w-[800px] ${longDesc && !more ? "max-sm:line-clamp-4" : ""}`}
-            style={{ fontSize: "clamp(15px,1.4vw,17.5px)", textShadow: "0 2px 18px rgba(0,0,0,.6)" }}
-          >
-            {description}
-          </motion.p>
-        )}
-        {longDesc && (
-          <button type="button" onClick={() => setMore((v) => !v)} className="sm:hidden mt-2 text-[13.5px] font-bold text-primary underline underline-offset-2" aria-expanded={more}>
-            {more ? "Show less" : "Read more"}
-          </button>
-        )}
+        {/* Hero description paragraph intentionally not shown (removed site-wide). */}
 
         {stats && (
           <motion.ul {...rise(0.36)} className={`mt-7 flex flex-wrap gap-3 ${center ? "justify-center" : ""}`}>

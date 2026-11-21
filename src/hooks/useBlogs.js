@@ -17,7 +17,7 @@ const SAMPLE_ALLOWED = import.meta.env.DEV || String(import.meta.env.VITE_BLOG_S
 const isPublished = (b) => b && b.slug && !b.draft && (!b.status || String(b.status).toLowerCase() === "published");
 
 const GH_TOKEN = import.meta.env.VITE_GH_TOKEN;
-const GH_REPO = import.meta.env.VITE_GH_REPO || "skyupdigitalsolutions-cpu/abhicabs-customer-website";
+const GH_REPO = import.meta.env.VITE_GH_REPO || "abhicabs/abhicabs-customers-website";
 const GH_FILE = "src/data/blogs.js";
 
 // In-memory cache so we don't refetch on every component mount
@@ -59,9 +59,15 @@ async function fetchLiveBlogs() {
 }
 
 /** Merge blogs from multiple sources, dedup by slug, filter published, sort. */
+// Placeholder articles (the bundled SEO_ARTICLES + dev sample posts) are switched OFF for now:
+// only real posts published from the Blog Builder (BLOGS / live GitHub) are shown.
+// Set to true to show the placeholder articles again.
+const SHOW_PLACEHOLDER_ARTICLES = false;
+
 function mergeBlogs(liveBlogs) {
-  // Priority: live GitHub > bundled BLOGS > SEO_ARTICLES
+  // Priority: live GitHub > bundled BLOGS > (placeholders, when enabled)
   const primary = (liveBlogs || BLOGS || []).filter(isPublished);
+  if (!SHOW_PLACEHOLDER_ARTICLES) return { blogs: sortBlogs(primary), isSample: false };
   const taken = new Set(primary.map((b) => b.slug));
   const seo = (SEO_ARTICLES || []).filter((a) => isPublished(a) && !taken.has(a.slug));
   const merged = [...primary, ...seo];

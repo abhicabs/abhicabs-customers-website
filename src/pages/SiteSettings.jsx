@@ -94,6 +94,7 @@ function SettingsConsole() {
         body: JSON.stringify(data),
       });
       const json = await res.json().catch(() => ({}));
+      if (res.ok) { try { localStorage.removeItem("ac:site-settings:404"); } catch { /* storage blocked */ } }
       setMsg(res.ok ? { ok: true, t: "Saved — live header & footer will update." } : { ok: false, t: json.message || "Save failed" });
     } catch (e) {
       setMsg({ ok: false, t: e.message || "Could not reach server" });

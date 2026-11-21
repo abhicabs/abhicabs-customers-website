@@ -5167,7 +5167,7 @@ export default function AbhiCabsCMS() {
       try {
         // Fetch current blogs.js, remove the blog, commit back
         const GH_TOKEN = import.meta.env.VITE_GH_TOKEN;
-        const GH_REPO = import.meta.env.VITE_GH_REPO || "skyupdigitalsolutions-cpu/abhicabs-customer-website";
+        const GH_REPO = import.meta.env.VITE_GH_REPO || "abhicabs/abhicabs-customers-website";
         if (!GH_TOKEN) { alert("GitHub token not configured."); return; }
         const fileRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/src/data/blogs.js?ref=main`, {
           headers: { Authorization: `token ${GH_TOKEN}`, Accept: "application/vnd.github.v3+json" },

@@ -3,7 +3,7 @@ import LegalLayout from "../../src/components/LegalLayout";
 
 export default function Page() {
   return (
-    <LegalLayout title="Terms & Conditions">
+    <LegalLayout title="Terms & Conditions" showBooking={false}>
       <h2>1. Acceptance of Terms</h2>
       <p>By booking a ride through Abhi Cabs, you agree to these Terms &amp; Conditions and our Privacy Policy. If you do not agree, please do not use our services.</p>
 

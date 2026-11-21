@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import { SITE_ORIGIN } from "../lib/seo/constants.js";
 
-// Host shown in the SERP preview (e.g. "www.abhicabs24x7.com").
+// Host shown in the SERP preview (e.g. "abhicabs24x7.com").
 const SERP_HOST = SITE_ORIGIN.replace(/^https?:\/\//, "");
 
 // ══════════════════════════════════════════════════════════════════════

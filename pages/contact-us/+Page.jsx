@@ -19,8 +19,9 @@ import OfficeLocation from "../../src/components/contact/OfficeLocation";
 import WorkingHours from "../../src/components/contact/WorkingHours";
 import ContactFAQs from "../../src/components/contact/ContactFAQs";
 import { scrollToId } from "../../src/components/contact/shared";
+import { SITE_ORIGIN } from "../../src/lib/seo/constants";
 
-const SITE = "https://www.abhicabs24x7.com";
+const SITE = SITE_ORIGIN;
 
 // ?subject=corporate (used by service pages) -> form subject
 const SUBJECT_PARAM = {

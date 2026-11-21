@@ -8,7 +8,9 @@
     "dev": "vike dev",
     "build": "node scripts/generate-sitemap.cjs && vike build",
     "sitemap": "node scripts/generate-sitemap.cjs",
-    "preview": "vike preview"
+    "preview": "vike preview",
+    "images:upload": "node scripts/upload-images-to-cloudinary.mjs",
+    "images:places": "node scripts/fetch-place-images.mjs"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.8",

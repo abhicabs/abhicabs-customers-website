@@ -9,7 +9,7 @@
  */
 export const GH_TOKEN = import.meta.env.VITE_GH_TOKEN;
 // Default = this project's own repository (from .git/config). Override with VITE_GH_REPO if it ever moves.
-export const GH_REPO = import.meta.env.VITE_GH_REPO || "skyupdigitalsolutions-cpu/abhicabs-customer-website";
+export const GH_REPO = import.meta.env.VITE_GH_REPO || "abhicabs/abhicabs-customers-website";
 export const GH_BRANCH = "main";
 export const GH_FILE = "src/data/blogs.js";
 

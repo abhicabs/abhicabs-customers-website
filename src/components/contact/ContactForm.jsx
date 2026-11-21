@@ -88,23 +88,23 @@ export default function ContactForm({ content, subject, onSubjectChange, message
   }
 
   const submitting = status.state === "submitting";
+  const done = 5 - Object.keys(errors).length; // fields currently valid
   const ai = (k, id) => ({ id, "aria-invalid": show(k) ? "true" : "false", "aria-describedby": show(k) ? `${id}-err` : undefined, required: true, className: `${input} ${show(k) ? "border-error" : "border-border"}` });
 
   return (
     <Section id="contact-form" tone="white" lazyPaint={false}>
       <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] rounded-[26px] overflow-hidden border border-[#EFEFEF] shadow-[0_20px_60px_rgba(0,0,0,.08)]">
         {/* Assurance side */}
-        <div className="relative bg-[#111] text-white p-7 md:p-10 flex flex-col justify-between min-h-[320px] overflow-hidden">
-          <img src="/images/dashboard-pov.jpg" alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-25" />
-          <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(17,17,17,.7), rgba(17,17,17,.95))" }} />
+        <div className="relative bg-primary text-[#111] p-7 md:p-10 flex flex-col justify-between min-h-[320px] overflow-hidden">
+          <Send aria-hidden strokeWidth={0.7} className="absolute -right-10 -bottom-10 w-64 h-64 text-[#111]/[.07] -rotate-12" />
           <div className="relative">
-            <SectionHead id="contact-form" light eyebrow={content.form.eyebrow} title={content.form.title} description={content.form.description} />
+            <SectionHead id="contact-form" eyebrow={content.form.eyebrow} title={content.form.title} description={content.form.description} />
           </div>
-          <ul className="relative mt-8 space-y-3 text-[14px] text-white/80">
-            {content.form.assurances.map((t) => (
-              <li key={t} className="flex gap-2.5"><CheckCircle2 size={18} className="text-primary shrink-0 mt-0.5" aria-hidden />{t}</li>
+          <ol className="relative mt-8 space-y-4 text-[14.5px] font-semibold">
+            {content.form.assurances.map((t, i) => (
+              <li key={t} className="flex gap-3 items-start"><span className="grid place-items-center w-7 h-7 shrink-0 rounded-full bg-[#111] text-primary text-[12.5px] font-black">{i + 1}</span><span className="pt-0.5">{t}</span></li>
             ))}
-          </ul>
+          </ol>
         </div>
 
         {/* Form side */}
@@ -121,14 +121,41 @@ export default function ContactForm({ content, subject, onSubjectChange, message
             </div>
           ) : (
             <form onSubmit={submit} noValidate aria-busy={submitting}>
+              <div className="mb-6">
+                <div className="flex items-center justify-between text-[12.5px] font-bold">
+                  <span className="text-text-secondary">{done === 5 ? "Ready to send" : "Your message"}</span>
+                  <span className="tabular-nums">{done} of 5 complete</span>
+                </div>
+                <div className="mt-2 h-2 rounded-full bg-[#EFEDE6] overflow-hidden">
+                  <div className={`h-full rounded-full transition-[width,background-color] duration-500 ease-out motion-reduce:transition-none ${done === 5 ? "bg-[#22C55E]" : "bg-primary"}`} style={{ width: `${(done / 5) * 100}%` }} />
+                </div>
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field id="cf-name" label="Full Name" error={show("name")}><input {...ai("name", "cf-name")} value={v.name} onChange={set("name")} onBlur={blur("name")} autoComplete="name" placeholder="Your name" /></Field>
                 <Field id="cf-mobile" label="Mobile Number" error={show("mobile")}><input {...ai("mobile", "cf-mobile")} type="tel" inputMode="numeric" autoComplete="tel-national" value={v.mobile} onChange={set("mobile")} onBlur={blur("mobile")} placeholder="10-digit mobile" /></Field>
                 <div className="sm:col-span-2"><Field id="cf-email" label="Email Address" error={show("email")}><input {...ai("email", "cf-email")} type="email" autoComplete="email" value={v.email} onChange={set("email")} onBlur={blur("email")} placeholder="you@example.com" /></Field></div>
-                <div className="sm:col-span-2"><Field id="cf-subject" label="Subject" error={show("subject")}>
-                  <select {...ai("subject", "cf-subject")} value={subject} onChange={(e) => onSubjectChange(e.target.value)} onBlur={blur("subject")}>
-                    {SUBJECTS.map((s) => <option key={s}>{s}</option>)}
-                  </select></Field></div>
+                <div className="sm:col-span-2">
+                  <p id="cf-subject-label" className="text-[13px] font-bold mb-2">Subject <span className="text-error" aria-hidden>*</span><span className="sr-only">(required)</span></p>
+                  <div id="cf-subject" role="radiogroup" aria-labelledby="cf-subject-label" aria-invalid={show("subject") ? "true" : "false"} className="flex flex-wrap gap-2">
+                    {SUBJECTS.map((s) => {
+                      const on = subject === s;
+                      return (
+                        <button key={s} type="button" role="radio" aria-checked={on} tabIndex={on || (!subject && s === SUBJECTS[0]) ? 0 : -1}
+                          onClick={() => { onSubjectChange(s); setTouched((t) => ({ ...t, subject: true })); }}
+                          onKeyDown={(e) => {
+                            const i = SUBJECTS.indexOf(s); const n = SUBJECTS.length;
+                            const next = ["ArrowRight", "ArrowDown"].includes(e.key) ? (i + 1) % n : ["ArrowLeft", "ArrowUp"].includes(e.key) ? (i - 1 + n) % n : null;
+                            if (next === null) return; e.preventDefault(); onSubjectChange(SUBJECTS[next]);
+                            e.currentTarget.parentElement.children[next]?.focus();
+                          }}
+                          className={`inline-flex items-center gap-1.5 h-10 px-4 rounded-full border-2 text-[13.5px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E6AC00] ${on ? "bg-[#111] border-[#111] text-white" : "bg-white border-border hover:border-[#111]"}`}>
+                          {on && <CheckCircle2 size={15} className="text-primary" aria-hidden />}{s}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {show("subject") && <p id="cf-subject-err" role="alert" className="mt-1.5 text-[12.5px] text-error">{show("subject")}</p>}
+                </div>
                 <div className="sm:col-span-2"><Field id="cf-message" label="Message" error={show("message")}>
                   <textarea {...ai("message", "cf-message")} className={`${ai("message", "cf-message").className} h-auto min-h-[130px] py-3 resize-y`} maxLength={MSG_MAX + 200} value={message} onChange={(e) => onMessageChange(e.target.value)} onBlur={blur("message")} placeholder="How can we help? Include your Booking ID if you have one." />
                   <div className={`text-right text-[12px] ${message.length > MSG_MAX ? "text-error" : "text-text-secondary"}`}>{message.trim().length}/{MSG_MAX}</div>
@@ -136,7 +163,7 @@ export default function ContactForm({ content, subject, onSubjectChange, message
               </div>
 
               <div aria-live="polite" className="mt-4 min-h-[0]">
-                {status.state === "error" && (
+                {status.state === "error" && !(status.kind === "validation" && done === 5) && (
                   <p role="alert" className="flex gap-2 items-start rounded-xl bg-error-tint text-[#991B1B] text-[13.5px] px-4 py-3"><AlertCircle size={17} className="shrink-0 mt-0.5" aria-hidden />{status.text}</p>
                 )}
               </div>

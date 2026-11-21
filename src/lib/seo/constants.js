@@ -16,7 +16,8 @@
 // Canonical public origin. Matches pages/+Head.jsx (SITE) and public/sitemap.xml.
 // The old `www.abhicabs.in` strings elsewhere were stale and caused the SERP
 // preview + blog canonical/OG to point at the wrong host.
-export const SITE_ORIGIN = "https://www.abhicabs24x7.com";
+// Canonical origin as specified in the SEO content docs: non-www (https://abhicabs24x7.com/...).
+export const SITE_ORIGIN = "https://abhicabs24x7.com";
 
 // Severity model. Order matters — it drives sort/priority.
 export const SEVERITY = {

@@ -1,35 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { Clock } from "lucide-react";
-import Reveal from "../ui/Reveal";
-import Section from "../ui/Section";
-import SectionHead from "../ui/SectionHead";
 import { SUPPORT_HOURS as H } from "../../data/businessInfo";
+import { useSupportOpen } from "./ContactHero";
 
+/** Live clock (IST), open-now badge and the week strip. Time/day are set after mount so SSR and first paint match. */
 export default function WorkingHours({ content }) {
   const c = content.hours;
-  const [today, setToday] = useState(null); // after mount, in IST, so SSR and first paint match
-  useEffect(() => { try { setToday(new Intl.DateTimeFormat("en-IN", { weekday: "long", timeZone: "Asia/Kolkata" }).format(new Date())); } catch { /* ignore */ } }, []);
+  const open = useSupportOpen();
+  const [now, setNow] = useState(null);
+  useEffect(() => {
+    const fmt = () => {
+      try {
+        const d = new Date();
+        setNow({
+          time: new Intl.DateTimeFormat("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true, timeZone: "Asia/Kolkata" }).format(d).toUpperCase(),
+          day: new Intl.DateTimeFormat("en-IN", { weekday: "long", timeZone: "Asia/Kolkata" }).format(d),
+        });
+      } catch { /* ignore */ }
+    };
+    fmt(); const id = setInterval(fmt, 15000); return () => clearInterval(id);
+  }, []);
   const hours = H.allDay ? "Open 24 hours" : `${H.open} – ${H.close}`;
+
   return (
-    <Section id="contact-hours" tone="tint" className="!py-12 md:!py-14">
-      <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-14 items-center">
-        <Reveal><SectionHead id="contact-hours" eyebrow={c.eyebrow} title={c.title} description={c.description} /></Reveal>
-        <Reveal delay={0.08}>
-          <div className="rounded-[14px] bg-[#111] text-white p-5 md:p-6">
-            <div className="flex items-center gap-3">
-              <span className="w-11 h-11 rounded-xl bg-primary text-[#111] flex items-center justify-center shrink-0"><Clock size={20} aria-hidden /></span>
-              <div><div className="text-[19px] font-extrabold">{H.allDay ? "Open 24×7" : hours}</div><p className="text-[13px] text-white/65">{H.note}</p></div>
+    <section id="contact-hours" aria-labelledby="contact-hours-title" className="bg-primary py-16 md:py-20 scroll-mt-28 overflow-hidden">
+      <div className="max-w-[1264px] mx-auto px-5 sm:px-6 grid lg:grid-cols-[minmax(0,1fr)_auto] gap-10 items-center">
+        <div>
+          <p className="flex items-center gap-2.5 text-[12px] font-black uppercase tracking-[0.2em]"><span aria-hidden className="h-[3px] w-8 bg-[#111] rounded-full" />{c.eyebrow}</p>
+          <h2 id="contact-hours-title" className="mt-3 text-[30px] md:text-[44px] font-black tracking-[-0.035em] leading-[1.05]">{c.title}</h2>
+          <p className="mt-3 text-[15.5px] text-[#111]/75 max-w-[520px]">{c.description}</p>
+          <ul aria-label="Support days" className="mt-7 grid grid-cols-7 gap-1.5 max-w-[560px]">
+            {H.days.map((d) => { const isToday = now?.day === d; return (
+              <li key={d} aria-current={isToday ? "date" : undefined} title={`${d}: ${hours}`}
+                className={`text-center rounded-xl py-3 text-[12.5px] font-black ${isToday ? "bg-[#111] text-primary" : "bg-[#111]/[.08]"}`}>
+                {d.slice(0, 3)}{isToday && <span className="block text-[10px] font-bold text-white/70 mt-0.5">Today</span>}
+              </li>); })}
+          </ul>
+          <p className="mt-4 text-[13.5px] font-semibold text-[#111]/70">{H.note} {c.bookingNote}</p>
+        </div>
+
+        <div className="relative justify-self-center lg:justify-self-end">
+          <div className="w-[280px] sm:w-[320px] aspect-square rounded-full bg-[#111] text-white grid place-items-center text-center shadow-[0_40px_80px_-40px_rgba(0,0,0,.7)] ring-[10px] ring-[#111]/10">
+            <div>
+              <Clock size={22} aria-hidden className="mx-auto text-primary" />
+              <p className="mt-3 text-[12px] font-black uppercase tracking-[0.18em] text-white/50">Time in India</p>
+              <p className="mt-1 text-[44px] sm:text-[52px] font-black tracking-[-0.04em] tabular-nums leading-none" aria-live="off">{now?.time || "—"}</p>
+              <p className={`mt-4 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[13px] font-extrabold ${open === false ? "bg-white/15" : "bg-[#22C55E] text-[#06240f]"}`}>
+                <span className="w-2 h-2 rounded-full bg-current" aria-hidden />{open === false ? "Closed now" : H.allDay ? "Open 24×7" : "Open now"}
+              </p>
             </div>
-            <ul aria-label="Support days" className="mt-4 grid grid-cols-7 gap-1.5">
-              {H.days.map((d) => { const isToday = today === d; return (
-                <li key={d} aria-current={isToday ? "date" : undefined} title={`${d}: ${hours}`} className={`text-center rounded-lg py-2 text-[12px] font-bold ${isToday ? "bg-primary text-[#111]" : "bg-white/10 text-white/80"}`}>
-                  {d.slice(0, 3)}
-                </li>); })}
-            </ul>
-            <p className="mt-3 text-[12.5px] text-white/55">{c.bookingNote}</p>
           </div>
-        </Reveal>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
-import StatesCoverageBand from "../../src/components/StatesCoverageBand";
+import ServiceBooking from "../../src/components/ServiceBooking";
+import StatesPlatesBand from "../../src/components/StatesPlatesBand";
 import {
   Plane, Navigation, Car, Repeat, Timer, MapPin, Users, UserCheck,
   ShieldCheck, Headset, Route, Truck, CalendarCheck, Sparkles, Info,
@@ -129,6 +130,7 @@ export default function Page() {
             Cab Booking Services – <span className="ac-h1-highlight">Airport, Local & Outstation Cabs</span> Across India
           </Reveal>
 
+          <div style={{ marginTop: "clamp(28px,4vw,44px)" }}><ServiceBooking widgetKey="services-hero" initialMode="one-way" /></div>
         </div>
       </section>
 
@@ -193,8 +195,9 @@ export default function Page() {
       </section>
 
       {/* ═══ POPULAR OUTSTATION CAB ROUTES ═══ */}
-      <section className="py-14 md:py-20 bg-white border-y border-border">
-        <div className="max-w-[1264px] mx-auto px-6">
+      <section className="ac-cv py-14 md:py-20 bg-white border-y border-border relative overflow-hidden">
+        <div aria-hidden className="absolute inset-x-0 top-0 h-40 -z-0 pointer-events-none" style={{ background: "radial-gradient(60% 100% at 50% 0%, rgba(255,213,79,.14), transparent 70%)" }} />
+        <div className="relative max-w-[1264px] mx-auto px-6">
           <Reveal>
             <div className="ac-section-divider" />
             <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight leading-tight text-center">Popular Outstation Cab Routes</h2>
@@ -203,20 +206,58 @@ export default function Page() {
               Planning an intercity journey? Explore popular <span className="ac-hl">outstation cab routes</span> from our supported pickup states.
             </p>
           </Reveal>
-          <div className="max-w-[800px] mx-auto mt-8 space-y-4">
-            {ROUTES.map((r) => (
-              <div key={r.label} className="flex items-start gap-3">
-                <ChevronRight size={18} className="text-[#E6AC00] mt-0.5 shrink-0" />
-                <p className="text-[15px]"><span className="font-bold">{r.label}:</span> <span className="text-text-secondary">{r.desc}</span></p>
-              </div>
-            ))}
-            <p className="text-[15px] text-text-secondary mt-4">Explore available routes and book your preferred cab with Abhi Cabs 24×7.</p>
+          <div className="ac-fgrid ac-c3 gap-5 mt-10">
+            {ROUTES.map((r, i) => {
+              const m = r.label.match(/^(.+?) to (.+?) Cabs$/);
+              const [from, to] = m ? [m[1], m[2]] : [r.label, ""];
+              return (
+                <Reveal key={r.label} variant="up" delay={(i % 3) * 0.1}>
+                  <article className="ac-card ac-route group relative h-full overflow-hidden rounded-[22px] bg-white border border-[#EFEFEF] flex flex-col">
+                    {/* ticket top: FROM ——🚗—— TO */}
+                    <div aria-hidden className="relative px-6 pt-6 pb-5 bg-gradient-to-br from-[#FFF8DC] to-[#FFEFB0]">
+                      <div className="flex items-end justify-between gap-3">
+                        <div className="min-w-0">
+                          <div className="text-[10px] font-black tracking-[0.22em] text-[#9A6B00]">FROM</div>
+                          <div className="text-[19px] font-extrabold text-[#111] leading-tight truncate">{from}</div>
+                        </div>
+                        <div className="min-w-0 text-right">
+                          <div className="text-[10px] font-black tracking-[0.22em] text-[#9A6B00]">TO</div>
+                          <div className="text-[19px] font-extrabold text-[#111] leading-tight truncate">{to}</div>
+                        </div>
+                      </div>
+                      <div className="relative mt-4 h-6 flex items-center">
+                        <span className="w-3 h-3 rounded-full bg-[#111] ring-4 ring-[#FFD54F]/50 shrink-0" />
+                        <span className="flex-1 mx-1 border-t-2 border-dashed border-[#C99A1A]" />
+                        <span className="w-3 h-3 rounded-full bg-[#FFD54F] ring-2 ring-[#111] shrink-0" />
+                        <span className="ac-route-car absolute top-1/2 grid place-items-center w-7 h-7 rounded-full bg-[#111] text-[#FFD54F] shadow-[0_6px_14px_rgba(0,0,0,.35)]">
+                          <Car size={14} strokeWidth={2.4} />
+                        </span>
+                      </div>
+                      {/* ticket perforation */}
+                      <span className="absolute -left-3 -bottom-3 w-6 h-6 rounded-full bg-white border border-[#EFEFEF]" />
+                      <span className="absolute -right-3 -bottom-3 w-6 h-6 rounded-full bg-white border border-[#EFEFEF]" />
+                    </div>
+                    <div className="border-t-2 border-dashed border-[#F1E3B5] mx-5" />
+                    <div className="px-6 pt-4 pb-6 flex-1 flex flex-col">
+                      <h3 className="text-[15.5px] font-bold text-text">{r.label}</h3>
+                      <p className="mt-1.5 text-[14px] text-text-secondary leading-relaxed">{r.desc}</p>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
+          <Reveal variant="zoom">
+            <p className="mt-8 mx-auto max-w-[800px] text-center rounded-full bg-[#111] text-white px-6 py-3.5 text-[14.5px] font-semibold relative overflow-hidden">
+              <span className="relative">Explore available routes and book your preferred cab with Abhi Cabs 24×7.</span>
+              <span aria-hidden className="ac-hero-sweep absolute inset-0 pointer-events-none" />
+            </p>
+          </Reveal>
         </div>
       </section>
 
       {/* ═══ CAB BOOKING FROM 4 STATES ═══ */}
-      <StatesCoverageBand>
+      <StatesPlatesBand>
             <h2 style={{ fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 800, color: "#111", letterSpacing: "-0.02em", lineHeight: 1.2, maxWidth: 620, margin: 0, textWrap: "balance" }}>
               Cab Booking from Karnataka, Andhra Pradesh, Maharashtra & Telangana
             </h2>
@@ -226,7 +267,7 @@ export default function Page() {
             <p style={{ fontSize: 15, color: "#4B5563", lineHeight: 1.8, maxWidth: 600, margin: "16px 0 0" }}>
               Abhi Cabs 24×7 provides <span className="ac-hl">interstate cab booking services</span> with pickups from <span className="ac-hl">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</span> to destinations across India. Whether you need an airport transfer, local taxi, hourly rental, or outstation cab, choose a travel service that matches your requirements.
             </p>
-      </StatesCoverageBand>
+      </StatesPlatesBand>
 
       {/* ═══ IMPORTANT INFORMATION BEFORE BOOKING ═══ */}
       <section className="py-14 md:py-20">

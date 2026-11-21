@@ -31,11 +31,11 @@ export const SERVICE_LINKS = [
 ];
 
 export const NAV_LINKS = [
-  { href: "/services/local", label: "Car Rental" },
-  { href: ROUTES.fleet, label: "Vehicle Rental" },
-  { href: "/outstation", label: "Outstation Cabs" },
-  { href: "/services/airport-taxi", label: "Airport Cabs" },
-  { href: "/services/round-trip", label: "Intercity Cabs" },
+  { href: "/services/local", label: "Local Car Rental" },
+  { href: ROUTES.fleet, label: "Our Vehicles" },
+  { href: "/services/one-way-outstation", label: "One Way Cabs" },
+  { href: "/services/airport-taxi", label: "Airport Taxi" },
+  { href: "/services/round-trip", label: "Round Trip Cabs" },
   { href: ROUTES.blogs, label: "Blogs" },
   { href: ROUTES.contact, label: "Contact" },
 ];
