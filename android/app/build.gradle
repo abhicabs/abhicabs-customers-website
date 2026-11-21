@@ -1,0 +1,119 @@
+apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+
+project.ext {
+    hermesEnabled = true
+}
+// Firebase (push notifications) needs android/app/google-services.json.
+// An APK built without it opens and then crashes, so the build now STOPS
+// with a clear message instead of producing a broken app.
+if (!file("google-services.json").exists()) {
+    throw new GradleException(
+        "\n\n❌ android/app/google-services.json is missing.\n" +
+        "   Copy your Firebase google-services.json into android/app/ and build again.\n" +
+        "   (Firebase console → Project settings → Your apps → Android → google-services.json)\n")
+}
+apply plugin: "com.google.gms.google-services"
+
+def enableProguardInReleaseBuilds = true
+
+android {
+
+configurations.all {
+        resolutionStrategy {
+            force "androidx.core:core:1.13.1"
+            force "androidx.core:core-ktx:1.13.1"
+        }
+    }
+    buildToolsVersion "34.0.0"
+    compileSdk 35
+    namespace "com.skyupcrm"
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        applicationId "com.skyupcrm"
+        minSdkVersion 24
+        targetSdkVersion 35
+        versionCode 22
+        versionName "1.2.9"
+    }
+
+    // ONE universal APK that installs on every Android phone (32-bit and
+    // 64-bit ARM). Per-ABI split APKs were removed: sharing the wrong split
+    // (e.g. arm64 on a 32-bit phone) was a cause of "app crashes after install".
+    splits {
+        abi {
+            enable false
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    buildTypes {
+        debug { signingConfig signingConfigs.debug }
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                signingConfig signingConfigs.release
+            } else {
+                // No release keystore configured → sign with the bundled key so the
+                // APK still installs on any phone (fine for direct/WhatsApp sharing;
+                // use your own release keystore for Play Store uploads).
+                println("⚠️  No release keystore set — signing the release APK with android/app/debug.keystore.")
+                signingConfig signingConfigs.debug
+            }
+            minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    // Friendly APK file name: SkyUpCRM-v1.1.1.apk
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (variant.buildType.name == "release") {
+                outputFileName = "SkyUpCRM-v${variant.versionName}.apk"
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation("com.facebook.react:react-android")
+    implementation("com.facebook.react:hermes-android")
+
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
+}
+
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle")
+applyNativeModulesAppBuildGradle(project)
+
+android.sourceSets.main.java.srcDirs += [
+    "build/generated/rncli/src/main/java"
+]
+
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")

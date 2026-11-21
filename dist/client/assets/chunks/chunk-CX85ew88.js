@@ -1,0 +1,1 @@
+var e=/@(guest\.invalid|placeholder\.local)$/i,t=/@guest\.invalid$/i;function n(t){return e.test(String(t||``).trim())}function r(e){return t.test(String(e||``).trim())}function i(e){return e&&!n(e)?String(e).trim():``}export{i as n,r as t};

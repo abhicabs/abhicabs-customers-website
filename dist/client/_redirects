@@ -1,0 +1,17 @@
+# Cloudflare Pages redirects (Cloudflare ignores netlify.toml).
+# NOTE: on Cloudflare, these rules apply even when a file exists at that path,
+# so only list paths that should NOT serve their own pre-built page.
+
+# ── Duplicate URLs → one canonical address (permanent) ──
+/contact                    /contact-us              301
+/contact/                   /contact-us              301
+/services/airport-transfer  /services/airport-taxi   301
+/services/airport-transfer/ /services/airport-taxi   301
+/blog                       /blogs                   301
+/blog/*                     /blogs                   301
+
+# Every page (including CMS articles, CMS pages and the admin area) is pre-built
+# at deploy time, so no app-shell rewrites are needed — unknown URLs get the 404 page.
+
+# www → non-www is a DOMAIN redirect: set it in the Cloudflare dashboard
+# (Rules → Redirect Rules), not here — _redirects can't match on hostname.

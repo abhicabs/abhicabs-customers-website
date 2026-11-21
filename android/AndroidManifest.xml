@@ -1,0 +1,117 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Network -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Phone & Call Logs -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+
+<uses-permission android:name="android.permission.READ_CONTACTS" />
+<uses-permission android:name="android.permission.WRITE_CONTACTS" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Storage — Read -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <!-- Storage — Write (needed on Android < 10 to create CRM recordings folder) -->
+    <!-- Android 10+ uses scoped/app-specific storage; WRITE_EXTERNAL_STORAGE is
+         ignored on those versions but harmless to declare. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
+    <!-- Notifications (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Exact alarms — required for scheduled notifications on Android 12+
+         (API 31+). Without this, AlarmManager.setExact() silently falls back
+         to inexact delivery and notifications arrive late or not at all.
+         USE_EXACT_ALARM is granted automatically (no user dialog needed) on
+         API 33+; SCHEDULE_EXACT_ALARM requires the user to grant it once via
+         Settings > Apps > Special app access on API 31-32. Declare both so
+         the correct one is used per OS version. -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:minSdkVersion="31" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"
+        android:minSdkVersion="33" />
+
+    <!-- Background Sync -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- ✅ FIX — required because autoUploadService.js now declares its
+         foreground service as type "dataSync" (see autoUploadService.js).
+         Without this permission, the app throws a SecurityException on
+         startForeground() instead of the previous 3-minute shortService crash. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <!-- Required for Linking.canOpenURL tel: on Android 11+ -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.CALL" />
+            <data android:scheme="tel" />
+        </intent>
+    </queries>
+
+    <application
+      android:name=".MainApplication"
+      android:label="SkyUp CRM"
+      tools:replace="android:label"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher"
+      android:allowBackup="false"
+      android:theme="@style/AppTheme"
+      android:networkSecurityConfig="@xml/network_security_config"
+      android:supportsRtl="true">
+
+      <activity
+        android:name=".MainActivity"
+        android:label="SkyUp CRM"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+        android:launchMode="singleTask"
+        android:windowSoftInputMode="adjustResize"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+
+      <!-- FIX (post-login crash on Android 14+):
+           Notifee's library manifest declares app.notifee.core.ForegroundService
+           with android:foregroundServiceType="shortService" (0x00000800).
+           autoUploadService.js starts that service as FOREGROUND_SERVICE_TYPE_DATA_SYNC
+           (0x00000001). On API 34+ the started type must be a SUBSET of the type
+           declared on the <service> element, so the mismatch threw:
+             IllegalArgumentException: foregroundServiceType 0x00000001 is not a
+             subset of foregroundServiceType attribute 0x00000800
+           and crashed the app right after login (when autoUpload starts).
+           We override that service here to declare dataSync (plus shortService so
+           other Notifee foreground uses still work). tools:replace tells the
+           manifest merger to override the library's value. -->
+      <service
+        android:name="app.notifee.core.ForegroundService"
+        android:exported="false"
+        android:foregroundServiceType="dataSync|shortService"
+        tools:replace="android:foregroundServiceType" />
+
+      <!-- Default icon used by FCM for system-tray notifications when the app is
+           backgrounded/killed. Points at the white monochrome ic_notification
+           vector so notifications show the SkyUp mark instead of a white blob. -->
+      <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@drawable/ic_notification" />
+
+    </application>
+</manifest>

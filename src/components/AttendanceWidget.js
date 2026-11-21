@@ -1,0 +1,1224 @@
+// src/components/AttendanceWidget.js
+// ─────────────────────────────────────────────────────────────────────────────
+// Responsibilities:
+//   1. Display clocked-in time, status chip, break time, clock/break buttons.
+//   2. Real-time sync via Socket.IO (att:<userId> room).
+//   3. Tick worked-time counter every 1s (focused) / 10s (background).
+//   4. Ping the server every 60s while active so it knows the app is alive —
+//      this IS the idle detection: the backend's markIdleJob (every 2 min)
+//      marks anyone whose lastActivity is >5 min stale as "Idle". This ping
+//      is the only thing that keeps lastActivity fresh.
+//
+// BUG FIX (this revision) — false "Idle" during real phone calls:
+//   The old comment here claimed idle detection had "moved to App.js
+//   (useGlobalIdleDetection)... and also integrates with call-state
+//   detection" — that hook does not exist anywhere in this codebase. What
+//   actually existed: the AppState listener below stopped the ping
+//   completely the instant the app backgrounded, with ZERO awareness of an
+//   active call — even though `isOnCall()` was already imported and
+//   available (it was only wired to the UI chip). Since taking a phone call
+//   is exactly when this app gets backgrounded, and calls routinely run
+//   longer than the 5-minute idle cutoff, agents were being auto-marked
+//   Idle while actively on a live call with a lead. Fixed by keeping the
+//   ping alive across backgrounding whenever a call is in progress (see the
+//   "Ping keep-alive across backgrounding" effect below).
+// ─────────────────────────────────────────────────────────────────────────────
+
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import {
+  View, Text, TouchableOpacity, StyleSheet,
+  ActivityIndicator, Alert, AppState, Modal, TextInput, KeyboardAvoidingView, Platform,
+  PermissionsAndroid,
+} from 'react-native';
+import { useIsFocused }  from '@react-navigation/native';
+import { useSelector }   from 'react-redux';
+import Icon              from 'react-native-vector-icons/MaterialCommunityIcons';
+// PERF FIX: removed `import { io }` — AttendanceWidget no longer opens its own
+// socket connection. It reuses the singleton managed by socketService.js via getSocket().
+import { getSocket }     from '../services/socketService';
+import api               from '../services/api';
+import { getDeviceInfo } from '../services/deviceInfoService';
+import { serverNow } from '../services/serverTime';
+import { cancelClockInReminder } from '../services/notificationService';
+import { syncRecordings }        from '../services/recordingService';
+import { RADIUS, FONT } from '../theme/tokens';
+import { useTheme } from '../theme/ThemeContext';
+import { isOnCall, subscribeToCallState } from '../services/callStateService';
+import { requestLocationPermission } from '../services/permissionsService';
+import * as LocationTracking from '../services/locationTrackingService';
+import moment from 'moment';
+
+const STALE_MS = 30 * 1000;
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function fmtMins(mins) {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return `${h}h ${m.toString().padStart(2, '0')}m`;
+}
+// Break time with seconds, for the live counter shown while a break is in progress.
+function fmtBreakSecs(secs) {
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  const s = secs % 60;
+  if (h > 0) return `${h}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+  return `${m}m ${String(s).padStart(2, '0')}s`;
+}
+
+// BUG FIX ("Total Work timing ... sometimes shows wrong"): there used to be
+// TWO copies of this elapsed-work-time calculation — one inside the main tick
+// effect (correct: subtracts the CURRENTLY-RUNNING break's elapsed time too),
+// and a second, separate one inside the AppState-resume handler that only
+// subtracted `totalBreakMinutes` (the break total as of the LAST completed
+// break) and silently ignored any break still in progress. Resuming the app
+// from the background while on an active break re-registered the interval
+// using that second, buggy version — so from that point on, worked time was
+// overcounted by however long the break had been running, and stayed wrong
+// until the break ended (which finally updates totalBreakMinutes). Both call
+// sites now share this single implementation so there is only one place this
+// can ever go wrong.
+// Total break time in SECONDS: completed breaks (server sends whole minutes) + the break in progress, counted to the
+// exact second. Counting the active break in seconds (not rounded minutes) is what keeps "Time Worked" from jumping
+// DOWN by a whole minute the instant a break starts — the reported bug.
+function computeBreakSecs(rec) {
+  if (!rec) return 0;
+  const completedSecs = (rec.totalBreakMinutes || 0) * 60;
+  let activeSecs = 0;
+  if (rec.activeBreakIndex !== null && rec.activeBreakIndex !== undefined) {
+    const startTime = rec.breaks?.[rec.activeBreakIndex]?.startTime;
+    if (startTime) activeSecs = Math.max(0, Math.floor((serverNow() - new Date(startTime)) / 1000));
+  }
+  return completedSecs + activeSecs;
+}
+
+// Time Worked in SECONDS = time since login − total break seconds. Both are whole seconds, so the clock ticks down
+// by exactly 1s per 1s of break and never jumps.
+function computeElapsedSecs(rec) {
+  if (!rec?.loginTime || rec?.logoutTime) return 0;
+  const sinceLogin = Math.floor((serverNow() - new Date(rec.loginTime)) / 1000);
+  return Math.max(0, sinceLogin - computeBreakSecs(rec));
+}
+function fmtTime(d) {
+  if (!d) return '—';
+  // toLocaleTimeString relies on Hermes ICU data which may be incomplete
+  // and can throw on real devices — use moment instead.
+  return moment(d).format('hh:mm A');
+}
+
+// ── Status display config ─────────────────────────────────────────────────────
+const getStatusStyles = (colors) => ({
+  active    : { dot: colors.green,     label: 'Active',     chipBg: colors.greenBg,    chipText: colors.greenLight  },
+  on_break  : { dot: colors.amber,     label: 'On Break',   chipBg: colors.amberBg,    chipText: colors.amberLight  },
+  on_call   : { dot: colors.blue,      label: 'On Call',    chipBg: colors.blueBg,     chipText: colors.blueLight   },
+  idle      : { dot: colors.red,       label: 'Idle',       chipBg: colors.redBg,      chipText: colors.redLight    },
+  logged_out: { dot: colors.textMuted, label: 'Logged Out', chipBg: colors.surfaceAlt, chipText: colors.textMuted   },
+});
+
+// ── Component ─────────────────────────────────────────────────────────────────
+export default function AttendanceWidget() {
+  // ── Theme (dark/light) ──────────────────────────────────────────────────
+  // Colours come from useTheme() so the widget follows the app's dark/light
+  // toggle. Styles + status palette are rebuilt via useMemo whenever the theme
+  // changes. Factories (createStyles / getStatusStyles) keep colour refs out of
+  // module scope, which Hermes requires.
+  const { colors } = useTheme();
+  const w            = useMemo(() => createStyles(colors), [colors]);
+  const STATUS_STYLES = useMemo(() => getStatusStyles(colors), [colors]);
+  const [record,  setRecord]  = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [clockingIn, setClockingIn] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [breakSecs, setBreakSecs] = useState(0);
+  const lastBreakSecsRef = useRef(0);
+  // onCall drives the visible "On Call" status chip only.
+  const [onCall,  setOnCall]  = useState(isOnCall());
+
+  // ── Meeting permission request state ────────────────────────────────────
+  const [showMeetingModal, setShowMeetingModal] = useState(false);
+
+  // ── Live location tracking state ──────────────────────────────────────────
+  // Tracking is now managed by locationTrackingService (module-level, stable).
+  // trackingConfigRef holds { enabled, intervalMinutes } fetched after clock-in.
+  const trackingConfigRef    = useRef({ enabled: false, intervalMinutes: 15 });
+
+  // Office geofence (fetched after clock-in). When the employee is clocked in
+  // and moves OUTSIDE this radius, field-work location tracking auto-starts —
+  // no button, no admin permission needed. Stops when back inside / clocked out.
+  const geofenceRef        = useRef({ enabled: false, latitude: null, longitude: null, radiusMeters: 100, intervalMinutes: 15 });
+  const geofenceWatchRef   = useRef(null);
+  const [onFieldWork, setOnFieldWork] = useState(false);
+
+  const [meetingReason,    setMeetingReason]    = useState('');
+  const [meetingLocation,  setMeetingLocation]  = useState('');
+  const [requestSending,   setRequestSending]   = useState(false);
+  const [requestStatus,    setRequestStatus]    = useState('idle'); // idle|pending|approved|denied
+
+  // ── Shift hours (read-only) ───────────────────────────────────────────────
+  // FIX: "Ideal Time" used to be free text the employee typed in per day —
+  // it drifted into meaning "what I actually worked" instead of a fixed
+  // shift window. It's now one company-wide setting the admin configures
+  // once (web Attendance Settings page); this widget just displays it.
+  const [shiftLabel, setShiftLabel] = useState('');
+
+  // ── Idle remark popup ─────────────────────────────────────────────────────
+  // Prompted every 5 minutes while status stays "idle", and again the moment
+  // the app comes back to the foreground while idle. Skipping is always
+  // allowed — an empty remark just stays "pending" and is offered again next
+  // time, listed alongside the current prompt.
+  const [showIdleRemarkModal, setShowIdleRemarkModal] = useState(false);
+  const [idleRemarkMode,      setIdleRemarkMode]      = useState('recurring'); // 'recurring' | 'resume'
+  const [idleRemarkText,      setIdleRemarkText]      = useState('');
+  const [idleRemarkSaving,    setIdleRemarkSaving]    = useState(false);
+  const [expandedPendingIdx,  setExpandedPendingIdx]  = useState(null);
+  const [pendingIdleText,     setPendingIdleText]     = useState('');
+  const idlePromptTimerRef = useRef(null);
+  const pendingResumeRef   = useRef(false);
+
+  const isFocused = useIsFocused();
+  const userId    = useSelector(state => state.auth?.user?._id || null);
+
+  const tickRef        = useRef(null);
+  const pingRef        = useRef(null);
+  const lastFetchedRef = useRef(null);
+  const lastElapsedRef = useRef(0);
+  const socketRef      = useRef(null);
+
+  // ── Shared keep-alive ping ──────────────────────────────────────────────
+  // Single definition reused by the tick effect, the AppState listener, and
+  // the call-state effect below, so all three agree on one pingRef instead
+  // of each maintaining their own duplicate timer.
+  // FIX: this used to discard the response entirely. The backend's matching
+  // fix now emits a socket "attendance:updated" event when a ping resumes an
+  // idle session, which the listener below picks up — but the socket can be
+  // mid-reconnect right when this background timer fires (very possible right
+  // after the app resumes from background, which is exactly when this idle→
+  // active transition is most likely). Applying the response directly here
+  // too, same as the manual Resume handler (handleBreakEnd) already does,
+  // means the chip can't get stuck on "Idle" waiting for a socket that missed
+  // its moment.
+  const ping = useCallback(async () => {
+    try {
+      const r = await api.post('/attendance/ping');
+      if (r?.data?.status && r.data.status !== 'idle') {
+        setRecord(prev => (prev ? { ...prev, status: r.data.status, activeBreakIndex: null } : prev));
+      }
+    } catch { /* silent */ }
+  }, []);
+
+  const startPing = useCallback(() => {
+    if (pingRef.current) return; // already running
+    ping();
+    pingRef.current = setInterval(ping, 60_000);
+  }, [ping]);
+
+  const stopPing = useCallback(() => {
+    if (pingRef.current) { clearInterval(pingRef.current); pingRef.current = null; }
+  }, []);
+
+  // ── Initial fetch ─────────────────────────────────────────────────────────
+  const fetchRecord = useCallback(async (force = false) => {
+    if (!force && lastFetchedRef.current && Date.now() - lastFetchedRef.current < STALE_MS) return;
+    try {
+      const res = await api.get('/attendance/my-today');
+      setRecord(res.data);
+      lastFetchedRef.current = Date.now();
+    } catch { /* silent */ }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { fetchRecord(); }, [fetchRecord]);
+
+  // ── Socket.IO cross-device sync ───────────────────────────────────────────
+  // PERF FIX: Reuse the singleton socket from socketService.js instead of
+  // opening a second TCP connection with io(). We join the att:<userId> room
+  // on the shared connection so the server can push attendance:updated events.
+  useEffect(() => {
+    if (!userId) return;
+    const socket = getSocket();
+    if (!socket) return;
+    socketRef.current = socket;
+
+    // FIX: one handler, one registration, properly cleaned up.
+    // The old code called getSocket() TWICE — once as 'socket' and once as 'sock' —
+    // and registered meeting_permission_response on the second reference without
+    // ever removing it in the cleanup. Every userId change stacked another listener,
+    // causing the alert to fire multiple times per response.
+    const handleMeetingResponse = ({ approved, adminName }) => {
+      setRequestStatus(approved ? 'approved' : 'denied');
+      Alert.alert(
+        approved ? '✅ Permission Granted' : '❌ Request Denied',
+        approved
+          ? `${adminName || 'Admin'} approved your remote clock-in. You can now clock in from your current location.`
+          : `${adminName || 'Admin'} denied your request. Please return to the office to clock in.`,
+      );
+    };
+    socket.on('meeting_permission_response', handleMeetingResponse);
+
+    // Join attendance room on the existing shared connection
+    const joinRoom = () => socket.emit('att_join', { userId });
+    if (socket.connected) {
+      joinRoom();
+    } else {
+      socket.once('connect', joinRoom);
+    }
+
+    const handleAttUpdate = (updatedRecord) => {
+      setRecord(updatedRecord);
+      lastFetchedRef.current = Date.now();
+      // Update refs so tick() picks up new values without triggering re-registration
+      recordRef.current = updatedRecord;
+    };
+    socket.on('attendance:updated', handleAttUpdate);
+
+    return () => {
+      // FIX: clean up ALL listeners including meeting_permission_response
+      socket.off('meeting_permission_response', handleMeetingResponse);
+      socket.off('attendance:updated', handleAttUpdate);
+      socket.off('connect', joinRoom);
+      socketRef.current = null;
+      // Do NOT disconnect — the socket is shared with App.js / socketService
+    };
+  }, [userId]);
+
+  // ── Stable refs for tick — avoids re-registering interval on every record update ──
+  const recordRef = useRef(null);
+  useEffect(() => { recordRef.current = record; }, [record]);
+
+  // ── Idle-remark: re-prompt every 5 min while still idle ────────────────────
+  useEffect(() => {
+    if (idlePromptTimerRef.current) { clearInterval(idlePromptTimerRef.current); idlePromptTimerRef.current = null; }
+    if (record?.status !== 'idle') return;
+
+    setIdleRemarkMode('recurring');
+    setShowIdleRemarkModal(true);
+    idlePromptTimerRef.current = setInterval(() => {
+      setIdleRemarkMode('recurring');
+      setShowIdleRemarkModal(true);
+    }, 5 * 60 * 1000);
+
+    return () => {
+      if (idlePromptTimerRef.current) { clearInterval(idlePromptTimerRef.current); idlePromptTimerRef.current = null; }
+    };
+  }, [record?.status]);
+
+  // ── Idle-remark: reset the "already prompted for this idle period" guard
+  // whenever we leave idle status, so the next idle period can trigger again.
+  // Also closes the popup if it's still open — the pre-existing "Resume"
+  // button (bottom of the card) calls handleBreakEnd() directly, bypassing
+  // this popup entirely. Without this, a recurring/resume popup open at that
+  // moment would keep showing stale content after the employee already
+  // resumed through that other button.
+  const prevIdleStatusRef = useRef(record?.status);
+  useEffect(() => {
+    if (record?.status !== 'idle') pendingResumeRef.current = false;
+    const prev = prevIdleStatusRef.current;
+    prevIdleStatusRef.current = record?.status;
+    if (prev === 'idle' && record?.status !== 'idle' && showIdleRemarkModal) {
+      setShowIdleRemarkModal(false);
+    }
+  }, [record?.status]);
+
+  // ── Idle-remark: screen regaining focus while idle also counts as
+  // "movement" — covers navigating back to this tab, which AppState's
+  // background/foreground listener below doesn't catch (app never left
+  // foreground, just switched screens).
+  useEffect(() => {
+    if (!isFocused) return;
+    const rec = recordRef.current;
+    if (rec?.status === 'idle' && !pendingResumeRef.current) {
+      pendingResumeRef.current = true;
+      setIdleRemarkMode('resume');
+      setShowIdleRemarkModal(true);
+    }
+  }, [isFocused]);
+
+  // ── Fetch the company's fixed shift window once ────────────────────────────
+  useEffect(() => {
+    let cancelled = false;
+    api.get('/attendance/shift-config')
+      .then((r) => {
+        if (cancelled || !r?.data) return;
+        const { shiftStartHour, shiftStartMinute, shiftEndHour, shiftEndMinute } = r.data;
+        const fmt = (h, m) => moment({ hour: h, minute: m }).format('h:mm A');
+        setShiftLabel(`${fmt(shiftStartHour, shiftStartMinute)} – ${fmt(shiftEndHour, shiftEndMinute)}`);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  // ── Call-state chip sync + ping keep-alive across backgrounding ───────────
+  // Updates the "On Call" status chip AND, critically, keeps /attendance/ping
+  // firing if a call starts (or is already in progress) while the app is
+  // backgrounded — otherwise a call longer than 5 minutes gets the agent
+  // auto-marked "Idle" by the backend's markIdleJob mid-call. When the call
+  // ends while still backgrounded, ping reverts to normal (stops), so a
+  // genuinely idle backgrounded session still goes idle as expected.
+  useEffect(() => {
+    const applyCallState = (onACall) => {
+      setOnCall(onACall);
+      const rec = recordRef.current;
+      const clockedIn = rec?.loginTime && !rec?.logoutTime;
+      if (!clockedIn) return;
+      if (AppState.currentState !== 'active') {
+        if (onACall) startPing();
+        else stopPing();
+      }
+    };
+    applyCallState(isOnCall());
+    const unsub = subscribeToCallState(({ state }) => {
+      applyCallState(state !== 'idle');
+    });
+    return unsub;
+  }, [startPing, stopPing]);
+
+  // ── Tick + ping ────────────────────────────────────────────────────────────
+  // PERF FIX: Removed `record` from deps. Previously every attendance:updated
+  // socket push triggered cleanup + re-registration of setInterval AND
+  // AppState listener. Now the interval is registered once per focus change;
+  // tick() reads current values from recordRef so it always has fresh data.
+  useEffect(() => {
+    const tick = () => {
+      const rec = recordRef.current;
+      if (!rec?.loginTime || rec?.logoutTime) {
+        if (lastElapsedRef.current !== 0) {
+          lastElapsedRef.current = 0;
+          setElapsed(0);
+        }
+        return;
+      }
+      const secs = computeElapsedSecs(rec);
+      if (secs !== lastElapsedRef.current) {
+        lastElapsedRef.current = secs;
+        setElapsed(secs);
+      }
+      const bsecs = computeBreakSecs(rec);
+      if (bsecs !== lastBreakSecsRef.current) {
+        lastBreakSecsRef.current = bsecs;
+        setBreakSecs(bsecs);
+      }
+    };
+
+    const stopTimers = () => {
+      if (tickRef.current) { clearInterval(tickRef.current); tickRef.current = null; }
+      stopPing();
+    };
+
+    const startTimers = () => {
+      stopTimers();
+      tick();
+      const tickInterval = isFocused ? 1000 : 10_000;
+      tickRef.current = setInterval(tick, tickInterval);
+      startPing(); // fires immediately so the backend clears any stale 'idle' at once
+    };
+
+    if (AppState.currentState === 'active') {
+      startTimers();
+    }
+
+    return () => { stopTimers(); };
+  }, [isFocused, startPing, stopPing]); // PERF FIX: record removed — reads via recordRef instead
+
+  // ── AppState listener registered once (not inside tick useEffect) ──────────
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
+        const rec = recordRef.current;
+        if (rec?.loginTime && !rec?.logoutTime) {
+          const tickInterval = isFocused ? 1000 : 10_000;
+          if (tickRef.current) clearInterval(tickRef.current);
+          const tick = () => {
+            const r = recordRef.current;
+            if (!r?.loginTime || r?.logoutTime) return;
+            // BUG FIX: was `(r.totalBreakMinutes || 0)` only — ignored a
+            // currently-in-progress break, overcounting work time until the
+            // break ended. See computeElapsedSecs doc comment above.
+            const secs = computeElapsedSecs(r);
+            if (secs !== lastElapsedRef.current) { lastElapsedRef.current = secs; setElapsed(secs); }
+            const bsecs = computeBreakSecs(r);
+            if (bsecs !== lastBreakSecsRef.current) { lastBreakSecsRef.current = bsecs; setBreakSecs(bsecs); }
+          };
+          tickRef.current = setInterval(tick, tickInterval);
+
+          // Restart the keep-alive ping on resume — fire immediately so any
+          // stale 'idle' the backend applied while backgrounded (with no
+          // call in progress) clears right away.
+          startPing();
+
+          // ── Idle-remark: coming back to the app while idle counts as
+          // "movement" — surface the remark prompt right away instead of
+          // waiting for the recurring 5-min timer or the next ping cycle.
+          if (rec.status === 'idle' && !pendingResumeRef.current) {
+            pendingResumeRef.current = true;
+            setIdleRemarkMode('resume');
+            setShowIdleRemarkModal(true);
+          }
+        }
+      } else {
+        // BUG FIX: this used to unconditionally kill the ping the instant the
+        // app backgrounded — but backgrounding is exactly what happens when a
+        // real phone call starts, and calls routinely run past the 5-minute
+        // idle cutoff. Keep the ping running through backgrounding whenever
+        // a call is active (isOnCall(), refreshed live by the call-state
+        // effect above); only stop it for genuine backgrounded inactivity.
+        if (tickRef.current) { clearInterval(tickRef.current); tickRef.current = null; }
+        if (!isOnCall()) stopPing();
+      }
+    });
+    return () => sub.remove();
+  }, [startPing, stopPing]); // PERF FIX: registered exactly once
+
+  // ── Actions ───────────────────────────────────────────────────────────────
+  // Guards against double-taps / overlapping clock-in attempts. Without this,
+  // tapping the button repeatedly (which users do when GPS is slow) queues
+  // several clock-in calls and makes the app feel frozen ("not responding").
+  const clockingInRef = useRef(false);
+
+  // Get a device location WITHOUT hanging the UI.
+  // The old code did a single high-accuracy fix (timeout 10s, maximumAge 5s):
+  // indoors that often runs the full 10s, frequently fails, and rejects good
+  // recent fixes — so users retried and the app appeared stuck. This tries a
+  // quick cached/coarse fix first, then a high-accuracy fix, and ALWAYS resolves
+  // (never rejects) so clock-in proceeds even if GPS is slow — the backend
+  // decides whether the location is good enough.
+  const getLocationSafe = useCallback(() => {
+    return new Promise((resolve) => {
+      let settled = false;
+      const done = (payload) => { if (!settled) { settled = true; resolve(payload); } };
+
+      // Hard ceiling: never let location hold up clock-in more than 12s total.
+      const hardStop = setTimeout(() => done({}), 12000);
+
+      let Geo;
+      try {
+        const RN = require('react-native');
+        Geo = RN.Geolocation || require('@react-native-community/geolocation');
+      } catch (e) {
+        clearTimeout(hardStop);
+        return done({});
+      }
+      if (!Geo || typeof Geo.getCurrentPosition !== 'function') {
+        clearTimeout(hardStop);
+        return done({});
+      }
+
+      const toPayload = (position) => ({
+        latitude:  position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy:  position.coords.accuracy,
+      });
+
+      // Phase 2: high-accuracy fix (better for the 100m office radius).
+      const tryHighAccuracy = () => {
+        Geo.getCurrentPosition(
+          (pos)  => { clearTimeout(hardStop); done(toPayload(pos)); },
+          ()     => { clearTimeout(hardStop); done({}); }, // give up gracefully
+          // FIX: timeout 9s → 5s, maximumAge 0 → 30000.
+          // maximumAge:0 forced a fresh satellite fix every clock-in (slow).
+          // A 30s cached fix is perfectly fine for a 100m office geofence.
+          { enableHighAccuracy: true, timeout: 5000, maximumAge: 30000 },
+        );
+      };
+
+      // Phase 1: fast coarse/cached fix (accepts a recent fix up to 60s old).
+      // If it returns a precise-enough fix we use it immediately; otherwise we
+      // escalate to high accuracy.
+      Geo.getCurrentPosition(
+        (pos) => {
+          const acc = pos?.coords?.accuracy ?? 9999;
+          if (acc <= 50) { clearTimeout(hardStop); done(toPayload(pos)); }
+          else tryHighAccuracy(); // coarse fix — try to refine
+        },
+        ()    => tryHighAccuracy(), // no cached fix — go straight to high accuracy
+        { enableHighAccuracy: false, timeout: 4000, maximumAge: 60000 },
+      );
+    });
+  }, []);
+
+  const handleClockIn = useCallback(async () => {
+    // Block overlapping attempts.
+    if (clockingInRef.current) return;
+    clockingInRef.current = true;
+    setClockingIn(true);
+    try {
+      const deviceInfo = await getDeviceInfo();
+
+      // ── Attempt to get device location for location-restricted companies ──
+      // We always try to get location — the backend decides whether to enforce it.
+      // If permission is denied, we send without coordinates and let the backend
+      // gate (it returns 400 if location is required).
+      let locationPayload = {};
+      try {
+        // CHECK FIRST — if permission is already granted, skip the dialog.
+        // requestLocationPermission can return false when dismissed even if on.
+        const { PermissionsAndroid } = require('react-native');
+        const alreadyFine   = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).catch(() => false);
+        const alreadyCoarse = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION).catch(() => false);
+        const granted = alreadyFine || alreadyCoarse || await requestLocationPermission();
+        if (granted) {
+          locationPayload = await getLocationSafe();
+        }
+      } catch (locErr) {
+        // Non-fatal — send without location; backend will gate if needed
+        console.warn('[AttendanceWidget] Could not get location:', locErr.message);
+      }
+
+      const r = await api.post('/attendance/clock-in', { ...deviceInfo, ...locationPayload });
+      setRecord(r.data);
+      // Auto-sync any pending recordings after clock-in (runs silently in background).
+      setTimeout(() => {
+        syncRecordings(null, 0).catch(e =>
+          console.warn('[AttendanceWidget] post-clock-in recording sync:', e.message)
+        );
+      }, 2000);
+    } catch (e) {
+      const code    = e?.response?.data?.code;
+      const message = e?.response?.data?.message || e.message;
+
+      if (code === 'location_required') {
+        Alert.alert(
+          '📍 Location Required',
+          'Your company requires location for clock-in. Please enable Location permission and try again.',
+          [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Open Settings', onPress: () => require('react-native').Linking.openSettings() },
+          ],
+        );
+      } else if (code === 'outside_radius') {
+        Alert.alert(
+          '📍 Too Far from Office',
+          message + '\n\nYou can request remote clock-in permission from your admin.',
+          [
+            { text: 'Cancel', style: 'cancel' },
+            {
+              text: 'Request Permission',
+              onPress: () => setShowMeetingModal(true),
+            },
+          ],
+        );
+      } else {
+        Alert.alert('Clock-in failed', message);
+      }
+    } finally {
+      clockingInRef.current = false;
+      setClockingIn(false);
+    }
+  }, [getLocationSafe]);
+
+  // ── Live location tracking helpers ──────────────────────────────────────
+  // RAM FIX: GPS tracking moved to locationTrackingService (module-level stable
+  // function — no closure recreation on re-render). These are thin wrappers.
+  const stopLocationTracking  = useCallback(() => LocationTracking.stop(),  []);
+  const startLocationTracking = useCallback((intervalMinutes = 15) => LocationTracking.start(intervalMinutes), []);
+
+  // Haversine distance in metres (mirror of the backend geofence check).
+  const distanceMetres = useCallback((lat1, lon1, lat2, lon2) => {
+    const R = 6371000, toRad = (d) => (d * Math.PI) / 180;
+    const dLat = toRad(lat2 - lat1), dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(a));
+  }, []);
+
+  // ── Field-work auto-tracking: detect leaving the office geofence ─────────────
+  // While clocked in (and the company has a geofence), poll GPS. When the
+  // employee moves OUTSIDE the office radius, auto-start location breadcrumbs
+  // (the same lat/lng the admin/super-admin attendance page shows). When back
+  // inside, stop. Fully automatic — no button, no permission request.
+  // NOTE: reliable background capture needs "Allow all the time" location; with
+  // only "while using app", breadcrumbs pause when the app is backgrounded.
+  const isClockedIn = !!(record && record.loginTime && !record.logoutTime);
+  useEffect(() => {
+    let cancelled = false;
+
+    const clearWatch = () => {
+      if (geofenceWatchRef.current) { clearInterval(geofenceWatchRef.current); geofenceWatchRef.current = null; }
+    };
+
+    if (!isClockedIn) {
+      clearWatch();
+      // Only stop tracking if it was started by field-work (not meeting-permission).
+      if (onFieldWork) { stopLocationTracking(); setOnFieldWork(false); }
+      return;
+    }
+
+    const startWatch = async () => {
+      // Fetch the office geofence once per clock-in.
+      try {
+        const res = await api.get('/attendance/geofence-config');
+        geofenceRef.current = res.data || geofenceRef.current;
+      } catch { /* if it fails, no geofence → no auto-tracking */ }
+      const gf = geofenceRef.current;
+      if (!gf.enabled || gf.latitude == null || gf.longitude == null) return; // no geofence configured
+
+      const checkPosition = () => {
+        const Geo = require('@react-native-community/geolocation');
+        Geo.getCurrentPosition(
+          (pos) => {
+            if (cancelled) return;
+            const dist = distanceMetres(pos.coords.latitude, pos.coords.longitude, gf.latitude, gf.longitude);
+            const outside = dist > (gf.radiusMeters || 100);
+            if (outside && !onFieldWork) {
+              // Left the premises → begin field-work breadcrumbs.
+              setOnFieldWork(true);
+              startLocationTracking(gf.intervalMinutes || 15);
+              console.log('[AttendanceWidget] Left office geofence → field-work tracking ON');
+            } else if (!outside && onFieldWork) {
+              // Returned to the office → stop breadcrumbs.
+              setOnFieldWork(false);
+              stopLocationTracking();
+              console.log('[AttendanceWidget] Back inside office geofence → field-work tracking OFF');
+            }
+          },
+          (err) => console.warn('[AttendanceWidget] geofence check error:', err.message),
+          { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+        );
+      };
+
+      checkPosition(); // immediate
+      // Re-check position every 2 minutes (lighter than the breadcrumb interval).
+      geofenceWatchRef.current = setInterval(checkPosition, 2 * 60 * 1000);
+    };
+
+    startWatch();
+    return () => { cancelled = true; clearWatch(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isClockedIn, onFieldWork, startLocationTracking, stopLocationTracking, distanceMetres]);
+
+  // Bumped whenever a fresh meeting-permission request is sent, so the
+  // polling effect below can restart even if it had already settled+stopped
+  // from a previous request (e.g. a prior request was denied, polling
+  // stopped, then the employee sends a brand new request).
+  const [pollEpoch, setPollEpoch] = useState(0);
+
+  // Fetch tracking config + start/stop based on meeting permission.
+  //
+  // PERF FIX: this previously polled every 30s for the ENTIRE app session,
+  // for every employee, regardless of whether they were clocked in or had
+  // ever requested meeting permission — each tick costing a `protect` +
+  // `requireFeature("attendance")` round-trip (and a second call to
+  // meeting-tracking-config whenever hasPermission was true). Now:
+  //   1. The poll only runs while the employee is clocked in (isClockedIn) —
+  //      there's nothing to reconcile while logged out.
+  //   2. Once status settles to 'pending' (still needs polling to catch the
+  //      admin's decision) it keeps going, but once it settles to 'approved'
+  //      or 'denied' with no new request in flight, we stop the interval —
+  //      a fresh request later re-arms it via pollEpoch.
+  useEffect(() => {
+    if (!isClockedIn) {
+      // Logged out — nothing to reconcile. Don't poll.
+      return;
+    }
+
+    let cancelled = false;
+    let poll = null;
+
+    const check = async () => {
+      try {
+        const res = await api.get('/attendance/meeting-permission-status');
+        const { hasPermission, isPending, status } = res.data || {};
+
+        // Reconcile the badge with the SERVER's truth. This is the key fix for
+        // "approved in admin but still shows pending": the socket event can be
+        // missed (app backgrounded / socket dropped during approval), so we
+        // must derive the status from this poll rather than relying solely on
+        // the live event.
+        let settled = 'idle';
+        if (!cancelled) {
+          if (hasPermission || status === 'approved') {
+            settled = 'approved';
+          } else if (isPending || status === 'pending') {
+            settled = 'pending';
+          } else if (status === 'denied') {
+            settled = 'denied';
+          }
+          setRequestStatus(settled);
+        }
+
+        if (!hasPermission) {
+          // No remote-meeting permission. Only stop tracking if it ISN'T being
+          // driven by field-work geofence-exit detection (which manages its own
+          // start/stop). Otherwise we'd kill field-work breadcrumbs.
+          if (!onFieldWork) stopLocationTracking();
+        } else {
+          const cfgRes = await api.get('/attendance/meeting-tracking-config');
+          trackingConfigRef.current = cfgRes.data;
+          if (!cancelled && cfgRes.data.enabled) {
+            startLocationTracking(cfgRes.data.intervalMinutes);
+          } else {
+            stopLocationTracking();
+          }
+        }
+
+        // Stop polling once we've reached a settled, non-pending state —
+        // nothing left to reconcile until the employee sends a new request
+        // (which bumps pollEpoch and restarts this effect).
+        if (settled !== 'pending' && poll) {
+          clearInterval(poll);
+          poll = null;
+        }
+      } catch { /* silent */ }
+    };
+    check();
+
+    // Re-check when the app returns to the foreground (covers the case where
+    // the admin approved while the app was backgrounded and the socket missed it).
+    const sub = AppState.addEventListener('change', (s) => {
+      if (s === 'active') check();
+    });
+    // Poll periodically while pending so the badge clears promptly; cleared
+    // early by check() itself once status settles to approved/denied.
+    poll = setInterval(check, 30000);
+
+    return () => {
+      cancelled = true;
+      sub.remove();
+      if (poll) clearInterval(poll);
+      // Don't tear down field-work breadcrumbs here; the geofence effect owns them.
+      if (!onFieldWork) stopLocationTracking();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isClockedIn, pollEpoch, startLocationTracking, stopLocationTracking]);
+
+  // ── Request meeting permission ──────────────────────────────────────────
+  const handleSendMeetingRequest = useCallback(async () => {
+    if (!meetingReason.trim()) {
+      Alert.alert('Reason Required', 'Please explain why you need remote clock-in.');
+      return;
+    }
+    setRequestSending(true);
+    try {
+      await api.post('/attendance/request-meeting-permission', {
+        reason:   meetingReason.trim(),
+        location: meetingLocation.trim(),
+      });
+      setRequestStatus('pending');
+      setPollEpoch((e) => e + 1); // re-arm polling in case it had settled+stopped
+      setShowMeetingModal(false);
+      setMeetingReason('');
+      setMeetingLocation('');
+      Alert.alert(
+        '✅ Request Sent',
+        'Your admin has been notified. You will be able to clock in once they approve.',
+      );
+    } catch (e) {
+      Alert.alert('Failed', e?.response?.data?.message || e.message);
+    } finally {
+      setRequestSending(false);
+    }
+  }, [meetingReason, meetingLocation]);
+
+
+  const handleClockOut = useCallback(async () => {
+    Alert.alert('Clock Out', 'Are you sure you want to clock out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Clock Out', style: 'destructive',
+        onPress: async () => {
+          try {
+            const r = await api.post('/attendance/clock-out');
+            setRecord(r.data);
+          } catch (e) {
+            Alert.alert('Clock-out failed', e?.response?.data?.message || e.message);
+          }
+        },
+      },
+    ]);
+  }, []);
+
+  const handleBreakStart = useCallback(async () => {
+    try {
+      const r = await api.post('/attendance/break/start', { reason: 'Manual Break' });
+      setRecord(r.data);
+    } catch (e) {
+      Alert.alert('Error', e?.response?.data?.message || e.message);
+    }
+  }, []);
+
+  const handleBreakEnd = useCallback(async () => {
+    try {
+      if (record?.status === 'idle') {
+        // idle = auto-break with no activeBreakIndex. pingActivity correctly
+        // ends it and sets status back to active.
+        const r = await api.post('/attendance/ping');
+        setRecord(prev => ({ ...prev, status: 'active', activeBreakIndex: null, ...(r.data || {}) }));
+      } else {
+        // Manually started break — use the proper break/end endpoint.
+        const r = await api.post('/attendance/break/end');
+        setRecord(r.data);
+      }
+    } catch (e) {
+      Alert.alert('Error', e?.response?.data?.message || e.message);
+    }
+  }, [record?.status]);
+
+  // ── Idle-remark: derived data for the popup ─────────────────────────────────
+  const currentIdleBreak = (() => {
+    if (record?.status !== 'idle' || record?.activeBreakIndex == null) return null;
+    const br = record.breaks?.[record.activeBreakIndex];
+    return br?.reason === 'Auto Idle' ? { index: record.activeBreakIndex, ...br } : null;
+  })();
+
+  const pastPendingIdleBreaks = (record?.breaks || [])
+    .map((b, index) => ({ ...b, index }))
+    .filter((b) => b.reason === 'Auto Idle' && b.remarkStatus === 'pending' && b.index !== record?.activeBreakIndex);
+
+  // ── Idle-remark: save/skip handlers ─────────────────────────────────────────
+  const closeIdleRemarkModal = useCallback(async () => {
+    setShowIdleRemarkModal(false);
+    setIdleRemarkText('');
+    if (idleRemarkMode === 'resume') {
+      pendingResumeRef.current = false;
+      await handleBreakEnd();
+    }
+  }, [idleRemarkMode, handleBreakEnd]);
+
+  const handleSaveIdleRemark = useCallback(async () => {
+    setIdleRemarkSaving(true);
+    try {
+      const r = await api.post('/attendance/idle-remark', { remark: idleRemarkText });
+      if (r?.data) setRecord(prev => (prev ? { ...prev, breaks: r.data.breaks || prev.breaks } : prev));
+    } catch (e) {
+      Alert.alert('Could not save', e?.response?.data?.message || e.message);
+    } finally {
+      setIdleRemarkSaving(false);
+    }
+    closeIdleRemarkModal();
+  }, [idleRemarkText, closeIdleRemarkModal]);
+
+  const handleSkipIdleRemark = useCallback(async () => {
+    try { await api.post('/attendance/idle-remark', { remark: '' }); } catch { /* silent */ }
+    closeIdleRemarkModal();
+  }, [closeIdleRemarkModal]);
+
+  const handleSavePendingIdleRemark = useCallback(async (breakIndex) => {
+    if (!pendingIdleText.trim()) return;
+    try {
+      const r = await api.post('/attendance/idle-remark', { remark: pendingIdleText, breakIndex });
+      if (r?.data) setRecord(prev => (prev ? { ...prev, breaks: r.data.breaks || prev.breaks } : prev));
+    } catch (e) {
+      Alert.alert('Could not save', e?.response?.data?.message || e.message);
+    }
+    setExpandedPendingIdx(null);
+    setPendingIdleText('');
+  }, [pendingIdleText]);
+
+  // ── Derived display values ────────────────────────────────────────────────
+  const { statusStyle, statusLabel, elapsedStr, breakStr, notClockedIn } = useMemo(() => {
+    const notClockedIn = !record?.loginTime;
+    let st = record?.status || (notClockedIn ? 'logged_out' : 'active');
+    if (st === 'active' && onCall) st = 'on_call';
+    const ss = STATUS_STYLES[st] || STATUS_STYLES.logged_out;
+    const h = Math.floor(elapsed / 3600);
+    const m = Math.floor((elapsed % 3600) / 60);
+    const s = elapsed % 60;
+    const elapsedStr = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'00')}`;
+    // Live break time: while on a break, show it ticking (Hh MMm SSs via breakSecs); otherwise the completed total.
+    const onBreakNow = record?.activeBreakIndex !== null && record?.activeBreakIndex !== undefined;
+    const breakStr = onBreakNow
+      ? fmtBreakSecs(breakSecs)
+      : (record?.totalBreakMinutes ? fmtMins(record.totalBreakMinutes) : '—');
+    return { statusStyle: ss, statusLabel: ss.label, elapsedStr, breakStr, notClockedIn };
+  }, [record, elapsed, breakSecs, onCall]);
+
+  // ── Render ────────────────────────────────────────────────────────────────
+  if (loading) {
+    return (
+      <View style={w.loadWrap}>
+        <ActivityIndicator color={colors.blue} />
+      </View>
+    );
+  }
+
+  if (notClockedIn) {
+    return (
+      <View style={w.card}>
+        <Text style={w.notClocked}>You haven't clocked in today.</Text>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <TouchableOpacity
+            style={[w.clockInBtn, clockingIn && { opacity: 0.6 }]}
+            onPress={handleClockIn}
+            disabled={clockingIn}
+            activeOpacity={0.8}
+          >
+            <Icon name="login" size={16} color="#fff" />
+            <Text style={w.clockInTxt}>{clockingIn ? 'Clocking in…' : 'Clock In'}</Text>
+          </TouchableOpacity>
+          {requestStatus === 'pending' ? (
+            <View style={w.pendingBadge}>
+              <Icon name="clock-outline" size={13} color="#FCD34D" />
+              <Text style={w.pendingBadgeTxt}>Awaiting approval…</Text>
+            </View>
+          ) : requestStatus === 'approved' ? (
+            <View style={[w.pendingBadge, { borderColor: '#34D399' }]}>
+              <Icon name="check-circle-outline" size={13} color="#34D399" />
+              <Text style={[w.pendingBadgeTxt, { color: '#34D399' }]}>Remote approved!</Text>
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={w.requestBtn}
+              onPress={() => setShowMeetingModal(true)}
+            >
+              <Icon name="map-marker-question-outline" size={15} color="#93C5FD" />
+              <Text style={w.requestBtnTxt}>Request Remote</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
+        {/* Meeting permission request modal */}
+        <Modal visible={showMeetingModal} transparent animationType="slide" onRequestClose={() => setShowMeetingModal(false)}>
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={w.modalOverlay}>
+            <View style={w.meetingModal}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                <Text style={w.meetingModalTitle}>📍 Request Remote Clock-In</Text>
+                <TouchableOpacity onPress={() => setShowMeetingModal(false)}>
+                  <Icon name="close" size={20} color="#64748B" />
+                </TouchableOpacity>
+              </View>
+              <Text style={w.meetingModalLabel}>Reason for being away from office *</Text>
+              <TextInput
+                style={w.meetingInput}
+                placeholder="e.g. Client meeting at ABC Corp"
+                placeholderTextColor="#475569"
+                value={meetingReason}
+                onChangeText={setMeetingReason}
+                multiline
+              />
+              <Text style={w.meetingModalLabel}>Your current location (optional)</Text>
+              <TextInput
+                style={w.meetingInput}
+                placeholder="e.g. Bandra, Mumbai"
+                placeholderTextColor="#475569"
+                value={meetingLocation}
+                onChangeText={setMeetingLocation}
+              />
+              <Text style={w.meetingModalHint}>
+                Your admin will be notified and can approve your request with one tap.
+              </Text>
+              <TouchableOpacity
+                style={[w.meetingSubmitBtn, requestSending && { opacity: 0.6 }]}
+                onPress={handleSendMeetingRequest}
+                disabled={requestSending}
+              >
+                {requestSending
+                  ? <ActivityIndicator color="#fff" size="small" />
+                  : <>
+                    <Icon name="send-outline" size={16} color="#fff" style={{ marginRight: 6 }} />
+                    <Text style={w.meetingSubmitTxt}>Send Request to Admin</Text>
+                  </>
+                }
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </Modal>
+      </View>
+    );
+  }
+
+  const isOnBreak  = record?.status === 'on_break';
+  const isIdle     = record?.status === 'idle';
+  const showEndBreak = isOnBreak || isIdle;
+
+  return (
+    <View style={w.card}>
+      {LocationTracking.isRunning() && (
+        <View style={w.trackingBanner}>
+          <View style={w.trackingDot} />
+          <Text style={w.trackingTxt}>📍 Location sharing active</Text>
+        </View>
+      )}
+      <View style={w.topRow}>
+        <View>
+          <Text style={w.elapsedLabel}>Time Worked</Text>
+          <Text style={w.elapsed}>{elapsedStr}</Text>
+        </View>
+        <View style={[w.statusChip, { backgroundColor: statusStyle.chipBg }]}>
+          <View style={[w.statusDot, { backgroundColor: statusStyle.dot }]} />
+          <Text style={[w.statusTxt, { color: statusStyle.chipText }]}>{statusLabel}</Text>
+        </View>
+      </View>
+
+      <View style={w.metaRow}>
+        <View style={w.metaItem}>
+          <Icon name="login" size={12} color={colors.textMuted} />
+          <Text style={w.metaLabel}>In: {fmtTime(record?.loginTime)}</Text>
+        </View>
+        <View style={w.metaItem}>
+          <Icon name="coffee-outline" size={12} color={colors.textMuted} />
+          <Text style={w.metaLabel}>Break: {breakStr}</Text>
+        </View>
+      </View>
+
+      {/* ── Shift hours (read-only, company-wide) ── */}
+      {shiftLabel ? (
+        <View style={w.idealBox}>
+          <View style={w.idealHeaderLeft}>
+            <Icon name="clock-time-four-outline" size={13} color={colors.blueLight} />
+            <Text style={w.idealTitle}>Company Shift Hours</Text>
+          </View>
+          <Text style={w.idealTimeTxt}>{shiftLabel}</Text>
+        </View>
+      ) : null}
+
+      <View style={w.btnRow}>
+        {showEndBreak ? (
+          <TouchableOpacity style={[w.btn, w.btnGreen]} onPress={handleBreakEnd}>
+            <Icon name="play-circle-outline" size={15} color="#fff" />
+            <Text style={w.btnTxt}>End Break</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={[w.btn, w.btnAmber]} onPress={handleBreakStart}>
+            <Icon name="pause-circle-outline" size={15} color="#fff" />
+            <Text style={w.btnTxt}>Take Break</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity style={[w.btn, w.btnRed]} onPress={handleClockOut}>
+          <Icon name="logout" size={15} color="#fff" />
+          <Text style={w.btnTxt}>Clock Out</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* ── Idle remark modal ─────────────────────────────────────────────── */}
+      <Modal visible={showIdleRemarkModal} transparent animationType="slide" onRequestClose={() => setShowIdleRemarkModal(false)}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={w.modalOverlay}>
+          <View style={w.meetingModal}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+              <Text style={w.meetingModalTitle}>
+                {idleRemarkMode === 'resume' ? '👋 Welcome back' : '🌙 Still idle'}
+              </Text>
+            </View>
+            <Text style={w.meetingModalHint}>
+              {idleRemarkMode === 'resume'
+                ? 'You were idle — what were you doing?'
+                : `Idle since ${currentIdleBreak?.startTime ? moment(currentIdleBreak.startTime).format('h:mm A') : '—'}. What\'s going on?`}
+            </Text>
+            <TextInput
+              style={w.meetingInput}
+              placeholder="e.g. On a call, lunch break, meeting…"
+              placeholderTextColor="#475569"
+              value={idleRemarkText}
+              onChangeText={setIdleRemarkText}
+              multiline
+              autoFocus
+            />
+            <View style={{ flexDirection: 'row', gap: 8, marginTop: 8 }}>
+              <TouchableOpacity
+                style={[w.btn, { flex: 1, backgroundColor: '#1E2236', borderWidth: 1, borderColor: '#2C3348' }]}
+                onPress={handleSkipIdleRemark}
+              >
+                <Text style={[w.btnTxt, { color: '#94A3B8' }]}>
+                  {idleRemarkMode === 'resume' ? 'Skip' : 'Continue Idle'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[w.meetingSubmitBtn, { flex: 1, opacity: (!idleRemarkText.trim() || idleRemarkSaving) ? 0.5 : 1 }]}
+                onPress={handleSaveIdleRemark}
+                disabled={!idleRemarkText.trim() || idleRemarkSaving}
+              >
+                {idleRemarkSaving
+                  ? <ActivityIndicator color="#fff" size="small" />
+                  : <Text style={w.meetingSubmitTxt}>{idleRemarkMode === 'resume' ? 'Save & Resume' : 'Save'}</Text>
+                }
+              </TouchableOpacity>
+            </View>
+
+            {pastPendingIdleBreaks.length > 0 && (
+              <View style={{ marginTop: 16, paddingTop: 12, borderTopWidth: 1, borderTopColor: '#262A38' }}>
+                <Text style={{ fontSize: 11, fontWeight: '700', color: '#FBBF24', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8 }}>
+                  {pastPendingIdleBreaks.length} earlier idle period{pastPendingIdleBreaks.length > 1 ? 's' : ''} still need a reason
+                </Text>
+                {pastPendingIdleBreaks.map((b) => (
+                  <View key={b.index} style={{ marginBottom: 6 }}>
+                    <TouchableOpacity
+                      onPress={() => { setExpandedPendingIdx(expandedPendingIdx === b.index ? null : b.index); setPendingIdleText(''); }}
+                      style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4 }}
+                    >
+                      <Text style={{ fontSize: 12, color: '#94A3B8' }}>
+                        {moment(b.startTime).format('h:mm A')}{b.endTime ? ` – ${moment(b.endTime).format('h:mm A')}` : ' – ongoing'}
+                      </Text>
+                      <Text style={{ fontSize: 11, fontWeight: '700', color: '#60A5FA' }}>
+                        {expandedPendingIdx === b.index ? 'Cancel' : 'Fill in'}
+                      </Text>
+                    </TouchableOpacity>
+                    {expandedPendingIdx === b.index && (
+                      <View style={{ flexDirection: 'row', gap: 6, marginTop: 4 }}>
+                        <TextInput
+                          style={[w.meetingInput, { flex: 1, minHeight: 40, marginBottom: 0 }]}
+                          placeholder="What were you doing then?"
+                          placeholderTextColor="#475569"
+                          value={pendingIdleText}
+                          onChangeText={setPendingIdleText}
+                          autoFocus
+                        />
+                        <TouchableOpacity
+                          style={[w.meetingSubmitBtn, { paddingHorizontal: 14, opacity: pendingIdleText.trim() ? 1 : 0.5 }]}
+                          onPress={() => handleSavePendingIdleRemark(b.index)}
+                          disabled={!pendingIdleText.trim()}
+                        >
+                          <Text style={w.meetingSubmitTxt}>Save</Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+    </View>
+  );
+}
+
+// ── Styles ────────────────────────────────────────────────────────────────────
+const createStyles = (colors) => StyleSheet.create({
+  loadWrap:     { padding: 24, alignItems: 'center' },
+  card:         { backgroundColor: colors.surface, borderRadius: RADIUS.lg, padding: 16, borderWidth: 1, borderColor: colors.border },
+  notClocked:   { fontSize: FONT.sm, color: colors.textMuted, marginBottom: 12 },
+  clockInBtn:   { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: colors.blue, borderRadius: RADIUS.md, paddingVertical: 10, paddingHorizontal: 16, alignSelf: 'flex-start' },
+  clockInTxt:   { color: '#fff', fontWeight: '700', fontSize: FONT.sm },
+
+  // Request remote button
+  requestBtn:     { flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: '#1E2236', borderRadius: RADIUS.md, paddingVertical: 10, paddingHorizontal: 12, borderWidth: 1, borderColor: '#2563EB40' },
+  requestBtnTxt:  { color: '#93C5FD', fontWeight: '700', fontSize: FONT.sm },
+  pendingBadge:   { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 10, paddingVertical: 8, borderRadius: RADIUS.md, borderWidth: 1, borderColor: '#CA8A04' },
+  pendingBadgeTxt:{ color: '#FCD34D', fontSize: FONT.xs, fontWeight: '700' },
+
+  // Meeting request modal
+  modalOverlay:      { flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.55)' },
+  meetingModal:      { backgroundColor: '#1A1D27', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, paddingBottom: 36, borderTopWidth: 1, borderColor: '#262A38' },
+  meetingModalTitle: { fontSize: 16, fontWeight: '800', color: '#F0F2FA' },
+  meetingModalLabel: { fontSize: 11, color: '#94A3B8', fontWeight: '600', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 8, marginTop: 12 },
+  meetingInput:      { backgroundColor: '#0F172A', borderRadius: 10, padding: 12, color: '#F0F2FA', borderWidth: 1, borderColor: '#262A38', minHeight: 72, textAlignVertical: 'top', marginBottom: 4 },
+  meetingModalHint:  { fontSize: 11, color: '#64748B', marginTop: 8, marginBottom: 16, lineHeight: 16 },
+  meetingSubmitBtn:  { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#2563EB', borderRadius: 12, paddingVertical: 13 },
+  meetingSubmitTxt:  { color: '#fff', fontSize: 14, fontWeight: '700' },
+  topRow:       { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10 },
+  elapsedLabel: { fontSize: FONT.xs, color: colors.textMuted, marginBottom: 2 },
+  elapsed:      { fontSize: 26, fontWeight: '800', color: colors.textPrimary, fontVariant: ['tabular-nums'] },
+  statusChip:   { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 10, paddingVertical: 5, borderRadius: RADIUS.full },
+  statusDot:    { width: 7, height: 7, borderRadius: 4 },
+  statusTxt:    { fontSize: FONT.xs, fontWeight: '700' },
+  metaRow:      { flexDirection: 'row', gap: 16, marginBottom: 12 },
+  metaItem:     { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  metaLabel:    { fontSize: FONT.xs, color: colors.textMuted },
+  btnRow:       { flexDirection: 'row', gap: 8 },
+  btn:          { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, borderRadius: RADIUS.md, paddingVertical: 9 },
+  btnTxt:       { color: '#fff', fontSize: FONT.sm, fontWeight: '700' },
+  btnGreen:     { backgroundColor: colors.green },
+  trackingBanner: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 7, marginBottom: 10, borderRadius: 8, backgroundColor: '#1C2A1A', borderWidth: 1, borderColor: '#34D39940' },
+  trackingDot:    { width: 7, height: 7, borderRadius: 4, backgroundColor: '#34D399' },
+  trackingTxt:    { fontSize: 11, color: '#34D399', fontWeight: '700' },
+  btnAmber:     { backgroundColor: colors.amber },
+  btnRed:       { backgroundColor: colors.red },
+
+  // Ideal time + remark
+  idealBox:        { backgroundColor: colors.surfaceAlt, borderRadius: RADIUS.md, padding: 12, marginBottom: 12, borderWidth: 1, borderColor: colors.border },
+  idealHeader:     { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 },
+  idealHeaderLeft: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+  idealTitle:      { fontSize: FONT.xs, color: colors.textMuted, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.4 },
+  idealEditBtn:    { flexDirection: 'row', alignItems: 'center', gap: 3, paddingHorizontal: 8, paddingVertical: 3, borderRadius: RADIUS.full, backgroundColor: colors.blueBg },
+  idealEditTxt:    { fontSize: FONT.xs, color: colors.blueLight, fontWeight: '700' },
+  idealTimeTxt:    { fontSize: FONT.md, color: colors.textPrimary, fontWeight: '700' },
+  idealEmptyTxt:   { fontSize: FONT.sm, color: colors.textMuted, fontStyle: 'italic' },
+  idealRemarkRow:  { flexDirection: 'row', alignItems: 'flex-start', gap: 6, marginTop: 6 },
+  idealRemarkTxt:  { flex: 1, fontSize: FONT.sm, color: colors.textSecondary || colors.textMuted, lineHeight: 18 },
+});

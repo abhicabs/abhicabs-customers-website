@@ -1,35 +1,100 @@
-# Dependencies
+# ════════════════════════════════════════════════════════════════════════════
+#  SkyUpCRM Mobile App — .gitignore
+# ════════════════════════════════════════════════════════════════════════════
+
+# ── OSX ──────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+
+# ── Xcode ────────────────────────────────────────────────────────────────────
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+ios/.xcode.env.local
+ios/Pods/
+ios/build/
+ios/GoogleService-Info.plist
+
+# ── Android ──────────────────────────────────────────────────────────────────
+android/app/build/
+android/.gradle/
+android/build/
+android/local.properties
+android/captures/
+android/.cxx/
+android/.externalNativeBuild/
+android/gradle.properties
+
+# ── Android Secrets (NEVER commit) ───────────────────────────────────────────
+android/keystore.properties
+android/app/google-services.json
+
+# ── Keystore / Signing files (NEVER commit) ──────────────────────────────────
+*.keystore
+!debug.keystore
+*.jks
+*.p12
+*.pfx
+
+# ── APK / AAB build output ───────────────────────────────────────────────────
+*.apk
+*.aab
+
+# ── Node ─────────────────────────────────────────────────────────────────────
 node_modules/
-.pnp
-.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.yarn/
 
-# Build output
-dist/
-.output/
-.vite/
+# ── BUCK ─────────────────────────────────────────────────────────────────────
+buck-out/
+\.buckd/
+*.buckversion
 
-# Environment files — NEVER commit these
+# ── Metro ────────────────────────────────────────────────────────────────────
+.metro-health-check*
+.metro/
+
+# ── Environment & Secrets (NEVER commit) ─────────────────────────────────────
 .env
 .env.local
-.env.*.local
 .env.development
 .env.production
 .env.staging
+.env.example
 
-# Logs
+# ── Firebase (NEVER commit) ──────────────────────────────────────────────────
+google-services.json
+GoogleService-Info.plist
+
+# ── IDE ──────────────────────────────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*.suo
+
+# ── Temp / Test ──────────────────────────────────────────────────────────────
+temp/
 logs/
 *.log
-npm-debug.log*
 
-# OS
-.DS_Store
+# ── Windows ──────────────────────────────────────────────────────────────────
 Thumbs.db
-
-# Editor
-.vscode/
-.idea/
-*.swp
-
-# Temp
-*.tmp
-*.bak
+desktop.ini
+ehthumbs.db
