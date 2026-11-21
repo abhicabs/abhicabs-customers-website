@@ -1,1 +1,0 @@
-import{Nt as e}from"./chunk-8_D0pkDz.js";async function t({name:t,phone:n,email:r,topic:i,message:a}){return await e.post(`/contact`,{name:t,mobile:n,email:r,topic:i,message:a},{auth:!1})}export{t};

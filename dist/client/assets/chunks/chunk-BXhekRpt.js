@@ -1,1 +1,0 @@
-function e(e,{width:t}={}){if(!e||typeof e!=`string`||!/res\.cloudinary\.com\/[^/]+\/image\/upload\//.test(e)||/\/upload\/[^/]*\bf_auto\b/.test(e))return e;let n=[];return t&&n.push(`w_${Math.round(t)}`,`c_limit`),n.push(`f_auto`,`q_auto`),e.replace(`/image/upload/`,`/image/upload/${n.join(`,`)}/`)}export{e as t};

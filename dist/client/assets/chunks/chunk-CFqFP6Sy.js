@@ -1,1 +1,0 @@
-import"./chunk-XKyaHtl9.js";import{Zr as e,ri as t}from"./chunk-8_D0pkDz.js";t();var n=e();function r({as:e=`div`,className:t=``,children:r,...i}){return(0,n.jsx)(e,{className:`ac-card bg-white border border-[#EFEFEF] rounded-[20px] ${t}`.trim(),...i,children:r})}export{r as t};
