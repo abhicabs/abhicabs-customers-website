@@ -9,12 +9,18 @@ import WhatsAppFloat from "./WhatsAppFloat";
 import { usePageContext } from "vike-react/usePageContext";
 import { PagesContext } from "../hooks/usePageContent";
 import "../styles/global.css";
+import { syncCanonicalTags } from "../lib/seo/canonical";
 
 export default function Layout({ children }) {
   const pageCtx = usePageContext();
   const serverPages = pageCtx.data?.allPages ?? null;
   // Home page keeps its full original motion; every other page runs in performance mode.
   const isHome = ((pageCtx.urlPathname || "/").replace(/\/+$/, "") || "/") === "/";
+  // In-site navigation swaps pages without a reload, so <head> tags written on the first
+  // load would go stale — re-point canonical / og:url / robots at the current page.
+  useEffect(() => {
+    syncCanonicalTags(pageCtx.urlPathname, { isErrorPage: Boolean(pageCtx.is404 || pageCtx.abortStatusCode) });
+  }, [pageCtx.urlPathname, pageCtx.is404, pageCtx.abortStatusCode]);
   useEffect(() => {
     rehydrateStore();
   }, []);

@@ -1,6 +1,7 @@
 import React from "react";
 import { usePageContext } from "vike-react/usePageContext";
 import { SITE_ORIGIN } from "../src/lib/seo/constants";
+import { canonicalFor, isPrivatePath, normalizePath } from "../src/lib/seo/canonical";
 
 /**
  * Global <head> — renders on every page.
@@ -52,16 +53,12 @@ const STRUCTURED_DATA = [
 
 export default function HeadDefault() {
   const { urlPathname, is404, abortStatusCode } = usePageContext();
-  const path = (urlPathname || "/").replace(/\/+$/, "");
-  // Self-referencing canonical: https://abhicabs24x7.com + path, no trailing slash, no query string.
-  // Pages are pre-rendered as <path>.html (pages/+config.js → prerender.noExtraDir), so Netlify serves
-  // exactly this URL (no /path → /path/ redirect) and it matches the sitemap and every internal link.
-  // Old/duplicate addresses (301-redirected in netlify.toml) name the real page as canonical.
-  const CANONICAL_ALIAS = { "/contact": "/contact-us", "/blog": "/blogs", "/services/airport-transfer": "/services/airport-taxi" };
-  const pageUrl = SITE + (CANONICAL_ALIAS[path] || path);
+  const path = normalizePath(urlPathname);
+  // Self-referencing canonical: https://abhicabs24x7.com + path (no trailing slash / query) — see src/lib/seo/canonical.js.
+  // Layout.jsx re-applies these tags on in-site navigation, so they stay correct on every page.
+  const pageUrl = canonicalFor(urlPathname);
   const isErrorPage = Boolean(is404 || abortStatusCode);
-  // App / transactional screens: keep them out of search results (robots.txt also blocks crawling).
-  const isPrivate = /^\/(checkout|payment|confirmation|login|my-booking|booking-details|support-tickets|tracking|delete-account|admin)(\/|$)/.test(path);
+  const isPrivate = isPrivatePath(urlPathname);
   const isArticle = /^\/blogs\/[^/]+$/.test(path);
   return (
     <>
@@ -94,7 +91,7 @@ export default function HeadDefault() {
           gone: search engines ignore it and it listed an outdated service area. */}
       <meta name="author" content="Abhi Cabs" />
       {!isErrorPage && <link rel="canonical" href={pageUrl} />}
-      {isPrivate && <meta name="robots" content="noindex, follow" />}
+      {isPrivate && <meta name="robots" content="noindex, follow" data-ac-robots="" />}
 
       {/* ── Open Graph (only the parts vike-react does not generate) ── */}
       <meta property="og:type" content={isArticle ? "article" : "website"} />
