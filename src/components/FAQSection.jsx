@@ -17,7 +17,7 @@ const itemIn = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT } },
 };
 
-export default function FAQSection({ faqs, defaultOpenIndex = 0, contactHref = "/contact-us#contact-form" }) {
+export default function FAQSection({ faqs, defaultOpenIndex = 0, contactHref = "/contact#contact-form" }) {
   const [openIdx, setOpenIdx] = useState(defaultOpenIndex);
   const hoverT = useRef(0);
   const baseId = useId();

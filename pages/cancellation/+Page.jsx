@@ -30,7 +30,7 @@ export default function Page() {
       <p>ABHI CABS reserves the right to substitute a vehicle of equivalent or superior category in case of unforeseen circumstances.</p>
 
       <h2>8. Contact</h2>
-      <p>For cancellation or refund queries, reach us through <a href="/contact-us">Contact &amp; Support</a>.</p>
+      <p>For cancellation or refund queries, reach us through <a href="/contact">Contact &amp; Support</a>.</p>
     </LegalLayout>
   );
 }

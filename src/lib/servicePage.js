@@ -8,7 +8,7 @@
  *
  * Shared by the CMS form (creation + defaults) and the public page (rendering).
  */
-import { SERVICE_LINKS } from "../data/siteLinks";
+import { SERVICE_LINKS, serviceHref } from "../data/siteLinks";
 import { getIcon, iconName } from "../components/ui/iconMap";
 import { SERVICE_DEFAULTS, BUILT_IN_SLUGS } from "../content/serviceDefaults";
 
@@ -119,7 +119,7 @@ export function buildDirectory(allPages = {}, { exclude } = {}) {
     if (!pg || !(pg._service || pg._template) || id === exclude) return;
     const g = (pg._content?.group || "").trim() || "More Services";
     if (!groups.has(g)) groups.set(g, []);
-    groups.get(g).push({ label: pg._label || id, href: `/services/${pg._slug || id}` });
+    groups.get(g).push({ label: pg._label || id, href: serviceHref(pg._slug || id) });
   });
   return [...groups.entries()].map(([group, links]) => ({ group, links }));
 }
@@ -171,7 +171,7 @@ export function featuredServices(allPages = {}) {
   const row = (slug, page, base) => {
     const c = page?._content;
     return {
-      slug, href: `/services/${slug}`, custom: !!page && !base, fromCms: !!page,
+      slug, href: serviceHref(slug), custom: !!page && !base, fromCms: !!page,
       label: page?._label || base?.label || slug, short: page?._label || base?.short || slug,
       mode: c ? (c.mode || null) : (base?.mode ?? null), icon: c?.icon || base?.icon || "car",
       desc: c?.hero?.description || base?.desc || "", points: (c?.intro?.bullets || base?.points || []).slice(0, 3),
@@ -182,7 +182,7 @@ export function featuredServices(allPages = {}) {
     const page = cms(slug);
     if (page && page._content?.listing === "directory") return; // unlisted by the editor
     const d = SERVICE_DEFAULTS[slug];
-    const sl = SERVICE_LINKS.find((l) => l.href === `/services/${slug}`);
+    const sl = SERVICE_LINKS.find((l) => l.href === serviceHref(slug));
     out.push(row(slug, page, { label: sl?.label || d.hero.eyebrow, short: sl?.short || d.hero.eyebrow, mode: d.mode || null, icon: d.cardIcon, desc: d.hero.description, points: d.intro.bullets }));
   });
   Object.entries(allPages).forEach(([id, p]) => {

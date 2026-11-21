@@ -7,7 +7,7 @@ const OFFERS = [
   { discount: "10% OFF", title: "Weekday Local Rides", code: "LOCAL10", meta: "Valid Monday–Friday on local packages · Demo offer for development" },
   { discount: "₹300 OFF", title: "Airport Transfers", code: "FLYABHI", meta: "Valid on all airport pickups & drops · Demo offer for development" },
   { discount: "₹750 OFF", title: "Round Trip Getaways", code: "TRIP750", meta: "Valid on round trips over 400 km · Demo offer for development" },
-  { discount: "15% OFF", title: "Corporate Accounts", code: "CORP15", meta: "For registered corporate billing accounts · Demo offer for development", ctaHref: "/contact-us?subject=corporate#contact-form", ctaLabel: "Contact Corporate Team" },
+  { discount: "15% OFF", title: "Corporate Accounts", code: "CORP15", meta: "For registered corporate billing accounts · Demo offer for development", ctaHref: "/contact?subject=corporate#contact-form", ctaLabel: "Contact Corporate Team" },
   { discount: "₹200 OFF", title: "Refer & Earn", code: "REFER200", meta: "When a friend completes their first ride · Demo offer for development" }
 ];
 

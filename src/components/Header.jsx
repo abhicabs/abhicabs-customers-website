@@ -117,7 +117,7 @@ export default function Header() {
             <span className="ac-util-loc" />
 
             <div className="ac-util-hide">
-              <a href="/contact-us" className="ac-util-link">
+              <a href="/contact" className="ac-util-link">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" strokeWidth="2" />
                   <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />

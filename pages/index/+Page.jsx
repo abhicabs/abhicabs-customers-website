@@ -161,7 +161,7 @@ export default function Page() {
   function bookMode(mode) {
     if (mode === "group-coach") {
       // the old on-page contact form is gone — group/coach quotes go to the real contact form
-      if (typeof window !== "undefined") window.location.href = "/contact-us?subject=booking#contact-form";
+      if (typeof window !== "undefined") window.location.href = "/contact?subject=booking#contact-form";
       return;
     }
     setActiveMode(mode);

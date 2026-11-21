@@ -156,7 +156,7 @@ export const SERVICE_DEFAULTS = {
   },
   cardIcon: "clock",
   },
-  // Content source: "Airport Taxi Booking & Pickup Drop Services" SEO brief. URL: /services/airport-taxi (old /services/airport-transfer 301-redirects here).
+  // Content source: "Airport Taxi Booking & Pickup Drop Services" SEO brief. URL: /airport-taxi (old /services/airport-transfer 301-redirects here).
   "airport-taxi": {
   slug: "airport-taxi", mode: "airport",
   primaryLabel: "Book Your Airport Taxi",
@@ -186,7 +186,7 @@ export const SERVICE_DEFAULTS = {
                "Explore our [corporate cab services](/services/corporate) for additional business transportation options."] },
       { heading: "Family & Group Airport Taxi Services – Travel Together",
         body: ["Travelling with family, friends, or colleagues? Choose spacious SUVs, Tempo Travellers, Force Urbania vehicles, or buses for convenient group airport pickup and drop-off services.",
-               "Explore our [cab fleet](/fleet) to find a vehicle that suits your passenger count and luggage requirements."] },
+               "Explore our [cab fleet](/our-vehicles) to find a vehicle that suits your passenger count and luggage requirements."] },
     ],
   },
   pricing: {
@@ -203,7 +203,7 @@ export const SERVICE_DEFAULTS = {
       "Bus & Coach Rentals: Suitable for corporate teams, organised tours, and large-group airport transportation.",
     ],
     note: "Vehicle availability and luggage capacity depend on the selected model and pickup location.",
-    links: ["Explore the complete Abhi Cabs 24×7 [vehicle collection](/fleet) to choose a suitable airport taxi."],
+    links: ["Explore the complete Abhi Cabs 24×7 [vehicle collection](/our-vehicles) to choose a suitable airport taxi."],
     ctaLabel: "Explore Airport Cab Options",
   },
   features: {
@@ -227,8 +227,8 @@ export const SERVICE_DEFAULTS = {
       "Abhi Cabs 24×7 offers airport taxi booking services at supported locations across Karnataka, Andhra Pradesh, Maharashtra, and Telangana.",
       "Whether you’re looking for Bangalore airport taxi booking, Hyderabad airport cab services, Pune airport taxi services, or airport pickups and drops in other supported cities, check cab availability for your travel date and location.",
       "We also arrange eligible long-distance airport taxi journeys to destinations across India, depending on the route and vehicle availability.",
-      "For city travel beyond the airport, explore our [local cab booking services](/services/local).",
-      "For long-distance travel, check our [one-way outstation cab services](/services/one-way-outstation).",
+      "For city travel beyond the airport, explore our [local cab booking services](/local-car-rental).",
+      "For long-distance travel, check our [one-way outstation cab services](/one-way-cabs).",
     ],
   },
   routes: [ {from:"City",to:"Kempegowda Airport (BLR)"},{from:"Kempegowda Airport",to:"City"},{from:"City",to:"Hyderabad Airport (HYD)"},{from:"Hyderabad Airport",to:"City"},{from:"City",to:"Pune Airport (PNQ)"},{from:"Pune Airport",to:"City"} ],
@@ -269,7 +269,7 @@ export const SERVICE_DEFAULTS = {
     ["Can I schedule an airport taxi in advance?", "Yes. You can request advance airport taxi booking by selecting your preferred date, pickup time, and travel details."],
     ["What should I do if my flight is delayed?", "If your flight is delayed, contact Abhi Cabs 24×7 as soon as possible to update your arrival details. Pickup-time changes depend on driver availability and booking conditions."],
   ],
-  related: [ {label:"Local Taxi",href:"/services/local"},{label:"One-Way Outstation",href:"/services/one-way-outstation"},{label:"Round Trip",href:"/services/round-trip"},{label:"Corporate",href:"/services/corporate"},{label:"All Services",href:"/services"} ],
+  related: [ {label:"Local Taxi",href:"/local-car-rental"},{label:"One-Way Outstation",href:"/one-way-cabs"},{label:"Round Trip",href:"/round-trip-cabs"},{label:"Corporate",href:"/services/corporate"},{label:"All Services",href:"/services"} ],
   cta: {
     line1: "Book Your Airport Taxi", line2: "with Abhi Cabs 24×7",
     subheading: "From Your Doorstep to the Airport & Back",
@@ -603,7 +603,7 @@ export const SERVICE_DEFAULTS = {
     ["How do we get started?", "Send an enquiry with your requirement and our team will set up the right arrangement."],
     ["Which vehicles are available for business travel?", "Sedans and SUVs for individuals and small teams, and larger vehicles for groups and events."],
   ],
-  related: [ {label:"Local Taxi",href:"/services/local"},{label:"Airport Taxi",href:"/services/airport-taxi"},{label:"One-Way Outstation",href:"/services/one-way-outstation"},{label:"Round Trip",href:"/services/round-trip"},{label:"All Services",href:"/services"} ],
+  related: [ {label:"Local Taxi",href:"/local-car-rental"},{label:"Airport Taxi",href:"/airport-taxi"},{label:"One-Way Outstation",href:"/one-way-cabs"},{label:"Round Trip",href:"/round-trip-cabs"},{label:"All Services",href:"/services"} ],
   cta: { line1: "Travel for", line2: "your business", description: "Tell us your corporate travel needs and we'll set up a reliable, GST-billed arrangement." },
 }),
     seo: { title: "Corporate Transportation | Abhi Cabs", description: "Business travel, employee transport and corporate airport rides with Abhi Cabs — reliable, with GST invoicing and a dedicated support desk." },

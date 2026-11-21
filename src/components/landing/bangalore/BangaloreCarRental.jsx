@@ -75,7 +75,7 @@ export default function BangaloreCarRental({ cfg }) {
         description={c.cta.description}
         actions={<>
           <Button variant="inverse" size="lg" onClick={() => book(null)}>{c.cta.primaryLabel}</Button>
-          <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
+          <Button href="/contact" variant="outlineInverse" size="lg">Talk to Us</Button>
         </>}
       />
     </>

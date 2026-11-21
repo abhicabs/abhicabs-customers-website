@@ -9,7 +9,7 @@ export const BLR_LOCAL = {
     title: "Car Rental in Bangalore with Driver | Hourly Packages | Abhi Cabs 24×7",
     description: "Book a chauffeur-driven car rental in Bangalore with Abhi Cabs 24×7. Choose 4-hour, 8-hour or 12-hour local packages for shopping, meetings, sightseeing and city travel.",
   },
-  breadcrumb: [["Home", "/"], ["Services", "/services"], ["Car Rental", "/services/local"], ["Bangalore", null]],
+  breadcrumb: [["Home", "/"], ["Services", "/services"], ["Car Rental", "/local-car-rental"], ["Bangalore", null]],
 
   hero: {
     h1: "Car Rental in Bangalore with Driver – Abhi Cabs 24×7",
@@ -17,7 +17,7 @@ export const BLR_LOCAL = {
     body: [
       "Looking for a reliable **car rental in Bangalore**? **Abhi Cabs 24×7** offers convenient chauffeur-driven cars for shopping, office meetings, sightseeing, family outings and everyday city travel.",
       "Choose from **4-hour, 8-hour and 12-hour local car rental packages** with comfortable vehicles and experienced drivers. Whether you need a rental car for a few hours or a full day, choose an option that suits your schedule.",
-      "Explore our [local car rental services](/services/local) for more booking options.",
+      "Explore our [local car rental services](/local-car-rental) for more booking options.",
     ],
     cta: "Book Your Bangalore Rental Car",
     image: "/images/hero-local-chauffeur.webp",
@@ -46,7 +46,7 @@ export const BLR_LOCAL = {
       { name: "Innova Hycross", type: "Premium MUV", image: "/images/tea-garden-road.jpg", desc: "Comfortable options for premium family and business journeys." },
       { name: "Tempo Traveller & Force Urbania", type: "Group", image: "/images/who-we-are-fleet.webp", crop: { x: 59, y: 56, zoom: 2.3 }, desc: "Available for larger groups, subject to rental requirements and availability." },
     ],
-    link: "Explore our [complete cab fleet](/fleet) to compare suitable vehicle options.",
+    link: "Explore our [complete cab fleet](/our-vehicles) to compare suitable vehicle options.",
     cta: "Explore Available Rental Cars",
   },
 
@@ -116,9 +116,9 @@ export const BLR_LOCAL = {
     subheading: "Explore More Travel Services with Abhi Cabs 24×7",
     intro: "Local car rental packages are designed mainly for travel within Bangalore. For other journey types, explore these dedicated services:",
     links: [
-      { kind: "airport", label: "Bangalore airport taxi booking", href: "/services/airport-taxi", desc: "for airport pickup and drop-off." },
-      { kind: "oneway", label: "One-way outstation cab services", href: "/services/one-way-outstation", desc: "for intercity journeys without a planned return." },
-      { kind: "round", label: "Round-trip cab booking services", href: "/services/round-trip", desc: "for weekend trips, family holidays and return journeys." },
+      { kind: "airport", label: "Bangalore airport taxi booking", href: "/airport-taxi", desc: "for airport pickup and drop-off." },
+      { kind: "oneway", label: "One-way outstation cab services", href: "/one-way-cabs", desc: "for intercity journeys without a planned return." },
+      { kind: "round", label: "Round-trip cab booking services", href: "/round-trip-cabs", desc: "for weekend trips, family holidays and return journeys." },
     ],
   },
 

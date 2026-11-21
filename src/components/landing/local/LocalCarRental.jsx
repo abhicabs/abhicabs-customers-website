@@ -9,7 +9,7 @@ import { HowSection } from "../bangalore/TrustSections";
 import { ServiceSwitcher, PackageDial, FleetShowcase, BenefitRows, CoverageTickets, TipStack, FaqSearch } from "./LocalSections";
 
 /**
- * /services/local — the "Car Rental" menu page. Interactive layout; content is whatever
+ * /local-car-rental — the "Car Rental" menu page. Interactive layout; content is whatever
  * ServicePageView passes in (CMS version if an editor created one, else serviceDefaults.local),
  * so editors keep control of every word. Every action prefills the hero booking widget.
  */
@@ -54,7 +54,7 @@ export default function LocalCarRental({ cfg }) {
         description={c.cta.description}
         actions={<>
           <Button variant="inverse" size="lg" className="whitespace-normal! h-auto! min-h-14 py-3.5" onClick={() => book(null)}>{c.cta.primaryLabel}</Button>
-          <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
+          <Button href="/contact" variant="outlineInverse" size="lg">Talk to Us</Button>
         </>}
       />
     </>

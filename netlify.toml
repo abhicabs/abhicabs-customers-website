@@ -21,14 +21,44 @@
   force = true
 
 [[redirects]]
-  from = "/contact"
-  to = "/contact-us"
+  from = "/services/local"
+  to = "/local-car-rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fleet"
+  to = "/our-vehicles"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/one-way-outstation"
+  to = "/one-way-cabs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/airport-taxi"
+  to = "/airport-taxi"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/round-trip"
+  to = "/round-trip-cabs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact-us"
+  to = "/contact"
   status = 301
   force = true
 
 [[redirects]]
   from = "/services/airport-transfer"
-  to = "/services/airport-taxi"
+  to = "/airport-taxi"
   status = 301
   force = true
 

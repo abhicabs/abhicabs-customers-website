@@ -18,8 +18,16 @@ export default {
   image: "https://abhicabs24x7.com/images/Herosection.jpg",
   Layout,
   // Permanent (301) redirects for URLs that moved. Keeps old links and search rankings pointing at the new page.
+  // Menu pages now live at URLs that match their navbar names.
   redirects: {
-    "/services/airport-transfer": "/services/airport-taxi",
+    "/services/local": "/local-car-rental",
+    "/fleet": "/our-vehicles",
+    "/services/one-way-outstation": "/one-way-cabs",
+    "/services/airport-taxi": "/airport-taxi",
+    "/services/round-trip": "/round-trip-cabs",
+    "/contact-us": "/contact",
+    "/services/airport-transfer": "/airport-taxi",
+    "/blog": "/blogs",
   },
   // Real brand favicon (the "A" road-and-pin mark). Uses the pre-rasterized
   // .ico rather than the raw .svg — the source logo is a highly detailed

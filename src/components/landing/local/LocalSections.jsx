@@ -244,7 +244,7 @@ export function FleetShowcase({ data }) {
       <div className="mt-8 flex flex-col items-center gap-4 text-center">
         {data.note && <p className="text-[13.5px] text-text-secondary">{data.note}</p>}
         {(data.links || []).map((l, i) => <p key={i} className="text-[14.5px]">{renderInline(l)}</p>)}
-        {data.ctaLabel && <Button href="/fleet" variant="outline" size="lg">{data.ctaLabel}</Button>}
+        {data.ctaLabel && <Button href="/our-vehicles" variant="outline" size="lg">{data.ctaLabel}</Button>}
       </div>
     </Band>
   );

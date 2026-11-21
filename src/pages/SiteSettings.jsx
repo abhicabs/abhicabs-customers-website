@@ -140,7 +140,7 @@ function SettingsConsole() {
           <ListEditor
             title="Navigation links"
             rows={data.header.nav}
-            cols={[["label", "Label (e.g. Vehicles)"], ["href", "Link (e.g. /fleet)"]]}
+            cols={[["label", "Label (e.g. Vehicles)"], ["href", "Link (e.g. /our-vehicles)"]]}
             onChange={(v) => setHeader("nav", v)}
             blank={{ label: "", href: "/" }}
             disabled={!canEdit}

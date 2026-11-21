@@ -27,11 +27,11 @@ const SITE = SITE_ORIGIN;
 function serviceCta(blog) {
   const route = routeEndpoints(blog);
   if (route) return { title: `Travelling ${route.from} to ${route.to}?`, text: "Check the fare and book this route with a verified driver.", label: "Book This Route", href: bookRouteHref(route) };
-  if (hasTag(blog, "airport")) return { title: "Need an airport transfer?", text: "On-time pickups and drops with fares shown up front.", label: "Airport Taxi", href: "/services/airport-taxi" };
+  if (hasTag(blog, "airport")) return { title: "Need an airport transfer?", text: "On-time pickups and drops with fares shown up front.", label: "Airport Taxi", href: "/airport-taxi" };
   if (hasTag(blog, "family")) return { title: "Travelling with family?", text: "Compare comfortable cars for every group size.", label: "See Our Fleet", href: ROUTES.fleet };
   if (hasTag(blog, "corporate", "business")) return { title: "Travel for work?", text: "Corporate accounts with GST invoicing and monthly billing.", label: "Corporate Transport", href: "/services/corporate" };
-  if (hasTag(blog, "local", "city")) return { title: "Getting around the city?", text: "Hourly and full-day local rentals.", label: "Local Taxi", href: "/services/local" };
-  if (hasTag(blog, "outstation", "weekend", "road trip", "destination")) return { title: "Planning an outstation trip?", text: "One-way and round-trip cabs across Karnataka and Hyderabad.", label: "Outstation Cabs", href: "/services/one-way-outstation" };
+  if (hasTag(blog, "local", "city")) return { title: "Getting around the city?", text: "Hourly and full-day local rentals.", label: "Local Taxi", href: "/local-car-rental" };
+  if (hasTag(blog, "outstation", "weekend", "road trip", "destination")) return { title: "Planning an outstation trip?", text: "One-way and round-trip cabs across Karnataka and Hyderabad.", label: "Outstation Cabs", href: "/one-way-cabs" };
   return { title: "Ready for your next journey?", text: "Book a verified driver with transparent fares.", label: "Book a Cab", href: ROUTES.booking };
 }
 

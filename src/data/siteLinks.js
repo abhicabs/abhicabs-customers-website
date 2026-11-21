@@ -8,11 +8,11 @@ export const ROUTES = {
   home: "/",
   booking: "/#booking",
   about: "/about",
-  fleet: "/fleet",
+  fleet: "/our-vehicles",
   services: "/services",
   blogs: "/blogs",
-  contact: "/contact-us",
-  contactForm: "/contact-us#contact-form",
+  contact: "/contact",
+  contactForm: "/contact#contact-form",
   myBooking: "/my-booking",
   supportTickets: "/support-tickets",
   privacy: "/privacy",
@@ -20,22 +20,32 @@ export const ROUTES = {
   cancellation: "/cancellation",
 };
 
-export const contactFormHref = (subject) => `/contact-us?subject=${encodeURIComponent(subject)}#contact-form`;
+/** Built-in service pages live at URLs that match their navbar names; CMS-created
+ *  service pages stay at /services/<slug>. Use this whenever a URL is built from a slug. */
+export const SERVICE_URLS = {
+  local: "/local-car-rental",
+  "one-way-outstation": "/one-way-cabs",
+  "airport-taxi": "/airport-taxi",
+  "round-trip": "/round-trip-cabs",
+};
+export const serviceHref = (slug) => SERVICE_URLS[slug] || `/services/${slug}`;
+
+export const contactFormHref = (subject) => `/contact?subject=${encodeURIComponent(subject)}#contact-form`;
 
 export const SERVICE_LINKS = [
-  { href: "/services/local", label: "Local Taxi Services", short: "Local Rental", mode: "local" },
-  { href: "/services/airport-taxi", label: "Airport Taxi", short: "Airport Taxi", mode: "airport" },
-  { href: "/services/one-way-outstation", label: "One-Way Outstation", short: "One Way", mode: "one-way" },
-  { href: "/services/round-trip", label: "Round Trip Services", short: "Round Trip", mode: "round-trip" },
+  { href: "/local-car-rental", label: "Local Taxi Services", short: "Local Rental", mode: "local" },
+  { href: "/airport-taxi", label: "Airport Taxi", short: "Airport Taxi", mode: "airport" },
+  { href: "/one-way-cabs", label: "One-Way Outstation", short: "One Way", mode: "one-way" },
+  { href: "/round-trip-cabs", label: "Round Trip Services", short: "Round Trip", mode: "round-trip" },
   { href: "/services/corporate", label: "Corporate Transportation", short: "Corporate", mode: null },
 ];
 
 export const NAV_LINKS = [
-  { href: "/services/local", label: "Local Car Rental" },
+  { href: "/local-car-rental", label: "Local Car Rental" },
   { href: ROUTES.fleet, label: "Our Vehicles" },
-  { href: "/services/one-way-outstation", label: "One Way Cabs" },
-  { href: "/services/airport-taxi", label: "Airport Taxi" },
-  { href: "/services/round-trip", label: "Round Trip Cabs" },
+  { href: "/one-way-cabs", label: "One Way Cabs" },
+  { href: "/airport-taxi", label: "Airport Taxi" },
+  { href: "/round-trip-cabs", label: "Round Trip Cabs" },
   { href: ROUTES.blogs, label: "Blogs" },
   { href: ROUTES.contact, label: "Contact" },
 ];

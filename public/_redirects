@@ -1,17 +1,24 @@
-# Cloudflare Pages redirects (Cloudflare ignores netlify.toml).
-# NOTE: on Cloudflare, these rules apply even when a file exists at that path,
-# so only list paths that should NOT serve their own pre-built page.
+# Cloudflare redirects (Cloudflare ignores netlify.toml).
+# NOTE: on Cloudflare these rules apply even when a file exists at that path.
 
-# ── Duplicate URLs → one canonical address (permanent) ──
-/contact                    /contact-us              301
-/contact/                   /contact-us              301
-/services/airport-transfer  /services/airport-taxi   301
-/services/airport-transfer/ /services/airport-taxi   301
-/blog                       /blogs                   301
-/blog/*                     /blogs                   301
+# ── Menu pages moved to URLs that match their navbar names (permanent) ──
+/services/local                 /local-car-rental   301
+/services/local/                /local-car-rental   301
+/fleet                          /our-vehicles       301
+/fleet/                         /our-vehicles       301
+/services/one-way-outstation    /one-way-cabs       301
+/services/one-way-outstation/   /one-way-cabs       301
+/services/airport-taxi          /airport-taxi       301
+/services/airport-taxi/         /airport-taxi       301
+/services/round-trip            /round-trip-cabs    301
+/services/round-trip/           /round-trip-cabs    301
+/contact-us                     /contact            301
+/contact-us/                    /contact            301
 
-# Every page (including CMS articles, CMS pages and the admin area) is pre-built
-# at deploy time, so no app-shell rewrites are needed — unknown URLs get the 404 page.
+# ── Older duplicate URLs ──
+/services/airport-transfer      /airport-taxi       301
+/services/airport-transfer/     /airport-taxi       301
+/blog                           /blogs              301
+/blog/*                         /blogs              301
 
-# www → non-www is a DOMAIN redirect: set it in the Cloudflare dashboard
-# (Rules → Redirect Rules), not here — _redirects can't match on hostname.
+# www → non-www is handled by the Worker (worker/index.js).

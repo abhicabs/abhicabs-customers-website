@@ -1331,7 +1331,7 @@ export default function Page() {
               ← Change Pickup Location
             </button>
             <a
-              href="/contact-us"
+              href="/contact"
               style={{ display: "block", padding: "13px 0", borderRadius: 12, border: "1.5px solid #E5E5E5", color: "#555", fontWeight: 600, fontSize: 14, textDecoration: "none" }}
             >
               Request a Custom Booking

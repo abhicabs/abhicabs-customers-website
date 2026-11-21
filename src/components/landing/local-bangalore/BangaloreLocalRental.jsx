@@ -186,7 +186,7 @@ function Vehicles({ onBook }) {
                   <p className="mt-3 max-w-[440px] text-[16px] text-white/70 leading-relaxed">{it.desc}</p>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Button size="md" onClick={() => onBook({ tripType: "local" })} tabIndex={0}>Book this car <ArrowRight size={16} aria-hidden /></Button>
-                    <Button size="md" variant="outlineInverse" href="/fleet">View in fleet</Button>
+                    <Button size="md" variant="outlineInverse" href="/our-vehicles">View in fleet</Button>
                   </div>
                 </li>
               );
@@ -196,7 +196,7 @@ function Vehicles({ onBook }) {
 
         <div className="mt-10 lg:mt-4 text-center">
           <p className="text-[15px] text-white/75">{rich(v.link, "font-semibold text-primary underline underline-offset-2 hover:text-white")}</p>
-          <div className="mt-6"><Button href="/fleet" variant="inverse" size="lg">{v.cta}</Button></div>
+          <div className="mt-6"><Button href="/our-vehicles" variant="inverse" size="lg">{v.cta}</Button></div>
         </div>
       </div>
     </section>
@@ -350,7 +350,7 @@ function FinalCta({ onBook }) {
         <div className="mt-5 space-y-3 text-[15.5px] md:text-[16.5px] text-[#111]/75 leading-relaxed">{c.body.map((p, i) => <p key={i}>{rich(p)}</p>)}</div>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button size="lg" className="bg-[#111]! text-white! shadow-none! hover:bg-black!" onClick={() => onBook(null)}>{c.button} <ArrowRight size={17} aria-hidden /></Button>
-          <Button size="lg" variant="outline" href="/contact-us">Talk to Us</Button>
+          <Button size="lg" variant="outline" href="/contact">Talk to Us</Button>
         </div>
       </div>
     </section>

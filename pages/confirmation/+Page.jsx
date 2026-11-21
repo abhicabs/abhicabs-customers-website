@@ -131,7 +131,7 @@ export default function Page() {
               {isTaxInvoice ? "View / Download Invoice" : "View / Download Receipt"}
             </button>
             <a
-              href="/contact-us"
+              href="/contact"
               style={{ flex: "1 1 150px", padding: 14, borderRadius: 12, border: "1.5px solid #E5E5E5", background: "#fff", color: "#111", fontWeight: 600, fontSize: 14, textAlign: "center" }}
             >
               Contact Support

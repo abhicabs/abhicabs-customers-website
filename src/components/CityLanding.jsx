@@ -56,7 +56,7 @@ export default function CityLanding({ cfg: c }) {
     heading: c.services.heading,
     cards: c.services.items.map((s) => {
       const journey = serviceJourney(s, city);
-      return { title: s.title, body: linkify(s.desc, s.links), book: journey || undefined, href: journey ? undefined : (s.link || "/contact-us"), link: journey ? s.link : undefined };
+      return { title: s.title, body: linkify(s.desc, s.links), book: journey || undefined, href: journey ? undefined : (s.link || "/contact"), link: journey ? s.link : undefined };
     }),
   };
 
@@ -104,7 +104,7 @@ export default function CityLanding({ cfg: c }) {
         description={c.cta.description}
         actions={<>
           <Button variant="inverse" size="lg" className="whitespace-normal! h-auto! min-h-14 py-3.5 text-center" onClick={() => book(null)}>{c.cta.ctaLabel}</Button>
-          <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
+          <Button href="/contact" variant="outlineInverse" size="lg">Talk to Us</Button>
         </>}
       />
     </>

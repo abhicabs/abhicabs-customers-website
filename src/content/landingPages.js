@@ -47,8 +47,8 @@ export const LANDING_PAGES = {
           { kind: "bus", title: "Urbania & Bus Rentals in Bangalore", body: "Organising transportation for a larger group? Abhi Cabs 24×7 offers Force Urbania and bus rental options for weddings, company outings, educational trips and group tours." },
         ],
         note: "Vehicle models, seating capacities and luggage space depend on availability.",
-        links: ["Explore our complete [vehicle fleet](/fleet) before choosing your rental vehicle."],
-        cta: { label: "Explore Rental Vehicles", href: "/fleet" },
+        links: ["Explore our complete [vehicle fleet](/our-vehicles) before choosing your rental vehicle."],
+        cta: { label: "Explore Rental Vehicles", href: "/our-vehicles" },
       },
       hourly: {
         eyebrow: "Hourly Packages", tone: "tint",
@@ -62,17 +62,17 @@ export const LANDING_PAGES = {
         ],
         packages: ["4 hrs / 40 km", "8 hrs / 80 km", "12 hrs / 120 km"], // must match PACKAGE_OPTIONS in BookingWidget
         note: "Choose a suitable package based on your travel requirements. Confirm included kilometres, extra-hour charges, parking fees and other applicable costs before booking.",
-        links: ["For detailed rental information, explore our [local cab and hourly rental services](/services/local)."],
-        cta: { label: "Check Hourly Rental Packages", href: "/services/local" },
+        links: ["For detailed rental information, explore our [local cab and hourly rental services](/local-car-rental)."],
+        cta: { label: "Check Hourly Rental Packages", href: "/local-car-rental" },
       },
       uses: {
         eyebrow: "Ways to Travel", tone: "white",
         heading: "Hire a Car in Bangalore for Local, Airport & Outstation Travel",
         cards: [
-          { book: "local", title: "Local Car Rental in Bangalore", body: "Book [local car rental services](/services/local) in Bangalore for office travel, hospital visits, shopping, personal appointments and city sightseeing. Choose a vehicle and rental duration according to your schedule." },
-          { book: "airport", title: "Bangalore Airport Taxi Booking", body: ["Travelling to or from Kempegowda International Airport? Abhi Cabs 24×7 offers airport pickup and drop-off options for individuals, families and business travellers.", "Explore our [airport taxi booking services](/services/airport-taxi) to plan your airport journey."] },
-          { book: "one-way", title: "One-Way Outstation Car Rental", body: ["Travelling from Bangalore to another city without a return trip? Book a one-way outstation cab for personal journeys, business visits or family travel.", "Explore our [one-way outstation taxi services](/services/one-way-outstation)."] },
-          { book: "round-trip", title: "Round-Trip Car Rental from Bangalore", body: ["Planning a weekend getaway or family holiday? Choose round-trip car rentals from Bangalore for return journeys and multi-day travel.", "Learn more about our [round-trip cab booking](/services/round-trip) options."] },
+          { book: "local", title: "Local Car Rental in Bangalore", body: "Book [local car rental services](/local-car-rental) in Bangalore for office travel, hospital visits, shopping, personal appointments and city sightseeing. Choose a vehicle and rental duration according to your schedule." },
+          { book: "airport", title: "Bangalore Airport Taxi Booking", body: ["Travelling to or from Kempegowda International Airport? Abhi Cabs 24×7 offers airport pickup and drop-off options for individuals, families and business travellers.", "Explore our [airport taxi booking services](/airport-taxi) to plan your airport journey."] },
+          { book: "one-way", title: "One-Way Outstation Car Rental", body: ["Travelling from Bangalore to another city without a return trip? Book a one-way outstation cab for personal journeys, business visits or family travel.", "Explore our [one-way outstation taxi services](/one-way-cabs)."] },
+          { book: "round-trip", title: "Round-Trip Car Rental from Bangalore", body: ["Planning a weekend getaway or family holiday? Choose round-trip car rentals from Bangalore for return journeys and multi-day travel.", "Learn more about our [round-trip cab booking](/round-trip-cabs) options."] },
           { href: "/services/corporate", title: "Corporate Car Rental in Bangalore", body: ["Need transportation for business meetings, executives or employee travel? Abhi Cabs 24×7 offers corporate car rental enquiries for local travel, airport pickups, company outings and business visits.", "Explore our [corporate cab rental services](/services/corporate)."] },
         ],
       },
@@ -134,7 +134,7 @@ export const LANDING_PAGES = {
           "Bangalore to Goa Car Rental: Family holidays, group outings and coastal road trips.",
         ],
         km: { Mysore: 145, Coorg: 250, Mangalore: 350, Chennai: 345, Hyderabad: 570, Goa: 560 }, // approximate road distance
-        note: "Choose [one-way](/services/one-way-outstation) or [round-trip](/services/round-trip) options according to your journey and check route availability.",
+        note: "Choose [one-way](/one-way-cabs) or [round-trip](/round-trip-cabs) options according to your journey and check route availability.",
         cta: { label: "Explore Outstation Car Rentals", href: "/outstation" },
       },
       chauffeur: {
@@ -238,7 +238,7 @@ export const LANDING_PAGES = {
   "tempo-traveller": {
     slug: "tempo-traveller", mode: "round-trip",
     primaryLabel: "Book Your Tempo Traveller",
-    breadcrumb: [["Home", "/"], ["Vehicles", "/fleet"], ["Tempo Traveller", null]],
+    breadcrumb: [["Home", "/"], ["Vehicles", "/our-vehicles"], ["Tempo Traveller", null]],
     seo: {
       title: "Tempo Traveller & Bus Rental | Abhi Cabs 24×7",
       description: "Book Tempo Traveller and 33-seater bus rentals with Abhi Cabs 24×7. Explore 12, 13, 16, 17 and 33-seater options for family tours, weddings and group trips.",
@@ -264,20 +264,20 @@ export const LANDING_PAGES = {
           { title: "33-Seater Bus Rental for Large Groups", body: "Planning a company outing, wedding, college trip, or pilgrimage? Abhi Cabs 24×7 offers 33-seater bus rental options for large-group transportation. Choose a suitable bus for organised travel, special events, and outstation journeys." },
         ],
         note: "Vehicle models, seating configurations, AC options, luggage space, and availability vary by pickup location and travel date.",
-        links: ["Explore our complete [cab and group vehicle fleet](/fleet) for additional vehicle choices."],
+        links: ["Explore our complete [cab and group vehicle fleet](/our-vehicles) for additional vehicle choices."],
         cta: { label: "Check Vehicle Availability" },
       },
       uses: {
         eyebrow: "Group Travel", tone: "white",
         heading: "Tempo Traveller Rental Services for Every Travel Need",
         cards: [
-          { title: "Tempo Traveller for Outstation Trips", body: ["Planning an intercity journey? Choose outstation Tempo Traveller rentals with Abhi Cabs 24×7 for hill station holidays, weekend getaways, family vacations, and long-distance group travel.", "For return journeys and multi-day holidays, explore our [round-trip cab booking services](/services/round-trip)."] },
+          { title: "Tempo Traveller for Outstation Trips", body: ["Planning an intercity journey? Choose outstation Tempo Traveller rentals with Abhi Cabs 24×7 for hill station holidays, weekend getaways, family vacations, and long-distance group travel.", "For return journeys and multi-day holidays, explore our [round-trip cab booking services](/round-trip-cabs)."] },
           { title: "Tempo Traveller for Family Tours", body: "Travelling with family or relatives? Book a Tempo Traveller for family trips to enjoy sightseeing, reunions, vacations, and special occasions together." },
           { title: "Tempo Traveller for Pilgrimage Tours", body: "Plan spiritual journeys and temple visits with Tempo Traveller rental services. Choose a suitable group vehicle for religious tours, pilgrimages, and multi-destination travel." },
           { title: "Tempo Traveller for Corporate Outings", body: ["Organising a team outing, conference, or company event? Choose Tempo Traveller and bus rentals for corporate group transportation based on your team size.", "Explore our [corporate cab services](/services/corporate) for additional business transportation options."] },
-          { title: "Tempo Traveller for Local Sightseeing", body: ["Explore tourist attractions and nearby destinations with Tempo Traveller sightseeing rentals. Suitable for family outings, city tours, and one-day group trips.", "For city travel and flexible rental packages, explore our [local cab rental services](/services/local)."] },
+          { title: "Tempo Traveller for Local Sightseeing", body: ["Explore tourist attractions and nearby destinations with Tempo Traveller sightseeing rentals. Suitable for family outings, city tours, and one-day group trips.", "For city travel and flexible rental packages, explore our [local cab rental services](/local-car-rental)."] },
           { title: "Tempo Traveller & Bus Rentals for Weddings", body: "Arrange transportation for wedding guests, family functions, and special celebrations with Tempo Traveller and 33-seater bus rental options." },
-          { title: "Tempo Traveller for Airport Pickup & Drop", body: ["Travelling with a group to or from the airport? Choose a suitable Tempo Traveller for airport pickup and drop-off services, considering passenger count and luggage capacity.", "Learn more about our [airport taxi booking services](/services/airport-taxi)."] },
+          { title: "Tempo Traveller for Airport Pickup & Drop", body: ["Travelling with a group to or from the airport? Choose a suitable Tempo Traveller for airport pickup and drop-off services, considering passenger count and luggage capacity.", "Learn more about our [airport taxi booking services](/airport-taxi)."] },
         ],
       },
       destinations: {

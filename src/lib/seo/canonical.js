@@ -7,7 +7,16 @@
 import { SITE_ORIGIN } from "./constants";
 
 // Old / duplicate addresses (301-redirected) name the real page as canonical.
-export const CANONICAL_ALIAS = { "/contact": "/contact-us", "/blog": "/blogs", "/services/airport-transfer": "/services/airport-taxi" };
+export const CANONICAL_ALIAS = {
+  "/services/local": "/local-car-rental",
+  "/fleet": "/our-vehicles",
+  "/services/one-way-outstation": "/one-way-cabs",
+  "/services/airport-taxi": "/airport-taxi",
+  "/services/round-trip": "/round-trip-cabs",
+  "/contact-us": "/contact",
+  "/services/airport-transfer": "/airport-taxi",
+  "/blog": "/blogs",
+};
 
 // App / transactional screens: keep out of search results (robots.txt also blocks crawling).
 const PRIVATE_RE = /^\/(checkout|payment|confirmation|login|my-booking|booking-details|support-tickets|tracking|delete-account|admin)(\/|$)/;

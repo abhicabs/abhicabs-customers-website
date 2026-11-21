@@ -13,7 +13,7 @@ import SeoAnalyzer from "../components/SeoAnalyzer";
 import PageSeoAnalyzer from "../components/PageSeoAnalyzer";
 import ServiceContentForm from "../components/cms/ServiceContentForm";
 import { newServiceContent, isTemplatePage, TRIP_MODES, namesForCities, slugifyName, cfgToContent, BUILT_IN_SLUGS } from "../lib/servicePage";
-import { SERVICE_LINKS } from "../data/siteLinks";
+import { SERVICE_LINKS, serviceHref } from "../data/siteLinks";
 import { classifyOrigin } from "../data/serviceCoverage";
 import { SERVICE_PRESETS, VEHICLE_SUGGESTIONS, parsePresetList, presetLabel } from "../content/servicePresets";
 import { BLOGS } from "../data/blogs";
@@ -4404,7 +4404,7 @@ function PageEditor({ onBack }) {
     : activePage === "home"
     ? "/"
     : (pages[activePage]?._service || pages[activePage]?._custom)
-    ? `/services/${activePage}`
+    ? serviceHref(activePage)
     : `/${activePage}`;
 
   const API = API_ROOT;
@@ -4568,7 +4568,7 @@ function PageEditor({ onBack }) {
   // Built-in services run on code defaults until "customised": this copies the defaults into an editable CMS page.
   const customizeBuiltIn = (slug) => {
     if (!canEdit || pages[slug]) { setActivePage(slug); return; }
-    const label = SERVICE_LINKS.find((l) => l.href === `/services/${slug}`)?.short || slug;
+    const label = SERVICE_LINKS.find((l) => l.href === serviceHref(slug))?.short || slug;
     setPages((prev) => ({ ...prev, [slug]: { _slug: slug, _label: label, _icon: "🧳", _desc: "Service page", _custom: true, _service: true, _template: "service", _content: cfgToContent(slug), sections: [] } }));
     setActivePage(slug);
   };
@@ -4823,7 +4823,7 @@ function PageEditor({ onBack }) {
                 <button key={sl} onClick={() => customizeBuiltIn(sl)} title="Copy the default content into an editable page"
                   className="w-full flex items-center justify-between gap-2 px-3 py-1.5 text-[12px] rounded-lg text-[#9CA3AF] hover:text-white transition-colors"
                   onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}>
-                  <span className="truncate">{SERVICE_LINKS.find((l) => l.href === `/services/${sl}`)?.short || sl}</span><span className="text-[10px] text-[#F5A623]">Customize</span>
+                  <span className="truncate">{SERVICE_LINKS.find((l) => l.href === serviceHref(sl))?.short || sl}</span><span className="text-[10px] text-[#F5A623]">Customize</span>
                 </button>
               ))}
             </>

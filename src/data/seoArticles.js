@@ -972,7 +972,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "Group bookings are handled through an enquiry. Share your date, route and group size, and our team will confirm availability and a quote. You can <a href=\"/contact-us?subject=booking#contact-form\">send a group travel enquiry</a> in a minute."
+        "text": "Group bookings are handled through an enquiry. Share your date, route and group size, and our team will confirm availability and a quote. You can <a href=\"/contact?subject=booking#contact-form\">send a group travel enquiry</a> in a minute."
       },
       {
         "type": "h2",
@@ -1011,7 +1011,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "Compare vehicles on the <a href=\"/fleet\">fleet page</a> or <a href=\"/contact-us?subject=booking#contact-form\">send an enquiry</a>."
+        "text": "Compare vehicles on the <a href=\"/fleet\">fleet page</a> or <a href=\"/contact?subject=booking#contact-form\">send an enquiry</a>."
       }
     ]
   },

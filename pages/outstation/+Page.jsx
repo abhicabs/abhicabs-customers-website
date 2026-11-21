@@ -135,7 +135,7 @@ export default function Page() {
         description="Enter your pickup and destination — the fare, vehicle options, and estimated time appear instantly. No login needed."
         actions={<>
           <Button variant="inverse" size="lg" onClick={() => book(null)}>{ctaText}</Button>
-          <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
+          <Button href="/contact" variant="outlineInverse" size="lg">Talk to Us</Button>
         </>}
       />
     </>

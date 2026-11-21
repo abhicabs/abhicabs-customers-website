@@ -113,7 +113,7 @@ export function BaggageTags({ data }) {
       <div className="mt-12 flex flex-col items-center gap-3 text-center">
         {data.note && <p className="text-[13.5px] text-text-secondary">{data.note}</p>}
         {(data.links || []).map((l, i) => <p key={i} className="text-[14.5px]">{renderInline(l)}</p>)}
-        {data.ctaLabel && <div className="mt-3"><Button href="/fleet" variant="outline" size="lg">{data.ctaLabel}</Button></div>}
+        {data.ctaLabel && <div className="mt-3"><Button href="/our-vehicles" variant="outline" size="lg">{data.ctaLabel}</Button></div>}
       </div>
     </Band>
   );

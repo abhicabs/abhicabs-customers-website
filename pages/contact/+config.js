@@ -1,4 +1,4 @@
 export default {
-  title: "Contact Us — AbhiCabs | 24×7 Support",
-  description: "Get in touch with AbhiCabs for bookings, corporate enquiries, group transport quotes or support. Available 24×7 by phone, email and WhatsApp.",
+  title: "Contact Abhi Cabs | Bookings, Travel Assistance & Enquiries",
+  description: "Contact Abhi Cabs for cab booking help, airport transfers, outstation travel and corporate enquiries. Reach us by phone, email or WhatsApp.",
 };

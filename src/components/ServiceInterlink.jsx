@@ -9,11 +9,11 @@ import { Car, Truck, Navigation, Plane, Repeat, Building2, BookOpen, ArrowRight 
 
 const SERVICE_ICONS = { Car, Truck, Navigation, Plane, Repeat, Building2 };
 const SERVICES = [
-  { Icon: Car, label: "Car Rental", desc: "Hourly & full-day city rides", href: "/services/local" },
-  { Icon: Truck, label: "Vehicle Rental", desc: "Browse our full fleet", href: "/fleet" },
+  { Icon: Car, label: "Car Rental", desc: "Hourly & full-day city rides", href: "/local-car-rental" },
+  { Icon: Truck, label: "Vehicle Rental", desc: "Browse our full fleet", href: "/our-vehicles" },
   { Icon: Navigation, label: "Outstation Cabs", desc: "One-way & round trips", href: "/outstation" },
-  { Icon: Plane, label: "Airport Cabs", desc: "On-time airport transfers", href: "/services/airport-taxi" },
-  { Icon: Repeat, label: "Intercity Cabs", desc: "City-to-city round trips", href: "/services/round-trip" },
+  { Icon: Plane, label: "Airport Cabs", desc: "On-time airport transfers", href: "/airport-taxi" },
+  { Icon: Repeat, label: "Intercity Cabs", desc: "City-to-city round trips", href: "/round-trip-cabs" },
   { Icon: Building2, label: "Corporate", desc: "Business travel solutions", href: "/services/corporate" },
 ];
 
@@ -97,11 +97,11 @@ export function BlogInterlink({ blogs = [], title = "From Our Blog", max = 3, cl
  */
 export function QuickBookStrip({ className = "" }) {
   const trips = [
-    { label: "Book Local Cab", href: "/services/local" },
-    { label: "Airport Taxi", href: "/services/airport-taxi" },
+    { label: "Book Local Cab", href: "/local-car-rental" },
+    { label: "Airport Taxi", href: "/airport-taxi" },
     { label: "Outstation Trip", href: "/outstation" },
-    { label: "Round Trip", href: "/services/round-trip" },
-    { label: "Browse Fleet", href: "/fleet" },
+    { label: "Round Trip", href: "/round-trip-cabs" },
+    { label: "Browse Fleet", href: "/our-vehicles" },
   ];
   return (
     <div className={`py-6 ${className}`}>

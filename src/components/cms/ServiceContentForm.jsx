@@ -375,7 +375,7 @@ function CustomSectionEditor({ section, onChange, canEdit, onUpload }) {
             {[
               { label: "Bold", html: "<strong>text</strong>" },
               { label: "Italic", html: "<em>text</em>" },
-              { label: "Link", html: '<a href="/services/local">link text</a>' },
+              { label: "Link", html: '<a href="/local-car-rental">link text</a>' },
               { label: "Image", html: '<img src="/images/dashboard-pov.jpg" alt="description" />' },
               { label: "H2", html: "<h2>Heading</h2>" },
               { label: "H3", html: "<h3>Sub-heading</h3>" },
@@ -437,7 +437,7 @@ function CustomSectionEditor({ section, onChange, canEdit, onUpload }) {
           onChange={(v) => up("buttons", v)}
           render={(bt, s) => (<>
             <input style={inputStyle} placeholder="Button label" disabled={!canEdit} value={bt.label} onChange={(e) => s("label", e.target.value)} />
-            <input style={inputStyle} placeholder="URL (e.g. /fleet or https://...)" disabled={!canEdit} value={bt.url} onChange={(e) => s("url", e.target.value)} />
+            <input style={inputStyle} placeholder="URL (e.g. /our-vehicles or https://...)" disabled={!canEdit} value={bt.url} onChange={(e) => s("url", e.target.value)} />
             <div style={{ display: "flex", gap: 8 }}>
               <select style={{ ...inputStyle, flex: 1 }} disabled={!canEdit} value={bt.style} onChange={(e) => s("style", e.target.value)}>
                 <option value="primary">Yellow (primary)</option>
@@ -473,7 +473,7 @@ function CustomSectionEditor({ section, onChange, canEdit, onUpload }) {
           <input id={`${id}-ltxt`} style={inputStyle} disabled={!canEdit} value={section.linkText || ""} onChange={(e) => up("linkText", e.target.value)} placeholder="Learn More" />
         </Field>
         <Field label="Link URL" htmlFor={`${id}-lurl`}>
-          <input id={`${id}-lurl`} style={inputStyle} disabled={!canEdit} value={section.linkUrl || ""} onChange={(e) => up("linkUrl", e.target.value)} placeholder="/services/local or https://..." />
+          <input id={`${id}-lurl`} style={inputStyle} disabled={!canEdit} value={section.linkUrl || ""} onChange={(e) => up("linkUrl", e.target.value)} placeholder="/local-car-rental or https://..." />
         </Field>
       </>)}
     </Group>
@@ -571,7 +571,7 @@ export default function ServiceContentForm({ content: c, onChange, canEdit = tru
             <div style={{ marginBottom: 6, display: "flex", gap: 4, flexWrap: "wrap" }}>
               {[
                 { label: "Bold", html: "<strong>text</strong>" },
-                { label: "Link", html: '<a href="/services/local">link text</a>' },
+                { label: "Link", html: '<a href="/local-car-rental">link text</a>' },
                 { label: "Image", html: '<img src="/images/dashboard-pov.jpg" alt="" />' },
                 { label: "Table", html: "<table><tr><th>Col 1</th><th>Col 2</th></tr><tr><td>Data</td><td>Data</td></tr></table>" },
                 { label: "List", html: "<ul><li>Item 1</li><li>Item 2</li></ul>" },
@@ -617,7 +617,7 @@ export default function ServiceContentForm({ content: c, onChange, canEdit = tru
               <Field label="Bullet points (one per line)" htmlFor={fid(["intro","bullets"])}>{A(["intro","bullets"],4,true)}</Field>
               <Field label="Image" htmlFor={fid(["intro","image"])}>{Img(["intro","image"])}</Field>
               <Field label="Link text (optional)" htmlFor={fid(["intro","linkText"])}>{T(["intro","linkText"], { placeholder: "Learn More" })}</Field>
-              <Field label="Link URL" htmlFor={fid(["intro","linkUrl"])}>{T(["intro","linkUrl"], { placeholder: "/fleet or https://..." })}</Field>
+              <Field label="Link URL" htmlFor={fid(["intro","linkUrl"])}>{T(["intro","linkUrl"], { placeholder: "/our-vehicles or https://..." })}</Field>
               <ExtraHtml section="intro" />
             </Group>
           );
@@ -682,7 +682,7 @@ export default function ServiceContentForm({ content: c, onChange, canEdit = tru
               <Field label="Highlighted line (yellow)" htmlFor={fid(["cta","line2"])}>{T(["cta","line2"])}</Field>
               <Field label="Description" htmlFor={fid(["cta","description"])}>{A(["cta","description"],2)}</Field>
               <Field label="Button text (optional)" htmlFor={fid(["cta","buttonText"])}>{T(["cta","buttonText"], { placeholder: "Book Your Ride" })}</Field>
-              <Field label="Button URL (optional)" htmlFor={fid(["cta","buttonUrl"])}>{T(["cta","buttonUrl"], { placeholder: "#booking or /contact-us" })}</Field>
+              <Field label="Button URL (optional)" htmlFor={fid(["cta","buttonUrl"])}>{T(["cta","buttonUrl"], { placeholder: "#booking or /contact" })}</Field>
               <ExtraHtml section="cta" />
             </Group>
           );

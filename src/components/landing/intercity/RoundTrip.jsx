@@ -10,7 +10,7 @@ import { BenefitRows, CoverageTickets, FaqSearch, FleetShowcase } from "../local
 import { ServicePhotoGrid, RoundTripRoutes } from "./IntercitySections";
 
 /**
- * /services/round-trip — the "Intercity Cabs" menu page. Content is whatever ServicePageView passes in
+ * /round-trip-cabs — the "Intercity Cabs" menu page. Content is whatever ServicePageView passes in
  * (CMS version if an editor created one, else serviceDefaults["round-trip"]); layout themed on the return loop.
  * Every action prefills the hero booking widget in Round Trip mode.
  */
@@ -56,7 +56,7 @@ export default function RoundTrip({ cfg }) {
         description={c.cta.description}
         actions={<>
           <Button variant="inverse" size="lg" className="whitespace-normal! h-auto! min-h-14 py-3.5" onClick={() => book(null)}>{c.cta.primaryLabel}</Button>
-          <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>
+          <Button href="/contact" variant="outlineInverse" size="lg">Talk to Us</Button>
         </>}
       />
     </>

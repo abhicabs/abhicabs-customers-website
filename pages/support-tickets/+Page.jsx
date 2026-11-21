@@ -151,7 +151,7 @@ export default function SupportTicketsPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
             <a href="/" style={{ color: "#888", fontSize: 12.5, textDecoration: "none" }}>Home</a>
             <span style={{ color: "#ccc" }}>›</span>
-            <a href="/contact-us" style={{ color: "#888", fontSize: 12.5, textDecoration: "none" }}>Support</a>
+            <a href="/contact" style={{ color: "#888", fontSize: 12.5, textDecoration: "none" }}>Support</a>
             <span style={{ color: "#ccc" }}>›</span>
             <span style={{ fontSize: 12.5, color: "#111", fontWeight: 600 }}>My Tickets</span>
           </div>
@@ -166,7 +166,7 @@ export default function SupportTicketsPage() {
           <button style={pillStyle(tab === "mine")} onClick={() => setTab("mine")}>My Tickets ({tickets.length})</button>
           <button style={pillStyle(tab === "lookup")} onClick={() => setTab("lookup")}>Look Up by ID</button>
           <button
-            onClick={() => navigate("/contact-us")}
+            onClick={() => navigate("/contact")}
             style={{ marginLeft: "auto", padding: "8px 18px", borderRadius: 9999, background: "#FFD54F", color: "#111", border: "none", fontWeight: 700, fontSize: 13.5, cursor: "pointer" }}
           >
             + Raise New Ticket
@@ -183,7 +183,7 @@ export default function SupportTicketsPage() {
                 Tickets you raise through our Contact page will appear here so you can track their status.
               </p>
               <button
-                onClick={() => navigate("/contact-us")}
+                onClick={() => navigate("/contact")}
                 style={{ padding: "11px 24px", borderRadius: 9999, background: "#FFD54F", color: "#111", border: "none", fontWeight: 700, fontSize: 14, cursor: "pointer" }}
               >
                 Contact Support

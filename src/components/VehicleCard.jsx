@@ -55,7 +55,7 @@ export default function VehicleCard({ vehicle: v, ctaHref = "/#booking", ctaLabe
 
         {/* Actions */}
         <div className="flex gap-2 mt-1">
-          <a href="/fleet" className="flex-1 border-2 border-brand-black text-brand-black text-[13px] font-black py-2 rounded-[10px] hover:bg-primary hover:border-primary transition-colors text-center">
+          <a href="/our-vehicles" className="flex-1 border-2 border-brand-black text-brand-black text-[13px] font-black py-2 rounded-[10px] hover:bg-primary hover:border-primary transition-colors text-center">
             View Details
           </a>
           <Button href={ctaHref} size="sm" className="flex-1 text-[13px]">{ctaLabel}</Button>

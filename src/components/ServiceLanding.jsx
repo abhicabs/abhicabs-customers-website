@@ -16,7 +16,7 @@ import SectionRenderer from "./SectionRenderer";
 import ServiceBooking, { scrollToBooking } from "./ServiceBooking";
 import useCmsContent from "../hooks/useCmsContent";
 import { usePageContext } from "vike-react/usePageContext";
-import { contactFormHref } from "../data/siteLinks";
+import { contactFormHref, serviceHref } from "../data/siteLinks";
 import useServiceLinks from "../hooks/useServiceLinks";
 import { cldOptimize } from "../utils/cloudinaryUrl";
 import { resolveIcon } from "./ui/iconMap";
@@ -36,7 +36,7 @@ const DEFAULT_STEPS = [
   { title: "Confirm & ride", desc: "A verified driver, on time." },
 ];
 
-/** "Explore our [cab fleet](/fleet) today" → text with a real internal link. Plain strings pass through unchanged. */
+/** "Explore our [cab fleet](/our-vehicles) today" → text with a real internal link. Plain strings pass through unchanged. */
 const LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
 export function renderInline(text) {
   if (typeof text !== "string" || !text.includes("](")) return text;
@@ -464,7 +464,7 @@ export function newCustomSection(type) {
     case "checklist":   return { ...base, heading: "What to Expect", items: ["First item", "Second item"] };
     case "richContent": return { ...base, heading: "Detailed Content", html: "<h2>Sub-heading</h2><p>Write anything here — add <strong>bold</strong>, <em>italic</em>, <a href='/services'>links</a>, images, tables, lists.</p><ul><li>Item one</li><li>Item two</li></ul>" };
     case "table":       return { ...base, heading: "Information Table", headers: ["Column 1", "Column 2", "Column 3"], rows: [{ cells: ["Row 1", "Data", "Data"] }], caption: "" };
-    case "buttons":     return { ...base, heading: "Quick Links", buttons: [{ label: "Book Now", url: "#booking", style: "primary", external: false }, { label: "View Fleet", url: "/fleet", style: "outline", external: false }], align: "center" };
+    case "buttons":     return { ...base, heading: "Quick Links", buttons: [{ label: "Book Now", url: "#booking", style: "primary", external: false }, { label: "View Fleet", url: "/our-vehicles", style: "outline", external: false }], align: "center" };
     case "imageText":   return { ...base, heading: "About This Service", body: ["Describe the service in detail here."], image: "", imageAlt: "", imageCaption: "", imagePosition: "left", linkText: "Learn More", linkUrl: "" };
     default:            return { ...base, heading: "New Section", body: [] };
   }
@@ -578,7 +578,7 @@ function PricingConnect({ cfg, BookBtn, canBook, tone }) {
 
 export default function ServiceLanding({ cfg }) {
   const canBook = !!cfg.mode;
-  const related = [...useServiceLinks().filter((l) => l.href !== `/services/${cfg.slug}`).map((l) => ({ label: l.short, href: l.href })), { label: "All Services", href: "/services" }];
+  const related = [...useServiceLinks().filter((l) => l.href !== serviceHref(cfg.slug)).map((l) => ({ label: l.short, href: l.href })), { label: "All Services", href: "/services" }];
   const primaryLabel = cfg.primaryLabel || (canBook ? "Book Your Ride" : "Send an Enquiry");
 
   const defaults = {
@@ -715,7 +715,7 @@ export default function ServiceLanding({ cfg }) {
           <Reveal variant="zoom">
             <div className="relative mt-8 overflow-hidden rounded-2xl bg-[#111] text-white px-6 py-5 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-[18px] md:text-[20px] font-bold leading-tight text-center sm:text-left">Find the right vehicle for your journey</p>
-              <BookBtn variant="inverse" size="lg" href="/fleet" className="shrink-0">{cfg.fleet.ctaLabel || "Explore Our Fleet"}</BookBtn>
+              <BookBtn variant="inverse" size="lg" href="/our-vehicles" className="shrink-0">{cfg.fleet.ctaLabel || "Explore Our Fleet"}</BookBtn>
               <span aria-hidden className="ac-hero-sweep absolute inset-0 pointer-events-none" />
             </div>
           </Reveal>
@@ -834,7 +834,7 @@ export default function ServiceLanding({ cfg }) {
         actions={<>
           <BookBtn variant="inverse" size="lg">{c.cta.primaryLabel}</BookBtn>
           {!canBook && <Button href="/services" variant="outlineInverse" size="lg">All Services</Button>}
-          {canBook && <Button href="/contact-us" variant="outlineInverse" size="lg">Talk to Us</Button>}
+          {canBook && <Button href="/contact" variant="outlineInverse" size="lg">Talk to Us</Button>}
         </>}
       />
     ),
