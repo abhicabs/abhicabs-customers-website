@@ -17,6 +17,8 @@ import { ROUTES as HOME_ROUTES } from "../../../data/mockData";
  */
 const SERVICE_ICONS = [Navigation, Route, Building2, Briefcase, Users];
 const SHORT_TABS = ["Intercity", "Drop Taxi", "Long-Distance", "Business", "Family & Personal"];
+// a different route diagram for each tab (designs live in OutstationSections.jsx)
+const KINDS = ["oneway", "drop", "long", "business", "family"];
 
 // photo / distance / drive time for each route — same data as the home page's popular routes
 const routeExtras = (to) => {
@@ -30,7 +32,7 @@ export default function OneWayOutstation({ cfg }) {
 
   const [h1Main, h1Accent] = String(cfg.hero?.heading || "").split(/\s+–\s+/);
   const types = (cfg.intro?.items || []).map((it, i) => ({
-    title: it.heading, desc: it.body, short: SHORT_TABS[i], kind: "oneway",
+    title: it.heading, desc: it.body, short: SHORT_TABS[i], kind: KINDS[i] || "oneway",
     icon: React.createElement(SERVICE_ICONS[i % SERVICE_ICONS.length], { className: "w-5 h-5", "aria-hidden": true }),
     cta: cfg.primaryLabel,
   }));

@@ -9,25 +9,88 @@ const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-
 /* ════════════ Trip types — switcher with an animated route diagram per type ════════════ */
 
 /** Diagram per trip type: stops (x,y in a 320×160 box) and the path the car takes. */
+/* Route diagrams. Each design: the route (path), its stops ([x, y]), and optional
+   marker labels / icons / shapes, background details and the car's start–end on the route. */
+const ICON = {
+  home: "M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z",
+  heart: "M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z",
+  building: "M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2 M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2 M10 6h4 M10 10h4 M10 14h4 M10 18h4",
+  briefcase: "M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16 M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z",
+  coffee: "M10 2v2 M14 2v2 M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1",
+};
 const DIAGRAMS = {
-  oneway: { stops: [[40, 110], [280, 50]], path: "M40,110 C120,110 200,50 280,50", labels: ["A", "B"] },
-  round: { stops: [[50, 80], [270, 80]], path: "M50,80 C110,20 210,20 270,80 C210,140 110,140 50,80", labels: ["A", "B"] },
-  multi: { stops: [[40, 120], [130, 40], [230, 70], [290, 130]], path: "M40,120 C60,60 100,40 130,40 C170,40 200,70 230,70 C260,70 280,100 290,130", labels: ["A", "B", "C", "D"] },
+  oneway: { stops: [[40, 110], [280, 50]], path: "M40,110 C120,110 200,50 280,50", labels: ["A", "B"], car: ["0.14;0.84;0.84", "0;0.8;1"], dur: "3.4s" },
+  round: { stops: [[50, 80], [270, 80]], path: "M50,80 C110,20 210,20 270,80 C210,140 110,140 50,80", labels: ["A", "B"], car: ["0.07;0.93", "0;1"], dur: "4.6s" },
+  multi: { stops: [[40, 120], [130, 40], [230, 70], [290, 130]], path: "M40,120 C60,60 100,40 130,40 C170,40 200,70 230,70 C260,70 280,100 290,130", labels: ["A", "B", "C", "D"], car: ["0.1;0.9", "0;1"], dur: "5s" },
+  // Drop taxi — straight point-to-point run, ends at a map-pin "drop" marker
+  drop: { stops: [[46, 112], [272, 66]], path: "M46,112 L272,66", labels: ["A", ""], shapes: ["circle", "pin"], car: ["0.16;0.8;0.8", "0;0.8;1"], dur: "3s" },
+  // Long-distance — a winding road across state borders
+  long: { stops: [[30, 120], [294, 46]], path: "M30,120 C70,120 72,42 122,42 S172,122 214,112 S256,44 294,46", labels: ["A", "B"],
+          borders: [104, 206], car: ["0.13;0.87;0.87", "0;0.85;1"], dur: "5.4s" },
+  // Business — office to office on a city-grid route
+  business: { stops: [[48, 116], [274, 50]], path: "M48,116 H140 Q152,116 152,104 V62 Q152,50 164,50 H274", icons: ["building", "briefcase"], shapes: ["tile", "tile"],
+              grid: true, car: ["0.11;0.87;0.87", "0;0.8;1"], dur: "3.8s" },
+  // Family & personal — home to destination, with a stop on the way
+  family: { stops: [[40, 112], [168, 80], [282, 60]], path: "M40,112 C80,62 128,128 168,80 S246,40 282,60", icons: ["home", "coffee", "heart"], waypoint: 1,
+            car: ["0.16;0.84;0.84", "0;0.82;1"], dur: "4.6s" },
 };
 const kindOf = (title = "") => (/round/i.test(title) ? "round" : /multi/i.test(title) ? "multi" : "oneway");
 const journeyFor = (kind) => (kind === "round" || kind === "multi" ? { tripType: "round-trip" } : { tripType: "one-way" });
 
+function Stop({ x, y, i, last, d }) {
+  const dark = i === 0;
+  const fill = dark ? "#111" : "#FFD54F";
+  const ink = dark ? "#FFD54F" : "#111";
+  const shape = d.shapes?.[i] || "circle";
+  const icon = d.icons?.[i] && ICON[d.icons[i]];
+  const small = d.waypoint === i;                      // a stop along the way: smaller, lighter
+  const r = small ? 12 : 17;
+  if (shape === "pin") {
+    return (
+      <g>
+        <path d={`M${x},${y} C${x - 13},${y - 16} ${x - 13},${y - 36} ${x},${y - 36} C${x + 13},${y - 36} ${x + 13},${y - 16} ${x},${y} Z`} fill={fill} stroke="#111" strokeWidth="2.5" strokeLinejoin="round" />
+        <circle cx={x} cy={y - 23} r="5" fill="#111" />
+      </g>
+    );
+  }
+  return (
+    <g>
+      {shape === "tile"
+        ? <rect x={x - 17} y={y - 17} width="34" height="34" rx="9" fill={fill} stroke="#111" strokeWidth="2.5" />
+        : <circle cx={x} cy={y} r={r} fill={small ? "#FFF6D1" : fill} stroke="#111" strokeWidth={small ? 2 : 2.5} />}
+      {icon
+        ? <g transform={`translate(${x - (small ? 7 : 9)} ${y - (small ? 7 : 9)}) scale(${small ? 0.58 : 0.75})`} fill="none" stroke={small ? "#111" : ink} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d={icon} /></g>
+        : <text x={x} y={y + 5} textAnchor="middle" fontSize="14" fontWeight="900" fill={ink} fontFamily="inherit">{d.labels?.[i]}</text>}
+    </g>
+  );
+}
+
 function RouteDiagram({ kind, moving = true }) {
-  const d = DIAGRAMS[kind];
-  const dur = kind === "multi" ? "5s" : kind === "round" ? "4.6s" : "3.4s";
+  const d = DIAGRAMS[kind] || DIAGRAMS.oneway;
+  const [kp, kt] = d.car;
   return (
     <svg viewBox="0 0 320 160" className="w-full h-auto" aria-hidden>
-      <path d={d.path} fill="none" stroke="rgba(17,17,17,.12)" strokeWidth="10" strokeLinecap="round" />
-      <path key={kind} d={d.path} fill="none" stroke="#111" strokeWidth="3" strokeDasharray="8 8" strokeLinecap="round" pathLength="100" className="ac-draw" />
-      {/* the cab driving the route */}
+      {/* background details */}
+      {d.grid && (
+        <g stroke="rgba(17,17,17,.07)" strokeWidth="1">
+          {[40, 80, 120, 160, 200, 240, 280].map((x) => <line key={`gx${x}`} x1={x} y1="10" x2={x} y2="150" />)}
+          {[30, 70, 110, 150].map((y) => <line key={`gy${y}`} x1="10" y1={y} x2="310" y2={y} />)}
+        </g>
+      )}
+      {d.borders?.map((x, i) => (
+        <g key={`b${x}`}>
+          <line x1={x} y1="14" x2={x} y2="146" stroke="rgba(17,17,17,.28)" strokeWidth="1.5" strokeDasharray="3 5" />
+          <text x={x + 5} y="22" fontSize="8" fontWeight="800" letterSpacing="1" fill="rgba(17,17,17,.4)" fontFamily="inherit">STATE {i + 2}</text>
+        </g>
+      ))}
+      {d.borders && <text x="16" y="22" fontSize="8" fontWeight="800" letterSpacing="1" fill="rgba(17,17,17,.4)" fontFamily="inherit">STATE 1</text>}
+
+      <path d={d.path} fill="none" stroke="rgba(17,17,17,.12)" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+      <path key={kind} d={d.path} fill="none" stroke="#111" strokeWidth="3" strokeDasharray="8 8" strokeLinecap="round" strokeLinejoin="round" pathLength="100" className="ac-draw" />
+      {/* the cab driving the route (drawn under the markers so their labels stay readable) */}
       {moving && (
         <g key={`car-${kind}`}>
-          <animateMotion dur={dur} begin="0s" repeatCount="indefinite" path={d.path} rotate="auto" keyPoints={kind === "oneway" ? "0.14;0.84;0.84" : kind === "multi" ? "0.1;0.9" : "0.07;0.93"} keyTimes={kind === "oneway" ? "0;0.8;1" : "0;1"} calcMode="linear" />
+          <animateMotion dur={d.dur} begin="0s" repeatCount="indefinite" path={d.path} rotate="auto" keyPoints={kp} keyTimes={kt} calcMode="linear" />
           <rect x="-13" y="-8" width="26" height="16" rx="5" fill="#111" />
           <rect x="-6" y="-6" width="11" height="12" rx="2.5" fill="#FFD54F" />
           <circle cx="9" cy="-4" r="1.6" fill="#FFF1B8" /><circle cx="9" cy="4" r="1.6" fill="#FFF1B8" />
@@ -35,8 +98,7 @@ function RouteDiagram({ kind, moving = true }) {
       )}
       {d.stops.map(([x, y], i) => (
         <g key={`${kind}-${i}`} className="ac-pop" style={{ animationDelay: `${0.25 + i * 0.2}s` }}>
-          <circle cx={x} cy={y} r="17" fill={i === 0 ? "#111" : "#FFD54F"} stroke="#111" strokeWidth="2.5" />
-          <text x={x} y={y + 5} textAnchor="middle" fontSize="14" fontWeight="900" fill={i === 0 ? "#FFD54F" : "#111"} fontFamily="inherit">{d.labels[i]}</text>
+          <Stop x={x} y={y} i={i} last={i === d.stops.length - 1} d={d} />
         </g>
       ))}
     </svg>
