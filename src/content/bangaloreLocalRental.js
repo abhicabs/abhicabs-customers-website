@@ -9,7 +9,7 @@ export const BLR_LOCAL = {
     title: "Car Rental in Bangalore with Driver | Hourly Packages | Abhi Cabs 24×7",
     description: "Book a chauffeur-driven car rental in Bangalore with Abhi Cabs 24×7. Choose 4-hour, 8-hour or 12-hour local packages for shopping, meetings, sightseeing and city travel.",
   },
-  breadcrumb: [["Home", "/"], ["Services", "/services"], ["Car Rental", "/local-car-rental"], ["Bangalore", null]],
+  breadcrumb: [["Home", "/"], ["Services", "/services"], ["Local Car Rental", "/local-car-rental"], ["Bangalore", null]],
 
   hero: {
     h1: "Car Rental in Bangalore with Driver – Abhi Cabs 24×7",

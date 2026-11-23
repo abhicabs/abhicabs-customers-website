@@ -50,13 +50,11 @@ function Hero({ booking, onBook }) {
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-black/90 via-black/70 to-black/30" />
       <div className="max-w-[1264px] mx-auto px-5 sm:px-6 pt-8 pb-10 md:pt-12 md:pb-14">
         <Breadcrumb items={C.breadcrumb} light />
-        <div className="max-w-[760px]">
-          <h1 className="mt-3 text-[36px] sm:text-[48px] lg:text-[60px] font-black tracking-[-0.04em] leading-[1.02] [text-wrap:balance]">{h.h1}</h1>
-          <h2 className="mt-4 text-[19px] md:text-[23px] font-extrabold text-primary">{h.h2}</h2>
-          <div className="mt-4 space-y-3 text-[15.5px] md:text-[16.5px] text-white/80 leading-relaxed">
-            {h.body.map((p, i) => <p key={i}>{rich(p, "font-semibold text-primary underline underline-offset-2 hover:text-white")}</p>)}
-          </div>
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+        <div className="max-w-[900px]">
+          <h1 className="mt-3 text-[30px] sm:text-[40px] lg:text-[50px] font-black tracking-[-0.035em] leading-[1.08] [text-wrap:balance]">{h.h1}</h1>
+          <h2 className="mt-3 text-[18px] md:text-[22px] font-extrabold text-primary">{h.h2}</h2>
+          {/* Hero description paragraphs (h.body) are kept in the content but not shown — same as every other page's hero. */}
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             <Button size="lg" onClick={() => onBook(null)}>{h.cta} <ArrowRight size={17} aria-hidden /></Button>
             <span className="text-[13px] font-bold text-white/55 ml-1">Quick pick:</span>
             {C.packages.items.map((p) => (
