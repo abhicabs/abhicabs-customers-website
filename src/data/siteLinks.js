@@ -33,10 +33,10 @@ export const serviceHref = (slug) => SERVICE_URLS[slug] || `/services/${slug}`;
 export const contactFormHref = (subject) => `/contact?subject=${encodeURIComponent(subject)}#contact-form`;
 
 export const SERVICE_LINKS = [
-  { href: "/local-car-rental", label: "Local Taxi Services", short: "Local Rental", mode: "local" },
+  { href: "/local-car-rental", label: "Local Taxi Services", short: "Local Car Rental", mode: "local" },
   { href: "/airport-taxi", label: "Airport Taxi", short: "Airport Taxi", mode: "airport" },
-  { href: "/one-way-cabs", label: "One-Way Outstation", short: "One Way", mode: "one-way" },
-  { href: "/round-trip-cabs", label: "Round Trip Services", short: "Round Trip", mode: "round-trip" },
+  { href: "/one-way-cabs", label: "One-Way Outstation", short: "One Way Cabs", mode: "one-way" },
+  { href: "/round-trip-cabs", label: "Round Trip Services", short: "Round Trip Cabs", mode: "round-trip" },
   { href: "/services/corporate", label: "Corporate Transportation", short: "Corporate", mode: null },
 ];
 
@@ -60,7 +60,7 @@ export const FOOTER_COLUMNS = [
       ["Tempo Traveller", "/vehicles/tempo-traveller"],
       ["All Services", ROUTES.services],
       ["Blogs", ROUTES.blogs],
-      ["Contact Us", ROUTES.contact],
+      ["Contact", ROUTES.contact],
     ],
   },
   {
