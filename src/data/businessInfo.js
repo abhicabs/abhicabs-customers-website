@@ -20,7 +20,7 @@ export const PHONES = [
   { label: "+91 80960 00183", href: "tel:+918096000183" },
 ];
 
-export const EMAIL = "support@abhicabs.com"; // same as Footer; CMS override supported
+export const EMAIL = "contact@abhicab.com"; // same as Footer; CMS override supported
 
 export const WHATSAPP_NUMBER = "918096000182"; // same as Footer
 export const WHATSAPP_MESSAGE = "Hello Abhi Cabs, I would like to enquire about your cab services.";
