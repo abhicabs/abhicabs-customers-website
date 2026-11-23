@@ -12,8 +12,8 @@ export const SERVICE_DEFAULTS = {
   slug: "local", mode: "local",
   primaryLabel: "Book Your Local Cab",
   hero: {
-    eyebrow: "Local Cab Booking",
-    heading: "Local Cab Booking Services \u2013 Hourly & City Taxi Rentals",
+    eyebrow: "Local Car Booking",
+    heading: "Local Car Booking Services \u2013 Hourly & City Taxi Rentals",
     subheading: "Explore Your City with Abhi Cabs 24\u00d77",
     description: "Looking for a convenient local cab booking service? Abhi Cabs 24\u00d77 offers local taxi services for city sightseeing, shopping, office travel, business meetings, and family outings. Choose from comfortable sedans, spacious SUVs, and group vehicles with professional drivers. Whether you need a short city ride or an hourly car rental, find a suitable vehicle for your journey.",
     image: "/images/hero-local-chauffeur.webp", imagePosition: "72% center",
@@ -32,7 +32,7 @@ export const SERVICE_DEFAULTS = {
         body: "Book an hourly taxi rental for meetings, errands, shopping, or multiple stops. Choose a suitable rental duration and travel conveniently around the city." },
       { heading: "City Sightseeing Cab Services",
         body: "Discover local attractions with city sightseeing cab rentals. Ideal for tourists, families, and visitors planning to explore popular destinations comfortably." },
-      { heading: "Corporate & Business Cab Rentals",
+      { heading: "Corporate & Business Car Rentals",
         body: "Choose local taxi services for business travel, office meetings, client visits, and corporate events. Plan your city travel according to your business schedule." },
       { heading: "Family & Personal Cab Services",
         body: "Book a local car rental with driver for family outings, hospital visits, shopping, social events, and other personal travel needs." },
@@ -40,14 +40,14 @@ export const SERVICE_DEFAULTS = {
   },
   pricing: {
     eyebrow: "Rental Packages",
-    heading: "Hourly, Half-Day & Full-Day Cab Rental Packages",
+    heading: "Hourly, Half-Day & Full-Day Car Rental Packages",
     subheading: "Flexible Local Taxi Rentals for Your Schedule",
     listHeading: null,
     intro: "At Abhi Cabs 24\u00d77, we offer flexible hourly car rental packages for different city travel requirements. Depending on availability, choose a shorter rental or a longer package for sightseeing, business appointments, and family outings.",
     points: [
       "Hourly Car Rental: Suitable for short trips, meetings, errands, and shopping.",
-      "Half-Day Cab Rental: Ideal for local sightseeing, appointments, and multiple city stops.",
-      "Full-Day Cab Rental: Convenient for extended city travel, family outings, and business schedules.",
+      "Half-Day Car Rental: Ideal for local sightseeing, appointments, and multiple city stops.",
+      "Full-Day Car Rental: Convenient for extended city travel, family outings, and business schedules.",
     ],
     note: "Rental duration, included kilometres, and applicable charges depend on the selected package.",
     ctaLabel: "Check Hourly Car Rental Packages",
@@ -55,11 +55,11 @@ export const SERVICE_DEFAULTS = {
   },
   fleet: {
     eyebrow: "Our Vehicles",
-    heading: "Choose Your Vehicle for Local Cab Booking",
+    heading: "Choose Your Vehicle for Local Car Booking",
     subheading: "Sedans, SUVs & Group Vehicles for City Travel",
     intro: "Select a vehicle from the Abhi Cabs 24\u00d77 vehicles based on your passenger count, luggage, and travel requirements.",
     points: [
-      "Sedan Cab Rentals: Swift Dzire or similar vehicles for individuals and small families.",
+      "Sedan Car Rentals: Swift Dzire or similar vehicles for individuals and small families.",
       "SUV & MUV Rentals: Ertiga, Innova, and Innova Hycross for spacious family travel.",
       "Tempo Traveller Rentals: Suitable for group sightseeing and family outings.",
       "Force Urbania & Bus Rentals: Options for larger groups and corporate city travel.",
@@ -83,7 +83,7 @@ export const SERVICE_DEFAULTS = {
   },
   coverage: {
     eyebrow: "Service Areas",
-    heading: "Local Cab Booking in Karnataka, Andhra Pradesh, Maharashtra & Telangana",
+    heading: "Local Car Booking in Karnataka, Andhra Pradesh, Maharashtra & Telangana",
     subheading: "Find Local Taxi Services in Your City",
     body: [
       "Abhi Cabs 24\u00d77 provides local car rental services at supported pickup locations across Karnataka, Andhra Pradesh, Maharashtra, and Telangana.",
@@ -115,7 +115,7 @@ export const SERVICE_DEFAULTS = {
       { title: "Booking Availability", desc: "Check vehicle and package availability for your city and travel date." },
     ],
   },
-  faqHeading: "Frequently Asked Questions About Local Cab Booking",
+  faqHeading: "Frequently Asked Questions About Local Car Booking",
   faqs: [
     ["How can I book a local cab with Abhi Cabs 24\u00d77?", "Visit abhicabs24x7.com, enter your pickup details, select your preferred local cab and rental package, and submit your booking request."],
     ["Does Abhi Cabs 24\u00d77 offer hourly car rentals?", "Yes. We offer hourly car rental services for shopping, sightseeing, office meetings, and personal city travel."],
@@ -151,7 +151,7 @@ export const SERVICE_DEFAULTS = {
     { id: "cta", enabled: true },
   ],
   seo: {
-    title: "Local Cab Booking Services \u2013 Hourly & City Taxi Rentals | Abhi Cabs 24\u00d77",
+    title: "Local Car Booking Services \u2013 Hourly & City Taxi Rentals | Abhi Cabs 24\u00d77",
     description: "Book local cabs and hourly taxi rentals with Abhi Cabs 24\u00d77 for city sightseeing, shopping, office travel and family outings across supported cities.",
   },
   cardIcon: "clock",

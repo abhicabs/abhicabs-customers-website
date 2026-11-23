@@ -30,7 +30,7 @@ export default function LocalCarRental({ cfg }) {
     <>
       <PageHero
         center image={c.hero.image} imagePosition={c.hero.image === cfg.hero.image ? cfg.hero.imagePosition : undefined} imageAlt={cfg.hero.alt || ""}
-        breadcrumb={[["Home", "/"], ["Services", "/services"], [cfg.hero.eyebrow || "Local Cab Booking", null]]}
+        breadcrumb={[["Home", "/"], ["Services", "/services"], [cfg.hero.eyebrow || "Local Car Booking", null]]}
         title={c.hero.title} subtitle={cfg.hero.subheading} description={c.hero.description}
       >
         <ServiceBooking widgetKey={booking.key} initialMode={cfg.mode || "local"} presetJourney={booking.journey} />
