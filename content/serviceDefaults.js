@@ -13,7 +13,7 @@ export const SERVICE_DEFAULTS = {
   primaryLabel: "Book Your Local Cab",
   hero: {
     eyebrow: "Local Car Booking",
-    heading: "Local Car Booking Services \u2013 Hourly & City Taxi Rentals",
+    heading: "Local Car Rental Services \u2013 Hourly & City Taxi Rentals",
     subheading: "Explore Your City with Abhi Cabs 24\u00d77",
     description: "Looking for a convenient local cab booking service? Abhi Cabs 24\u00d77 offers local taxi services for city sightseeing, shopping, office travel, business meetings, and family outings. Choose from comfortable sedans, spacious SUVs, and group vehicles with professional drivers. Whether you need a short city ride or an hourly car rental, find a suitable vehicle for your journey.",
     image: "/images/hero-local-chauffeur.webp", imagePosition: "72% center",
