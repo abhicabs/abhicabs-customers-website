@@ -35,7 +35,7 @@ const RENTAL_OPTIONS = [
   { label: "Airport Taxi Booking", desc: "Convenient airport pickup and drop-off services.", href: "/airport-taxi" },
   { label: "Outstation Cab Rentals", desc: "Comfortable intercity and interstate journeys.", href: "/one-way-cabs" },
   { label: "Round-Trip Cab Booking", desc: "Flexible return journeys for business and family trips.", href: "/round-trip-cabs" },
-  { label: "Hourly Cab Rentals", desc: "Book cabs for meetings, shopping, sightseeing, and local travel.", href: "/local-car-rental" },
+  { label: "Hourly Car Rentals", desc: "Book cabs for meetings, shopping, sightseeing, and local travel.", href: "/local-car-rental" },
   { label: "Local Taxi Services", desc: "Convenient vehicle options for everyday city travel.", href: "/local-car-rental" },
   { label: "Group Vehicle Rentals", desc: "Tempo Travellers, Urbania, and buses for group transportation.", href: "/vehicles/tempo-traveller" },
 ];
@@ -47,7 +47,7 @@ const WHY_CHOOSE = [
   { Icon: Armchair, title: "Comfortable Travel Options", desc: "Select spacious vehicles suited to short city rides or long-distance journeys." },
   { Icon: Snowflake, title: "AC & Non-AC Vehicles", desc: "Choose available vehicle options based on your travel preferences." },
   { Icon: PartyPopper, title: "Vehicles for Every Occasion", desc: "Suitable for airport transfers, family vacations, corporate outings, weddings, and group tours." },
-  { Icon: Clock, title: "Flexible Rental Packages", desc: "Choose hourly cab rentals, local travel, outstation trips, or round-trip bookings." },
+  { Icon: Clock, title: "Flexible Rental Packages", desc: "Choose hourly car rentals, local travel, outstation trips, or round-trip bookings." },
   { Icon: MousePointerClick, title: "Easy Vehicle Selection", desc: "Explore the Abhi Cabs 24×7 vehicles and choose a vehicle that matches your group size and travel plans." },
 ];
 
@@ -55,7 +55,7 @@ const WHY_CHOOSE = [
 const FLEET_FAQS = [
   { q: "1. What types of vehicles are available at Abhi Cabs 24×7?", a: "Abhi Cabs 24×7 offers Swift Dzire, Ertiga, Innova, Innova Hycross, Tempo Traveller, Force Urbania, and BharatBenz buses for local, airport, outstation, and group travel." },
   { q: "2. Can I book an outstation cab for travel across India?", a: "Yes. Abhi Cabs 24×7 provides outstation cab booking services with pickups from Karnataka, Andhra Pradesh, Maharashtra, and Telangana to destinations across India." },
-  { q: "3. Does Abhi Cabs 24×7 provide hourly cab rentals?", a: "Yes, we offer hourly cab rental services for city sightseeing, shopping, business meetings, and personal travel." },
+  { q: "3. Does Abhi Cabs 24×7 provide hourly car rentals?", a: "Yes, we offer hourly car rental services for city sightseeing, shopping, business meetings, and personal travel." },
   { q: "4. Can I book a Tempo Traveller for family and group trips?", a: "Yes. You can book Tempo Traveller rentals with Abhi Cabs 24×7 for family vacations, pilgrimages, corporate outings, sightseeing, and group tours." },
   { q: "5. Which vehicles are suitable for small families?", a: "Swift Dzire, Ertiga, Innova, and Innova Hycross are suitable options depending on your passenger count, luggage, and travel requirements." },
   { q: "6. Can I book a cab for round-trip travel?", a: "Yes. Abhi Cabs 24×7 offers round-trip cab bookings for business travel, family vacations, sightseeing, and long-distance outstation journeys." },

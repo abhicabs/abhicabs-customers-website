@@ -119,7 +119,7 @@ export const SERVICE_PRESETS = [
         faq("What happens if I exceed the package?", "Extra hours or kilometres are charged at the applicable rate, shown up front."),
       ],
       ctaA: "Need a cab", ctaB: "for the day?", ctaText: "Book a local rental and travel on your schedule.",
-      seoTitle: `Local Taxi in ${city} | Hourly Car Rental | Abhi Cabs`, seoDesc: `Hourly and full-day local cab rentals in ${city} with verified drivers and transparent fares. Choose a 4, 8 or 12 hour package and book online.`,
+      seoTitle: `Local Taxi in ${city} | Hourly Car Rental | Abhi Cabs`, seoDesc: `Hourly and full-day local car rentals in ${city} with verified drivers and transparent fares. Choose a 4, 8 or 12 hour package and book online.`,
     }),
   },
   {

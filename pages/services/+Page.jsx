@@ -42,8 +42,8 @@ const SERVICE_CARDS = [
   },
   {
     Icon: Timer,
-    title: "Hourly Cab Rentals – Travel on Your Schedule",
-    desc: "Need a taxi for a few hours? Choose hourly cab rental services from Abhi Cabs 24×7 for shopping, meetings, sightseeing, and personal travel. Select an hourly rental package suited to your journey.",
+    title: "Hourly Car Rentals – Travel on Your Schedule",
+    desc: "Need a taxi for a few hours? Choose hourly car rental services from Abhi Cabs 24×7 for shopping, meetings, sightseeing, and personal travel. Select an hourly rental package suited to your journey.",
     cta: "Book Hourly Rental",
   },
   {
@@ -73,7 +73,7 @@ const OCCASIONS = [
   { label: "Corporate Transportation", desc: "Group vehicles for meetings, events, and team outings." },
   { label: "Pilgrimage Tours", desc: "Convenient cab bookings for religious journeys." },
   { label: "Weddings & Events", desc: "Vehicle rentals for guests and group transportation." },
-  { label: "City Sightseeing", desc: "Local taxis and hourly cab rentals for exploring destinations." },
+  { label: "City Sightseeing", desc: "Local taxis and hourly car rentals for exploring destinations." },
 ];
 
 /* ── Popular Routes ── */
@@ -107,7 +107,7 @@ const FAQS = [
   { q: "1. What types of cab services does Abhi Cabs 24×7 provide?", a: "Abhi Cabs 24×7 offers airport taxi services, local cabs, outstation taxi bookings, one-way trips, round-trip cabs, hourly rentals, driver services, and group transportation." },
   { q: "2. Can I book an outstation cab to destinations across India?", a: "Yes. We provide outstation cab bookings with pickups from Karnataka, Andhra Pradesh, Maharashtra, and Telangana to destinations across India, subject to route availability." },
   { q: "3. Does Abhi Cabs 24×7 provide one-way taxi services?", a: "Yes. You can book one-way cabs for intercity travel, business trips, and point-to-point journeys without scheduling a return trip." },
-  { q: "4. Are hourly cab rental services available?", a: "Yes. Abhi Cabs 24×7 offers hourly cab rentals for shopping, local sightseeing, business meetings, and personal travel." },
+  { q: "4. Are hourly car rental services available?", a: "Yes. Abhi Cabs 24×7 offers hourly car rentals for shopping, local sightseeing, business meetings, and personal travel." },
   { q: "5. Can I book a round-trip taxi for a family vacation?", a: "Yes. Our round-trip cab services are suitable for family holidays, sightseeing, pilgrimages, and long-distance travel." },
   { q: "6. Do you provide airport pickup and drop-off services?", a: "Yes. We provide airport taxi booking services from supported pickup and drop-off locations, with different vehicle options based on passenger and luggage requirements." },
   { q: "7. Can I book a Tempo Traveller or bus for group travel?", a: "Yes. Abhi Cabs 24×7 provides Tempo Travellers, Force Urbania vehicles, and buses for family tours, weddings, corporate outings, and group transportation." },

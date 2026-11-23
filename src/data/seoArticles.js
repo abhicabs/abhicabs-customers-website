@@ -367,7 +367,7 @@ export const SEO_ARTICLES = [
     "headline": "Local Taxi vs Outstation Taxi: What's the Difference?",
     "description": "Local taxi vs outstation taxi explained: how each is booked, what the key differences are, and how to choose the right one for your trip.",
     "date": "Nov 01, 2026",
-    "keywords": "local taxi vs outstation taxi, difference between local taxi and outstation taxi, local cab rental, outstation cab, hourly cab rental",
+    "keywords": "local taxi vs outstation taxi, difference between local taxi and outstation taxi, local car rental, outstation cab, hourly car rental",
     "author": "Abhi Cabs",
     "image": "/images/travelling.jpg",
     "imageAlt": "A cab travelling within a city",
@@ -387,7 +387,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "A local taxi, or local cab rental, stays within a city. Instead of booking a single point-to-point ride, you book a cab with a driver for a set number of hours — for errands, meetings, shopping or sightseeing. With Abhi Cabs, local packages are available for 4, 8 or 12 hours. See <a href=\"/services/local\">local taxi and rentals</a>."
+        "text": "A local taxi, or local car rental, stays within a city. Instead of booking a single point-to-point ride, you book a cab with a driver for a set number of hours — for errands, meetings, shopping or sightseeing. With Abhi Cabs, local packages are available for 4, 8 or 12 hours. See <a href=\"/services/local\">local taxi and rentals</a>."
       },
       {
         "type": "h2",

@@ -35,7 +35,7 @@ const SERVICES = [
   { Icon: Navigation, label: "Outstation Cabs", desc: "Comfortable intercity and interstate cab bookings." },
   { Icon: Car, label: "Local Taxi Services", desc: "Convenient taxi services for city travel and sightseeing." },
   { Icon: Repeat, label: "Round-Trip Cabs", desc: "Flexible round-trip taxi bookings for business, leisure, and family travel." },
-  { Icon: Timer, label: "Hourly Cab Rentals", desc: "Flexible hourly taxi rental services for meetings, shopping, sightseeing, and personal travel." },
+  { Icon: Timer, label: "Hourly Car Rentals", desc: "Flexible hourly taxi rental services for meetings, shopping, sightseeing, and personal travel." },
   { Icon: UserCheck, label: "Driver Services", desc: "Professional driving assistance for your journeys." },
   { Icon: Users, label: "Group Travel", desc: "Spacious vehicle options for families and large groups." },
 ];
@@ -116,7 +116,7 @@ export default function Page() {
             <p className="mt-5 text-[18px] md:text-[21px] font-extrabold text-[#334155]">Your Trusted Travel Partner for Every Journey</p>
             <p className="mt-4 text-[15.5px] md:text-[16.5px] text-[#3F3F46] leading-[1.75]">
               Welcome to <strong className="text-[#111] font-bold">Abhi Cabs 24×7</strong>, your trusted travel partner for comfortable, convenient, and hassle-free journeys. We provide{" "}
-              <strong className="text-[#111] font-bold">online cab booking, airport taxi services, local cabs, outstation cab bookings, round-trip taxi services, hourly cab rentals, and driver services</strong>.
+              <strong className="text-[#111] font-bold">online cab booking, airport taxi services, local cabs, outstation cab bookings, round-trip taxi services, hourly car rentals, and driver services</strong>.
               With pickups from <strong className="text-[#111] font-bold">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</strong>, we make travelling to destinations across India simple and convenient.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-5">
@@ -149,7 +149,7 @@ export default function Page() {
               <h3 className="mt-4 text-[18px] md:text-[22px] font-extrabold text-[#7A5D00] leading-snug max-w-[360px]">Making Every Journey Comfortable &amp; Convenient</h3>
             </div>
             <p className="text-[20px] md:text-[26px] font-semibold text-[#27272A] leading-[1.5] tracking-[-0.01em]">
-              At Abhi Cabs 24×7, we offer reliable <Mark>taxi booking services</Mark> for individuals, families, businesses, and groups. From short city rides and <Mark>hourly cab rentals</Mark> to long-distance outstation trips, our vehicle options ranging from <Mark>4-seaters to 50-seaters</Mark> help you find the right travel solution for every journey.
+              At Abhi Cabs 24×7, we offer reliable <Mark>taxi booking services</Mark> for individuals, families, businesses, and groups. From short city rides and <Mark>hourly car rentals</Mark> to long-distance outstation trips, our vehicle options ranging from <Mark>4-seaters to 50-seaters</Mark> help you find the right travel solution for every journey.
             </p>
           </div>
           <img src="/images/who-we-are-fleet.webp" alt="Abhi Cabs vehicles — 4 Seater, 7 Seater, 14 Seater and 50 Seater vehicles" loading="lazy" width="1536" height="1024"
@@ -220,7 +220,7 @@ export default function Page() {
             </h2>
             <h3 className="mt-4 inline-block rounded-full bg-[#111] text-[#FFD54F] px-5 py-2 text-[15px] md:text-[17px] font-extrabold">Travel from Your City to Destinations Across India</h3>
             <p className="mt-6 text-[16px] md:text-[17px] text-[#111]/80 leading-[1.8]">
-              Abhi Cabs 24×7 offers <strong className="text-[#111]">Pan-India taxi services</strong>, with pickups from <strong className="text-[#111]">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</strong>. Whether you're planning an airport transfer, local journey, hourly cab rental, outstation trip, or round-trip booking, we provide convenient travel options to destinations across India.
+              Abhi Cabs 24×7 offers <strong className="text-[#111]">Pan-India taxi services</strong>, with pickups from <strong className="text-[#111]">Karnataka, Andhra Pradesh, Maharashtra, and Telangana</strong>. Whether you're planning an airport transfer, local journey, hourly car rental, outstation trip, or round-trip booking, we provide convenient travel options to destinations across India.
             </p>
           </div>
         </div>
@@ -232,7 +232,7 @@ export default function Page() {
         onBookMode={() => { if (typeof window !== "undefined") window.location.href = BOOKING_HREF; }}
         line1="Book Your Cab Online"
         line2="with Abhi Cabs 24×7"
-        description="Your Journey, Our Priority. Planning your next trip? Choose Abhi Cabs 24×7 for reliable airport transfers, local taxi services, hourly cab rentals, outstation cabs, and round-trip bookings. Book your preferred vehicle and enjoy a convenient travel experience."
+        description="Your Journey, Our Priority. Planning your next trip? Choose Abhi Cabs 24×7 for reliable airport transfers, local taxi services, hourly car rentals, outstation cabs, and round-trip bookings. Book your preferred vehicle and enjoy a convenient travel experience."
         primaryLabel="Book Your Ride Now"
         secondary={false}
       />

@@ -60,7 +60,7 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.6 }}
-              style={{ textAlign: "center", maxWidth: 620, margin: "0 auto 30px" }}
+              style={{ textAlign: "center", maxWidth: 1000, margin: "0 auto 30px" }}
             >
               <m.span variants={fadeUp} style={{ display: "inline-block", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#B8860B" }}>
                 Routes
@@ -68,7 +68,7 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
               <m.h2 variants={fadeUp} style={{ fontWeight: 800, fontSize: "clamp(26px,3.4vw,42px)", lineHeight: 1.12, margin: "8px 0 6px", letterSpacing: "-.02em" }}>
                 Popular Routes
               </m.h2>
-              <m.p variants={fadeUp} style={{ fontSize: 15.5, color: "#666", fontWeight: 400, margin: 0 }}>
+              <m.p variants={fadeUp} style={{ fontSize: 15.5, color: "#666", fontWeight: 400, margin: "0 auto", maxWidth: 620 }}>
                 Explore some of the routes travellers book most often.
               </m.p>
 
@@ -78,7 +78,7 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
                   variants={fadeUp}
                   role="tablist"
                   aria-label="Filter routes by trip type"
-                  className="mx-auto mt-6 inline-flex max-w-full gap-1 overflow-x-auto rounded-full border border-[#ECE9E2] p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  className="mx-auto mt-6 inline-flex flex-wrap justify-center max-w-full gap-1 rounded-[24px] sm:rounded-full border border-[#ECE9E2] p-1"
                   style={{ background: LIGHT }}
                 >
                   {["All", ...badges].map((b) => {
@@ -154,7 +154,7 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
                             <img loading="lazy" decoding="async" src={r.img} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                           )}
                           <span style={{ position: "absolute", top: 12, left: 12, padding: "5px 11px", borderRadius: 9999, background: badge.bg, color: badge.fg, fontWeight: 600, fontSize: 11, zIndex: 2 }}>
-                            {r.badge}
+                            {r.badgeLabel || r.badge}
                           </span>
                         </div>
                         <div style={{ padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flex: 1 }}>
