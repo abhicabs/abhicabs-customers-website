@@ -11,7 +11,7 @@ import { TerminalSigns, BaggageTags, DeparturesBoard, PreflightChecklist } from 
 import { renderInline } from "../bangalore/shared";
 
 /**
- * /airport-taxi — the "Airport Cabs" menu page. Content is whatever ServicePageView passes in
+ * /airport-taxi — the "Airport Taxi" menu page. Content is whatever ServicePageView passes in
  * (CMS version if an editor created one, else serviceDefaults["airport-taxi"]); layout is airport-themed.
  * Every action prefills the hero booking widget (Airport mode with airport + direction where it can).
  */

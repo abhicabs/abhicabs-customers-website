@@ -13,7 +13,7 @@ import { ROUTES as HOME_ROUTES } from "../../../data/mockData";
 /**
  * One Way Cabs page (/one-way-cabs) — the Outstation page's design, filled with the
  * One-Way content from src/content/serviceDefaults.js ("one-way-outstation", or its
- * CMS override). /one-way-cabs now 301-redirects here.
+ * CMS override). /outstation now 301-redirects here.
  */
 const SERVICE_ICONS = [Navigation, Route, Building2, Briefcase, Users];
 const SHORT_TABS = ["Intercity", "Drop Taxi", "Long-Distance", "Business", "Family & Personal"];

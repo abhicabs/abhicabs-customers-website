@@ -9,7 +9,7 @@ import CtaBand from "../../src/components/CtaBand";
 import { VehicleShowroom, RentalOptionTiles } from "../../src/components/landing/fleet/FleetShowroom";
 import { BenefitRows, CoverageTickets, FaqSearch } from "../../src/components/landing/local/LocalSections";
 
-/* "Vehicle Rental" menu page. The fleet itself is live from the backend (useVehicleCatalogue);
+/* "Our Vehicles" menu page. The fleet itself is live from the backend (useVehicleCatalogue);
    the copy below is the page's own content, unchanged. Layout: src/components/landing/fleet. */
 
 const TABS = [
@@ -106,7 +106,7 @@ export default function FleetPage() {
         image="/images/hero-fleet-hills.webp"
         imagePosition="60% center"
         imageAlt="Abhi Cabs vehicles"
-        breadcrumb={[["Home", "/"], ["Vehicle Rental", null]]}
+        breadcrumb={[["Home", "/"], ["Our Vehicles", null]]}
         title={<>Our Vehicles – <span className="ac-gold-shimmer">Cab Rental & Vehicle Booking Services</span> Across India</>}
         subtitle="Find Your Perfect Ride with Abhi Cabs 24×7"
         description={HERO_DESCRIPTION}

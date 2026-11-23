@@ -89,7 +89,7 @@ export function VehicleShowroom({ fleet, loading, error, retry, tabs, categoryIn
       )}
       {!loading && error && (
         <div className="mt-8 rounded-[24px] bg-white border border-border py-14 px-6 text-center">
-          <p className="text-[15px] text-text-secondary">We couldn't load the fleet right now.</p>
+          <p className="text-[15px] text-text-secondary">We couldn't load our vehicles right now.</p>
           <div className="mt-4"><Button variant="outline" onClick={retry}>Try again</Button></div>
         </div>
       )}

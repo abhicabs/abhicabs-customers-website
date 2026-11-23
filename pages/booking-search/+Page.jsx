@@ -1290,7 +1290,7 @@ export default function Page() {
         <StateBlock
           tone="empty"
           icon={<IconPin className="w-6.5 h-6.5" />}
-          title="We couldn't load the fleet"
+          title="We couldn't load our vehicles"
           description={catalogueError}
           action={<button onClick={retryCatalogue} style={{ height: 44, padding: "0 24px", borderRadius: 9999, background: "#111", color: "#fff", fontWeight: 700, border: "none", cursor: "pointer" }}>Try again</button>}
         />

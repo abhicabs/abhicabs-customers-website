@@ -512,7 +512,7 @@ export const SEO_ARTICLES = [
       {
         "type": "ul",
         "text": [
-          "<strong>Sedan</strong> — a comfortable choice for couples and small families with light luggage, such as the Maruti Swift Dzire on our <a href=\"/our-vehicles\">fleet</a>.",
+          "<strong>Sedan</strong> — a comfortable choice for couples and small families with light luggage, such as the Maruti Swift Dzire on our <a href=\"/our-vehicles\">vehicles page</a>.",
           "<strong>MUV</strong> — extra seating and more luggage space for medium-sized families, such as the Maruti Ertiga.",
           "<strong>SUV</strong> — the usual choice for larger families and long drives, such as the Toyota Innova Crysta, Innova and Innova Hycross.",
           "<strong>Premium SUV</strong> — extra space and comfort, such as the Toyota Fortuner."
@@ -935,7 +935,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "Abhi Cabs offers 12 and 17 seater Tempo Travellers, Force Urbania vans, and larger luxury coaches. See the full <a href=\"/our-vehicles\">fleet</a> for what is available."
+        "text": "Abhi Cabs offers 12 and 17 seater Tempo Travellers, Force Urbania vans, and larger luxury coaches. See all our <a href=\"/our-vehicles\">vehicles</a> for what is available."
       },
       {
         "type": "table",

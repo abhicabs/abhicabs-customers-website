@@ -144,7 +144,7 @@ export default function FleetCarouselSection({ vehicles = [], loading = false, e
             <div style={{ background: "#fff", border: "1px solid #EFEFEF", borderRadius: 20, padding: "36px 20px", textAlign: "center", color: "#666", fontSize: 14.5 }}>
               {loading ? "Loading our vehicles…" : error ? (
                 <>
-                  <div style={{ marginBottom: 12 }}>We couldn't load the fleet right now.</div>
+                  <div style={{ marginBottom: 12 }}>We couldn't load our vehicles right now.</div>
                   {onRetry && (
                     <button onClick={onRetry} style={{ padding: "10px 22px", borderRadius: 11, border: "1.5px solid #111", background: "#fff", fontWeight: 600, cursor: "pointer" }}>Try again</button>
                   )}

@@ -10,7 +10,7 @@ import { BenefitRows, CoverageTickets, FaqSearch, FleetShowcase } from "../local
 import { ServicePhotoGrid, RoundTripRoutes } from "./IntercitySections";
 
 /**
- * /round-trip-cabs — the "Intercity Cabs" menu page. Content is whatever ServicePageView passes in
+ * /round-trip-cabs — the "Round Trip Cabs" menu page. Content is whatever ServicePageView passes in
  * (CMS version if an editor created one, else serviceDefaults["round-trip"]); layout themed on the return loop.
  * Every action prefills the hero booking widget in Round Trip mode.
  */
