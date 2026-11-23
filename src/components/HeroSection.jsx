@@ -78,8 +78,8 @@ const DEFAULT_FEATURES = ["Verified Drivers", "Transparent Pricing", "Comfortabl
 
 export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
   const cms = usePageContent("home");
-  const heroTitle = cms.get("hero", "title", "Your Journey,");
-  const heroAccent = cms.get("hero", "accent", "Our Priority.");
+  const heroTitle = cms.get("hero", "title", " Online Cab Booking Services –");
+  const heroAccent = cms.get("hero", "accent", "Local, Airport & Outstation Cabs");
   const heroDesc = cms.get("hero", "description", "Reliable Cabs. Transparent Fares. Comfortable Travel. Book reliable cabs for airport transfers, local travel, one-way trip, round trip, group trip and outstation journeys.");
   const heroImage = cms.get("hero", "image", "");
   const FEATURES = cms.getItems("features", "items", DEFAULT_FEATURES.map(f => typeof f === "string" ? { title: f } : f)).map(f => typeof f === "string" ? f : f.title || f);
