@@ -24,21 +24,21 @@ function RouteDiagram({ kind, moving = true }) {
     <svg viewBox="0 0 320 160" className="w-full h-auto" aria-hidden>
       <path d={d.path} fill="none" stroke="rgba(17,17,17,.12)" strokeWidth="10" strokeLinecap="round" />
       <path key={kind} d={d.path} fill="none" stroke="#111" strokeWidth="3" strokeDasharray="8 8" strokeLinecap="round" pathLength="100" className="ac-draw" />
+      {/* the cab driving the route */}
+      {moving && (
+        <g key={`car-${kind}`}>
+          <animateMotion dur={dur} begin="0s" repeatCount="indefinite" path={d.path} rotate="auto" keyPoints={kind === "oneway" ? "0.14;0.84;0.84" : kind === "multi" ? "0.1;0.9" : "0.07;0.93"} keyTimes={kind === "oneway" ? "0;0.8;1" : "0;1"} calcMode="linear" />
+          <rect x="-13" y="-8" width="26" height="16" rx="5" fill="#111" />
+          <rect x="-6" y="-6" width="11" height="12" rx="2.5" fill="#FFD54F" />
+          <circle cx="9" cy="-4" r="1.6" fill="#FFF1B8" /><circle cx="9" cy="4" r="1.6" fill="#FFF1B8" />
+        </g>
+      )}
       {d.stops.map(([x, y], i) => (
         <g key={`${kind}-${i}`} className="ac-pop" style={{ animationDelay: `${0.25 + i * 0.2}s` }}>
           <circle cx={x} cy={y} r="17" fill={i === 0 ? "#111" : "#FFD54F"} stroke="#111" strokeWidth="2.5" />
           <text x={x} y={y + 5} textAnchor="middle" fontSize="14" fontWeight="900" fill={i === 0 ? "#FFD54F" : "#111"} fontFamily="inherit">{d.labels[i]}</text>
         </g>
       ))}
-      {/* the cab driving the route */}
-      {moving && (
-        <g key={`car-${kind}`}>
-          <animateMotion dur={dur} begin="1s" repeatCount="indefinite" path={d.path} rotate="auto" keyPoints={kind === "oneway" ? "0;1;1" : "0;1"} keyTimes={kind === "oneway" ? "0;0.8;1" : "0;1"} calcMode="linear" />
-          <rect x="-13" y="-8" width="26" height="16" rx="5" fill="#111" />
-          <rect x="-6" y="-6" width="11" height="12" rx="2.5" fill="#FFD54F" />
-          <circle cx="9" cy="-4" r="1.6" fill="#FFF1B8" /><circle cx="9" cy="4" r="1.6" fill="#FFF1B8" />
-        </g>
-      )}
     </svg>
   );
 }
