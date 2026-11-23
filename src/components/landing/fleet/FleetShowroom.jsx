@@ -82,7 +82,7 @@ export function VehicleShowroom({ fleet, loading, error, retry, tabs, categoryIn
 
       {/* ── states ── */}
       {loading && (
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-5" aria-busy="true" aria-label="Loading our fleet">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-5" aria-busy="true" aria-label="Loading our vehicles">
           <div className="aspect-[16/10] rounded-[28px] bg-[#ECEAE3] animate-pulse motion-reduce:animate-none" />
           <div className="rounded-[28px] bg-[#ECEAE3] animate-pulse motion-reduce:animate-none min-h-[320px]" />
         </div>

@@ -152,7 +152,7 @@ export default function Page() {
               At Abhi Cabs 24×7, we offer reliable <Mark>taxi booking services</Mark> for individuals, families, businesses, and groups. From short city rides and <Mark>hourly cab rentals</Mark> to long-distance outstation trips, our vehicle options ranging from <Mark>4-seaters to 50-seaters</Mark> help you find the right travel solution for every journey.
             </p>
           </div>
-          <img src="/images/who-we-are-fleet.webp" alt="Abhi Cabs fleet — 4 Seater, 7 Seater, 14 Seater and 50 Seater vehicles" loading="lazy" width="1536" height="1024"
+          <img src="/images/who-we-are-fleet.webp" alt="Abhi Cabs vehicles — 4 Seater, 7 Seater, 14 Seater and 50 Seater vehicles" loading="lazy" width="1536" height="1024"
             className="ab-grow mt-12 md:mt-16 w-full aspect-[16/9] md:aspect-[21/9] object-cover object-[50%_62%] rounded-[28px] shadow-[0_40px_80px_-50px_rgba(0,0,0,.6)]" />
         </div>
       </section>

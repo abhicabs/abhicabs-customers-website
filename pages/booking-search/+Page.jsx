@@ -1220,7 +1220,7 @@ export default function Page() {
                 ? "Group & Coach Vehicles"
                 : browseType === "fleet"
                   ? "Available Vehicles"
-                  : "Browse Our Fleet"}
+                  : "Browse Our Vehicles"}
           </div>
           <p style={{ fontSize: 13, color: "rgba(255,255,255,.6)", margin: "4px 0 0" }}>
             {seaterFlow
@@ -1285,7 +1285,7 @@ export default function Page() {
       ) : loading ? (
         <StateBlock icon={<Spinner />} title="Finding available cabs…" description="Matching vehicles to your journey." />
       ) : (browseMode && catalogueLoading) ? (
-        <StateBlock icon={<Spinner />} title="Loading our fleet…" description="Fetching available vehicles." />
+        <StateBlock icon={<Spinner />} title="Loading our vehicles…" description="Fetching available vehicles." />
       ) : (browseMode && catalogueError) ? (
         <StateBlock
           tone="empty"

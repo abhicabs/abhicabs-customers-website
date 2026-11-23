@@ -66,7 +66,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "After you search, you will see the cabs available for your trip. Compare vehicle types and check the fare before you go any further. Each vehicle's details page lists seating and luggage space, so you can match the car to your group — you can also browse the full <a href=\"/fleet\">Abhi Cabs fleet</a>."
+        "text": "After you search, you will see the cabs available for your trip. Compare vehicle types and check the fare before you go any further. Each vehicle's details page lists seating and luggage space, so you can match the car to your group — you can also browse the full <a href=\"/our-vehicles\">Abhi Cabs vehicles</a>."
       },
       {
         "type": "h2",
@@ -345,7 +345,7 @@ export const SEO_ARTICLES = [
           },
           {
             "q": "Is the fare different for different cars?",
-            "a": "Yes. Larger and more premium vehicles cost more than smaller ones. You can compare options on the fleet page."
+            "a": "Yes. Larger and more premium vehicles cost more than smaller ones. You can compare options on the vehicles page."
           },
           {
             "q": "What if my plans change after I book?",
@@ -355,7 +355,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "Compare vehicles on our <a href=\"/fleet\">fleet page</a> or <a href=\"/outstation\">explore outstation cabs</a>."
+        "text": "Compare vehicles on our <a href=\"/our-vehicles\">vehicles page</a> or <a href=\"/one-way-cabs\">explore outstation cabs</a>."
       }
     ]
   },
@@ -395,7 +395,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "An outstation taxi takes you to another city or town. It is booked as a one-way trip or a round trip, with the fare based on your route and trip type rather than on hours. Explore <a href=\"/outstation\">outstation cabs</a> for routes and options."
+        "text": "An outstation taxi takes you to another city or town. It is booked as a one-way trip or a round trip, with the fare based on your route and trip type rather than on hours. Explore <a href=\"/one-way-cabs\">outstation cabs</a> for routes and options."
       },
       {
         "type": "h2",
@@ -512,7 +512,7 @@ export const SEO_ARTICLES = [
       {
         "type": "ul",
         "text": [
-          "<strong>Sedan</strong> — a comfortable choice for couples and small families with light luggage, such as the Maruti Swift Dzire on our <a href=\"/fleet\">fleet</a>.",
+          "<strong>Sedan</strong> — a comfortable choice for couples and small families with light luggage, such as the Maruti Swift Dzire on our <a href=\"/our-vehicles\">fleet</a>.",
           "<strong>MUV</strong> — extra seating and more luggage space for medium-sized families, such as the Maruti Ertiga.",
           "<strong>SUV</strong> — the usual choice for larger families and long drives, such as the Toyota Innova Crysta, Innova and Innova Hycross.",
           "<strong>Premium SUV</strong> — extra space and comfort, such as the Toyota Fortuner."
@@ -886,7 +886,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "Planning a trip? <a href=\"/outstation\">Explore outstation cabs</a> or <a href=\"/#booking\">check fares for your route</a>."
+        "text": "Planning a trip? <a href=\"/one-way-cabs\">Explore outstation cabs</a> or <a href=\"/#booking\">check fares for your route</a>."
       }
     ]
   },
@@ -935,7 +935,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "Abhi Cabs offers 12 and 17 seater Tempo Travellers, Force Urbania vans, and larger luxury coaches. See the full <a href=\"/fleet\">fleet</a> for what is available."
+        "text": "Abhi Cabs offers 12 and 17 seater Tempo Travellers, Force Urbania vans, and larger luxury coaches. See the full <a href=\"/our-vehicles\">fleet</a> for what is available."
       },
       {
         "type": "table",
@@ -1011,7 +1011,7 @@ export const SEO_ARTICLES = [
       },
       {
         "type": "p",
-        "text": "Compare vehicles on the <a href=\"/fleet\">fleet page</a> or <a href=\"/contact?subject=booking#contact-form\">send an enquiry</a>."
+        "text": "Compare vehicles on the <a href=\"/our-vehicles\">vehicles page</a> or <a href=\"/contact?subject=booking#contact-form\">send an enquiry</a>."
       }
     ]
   },

@@ -41,7 +41,7 @@ export function newServiceContent(label, mode = "one-way", group = "") {
     features: { heading: `Why ${lower} with Abhi Cabs`, items: [
       { icon: "shield", title: "Verified drivers", desc: "KYC-verified, background-checked chauffeurs." },
       { icon: "price", title: "Transparent pricing", desc: "See the exact fare before you book." },
-      { icon: "car", title: "Clean, comfortable cars", desc: "A well-maintained fleet for every trip." },
+      { icon: "car", title: "Clean, comfortable cars", desc: "Well-maintained vehicles for every trip." },
       { icon: "phone", title: "Real people to help", desc: "Reach our team before, during and after your ride." },
     ] },
     pricing: { heading: `Understand ${lower} costs`, description: "What goes into your fare.", points: ["Distance or package chosen", "Vehicle category", "Tolls & parking at actuals"] },

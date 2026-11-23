@@ -20,7 +20,7 @@ export const SERVICES = {
       { icon: "plane", ...pickLink("airport"), title: "Airport Transfers", desc: "Pickups and drops for Kempegowda, Hyderabad and the other airports listed in the booking form.", points: ["Fare shown before you book", "Choose your airport and direction", "Book ahead for early flights"] },
       { icon: "navigation", ...pickLink("one-way"), title: "One-Way Outstation", desc: "Single-direction intercity trips. Enter your route, add stops and see the fare before you confirm.", points: ["Single-direction intercity travel", "Add stops along the route", "Verified outstation drivers"] },
       { icon: "repeat", ...pickLink("round-trip"), title: "Round Trip & Multi-Day", desc: "Return journeys and multi-day tours with the same driver — ideal for weekend getaways and family trips.", points: ["Same trusted driver throughout", "Driver stay & allowances clear", "Flexible day-by-day plans"] },
-      { icon: "building", ...pickLink(null), title: "Corporate Transport", desc: "Employee commute, client pickups and event logistics on monthly billing with a dedicated account manager.", points: ["GST invoicing & monthly billing", "Priority support desk", "Fleet for teams & events"] },
+      { icon: "building", ...pickLink(null), title: "Corporate Transport", desc: "Employee commute, client pickups and event logistics on monthly billing with a dedicated account manager.", points: ["GST invoicing & monthly billing", "Priority support desk", "Vehicles for teams & events"] },
     ],
     helper: { title: "Not sure which to pick?", desc: "Tell us where you're going and we'll quote the right option instantly.", cta: "Get an instant quote" },
   },

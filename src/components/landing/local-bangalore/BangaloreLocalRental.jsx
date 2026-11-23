@@ -186,7 +186,7 @@ function Vehicles({ onBook }) {
                   <p className="mt-3 max-w-[440px] text-[16px] text-white/70 leading-relaxed">{it.desc}</p>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Button size="md" onClick={() => onBook({ tripType: "local" })} tabIndex={0}>Book this car <ArrowRight size={16} aria-hidden /></Button>
-                    <Button size="md" variant="outlineInverse" href="/our-vehicles">View in fleet</Button>
+                    <Button size="md" variant="outlineInverse" href="/our-vehicles">View in Our Vehicles</Button>
                   </div>
                 </li>
               );

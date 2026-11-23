@@ -36,7 +36,7 @@ const DEFAULT_STEPS = [
   { title: "Confirm & ride", desc: "A verified driver, on time." },
 ];
 
-/** "Explore our [cab fleet](/our-vehicles) today" → text with a real internal link. Plain strings pass through unchanged. */
+/** "Explore our [vehicles](/our-vehicles) today" → text with a real internal link. Plain strings pass through unchanged. */
 const LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
 export function renderInline(text) {
   if (typeof text !== "string" || !text.includes("](")) return text;
@@ -686,7 +686,7 @@ export default function ServiceLanding({ cfg }) {
       const pts = cfg.fleet.points || [];
       return (
         <Section tone={getTone("fleet", "white")}>
-          <Reveal><SectionHead center className="mb-4" eyebrow={cfg.fleet.eyebrow || "Our Fleet"} title={cfg.fleet.heading} subheading={cfg.fleet.subheading} /></Reveal>
+          <Reveal><SectionHead center className="mb-4" eyebrow={cfg.fleet.eyebrow || "Our Vehicles"} title={cfg.fleet.heading} subheading={cfg.fleet.subheading} /></Reveal>
           {cfg.fleet.intro && <Reveal><p className="text-center text-[15px] text-text-secondary leading-relaxed max-w-[680px] mx-auto">{renderInline(cfg.fleet.intro)}</p></Reveal>}
 
           <div className="ac-fgrid ac-c4 gap-4 sm:gap-5 mt-10">
@@ -715,7 +715,7 @@ export default function ServiceLanding({ cfg }) {
           <Reveal variant="zoom">
             <div className="relative mt-8 overflow-hidden rounded-2xl bg-[#111] text-white px-6 py-5 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-[18px] md:text-[20px] font-bold leading-tight text-center sm:text-left">Find the right vehicle for your journey</p>
-              <BookBtn variant="inverse" size="lg" href="/our-vehicles" className="shrink-0">{cfg.fleet.ctaLabel || "Explore Our Fleet"}</BookBtn>
+              <BookBtn variant="inverse" size="lg" href="/our-vehicles" className="shrink-0">{cfg.fleet.ctaLabel || "Explore Our Vehicles"}</BookBtn>
               <span aria-hidden className="ac-hero-sweep absolute inset-0 pointer-events-none" />
             </div>
           </Reveal>

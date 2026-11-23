@@ -46,7 +46,7 @@ export const BLR_LOCAL = {
       { name: "Innova Hycross", type: "Premium MUV", image: "/images/tea-garden-road.jpg", desc: "Comfortable options for premium family and business journeys." },
       { name: "Tempo Traveller & Force Urbania", type: "Group", image: "/images/who-we-are-fleet.webp", crop: { x: 59, y: 56, zoom: 2.3 }, desc: "Available for larger groups, subject to rental requirements and availability." },
     ],
-    link: "Explore our [complete cab fleet](/our-vehicles) to compare suitable vehicle options.",
+    link: "Explore our [complete range of vehicles](/our-vehicles) to compare suitable vehicle options.",
     cta: "Explore Available Rental Cars",
   },
 

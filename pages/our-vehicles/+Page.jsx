@@ -33,7 +33,7 @@ const CATEGORY_INFO = {
 /* ── Cab Rental Options ── */
 const RENTAL_OPTIONS = [
   { label: "Airport Taxi Booking", desc: "Convenient airport pickup and drop-off services.", href: "/airport-taxi" },
-  { label: "Outstation Cab Rentals", desc: "Comfortable intercity and interstate journeys.", href: "/outstation" },
+  { label: "Outstation Cab Rentals", desc: "Comfortable intercity and interstate journeys.", href: "/one-way-cabs" },
   { label: "Round-Trip Cab Booking", desc: "Flexible return journeys for business and family trips.", href: "/round-trip-cabs" },
   { label: "Hourly Cab Rentals", desc: "Book cabs for meetings, shopping, sightseeing, and local travel.", href: "/local-car-rental" },
   { label: "Local Taxi Services", desc: "Convenient vehicle options for everyday city travel.", href: "/local-car-rental" },
@@ -48,7 +48,7 @@ const WHY_CHOOSE = [
   { Icon: Snowflake, title: "AC & Non-AC Vehicles", desc: "Choose available vehicle options based on your travel preferences." },
   { Icon: PartyPopper, title: "Vehicles for Every Occasion", desc: "Suitable for airport transfers, family vacations, corporate outings, weddings, and group tours." },
   { Icon: Clock, title: "Flexible Rental Packages", desc: "Choose hourly cab rentals, local travel, outstation trips, or round-trip bookings." },
-  { Icon: MousePointerClick, title: "Easy Vehicle Selection", desc: "Explore the Abhi Cabs 24×7 fleet and choose a vehicle that matches your group size and travel plans." },
+  { Icon: MousePointerClick, title: "Easy Vehicle Selection", desc: "Explore the Abhi Cabs 24×7 vehicles and choose a vehicle that matches your group size and travel plans." },
 ];
 
 /* ── FAQs ── */
@@ -62,10 +62,10 @@ const FLEET_FAQS = [
   { q: "7. Which vehicle is best for large group transportation?", a: "For larger groups, Tempo Traveller, Force Urbania, and BharatBenz bus rentals are suitable options depending on the number of passengers and travel requirements." },
   { q: "8. Are airport pickup and drop-off services available?", a: "Yes. Abhi Cabs 24×7 offers airport taxi booking services from supported locations, with different vehicle options based on passenger and luggage requirements." },
   { q: "9. Can I book buses for weddings and corporate events?", a: "Yes. Abhi Cabs 24×7 provides bus and group vehicle rentals for weddings, corporate events, family tours, and school or college trips." },
-  { q: "10. How can I book a vehicle with Abhi Cabs 24×7?", a: "Visit abhicabs24x7.com, explore our fleet, choose your preferred vehicle, enter your travel details, and submit your cab booking request." },
+  { q: "10. How can I book a vehicle with Abhi Cabs 24×7?", a: "Visit abhicabs24x7.com, explore our vehicles, choose your preferred vehicle, enter your travel details, and submit your cab booking request." },
 ];
 
-/** Book a vehicle from the fleet page — the SAME link the home page fleet uses:
+/** Book a vehicle from the vehicles page — the SAME link the home page fleet uses:
  *  cab search with this vehicle pre-selected (type=fleet = full catalogue).
  *  The customer enters the trip there and goes straight to checkout with it. */
 function bookHref(v) {
@@ -87,7 +87,7 @@ const STATES = {
 const CTA = {
   line1: "Book Your Cab Online",
   line2: "with Abhi Cabs 24×7",
-  description: "Your Journey, Your Choice of Vehicle. Looking for a suitable vehicle for your next trip? Abhi Cabs 24×7 offers sedans, SUVs, Tempo Travellers, Urbania, and buses for local travel, airport transfers, outstation journeys, hourly rentals, and round trips. Explore our fleet, select your preferred vehicle, and book your next journey with Abhi Cabs 24×7.",
+  description: "Your Journey, Your Choice of Vehicle. Looking for a suitable vehicle for your next trip? Abhi Cabs 24×7 offers sedans, SUVs, Tempo Travellers, Urbania, and buses for local travel, airport transfers, outstation journeys, hourly rentals, and round trips. Explore our vehicles, select your preferred vehicle, and book your next journey with Abhi Cabs 24×7.",
   primaryLabel: "Explore Vehicles & Book Now",
 };
 
@@ -105,25 +105,25 @@ export default function FleetPage() {
         center
         image="/images/hero-fleet-hills.webp"
         imagePosition="60% center"
-        imageAlt="Abhi Cabs fleet"
+        imageAlt="Abhi Cabs vehicles"
         breadcrumb={[["Home", "/"], ["Vehicle Rental", null]]}
-        title={<>Our Fleet – <span className="ac-gold-shimmer">Cab Rental & Vehicle Booking Services</span> Across India</>}
+        title={<>Our Vehicles – <span className="ac-gold-shimmer">Cab Rental & Vehicle Booking Services</span> Across India</>}
         subtitle="Find Your Perfect Ride with Abhi Cabs 24×7"
         description={HERO_DESCRIPTION}
       >
         <ServiceBooking widgetKey={booking.key} initialMode="one-way" presetJourney={booking.journey} />
       </PageHero>
 
-      <VehicleShowroom heading="Explore the Abhi Cabs 24×7 Fleet" fleet={fleet} loading={loading} error={error} retry={retry}
+      <VehicleShowroom heading="Explore the Abhi Cabs 24×7 Vehicles" fleet={fleet} loading={loading} error={error} retry={retry}
         tabs={tabs} categoryInfo={CATEGORY_INFO} bookHref={bookHref} />
 
       <RentalOptionTiles heading="Cab Rental Options for Every Travel Need" options={RENTAL_OPTIONS} />
 
-      <BenefitRows data={{ heading: "Why Choose the Abhi Cabs 24×7 Fleet?", subheading: "The Right Vehicle for Every Travel Need", items: WHY_CHOOSE }} ctaLabel={CTA.primaryLabel} onCta={() => book(null)} />
+      <BenefitRows data={{ heading: "Why Choose the Abhi Cabs 24×7 Vehicles?", subheading: "The Right Vehicle for Every Travel Need", items: WHY_CHOOSE }} ctaLabel={CTA.primaryLabel} onCta={() => book(null)} />
 
       <CoverageTickets data={STATES} onBook={book} tripType="one-way" bookLabel="Book from here" />
 
-      <FaqSearch heading="Frequently Asked Questions About the Abhi Cabs 24×7 Fleet" items={FLEET_FAQS} placeholder="Search questions, e.g. Tempo Traveller, bus, airport" />
+      <FaqSearch heading="Frequently Asked Questions About the Abhi Cabs 24×7 Vehicles" items={FLEET_FAQS} placeholder="Search questions, e.g. Tempo Traveller, bus, airport" />
 
       <CtaBand
         image="/images/hero-fleet-hills.webp"

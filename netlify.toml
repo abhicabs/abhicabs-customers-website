@@ -51,6 +51,12 @@
   force = true
 
 [[redirects]]
+  from = "/outstation"
+  to = "/one-way-cabs"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/contact-us"
   to = "/contact"
   status = 301

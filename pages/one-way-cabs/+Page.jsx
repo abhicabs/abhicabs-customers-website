@@ -1,4 +1,6 @@
 import ServicePageView from "../../src/components/ServicePageView";
+import OneWayOutstation from "../../src/components/landing/outstation/OneWayOutstation";
 
-// Built-in service. Content = CMS override if one exists, else src/content/serviceDefaults.js.
-export default function Page() { return <ServicePageView slug="one-way-outstation" />; }
+// "One Way Cabs" menu page — Outstation page design + One-Way content
+// (src/content/serviceDefaults.js "one-way-outstation", or its CMS override).
+export default function Page() { return <ServicePageView slug="one-way-outstation" Layout={OneWayOutstation} />; }

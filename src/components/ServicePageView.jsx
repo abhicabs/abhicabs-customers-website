@@ -5,6 +5,7 @@ import { usePageContext } from "vike-react/usePageContext";
 import EmojiIcon from "./ui/EmojiIcon";
 import SectionRenderer from "./SectionRenderer";
 import ServiceLanding from "./ServiceLanding";
+import ServiceTemplate from "./landing/template/ServiceTemplate";
 import LocalCarRental from "./landing/local/LocalCarRental";
 import { useAllPagesState } from "../hooks/usePageContent";
 import { SERVICE_DEFAULTS } from "../content/serviceDefaults";
@@ -23,7 +24,9 @@ export default function ServicePageView({ slug, Layout }) {
   // Which layout draws the page: a page-specific one passed in by the route
   // (e.g. <ServicePageView slug="airport-taxi" Layout={AirportTaxi} />),
   // the local car-rental layout for /services/local, else the shared ServiceLanding.
-  const View = Layout || (slug === "local" ? LocalCarRental : ServiceLanding);
+  // Built-ins keep their own layouts; every page CREATED IN THE CMS uses the
+  // "Car Rental in Bangalore" design as its template (landing/template/ServiceTemplate).
+  const View = Layout || (slug === "local" ? LocalCarRental : SERVICE_DEFAULTS[slug] ? ServiceLanding : ServiceTemplate);
   const config = useConfig();
   const { data } = usePageContext();          // from +data: { page, allPages, loadFailed } — fetched on the server
   const { pages, loading } = useAllPagesState();

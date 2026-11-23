@@ -54,10 +54,10 @@ export const SERVICE_DEFAULTS = {
     links: [],
   },
   fleet: {
-    eyebrow: "Our Fleet",
+    eyebrow: "Our Vehicles",
     heading: "Choose Your Vehicle for Local Cab Booking",
     subheading: "Sedans, SUVs & Group Vehicles for City Travel",
-    intro: "Select a vehicle from the Abhi Cabs 24\u00d77 fleet based on your passenger count, luggage, and travel requirements.",
+    intro: "Select a vehicle from the Abhi Cabs 24\u00d77 vehicles based on your passenger count, luggage, and travel requirements.",
     points: [
       "Sedan Cab Rentals: Swift Dzire or similar vehicles for individuals and small families.",
       "SUV & MUV Rentals: Ertiga, Innova, and Innova Hycross for spacious family travel.",
@@ -66,7 +66,7 @@ export const SERVICE_DEFAULTS = {
     ],
     note: "Vehicle availability varies by city, travel date, and booking requirements.",
     links: [],
-    ctaLabel: "Explore Our Fleet",
+    ctaLabel: "Explore Our Vehicles",
   },
   features: {
     heading: "Benefits of Choosing Our Local Cab Services",
@@ -186,11 +186,11 @@ export const SERVICE_DEFAULTS = {
                "Explore our [corporate cab services](/services/corporate) for additional business transportation options."] },
       { heading: "Family & Group Airport Taxi Services – Travel Together",
         body: ["Travelling with family, friends, or colleagues? Choose spacious SUVs, Tempo Travellers, Force Urbania vehicles, or buses for convenient group airport pickup and drop-off services.",
-               "Explore our [cab fleet](/our-vehicles) to find a vehicle that suits your passenger count and luggage requirements."] },
+               "Explore our [vehicles](/our-vehicles) to find a vehicle that suits your passenger count and luggage requirements."] },
     ],
   },
   pricing: {
-    eyebrow: "Our Fleet",
+    eyebrow: "Our Vehicles",
     heading: "Choose the Right Cab for Your Airport Journey",
     subheading: "Airport Taxi Options for Every Travel Need",
     listHeading: null,
@@ -262,7 +262,7 @@ export const SERVICE_DEFAULTS = {
     ["Does Abhi Cabs 24×7 provide airport pickup and drop-off services?", "Yes. Abhi Cabs 24×7 provides airport pickup and drop-off taxi services for individuals, families, business travellers, and groups at supported locations."],
     ["Can I book an airport cab for an early-morning flight?", "Yes. You can request an early-morning airport taxi based on your flight schedule, subject to vehicle availability."],
     ["Are late-night airport taxi services available?", "Yes. Abhi Cabs 24×7 accepts late-night airport taxi bookings, subject to availability at your pickup location."],
-    ["What types of vehicles are available for airport taxi booking?", "Abhi Cabs 24×7 offers sedans, SUVs, Innova vehicles, Tempo Travellers, Force Urbania vehicles, and buses for airport pickup and drop-off services. Explore our available cab fleet to choose a suitable vehicle based on your passenger count and luggage requirements."],
+    ["What types of vehicles are available for airport taxi booking?", "Abhi Cabs 24×7 offers sedans, SUVs, Innova vehicles, Tempo Travellers, Force Urbania vehicles, and buses for airport pickup and drop-off services. Explore our available vehicles to choose a suitable vehicle based on your passenger count and luggage requirements."],
     ["Can I book an airport taxi for my family with luggage?", "Yes. Choose a vehicle based on the number of passengers and luggage. SUVs and larger vehicles may be suitable for families carrying additional baggage."],
     ["Does Abhi Cabs 24×7 offer corporate airport taxi services?", "Yes. We provide corporate airport taxi services for business travellers, employees, executives, and groups. You can also explore our [corporate transportation services](/services/corporate)."],
     ["Are airport parking, tolls, and waiting charges included in the fare?", "Applicable charges depend on your selected route and booking terms. Review the fare details to confirm airport parking fees, tolls, waiting charges, and other costs before booking."],
@@ -341,7 +341,7 @@ export const SERVICE_DEFAULTS = {
   routesNote: "Check route availability and book your preferred vehicle with Abhi Cabs 24×7.",
   routesCtaLabel: "Explore One-Way Cab Routes",
   pricing: {
-    eyebrow: "Our Fleet",
+    eyebrow: "Our Vehicles",
     heading: "Choose Your Vehicle for One-Way Outstation Travel",
     subheading: "Comfortable Cabs for Short & Long-Distance Journeys",
     listHeading: null,
@@ -487,7 +487,7 @@ export const SERVICE_DEFAULTS = {
   routesNote: "Choose your preferred destination, enter your return date, and check available vehicles with Abhi Cabs 24\u00d77.",
   routesCtaLabel: "Explore Round-Trip Cab Routes",
   pricing: {
-    eyebrow: "Our Fleet",
+    eyebrow: "Our Vehicles",
     heading: "Choose the Right Vehicle for Your Round Trip",
     subheading: "Comfortable Outstation Cabs for Families & Groups",
     listHeading: null,
@@ -501,7 +501,7 @@ export const SERVICE_DEFAULTS = {
     ],
     note: "Vehicle availability depends on your selected route, travel dates, and passenger requirements.",
     links: [],
-    ctaLabel: "Explore Our Cab Fleet",
+    ctaLabel: "Explore Our Vehicles",
   },
   features: {
     heading: "Why Choose Our Round-Trip Cab Services?",
@@ -628,6 +628,12 @@ const EXTRA_FAQS = {
     ["What is the difference between a local taxi and an outstation taxi?", "A local taxi stays within a city and is booked by package hours; an outstation taxi goes to another city and is booked as a one-way or round trip."],
   ],
 };
-Object.entries(EXTRA_FAQS).forEach(([slug, extra]) => { SERVICE_DEFAULTS[slug].faqs = [...SERVICE_DEFAULTS[slug].faqs, ...extra]; });
+// Pages whose content must match the SEO documents exactly get NO extra FAQs appended.
+// (Remove a slug from this list to append its EXTRA_FAQS again.)
+const EXACT_CONTENT_PAGES = ["one-way-outstation", "round-trip", "local"];
+Object.entries(EXTRA_FAQS).forEach(([slug, extra]) => {
+  if (EXACT_CONTENT_PAGES.includes(slug)) return;
+  SERVICE_DEFAULTS[slug].faqs = [...SERVICE_DEFAULTS[slug].faqs, ...extra];
+});
 
 export const BUILT_IN_SLUGS = Object.keys(SERVICE_DEFAULTS);

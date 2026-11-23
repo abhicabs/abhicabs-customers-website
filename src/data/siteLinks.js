@@ -56,7 +56,7 @@ export const FOOTER_COLUMNS = [
     links: [
       ["Home", ROUTES.home],
       ["About", ROUTES.about],
-      ["Our Fleet", ROUTES.fleet],
+      ["Our Vehicles", ROUTES.fleet],
       ["Tempo Traveller", "/vehicles/tempo-traveller"],
       ["All Services", ROUTES.services],
       ["Blogs", ROUTES.blogs],
@@ -75,7 +75,7 @@ export const FOOTER_COLUMNS = [
       ["Pune", "/cities/pune"],
       ["Tirupati", "/cities/tirupati"],
       ["Visakhapatnam", "/cities/visakhapatnam"],
-      ["Outstation Cabs", "/outstation"],
+      ["One Way Cabs", "/one-way-cabs"],
     ],
   },
 ];

@@ -59,7 +59,7 @@ export function TripTypeSwitcher({ eyebrow, title, description, types, onBook })
   const base = useId();
   const tabs = useRef([]);
   const cur = types[active];
-  const kind = kindOf(cur.title);
+  const kind = cur.kind || kindOf(cur.title);
   const onKey = (e, i) => {
     const n = types.length;
     const next = e.key === "ArrowRight" ? (i + 1) % n : e.key === "ArrowLeft" ? (i - 1 + n) % n : null;
@@ -73,10 +73,10 @@ export function TripTypeSwitcher({ eyebrow, title, description, types, onBook })
 
       <div role="tablist" aria-label="Trip types" className="mt-10 mx-auto w-fit max-w-full flex gap-1.5 rounded-full bg-[#F3F2EE] p-1.5 overflow-x-auto">
         {types.map((t, i) => (
-          <button key={t.title} ref={(el) => (tabs.current[i] = el)} type="button" role="tab" id={`${base}-t${i}`} aria-controls={`${base}-p`}
+          <button key={t.short || t.title} ref={(el) => (tabs.current[i] = el)} type="button" role="tab" id={`${base}-t${i}`} aria-controls={`${base}-p`}
             aria-selected={i === active} tabIndex={i === active ? 0 : -1} onClick={() => setActive(i)} onKeyDown={(e) => onKey(e, i)}
             className={`shrink-0 inline-flex items-center gap-2 rounded-full px-5 py-3 text-[14.5px] font-bold transition-colors ${focusRing} ${i === active ? "bg-text text-white" : "text-text hover:bg-white"}`}>
-            <span aria-hidden className={i === active ? "text-primary" : ""}>{t.icon}</span>{t.title}
+            <span aria-hidden className={i === active ? "text-primary" : ""}>{t.icon}</span>{t.short || t.title}
           </button>
         ))}
       </div>
@@ -88,16 +88,16 @@ export function TripTypeSwitcher({ eyebrow, title, description, types, onBook })
         <div>
           <h3 className="text-[30px] md:text-[42px] font-extrabold tracking-[-0.03em] leading-[1.05]">{cur.title}</h3>
           <p className="mt-4 text-[16px] md:text-[17px] leading-[1.7] text-text/80">{cur.desc}</p>
-          <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-text text-white px-4 py-2 text-[13.5px] font-bold"><Check size={15} strokeWidth={3} aria-hidden className="text-primary" />{cur.highlight}</p>
+          {cur.highlight && <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-text text-white px-4 py-2 text-[13.5px] font-bold"><Check size={15} strokeWidth={3} aria-hidden className="text-primary" />{cur.highlight}</p>}
           <div className="mt-7">
             <Button size="lg" className="bg-text! text-white! shadow-none! hover:bg-black!" onClick={() => onBook(journeyFor(kind))}>
-              Plan a {cur.title.toLowerCase()} <ArrowRight size={18} aria-hidden />
+              {cur.cta || `Plan a ${cur.title.toLowerCase()}`} <ArrowRight size={18} aria-hidden />
             </Button>
           </div>
         </div>
       </div>
       {/* every type's text stays in the page for search engines and screen readers */}
-      <ul className="sr-only">{types.filter((_, i) => i !== active).map((t) => <li key={t.title}>{t.title}: {t.desc} {t.highlight}</li>)}</ul>
+      <ul className="sr-only">{types.filter((_, i) => i !== active).map((t) => <li key={t.title}>{t.title}: {t.desc} {t.highlight || ""}</li>)}</ul>
     </Band>
   );
 }
@@ -110,7 +110,7 @@ const FILTERS = [
   { id: "far", label: "300 km and more", test: (r) => r.km >= 300 },
 ];
 
-export function RouteBoard({ eyebrow, title, routes, onBook }) {
+export function RouteBoard({ eyebrow, title, sub, description, note, ctaLabel, routes, onBook }) {
   const [filter, setFilter] = useState("all");
   const [hover, setHover] = useState(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -124,7 +124,7 @@ export function RouteBoard({ eyebrow, title, routes, onBook }) {
   return (
     <Band id="routes" bg="bg-[#111]" className="text-white">
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-        <Head id="routes" light eyebrow={eyebrow} title={title} />
+        <Head id="routes" light eyebrow={eyebrow} title={title} sub={sub} intro={description ? [description] : []} />
         <div role="group" aria-label="Filter routes by distance" className="flex flex-wrap gap-2 shrink-0">
           {FILTERS.map((f) => (
             <button key={f.id} type="button" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}
@@ -151,11 +151,13 @@ export function RouteBoard({ eyebrow, title, routes, onBook }) {
               <span className="text-[13px] font-black tabular-nums text-white/35 hidden lg:block">{String(i + 1).padStart(2, "0")}</span>
               <img src={r.img} alt="" loading="lazy" decoding="async" className="lg:hidden w-16 h-16 rounded-[14px] object-cover" />
               <div className="min-w-0">
-                <p className="text-[13px] font-semibold text-white/50">{r.from} to</p>
+                {r.label && <span className="sr-only">{r.label}</span>}
+                <p aria-hidden={r.label ? true : undefined} className="text-[13px] font-semibold text-white/50">{r.from} to</p>
                 <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <span className="text-[26px] md:text-[44px] font-extrabold tracking-[-0.03em] leading-tight transition-colors duration-300 group-hover:text-primary">{r.to}</span>
                   {r.tag && <span className="rounded-full border border-white/25 px-2.5 py-0.5 text-[11.5px] font-bold text-white/75">{r.tag}</span>}
                 </p>
+                {r.desc && <p className="mt-1.5 text-[14px] md:text-[15px] text-white/65 leading-snug max-w-[560px]">{r.desc}</p>}
                 <p className="lg:hidden mt-1 flex gap-4 text-[13px] text-white/60">
                   <span className="inline-flex items-center gap-1"><MapPin size={13} aria-hidden />{r.km} km</span>
                   <span className="inline-flex items-center gap-1"><Clock size={13} aria-hidden />~{r.hr} hrs</span>
@@ -173,6 +175,8 @@ export function RouteBoard({ eyebrow, title, routes, onBook }) {
           ))}
         </ul>
       </div>
+      {note && <p className="mt-10 max-w-[680px] mx-auto text-center text-[14.5px] text-white/65 leading-relaxed">{note}</p>}
+      {ctaLabel && <div className="mt-6 text-center"><Button size="lg" onClick={() => onBook({ tripType: "one-way" })}>{ctaLabel}</Button></div>}
     </Band>
   );
 }

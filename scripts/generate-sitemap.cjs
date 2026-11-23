@@ -34,7 +34,6 @@ const STATIC_URLS = [
   { path: "/services/corporate",          priority: "0.8", changefreq: "monthly" },
   { path: "/bangalore/car-rental",        priority: "0.9", changefreq: "weekly" },
   { path: "/vehicles/tempo-traveller",    priority: "0.9", changefreq: "weekly" },
-  { path: "/outstation",                  priority: "0.9", changefreq: "monthly" },
   { path: "/our-vehicles",                       priority: "0.8", changefreq: "monthly" },
   { path: "/about",                       priority: "0.6", changefreq: "monthly" },
   { path: "/contact",                  priority: "0.7", changefreq: "monthly" },

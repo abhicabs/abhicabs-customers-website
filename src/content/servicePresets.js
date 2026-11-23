@@ -18,7 +18,7 @@ const STEPS = [step("Enter your trip", "Add pickup, drop, date and time."), step
 const FEATURES = [
   { icon: "shield", title: "Verified drivers", desc: "KYC-checked, background-verified chauffeurs." },
   { icon: "price", title: "Transparent fares", desc: "See the fare before you confirm — nothing hidden." },
-  { icon: "car", title: "Clean, comfortable cars", desc: "A well-maintained fleet, AC and non-AC." },
+  { icon: "car", title: "Clean, comfortable cars", desc: "Well-maintained vehicles, AC and non-AC." },
   { icon: "phone", title: "Real people to help", desc: "Reach our team before, during and after your ride." },
 ];
 

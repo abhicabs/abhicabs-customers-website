@@ -91,7 +91,7 @@ export const CITY_CONTENT = {
       subheading: "Book Your Mangalore Taxi in Three Easy Steps",
       steps: [
         { title: "Enter Your Travel Details", desc: "Choose your pickup location, destination, travel date, and pickup time." },
-        { title: "Choose Your Vehicle", desc: "Explore available sedans, SUVs, and group vehicles. Compare options through our cab fleet page." },
+        { title: "Choose Your Vehicle", desc: "Explore available sedans, SUVs, and group vehicles. Compare options through our vehicles page." },
         { title: "Complete Your Booking", desc: "Review your travel details and applicable fare, then submit your booking request through Abhi Cabs 24×7." },
       ],
     },

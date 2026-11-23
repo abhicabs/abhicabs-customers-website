@@ -34,7 +34,7 @@ export const CONTACT = {
     description: "Looking for reliable transportation solutions for your business? Connect with Abhi Cabs to discuss corporate travel and potential business partnerships.",
     categories: [
       { icon: "briefcase", title: "Corporate Transportation", cta: "Corporate Enquiry", subject: "Corporate Enquiry", prefill: "", points: ["Employee transportation", "Corporate travel", "Business meetings", "Airport transportation", "Business travel requirements"] },
-      { icon: "handshake", title: "Partnerships & Business Opportunities", cta: "Partnership Enquiry", subject: "Other", prefill: "Partnership enquiry: ", points: ["Business partnerships", "Transportation collaborations", "Fleet-related business opportunities", "Other commercial enquiries"] },
+      { icon: "handshake", title: "Partnerships & Business Opportunities", cta: "Partnership Enquiry", subject: "Other", prefill: "Partnership enquiry: ", points: ["Business partnerships", "Transportation collaborations", "Vehicle-related business opportunities", "Other commercial enquiries"] },
     ],
   },
   office: { eyebrow: "Location", title: "Visit Our Office", description: "Find our office location and connect with the Abhi Cabs team.", fallbackImage: "/images/hero-hill-road.webp" },

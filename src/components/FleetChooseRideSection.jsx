@@ -31,7 +31,7 @@ export default function FleetChooseRideSection({
   tabs,
   categoryField = "category",
   onStartBooking = "#booking",
-  eyebrow = "Our Fleet",
+  eyebrow = "Our Vehicles",
   title = "Choose Your Ride",
   description = "From everyday city travel to large group journeys, choose the vehicle that fits your trip.",
   id = "fleet",
@@ -78,7 +78,7 @@ export default function FleetChooseRideSection({
 
           {/* View Fleet CTA — stays on this page (per explicit instruction:
               no navigating away for these homepage content buttons) instead
-              of linking to a separate fleet page. */}
+              of linking to a separate vehicles page. */}
           <div className="text-center mt-10">
             <a
               href={onStartBooking}

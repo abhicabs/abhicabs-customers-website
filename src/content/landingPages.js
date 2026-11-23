@@ -47,7 +47,7 @@ export const LANDING_PAGES = {
           { kind: "bus", title: "Urbania & Bus Rentals in Bangalore", body: "Organising transportation for a larger group? Abhi Cabs 24×7 offers Force Urbania and bus rental options for weddings, company outings, educational trips and group tours." },
         ],
         note: "Vehicle models, seating capacities and luggage space depend on availability.",
-        links: ["Explore our complete [vehicle fleet](/our-vehicles) before choosing your rental vehicle."],
+        links: ["Explore our complete [range of vehicles](/our-vehicles) before choosing your rental vehicle."],
         cta: { label: "Explore Rental Vehicles", href: "/our-vehicles" },
       },
       hourly: {
@@ -135,7 +135,7 @@ export const LANDING_PAGES = {
         ],
         km: { Mysore: 145, Coorg: 250, Mangalore: 350, Chennai: 345, Hyderabad: 570, Goa: 560 }, // approximate road distance
         note: "Choose [one-way](/one-way-cabs) or [round-trip](/round-trip-cabs) options according to your journey and check route availability.",
-        cta: { label: "Explore Outstation Car Rentals", href: "/outstation" },
+        cta: { label: "Explore Outstation Car Rentals", href: "/one-way-cabs" },
       },
       chauffeur: {
         eyebrow: "Chauffeur-Driven", tone: "tint",
@@ -200,7 +200,7 @@ export const LANDING_PAGES = {
     faqs: [
       ["How can I book a car rental in Bangalore with driver?", "Visit abhicabs24x7.com, enter your pickup location, destination, travel date and time, then search for available chauffeur-driven rental cars."],
       ["Does Abhi Cabs 24×7 provide hourly car rental in Bangalore?", "Yes. Abhi Cabs 24×7 offers hourly car rental options in Bangalore for shopping, business meetings, sightseeing and personal travel."],
-      ["What types of rental cars are available in Bangalore?", "Depending on availability, choose from Swift Dzire, Ertiga, Innova, Innova Hycross and other vehicles. Explore our cab fleet for more options."],
+      ["What types of rental cars are available in Bangalore?", "Depending on availability, choose from Swift Dzire, Ertiga, Innova, Innova Hycross and other vehicles. Explore our vehicles for more options."],
       ["How much does a car rental in Bangalore cost?", "Bangalore car rental prices vary depending on vehicle type, travel distance, rental duration and trip requirements. Enter your details to check the applicable fare."],
       ["Can I rent a car in Bangalore for a full day?", "Yes. You can explore longer-duration rental options, including 12-hour local packages, subject to availability and applicable kilometre limits."],
       ["Are drivers included in Bangalore car rental services?", "Abhi Cabs 24×7 offers chauffeur-driven car rentals with professional drivers. Review the fare details for applicable charges."],
@@ -264,7 +264,7 @@ export const LANDING_PAGES = {
           { title: "33-Seater Bus Rental for Large Groups", body: "Planning a company outing, wedding, college trip, or pilgrimage? Abhi Cabs 24×7 offers 33-seater bus rental options for large-group transportation. Choose a suitable bus for organised travel, special events, and outstation journeys." },
         ],
         note: "Vehicle models, seating configurations, AC options, luggage space, and availability vary by pickup location and travel date.",
-        links: ["Explore our complete [cab and group vehicle fleet](/our-vehicles) for additional vehicle choices."],
+        links: ["Explore our complete [cab and group vehicles](/our-vehicles) for additional vehicle choices."],
         cta: { label: "Check Vehicle Availability" },
       },
       uses: {

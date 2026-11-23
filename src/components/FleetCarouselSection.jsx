@@ -128,7 +128,7 @@ export default function FleetCarouselSection({ vehicles = [], loading = false, e
             style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 26 }}
           >
             <div>
-              <span style={{ display: "inline-block", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#B8860B" }}>Our Fleet</span>
+              <span style={{ display: "inline-block", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#B8860B" }}>Our Vehicles</span>
               <h2 style={{ fontWeight: 800, fontSize: "clamp(26px,3.4vw,42px)", lineHeight: 1.12, margin: "8px 0 6px", letterSpacing: "-.02em" }}>Choose Your Ride</h2>
               <p style={{ fontSize: 15.5, color: "#666", fontWeight: 400, margin: 0, maxWidth: 520 }}>
                 From everyday city travel to large group journeys, choose the vehicle that fits your trip.
@@ -142,7 +142,7 @@ export default function FleetCarouselSection({ vehicles = [], loading = false, e
 
           {(loading || error || !vehicles.length) && (
             <div style={{ background: "#fff", border: "1px solid #EFEFEF", borderRadius: 20, padding: "36px 20px", textAlign: "center", color: "#666", fontSize: 14.5 }}>
-              {loading ? "Loading our fleet…" : error ? (
+              {loading ? "Loading our vehicles…" : error ? (
                 <>
                   <div style={{ marginBottom: 12 }}>We couldn't load the fleet right now.</div>
                   {onRetry && (

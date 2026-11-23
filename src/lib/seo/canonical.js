@@ -16,6 +16,7 @@ export const CANONICAL_ALIAS = {
   "/contact-us": "/contact",
   "/services/airport-transfer": "/airport-taxi",
   "/blog": "/blogs",
+  "/outstation": "/one-way-cabs",
 };
 
 // App / transactional screens: keep out of search results (robots.txt also blocks crawling).

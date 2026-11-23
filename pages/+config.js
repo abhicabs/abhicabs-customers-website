@@ -28,6 +28,7 @@ export default {
     "/contact-us": "/contact",
     "/services/airport-transfer": "/airport-taxi",
     "/blog": "/blogs",
+    "/outstation": "/one-way-cabs",
   },
   // Real brand favicon (the "A" road-and-pin mark). Uses the pre-rasterized
   // .ico rather than the raw .svg — the source logo is a highly detailed
