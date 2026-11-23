@@ -83,7 +83,7 @@ export const SERVICE_DEFAULTS = {
   },
   coverage: {
     eyebrow: "Service Areas",
-    heading: "Local Car Booking in Karnataka, Andhra Pradesh, Maharashtra & Telangana",
+    heading: "Local Car Rentalin Karnataka, Andhra Pradesh, Maharashtra & Telangana",
     subheading: "Find Local Taxi Services in Your City",
     body: [
       "Abhi Cabs 24\u00d77 provides local car rental services at supported pickup locations across Karnataka, Andhra Pradesh, Maharashtra, and Telangana.",
@@ -151,7 +151,7 @@ export const SERVICE_DEFAULTS = {
     { id: "cta", enabled: true },
   ],
   seo: {
-    title: "Local Car Booking Services \u2013 Hourly & City Taxi Rentals | Abhi Cabs 24\u00d77",
+    title: "Local Car RentalServices \u2013 Hourly & City Taxi Rentals | Abhi Cabs 24\u00d77",
     description: "Book local cabs and hourly taxi rentals with Abhi Cabs 24\u00d77 for city sightseeing, shopping, office travel and family outings across supported cities.",
   },
   cardIcon: "clock",
