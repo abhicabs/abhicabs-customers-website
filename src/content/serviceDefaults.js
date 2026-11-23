@@ -12,8 +12,8 @@ export const SERVICE_DEFAULTS = {
   slug: "local", mode: "local",
   primaryLabel: "Book Your Local Cab",
   hero: {
-    eyebrow: "Local Car Booking",
-    heading: "Local Car Booking Services \u2013 Hourly & City Taxi Rentals",
+    eyebrow: "Local Car Rental",
+    heading: "Local Car Rental Services \u2013 Hourly & City Taxi Rentals",
     subheading: "Explore Your City with Abhi Cabs 24\u00d77",
     description: "Looking for a convenient local cab booking service? Abhi Cabs 24\u00d77 offers local taxi services for city sightseeing, shopping, office travel, business meetings, and family outings. Choose from comfortable sedans, spacious SUVs, and group vehicles with professional drivers. Whether you need a short city ride or an hourly car rental, find a suitable vehicle for your journey.",
     image: "/images/hero-local-chauffeur.webp", imagePosition: "72% center",
@@ -55,7 +55,7 @@ export const SERVICE_DEFAULTS = {
   },
   fleet: {
     eyebrow: "Our Vehicles",
-    heading: "Choose Your Vehicle for Local Car Booking",
+    heading: "Choose Your Vehicle for Local Car Rental",
     subheading: "Sedans, SUVs & Group Vehicles for City Travel",
     intro: "Select a vehicle from the Abhi Cabs 24\u00d77 vehicles based on your passenger count, luggage, and travel requirements.",
     points: [
@@ -83,7 +83,7 @@ export const SERVICE_DEFAULTS = {
   },
   coverage: {
     eyebrow: "Service Areas",
-    heading: "Local Car Booking in Karnataka, Andhra Pradesh, Maharashtra & Telangana",
+    heading: "Local Car Rental in Karnataka, Andhra Pradesh, Maharashtra & Telangana",
     subheading: "Find Local Taxi Services in Your City",
     body: [
       "Abhi Cabs 24\u00d77 provides local car rental services at supported pickup locations across Karnataka, Andhra Pradesh, Maharashtra, and Telangana.",
@@ -115,7 +115,7 @@ export const SERVICE_DEFAULTS = {
       { title: "Booking Availability", desc: "Check vehicle and package availability for your city and travel date." },
     ],
   },
-  faqHeading: "Frequently Asked Questions About Local Car Booking",
+  faqHeading: "Frequently Asked Questions About Local Car Rental",
   faqs: [
     ["How can I book a local cab with Abhi Cabs 24\u00d77?", "Visit abhicabs24x7.com, enter your pickup details, select your preferred local cab and rental package, and submit your booking request."],
     ["Does Abhi Cabs 24\u00d77 offer hourly car rentals?", "Yes. We offer hourly car rental services for shopping, sightseeing, office meetings, and personal city travel."],
@@ -151,7 +151,7 @@ export const SERVICE_DEFAULTS = {
     { id: "cta", enabled: true },
   ],
   seo: {
-    title: "Local Car Booking Services \u2013 Hourly & City Taxi Rentals | Abhi Cabs 24\u00d77",
+    title: "Local Car Rental Services \u2013 Hourly & City Taxi Rentals | Abhi Cabs 24\u00d77",
     description: "Book local cabs and hourly taxi rentals with Abhi Cabs 24\u00d77 for city sightseeing, shopping, office travel and family outings across supported cities.",
   },
   cardIcon: "clock",
