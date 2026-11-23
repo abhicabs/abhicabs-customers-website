@@ -9,6 +9,20 @@ export const ROUTES = [
   { from: "Bangalore", to: "Goa",       km: 560, hrs: "9 – 10 hrs",  price: 10640, img: "/images/route-2.webp", badge: "Outstation" }
 ];
 
+/* Home page "Popular Routes" — grouped by destination STATE, and each card links to
+   the destination's own page where one exists (/cities/<city>). Prices are
+   starting-from estimates (sedan one-way at ₹19/km); the real fare comes from
+   /fares/estimate. (ROUTES above is used by the One Way page's route board.) */
+export const POPULAR_ROUTES = [
+  { from: "Bangalore", to: "Mysore",        km: 145, hrs: "3 – 3.5 hrs", price: 2755,  img: "/images/route-1.webp",           badge: "Karnataka" },
+  { from: "Bangalore", to: "Coorg",         km: 260, hrs: "5 – 6 hrs",   price: 4940,  img: "/images/route-2.webp",           badge: "Karnataka" },
+  { from: "Bangalore", to: "Mangaluru",     km: 350, hrs: "7 – 8 hrs",   price: 6650,  img: "/images/route-3.webp",           badge: "Karnataka",      href: "/cities/mangaluru" },
+  { from: "Bangalore", to: "Tirupati",      km: 250, hrs: "5 – 6 hrs",   price: 4750,  img: "/images/route-5.webp",           badge: "Andhra Pradesh", href: "/cities/tirupati" },
+  { from: "Hyderabad", to: "Visakhapatnam", km: 620, hrs: "10 – 11 hrs", price: 11780, img: "/images/route-4.webp",           badge: "Andhra Pradesh", href: "/cities/visakhapatnam" },
+  { from: "Mumbai",    to: "Pune",          km: 150, hrs: "3 – 4 hrs",   price: 2850,  img: "/images/hero-hill-road-900.webp", badge: "Maharashtra",    href: "/cities/pune" },
+  { from: "Bangalore", to: "Hyderabad",     km: 570, hrs: "9 – 10 hrs",  price: 10830, img: "/images/route-6.webp",           badge: "Telangana" },
+];
+
 export const DRIVERS = ["Ramesh Kumar","Suresh Naik","Anitha Rao","Mohammed Imran","Deepak Shetty","Lakshmi Prasad"];
 
 export function fmtINR(n) {

@@ -18,7 +18,7 @@ import GroupTransportBannerSection from "../../src/components/GroupTransportBann
 import ServiceStripSection from "../../src/components/ServiceStripSection";
 import FleetCarouselSection from "../../src/components/FleetCarouselSection";
 import HeroSection from "../../src/components/HeroSection";
-import { ROUTES } from "../../src/data/mockData";
+import { ROUTES, POPULAR_ROUTES } from "../../src/data/mockData";
 import useVehicleCatalogue from "../../src/hooks/useVehicleCatalogue";
 import { IconClock, IconShield, IconTag, IconCar } from "../../src/components/Icons";
 import SectionRenderer from "../../src/components/SectionRenderer";
@@ -231,7 +231,7 @@ export default function Page() {
     grouptransport: <GroupTransportBannerSection seaterOptions={SEATER_OPTIONS} onRequestQuote={() => bookMode("group-coach")} />,
     promobanners: <PromoBannersSection onOutstation={() => bookMode("round-trip")} onGroup={() => bookMode("group-coach")} />,
     whyus: <WhyAbhiCabsSection imageSrc="/images/morethanjustride.webp" />,
-    routes: <PopularRoutesSection routes={ROUTES} onBook={bookRoute} />,
+    routes: <PopularRoutesSection routes={POPULAR_ROUTES} onBook={bookRoute} />,
     coverage: <CoverageSection coverage={COVERAGE} />,
     howitworks: <HowItWorksSection steps={STEPS} />,
     stats: <StatsBarSection stats={STATS} />,

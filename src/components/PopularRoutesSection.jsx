@@ -9,7 +9,14 @@ const BADGE_COLORS = {
   Intercity: { bg: "rgba(255,213,79,.9)", fg: "#111" },
   Outstation: { bg: "#111", fg: "#fff" },
   "Long Distance": { bg: "rgba(255,255,255,.9)", fg: "#111" },
+  // destination states (home page)
+  Karnataka: { bg: "rgba(255,213,79,.95)", fg: "#111" },
+  "Andhra Pradesh": { bg: "#111", fg: "#FFD54F" },
+  Maharashtra: { bg: "rgba(255,255,255,.95)", fg: "#111" },
+  Telangana: { bg: "#111", fg: "#fff" },
 };
+// tabs always appear in this order (any other badge follows)
+const BADGE_ORDER = ["Karnataka", "Andhra Pradesh", "Maharashtra", "Telangana"];
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 const DARK = "linear-gradient(180deg, #3A3A3A 0%, #1C1C1C 55%, #0B0B0B 100%)";
@@ -38,7 +45,7 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
   const [filter, setFilter] = useState("All");
 
   // Filter chips come from the data itself — only badges that actually exist
-  const badges = useMemo(() => [...new Set(routes.map((r) => r.badge).filter(Boolean))], [routes]);
+  const badges = useMemo(() => { const set = [...new Set(routes.map((r) => r.badge).filter(Boolean))]; return set.sort((a, b) => (BADGE_ORDER.indexOf(a) + 1 || 99) - (BADGE_ORDER.indexOf(b) + 1 || 99)); }, [routes]);
   const showFilters = badges.length > 1;
   const visible = filter === "All" ? routes : routes.filter((r) => r.badge === filter);
 
@@ -139,13 +146,28 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
                       {/* ── Card: unchanged ── */}
                       <div style={{ borderRadius: 20, overflow: "hidden", border: "1px solid #EFEFEF", background: "#fff", display: "flex", flexDirection: "column", height: "100%" }} className="ac-card group">
                         <div style={{ position: "relative", height: 172, overflow: "hidden" }}>
-                          <img loading="lazy" decoding="async" src={r.img} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                          {r.href ? (
+                            <a href={r.href} aria-label={`${r.to} — destination guide`} className="block w-full h-full">
+                              <img loading="lazy" decoding="async" src={r.img} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                            </a>
+                          ) : (
+                            <img loading="lazy" decoding="async" src={r.img} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                          )}
                           <span style={{ position: "absolute", top: 12, left: 12, padding: "5px 11px", borderRadius: 9999, background: badge.bg, color: badge.fg, fontWeight: 600, fontSize: 11, zIndex: 2 }}>
                             {r.badge}
                           </span>
                         </div>
                         <div style={{ padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flex: 1 }}>
-                          <div style={{ fontWeight: 700, fontSize: 16 }}>{r.from} → {r.to}</div>
+                          <div style={{ minWidth: 0 }}>
+                            <div style={{ fontWeight: 700, fontSize: 16 }}>
+                              {r.from} → {r.href ? <a href={r.href} className="hover:text-[#B88A00] transition-colors">{r.to}</a> : r.to}
+                            </div>
+                            {r.href && (
+                              <a href={r.href} className="block mt-1 text-[12.5px] font-semibold leading-snug text-[#B88A00] hover:text-[#111] transition-colors">
+                                Explore <span className="whitespace-nowrap">{r.to}&nbsp;<span aria-hidden>→</span></span>
+                              </a>
+                            )}
+                          </div>
                           <button
                             onClick={() => onBook(r)}
                             className="ac-btn ac-btn-shine relative overflow-hidden isolate hover:!bg-black hover:-translate-y-0.5"
