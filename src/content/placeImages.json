@@ -6,6 +6,13 @@
     "height": 900,
     "locked": true
   },
+  "Chandragiri Fort": {
+    "src": "/images/places/chandragiri-fort-tirupati-e39f5186-1200.webp",
+    "srcSet": "/images/places/chandragiri-fort-tirupati-e39f5186-286.webp 286w, /images/places/chandragiri-fort-tirupati-e39f5186-350.webp 350w, /images/places/chandragiri-fort-tirupati-e39f5186-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
   "Dagdusheth Ganpati Temple": {
     "src": "/images/places/dagdusheth-ganpati-temple-pune-6815271d-1200.webp",
     "srcSet": "/images/places/dagdusheth-ganpati-temple-pune-6815271d-286.webp 286w, /images/places/dagdusheth-ganpati-temple-pune-6815271d-350.webp 350w, /images/places/dagdusheth-ganpati-temple-pune-6815271d-1200.webp 1200w",
@@ -27,6 +34,13 @@
     "height": 900,
     "locked": true
   },
+  "ISKCON Temple Tirupati": {
+    "src": "/images/places/iskcon-temple-tirupati-a1812d6d-1200.webp",
+    "srcSet": "/images/places/iskcon-temple-tirupati-a1812d6d-286.webp 286w, /images/places/iskcon-temple-tirupati-a1812d6d-350.webp 350w, /images/places/iskcon-temple-tirupati-a1812d6d-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
   "Indira Gandhi Zoological Park": {
     "src": "/images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-1200.webp",
     "srcSet": "/images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-286.webp 286w, /images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-350.webp 350w, /images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-1200.webp 1200w",
@@ -44,6 +58,13 @@
   "Kailasagiri Hill Park": {
     "src": "/images/places/kailasagiri-visakhapatnam-cef7c906-1200.webp",
     "srcSet": "/images/places/kailasagiri-visakhapatnam-cef7c906-286.webp 286w, /images/places/kailasagiri-visakhapatnam-cef7c906-350.webp 350w, /images/places/kailasagiri-visakhapatnam-cef7c906-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Kapila Theertham": {
+    "src": "/images/places/kapila-theertham-tirupati-ee1a8ad3-1200.webp",
+    "srcSet": "/images/places/kapila-theertham-tirupati-ee1a8ad3-286.webp 286w, /images/places/kapila-theertham-tirupati-ee1a8ad3-350.webp 350w, /images/places/kapila-theertham-tirupati-ee1a8ad3-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
@@ -121,6 +142,34 @@
   "Simhachalam Temple": {
     "src": "/images/places/simhachalam-temple-visakhapatnam-9dac5824-1200.webp",
     "srcSet": "/images/places/simhachalam-temple-visakhapatnam-9dac5824-286.webp 286w, /images/places/simhachalam-temple-visakhapatnam-9dac5824-350.webp 350w, /images/places/simhachalam-temple-visakhapatnam-9dac5824-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Sri Govindaraja Swamy Temple": {
+    "src": "/images/places/sri-govindaraja-swamy-temple-tirupati-0c38a76e-1200.webp",
+    "srcSet": "/images/places/sri-govindaraja-swamy-temple-tirupati-0c38a76e-286.webp 286w, /images/places/sri-govindaraja-swamy-temple-tirupati-0c38a76e-350.webp 350w, /images/places/sri-govindaraja-swamy-temple-tirupati-0c38a76e-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Sri Kodandarama Swamy Temple": {
+    "src": "/images/places/sri-kodandarama-swamy-temple-tirupati-24da4d08-1200.webp",
+    "srcSet": "/images/places/sri-kodandarama-swamy-temple-tirupati-24da4d08-286.webp 286w, /images/places/sri-kodandarama-swamy-temple-tirupati-24da4d08-350.webp 350w, /images/places/sri-kodandarama-swamy-temple-tirupati-24da4d08-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Sri Padmavathi Ammavari Temple": {
+    "src": "/images/places/sri-padmavathi-ammavari-temple-tirupati-0dcd76b2-1200.webp",
+    "srcSet": "/images/places/sri-padmavathi-ammavari-temple-tirupati-0dcd76b2-286.webp 286w, /images/places/sri-padmavathi-ammavari-temple-tirupati-0dcd76b2-350.webp 350w, /images/places/sri-padmavathi-ammavari-temple-tirupati-0dcd76b2-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Sri Venkateswara Zoological Park": {
+    "src": "/images/places/sri-venkateswara-zoological-park-tirupati-1a55dd50-1200.webp",
+    "srcSet": "/images/places/sri-venkateswara-zoological-park-tirupati-1a55dd50-286.webp 286w, /images/places/sri-venkateswara-zoological-park-tirupati-1a55dd50-350.webp 350w, /images/places/sri-venkateswara-zoological-park-tirupati-1a55dd50-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
