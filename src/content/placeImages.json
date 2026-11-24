@@ -83,6 +83,20 @@
     "height": 900,
     "locked": true
   },
+  "Mangaladevi Temple": {
+    "src": "/images/places/mangaladevi-temple-mangaluru-7ea953d0-1200.webp",
+    "srcSet": "/images/places/mangaladevi-temple-mangaluru-7ea953d0-286.webp 286w, /images/places/mangaladevi-temple-mangaluru-7ea953d0-350.webp 350w, /images/places/mangaladevi-temple-mangaluru-7ea953d0-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Panambur Beach": {
+    "src": "/images/places/panambur-beach-mangaluru-a054071f-1200.webp",
+    "srcSet": "/images/places/panambur-beach-mangaluru-a054071f-286.webp 286w, /images/places/panambur-beach-mangaluru-a054071f-350.webp 350w, /images/places/panambur-beach-mangaluru-a054071f-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
   "Parvati Hill": {
     "src": "/images/places/parvati-hill-pune-0c71e1dd-1200.webp",
     "srcSet": "/images/places/parvati-hill-pune-0c71e1dd-286.webp 286w, /images/places/parvati-hill-pune-0c71e1dd-350.webp 350w, /images/places/parvati-hill-pune-0c71e1dd-1200.webp 1200w",
@@ -153,6 +167,13 @@
     "height": 900,
     "locked": true
   },
+  "Someshwara Beach": {
+    "src": "/images/places/someshwara-beach-mangaluru-5e049092-1200.webp",
+    "srcSet": "/images/places/someshwara-beach-mangaluru-5e049092-286.webp 286w, /images/places/someshwara-beach-mangaluru-5e049092-350.webp 350w, /images/places/someshwara-beach-mangaluru-5e049092-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
   "Sri Govindaraja Swamy Temple": {
     "src": "/images/places/sri-govindaraja-swamy-temple-tirupati-0c38a76e-1200.webp",
     "srcSet": "/images/places/sri-govindaraja-swamy-temple-tirupati-0c38a76e-286.webp 286w, /images/places/sri-govindaraja-swamy-temple-tirupati-0c38a76e-350.webp 350w, /images/places/sri-govindaraja-swamy-temple-tirupati-0c38a76e-1200.webp 1200w",
@@ -196,8 +217,8 @@
     "locked": true
   },
   "Tannirbhavi Beach": {
-    "src": "/images/places/tannirbhavi-beach-mangaluru-1351c791-1200.webp",
-    "srcSet": "/images/places/tannirbhavi-beach-mangaluru-1351c791-286.webp 286w, /images/places/tannirbhavi-beach-mangaluru-1351c791-350.webp 350w, /images/places/tannirbhavi-beach-mangaluru-1351c791-1200.webp 1200w",
+    "src": "/images/places/tannirbhavi-beach-mangaluru-1a8de774-1200.webp",
+    "srcSet": "/images/places/tannirbhavi-beach-mangaluru-1a8de774-286.webp 286w, /images/places/tannirbhavi-beach-mangaluru-1a8de774-350.webp 350w, /images/places/tannirbhavi-beach-mangaluru-1a8de774-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
