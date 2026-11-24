@@ -12,6 +12,6 @@ const CLOUD = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
 export function cdnImage(path) {
   if (!CLOUD || typeof path !== "string") return path;
-  const m = path.match(/^\/images\/([A-Za-z0-9_.-]+)$/);
+  const m = path.match(/^\/images\/((?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_.-]+)$/);
   return m ? cloudinaryUrl(CLOUD, m[1]) : path;
 }

@@ -1153,3 +1153,8 @@ img.h-full { height: 100%; }
 
 /* 5. Route cards: car moves only while hovering (no endless loop on touch) */
 @media (hover: none) { [data-perf="on"] .ac-route-car { left: calc(100% - 28px) !important; } }
+
+/* Link directory (above footer): the newly opened tab's content eases in */
+@keyframes ldPanelIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.ld-panel:not([hidden]) { animation: ldPanelIn 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
+@media (prefers-reduced-motion: reduce) { .ld-panel:not([hidden]) { animation: none; } }

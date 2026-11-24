@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 /**
- * Upload every file in public/images to Cloudinary (folder "abhicabs").
+ * Upload every file in public/images (subfolders included, e.g. places/) to Cloudinary
+ * (folder "abhicabs").
+ *
+ *   npm run images:upload                 # everything
+ *   npm run images:upload -- places       # only public/images/places
+ *   npm run images:upload -- --dry-run    # list what would be uploaded, upload nothing
  *
  *   CLOUDINARY_CLOUD_NAME=xxx CLOUDINARY_API_KEY=xxx CLOUDINARY_API_SECRET=xxx \
  *     node scripts/upload-images-to-cloudinary.mjs
@@ -27,13 +32,26 @@ if (fs.existsSync(envFile)) {
 const CLOUD = process.env.CLOUDINARY_CLOUD_NAME || process.env.VITE_CLOUDINARY_CLOUD_NAME;
 const KEY = process.env.CLOUDINARY_API_KEY;
 const SECRET = process.env.CLOUDINARY_API_SECRET;
-if (!CLOUD || !KEY || !SECRET) {
+if ((!CLOUD || !KEY || !SECRET) && !process.argv.includes("--dry-run")) {
   console.error("✗ Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET (env vars or .env).");
   process.exit(1);
 }
 
 const DIR = path.resolve("public/images");
-const files = fs.readdirSync(DIR).filter((f) => /\.(png|jpe?g|webp|svg|gif|avif)$/i.test(f));
+const args = process.argv.slice(2);
+const DRY = args.includes("--dry-run");
+const only = args.find((a) => !a.startsWith("--"))?.replace(/^\/+|\/+$/g, "");
+/** All image files under public/images, as forward-slash paths relative to it ("places/x.webp"). */
+const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+  const full = path.join(dir, e.name);
+  return e.isDirectory() ? walk(full) : /\.(png|jpe?g|webp|svg|gif|avif)$/i.test(e.name) ? [path.relative(DIR, full).split(path.sep).join("/")] : [];
+});
+const files = walk(DIR).filter((f) => !only || f.startsWith(only + "/"));
+if (DRY) {
+  files.forEach((f) => console.log(`${f} → ${publicIdFor(f)}`));
+  console.log(`\n${files.length} files would be uploaded (dry run, nothing sent).`);
+  process.exit(0);
+}
 const sign = (params) =>
   crypto.createHash("sha1").update(Object.keys(params).sort().map((k) => `${k}=${params[k]}`).join("&") + SECRET).digest("hex");
 

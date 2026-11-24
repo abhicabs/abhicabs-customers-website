@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { store, rehydrateStore } from "../store/store";
 import Header from "./Header";
 import Footer from "./Footer";
+import LinkDirectory from "./LinkDirectory";
 import ToastStack from "./ToastStack";
 import LoginPopup from "./LoginPopup";
 import WhatsAppFloat from "./WhatsAppFloat";
@@ -104,6 +105,7 @@ export default function Layout({ children }) {
         <main className="flex-1">
           {children}
         </main>
+        <LinkDirectory />
         <Footer />
       </div>
       <ToastStack />

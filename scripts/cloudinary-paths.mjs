@@ -8,7 +8,11 @@
  */
 export const FOLDER = "abhicabs";
 
-/** "hero-hill-road.webp" → "abhicabs/hero-hill-road_webp" (extension kept so a.png and a.webp never collide) */
+/**
+ * "hero-hill-road.webp"            → "abhicabs/hero-hill-road_webp"
+ * "places/lal-mahal-pune-…-1200.webp" → "abhicabs/places/lal-mahal-pune-…-1200_webp"
+ * (path relative to public/images; extension kept so a.png and a.webp never collide)
+ */
 export function publicIdFor(fileName) {
   return `${FOLDER}/${fileName.replace(/\.([a-z0-9]+)$/i, "_$1")}`;
 }
