@@ -125,6 +125,13 @@
     "height": 900,
     "locked": true
   },
+  "Rushikonda Beach": {
+    "src": "/images/places/rushikonda-beach-visakhapatnam-a1853a3f-554.webp",
+    "srcSet": "/images/places/rushikonda-beach-visakhapatnam-a1853a3f-286.webp 286w, /images/places/rushikonda-beach-visakhapatnam-a1853a3f-350.webp 350w, /images/places/rushikonda-beach-visakhapatnam-a1853a3f-554.webp 554w",
+    "width": 554,
+    "height": 415,
+    "locked": true
+  },
   "Sarasbaug Ganpati Temple": {
     "src": "/images/places/sarasbaug-ganpati-temple-pune-959547b4-1200.webp",
     "srcSet": "/images/places/sarasbaug-ganpati-temple-pune-959547b4-286.webp 286w, /images/places/sarasbaug-ganpati-temple-pune-959547b4-350.webp 350w, /images/places/sarasbaug-ganpati-temple-pune-959547b4-1200.webp 1200w",
@@ -193,6 +200,13 @@
     "srcSet": "/images/places/tannirbhavi-beach-mangaluru-1351c791-286.webp 286w, /images/places/tannirbhavi-beach-mangaluru-1351c791-350.webp 350w, /images/places/tannirbhavi-beach-mangaluru-1351c791-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Visakha Museum": {
+    "src": "/images/places/visakha-museum-visakhapatnam-f455159b-350.webp",
+    "srcSet": "/images/places/visakha-museum-visakhapatnam-f455159b-286.webp 286w, /images/places/visakha-museum-visakhapatnam-f455159b-350.webp 350w",
+    "width": 350,
+    "height": 263,
     "locked": true
   },
   "Yarada Beach": {
