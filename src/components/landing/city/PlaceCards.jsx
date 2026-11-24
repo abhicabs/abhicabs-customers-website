@@ -13,7 +13,7 @@ export function PlacePhoto({ img, alt, className = "", creditPos = "bottom" }) {
     <div className={`relative overflow-hidden bg-[#EFEAD9] ${className}`.trim()}>
       {img?.src ? (
         <>
-          <img src={img.src} srcSet={img.srcSet} sizes={img.srcSet ? "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" : undefined} width={img.width} height={img.height} alt={alt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
+          <img src={img.src} srcSet={img.srcSet} sizes={img.srcSet ? "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" : undefined} width={img.width} height={img.height} alt={alt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
           {img.author && <a href={img.source} target="_blank" rel="noopener noreferrer"
             className={`absolute ${creditPos === "top" ? "top-2" : "bottom-2"} right-2 z-[2] max-w-[85%] truncate rounded-md bg-black/60 px-2 py-0.5 text-[10.5px] font-medium text-white/90 hover:text-white focus-visible:outline-2 focus-visible:outline-primary`}>
             {img.author}{img.license ? `, ${img.license}` : ""}

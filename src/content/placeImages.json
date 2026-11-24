@@ -1,119 +1,154 @@
 {
   "Aga Khan Palace": {
-    "src": "/images/places/aga-khan-palace-pune-1200.webp",
-    "srcSet": "/images/places/aga-khan-palace-pune-286.webp 286w, /images/places/aga-khan-palace-pune-350.webp 350w, /images/places/aga-khan-palace-pune-1200.webp 1200w",
+    "src": "/images/places/aga-khan-palace-pune-0873d6a1-1200.webp",
+    "srcSet": "/images/places/aga-khan-palace-pune-0873d6a1-286.webp 286w, /images/places/aga-khan-palace-pune-0873d6a1-350.webp 350w, /images/places/aga-khan-palace-pune-0873d6a1-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Dagdusheth Ganpati Temple": {
-    "src": "/images/places/dagdusheth-ganpati-temple-pune-1200.webp",
-    "srcSet": "/images/places/dagdusheth-ganpati-temple-pune-286.webp 286w, /images/places/dagdusheth-ganpati-temple-pune-350.webp 350w, /images/places/dagdusheth-ganpati-temple-pune-1200.webp 1200w",
+    "src": "/images/places/dagdusheth-ganpati-temple-pune-6815271d-1200.webp",
+    "srcSet": "/images/places/dagdusheth-ganpati-temple-pune-6815271d-286.webp 286w, /images/places/dagdusheth-ganpati-temple-pune-6815271d-350.webp 350w, /images/places/dagdusheth-ganpati-temple-pune-6815271d-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Dolphin’s Nose Lighthouse": {
-    "src": "/images/places/dolphins-nose-lighthouse-visakhapatnam-1200.webp",
-    "srcSet": "/images/places/dolphins-nose-lighthouse-visakhapatnam-286.webp 286w, /images/places/dolphins-nose-lighthouse-visakhapatnam-350.webp 350w, /images/places/dolphins-nose-lighthouse-visakhapatnam-1200.webp 1200w",
+    "src": "/images/places/dolphins-nose-lighthouse-visakhapatnam-f9f7a906-1200.webp",
+    "srcSet": "/images/places/dolphins-nose-lighthouse-visakhapatnam-f9f7a906-286.webp 286w, /images/places/dolphins-nose-lighthouse-visakhapatnam-f9f7a906-350.webp 350w, /images/places/dolphins-nose-lighthouse-visakhapatnam-f9f7a906-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "INS Kurusura Submarine Museum": {
-    "src": "/images/places/ins-kursura-submarine-museum-visakhapatnam-1200.webp",
-    "srcSet": "/images/places/ins-kursura-submarine-museum-visakhapatnam-286.webp 286w, /images/places/ins-kursura-submarine-museum-visakhapatnam-350.webp 350w, /images/places/ins-kursura-submarine-museum-visakhapatnam-1200.webp 1200w",
+    "src": "/images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-1200.webp",
+    "srcSet": "/images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-286.webp 286w, /images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-350.webp 350w, /images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Indira Gandhi Zoological Park": {
-    "src": "/images/places/indira-gandhi-zoological-park-visakhapatnam-1200.webp",
-    "srcSet": "/images/places/indira-gandhi-zoological-park-visakhapatnam-286.webp 286w, /images/places/indira-gandhi-zoological-park-visakhapatnam-350.webp 350w, /images/places/indira-gandhi-zoological-park-visakhapatnam-1200.webp 1200w",
+    "src": "/images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-1200.webp",
+    "srcSet": "/images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-286.webp 286w, /images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-350.webp 350w, /images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Kadri Manjunatha Temple": {
-    "src": "/images/places/kadri-manjunatha-temple-mangaluru-1200.webp",
-    "srcSet": "/images/places/kadri-manjunatha-temple-mangaluru-286.webp 286w, /images/places/kadri-manjunatha-temple-mangaluru-350.webp 350w, /images/places/kadri-manjunatha-temple-mangaluru-1200.webp 1200w",
+    "src": "/images/places/kadri-manjunatha-temple-mangaluru-9feacc6b-1200.webp",
+    "srcSet": "/images/places/kadri-manjunatha-temple-mangaluru-9feacc6b-286.webp 286w, /images/places/kadri-manjunatha-temple-mangaluru-9feacc6b-350.webp 350w, /images/places/kadri-manjunatha-temple-mangaluru-9feacc6b-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Kailasagiri Hill Park": {
-    "src": "/images/places/kailasagiri-visakhapatnam-1200.webp",
-    "srcSet": "/images/places/kailasagiri-visakhapatnam-286.webp 286w, /images/places/kailasagiri-visakhapatnam-350.webp 350w, /images/places/kailasagiri-visakhapatnam-1200.webp 1200w",
+    "src": "/images/places/kailasagiri-visakhapatnam-cef7c906-1200.webp",
+    "srcSet": "/images/places/kailasagiri-visakhapatnam-cef7c906-286.webp 286w, /images/places/kailasagiri-visakhapatnam-cef7c906-350.webp 350w, /images/places/kailasagiri-visakhapatnam-cef7c906-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Kudroli Gokarnanatheshwara Temple": {
+    "src": "/images/places/kudroli-gokarnanatheshwara-temple-mangaluru-f05b2397-1200.webp",
+    "srcSet": "/images/places/kudroli-gokarnanatheshwara-temple-mangaluru-f05b2397-286.webp 286w, /images/places/kudroli-gokarnanatheshwara-temple-mangaluru-f05b2397-350.webp 350w, /images/places/kudroli-gokarnanatheshwara-temple-mangaluru-f05b2397-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Lal Mahal": {
+    "src": "/images/places/lal-mahal-pune-5b28dee1-1200.webp",
+    "srcSet": "/images/places/lal-mahal-pune-5b28dee1-286.webp 286w, /images/places/lal-mahal-pune-5b28dee1-350.webp 350w, /images/places/lal-mahal-pune-5b28dee1-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Parvati Hill": {
-    "src": "/images/places/parvati-hill-pune-1200.webp",
-    "srcSet": "/images/places/parvati-hill-pune-286.webp 286w, /images/places/parvati-hill-pune-350.webp 350w, /images/places/parvati-hill-pune-1200.webp 1200w",
+    "src": "/images/places/parvati-hill-pune-0c71e1dd-1200.webp",
+    "srcSet": "/images/places/parvati-hill-pune-0c71e1dd-286.webp 286w, /images/places/parvati-hill-pune-0c71e1dd-350.webp 350w, /images/places/parvati-hill-pune-0c71e1dd-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pataleshwar Cave Temple": {
+    "src": "/images/places/pataleshwar-cave-temple-pune-3dfd3f87-1200.webp",
+    "srcSet": "/images/places/pataleshwar-cave-temple-pune-3dfd3f87-286.webp 286w, /images/places/pataleshwar-cave-temple-pune-3dfd3f87-350.webp 350w, /images/places/pataleshwar-cave-temple-pune-3dfd3f87-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pilikula Nisargadhama": {
+    "src": "/images/places/pilikula-nisargadhama-mangaluru-0f4f41b2-1200.webp",
+    "srcSet": "/images/places/pilikula-nisargadhama-mangaluru-0f4f41b2-286.webp 286w, /images/places/pilikula-nisargadhama-mangaluru-0f4f41b2-350.webp 350w, /images/places/pilikula-nisargadhama-mangaluru-0f4f41b2-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "RK Beach": {
-    "src": "/images/places/rk-beach-visakhapatnam-1200.webp",
-    "srcSet": "/images/places/rk-beach-visakhapatnam-286.webp 286w, /images/places/rk-beach-visakhapatnam-350.webp 350w, /images/places/rk-beach-visakhapatnam-1200.webp 1200w",
+    "src": "/images/places/rk-beach-visakhapatnam-159c7cb6-1200.webp",
+    "srcSet": "/images/places/rk-beach-visakhapatnam-159c7cb6-286.webp 286w, /images/places/rk-beach-visakhapatnam-159c7cb6-350.webp 350w, /images/places/rk-beach-visakhapatnam-159c7cb6-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Raja Dinkar Kelkar Museum": {
-    "src": "/images/places/raja-dinkar-kelkar-museum-pune-1200.webp",
-    "srcSet": "/images/places/raja-dinkar-kelkar-museum-pune-286.webp 286w, /images/places/raja-dinkar-kelkar-museum-pune-350.webp 350w, /images/places/raja-dinkar-kelkar-museum-pune-1200.webp 1200w",
+    "src": "/images/places/raja-dinkar-kelkar-museum-pune-c9beff03-1200.webp",
+    "srcSet": "/images/places/raja-dinkar-kelkar-museum-pune-c9beff03-286.webp 286w, /images/places/raja-dinkar-kelkar-museum-pune-c9beff03-350.webp 350w, /images/places/raja-dinkar-kelkar-museum-pune-c9beff03-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Rajiv Gandhi Zoological Park": {
-    "src": "/images/places/rajiv-gandhi-zoological-park-pune-1200.webp",
-    "srcSet": "/images/places/rajiv-gandhi-zoological-park-pune-286.webp 286w, /images/places/rajiv-gandhi-zoological-park-pune-350.webp 350w, /images/places/rajiv-gandhi-zoological-park-pune-1200.webp 1200w",
+    "src": "/images/places/rajiv-gandhi-zoological-park-pune-f18e98dc-1200.webp",
+    "srcSet": "/images/places/rajiv-gandhi-zoological-park-pune-f18e98dc-286.webp 286w, /images/places/rajiv-gandhi-zoological-park-pune-f18e98dc-350.webp 350w, /images/places/rajiv-gandhi-zoological-park-pune-f18e98dc-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Sarasbaug Ganpati Temple": {
+    "src": "/images/places/sarasbaug-ganpati-temple-pune-959547b4-1200.webp",
+    "srcSet": "/images/places/sarasbaug-ganpati-temple-pune-959547b4-286.webp 286w, /images/places/sarasbaug-ganpati-temple-pune-959547b4-350.webp 350w, /images/places/sarasbaug-ganpati-temple-pune-959547b4-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Shaniwar Wada": {
-    "src": "/images/places/shaniwar-wada-pune-1200.webp",
-    "srcSet": "/images/places/shaniwar-wada-pune-286.webp 286w, /images/places/shaniwar-wada-pune-350.webp 350w, /images/places/shaniwar-wada-pune-1200.webp 1200w",
+    "src": "/images/places/shaniwar-wada-pune-3dd99118-1200.webp",
+    "srcSet": "/images/places/shaniwar-wada-pune-3dd99118-286.webp 286w, /images/places/shaniwar-wada-pune-3dd99118-350.webp 350w, /images/places/shaniwar-wada-pune-3dd99118-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Simhachalam Temple": {
-    "src": "/images/places/simhachalam-temple-visakhapatnam-1200.webp",
-    "srcSet": "/images/places/simhachalam-temple-visakhapatnam-286.webp 286w, /images/places/simhachalam-temple-visakhapatnam-350.webp 350w, /images/places/simhachalam-temple-visakhapatnam-1200.webp 1200w",
+    "src": "/images/places/simhachalam-temple-visakhapatnam-9dac5824-1200.webp",
+    "srcSet": "/images/places/simhachalam-temple-visakhapatnam-9dac5824-286.webp 286w, /images/places/simhachalam-temple-visakhapatnam-9dac5824-350.webp 350w, /images/places/simhachalam-temple-visakhapatnam-9dac5824-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "St. Aloysius Chapel": {
-    "src": "/images/places/st-aloysius-chapel-mangaluru-1200.webp",
-    "srcSet": "/images/places/st-aloysius-chapel-mangaluru-286.webp 286w, /images/places/st-aloysius-chapel-mangaluru-350.webp 350w, /images/places/st-aloysius-chapel-mangaluru-1200.webp 1200w",
+    "src": "/images/places/st-aloysius-chapel-mangaluru-b490c1ba-1200.webp",
+    "srcSet": "/images/places/st-aloysius-chapel-mangaluru-b490c1ba-286.webp 286w, /images/places/st-aloysius-chapel-mangaluru-b490c1ba-350.webp 350w, /images/places/st-aloysius-chapel-mangaluru-b490c1ba-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "TU-142 Aircraft Museum": {
-    "src": "/images/places/tu-142-aircraft-museum-visakhapatnam-1200.webp",
-    "srcSet": "/images/places/tu-142-aircraft-museum-visakhapatnam-286.webp 286w, /images/places/tu-142-aircraft-museum-visakhapatnam-350.webp 350w, /images/places/tu-142-aircraft-museum-visakhapatnam-1200.webp 1200w",
+    "src": "/images/places/tu-142-aircraft-museum-visakhapatnam-2ab9f154-1200.webp",
+    "srcSet": "/images/places/tu-142-aircraft-museum-visakhapatnam-2ab9f154-286.webp 286w, /images/places/tu-142-aircraft-museum-visakhapatnam-2ab9f154-350.webp 350w, /images/places/tu-142-aircraft-museum-visakhapatnam-2ab9f154-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Tannirbhavi Beach": {
-    "src": "/images/places/tannirbhavi-beach-mangaluru-1200.webp",
-    "srcSet": "/images/places/tannirbhavi-beach-mangaluru-286.webp 286w, /images/places/tannirbhavi-beach-mangaluru-350.webp 350w, /images/places/tannirbhavi-beach-mangaluru-1200.webp 1200w",
+    "src": "/images/places/tannirbhavi-beach-mangaluru-1351c791-1200.webp",
+    "srcSet": "/images/places/tannirbhavi-beach-mangaluru-1351c791-286.webp 286w, /images/places/tannirbhavi-beach-mangaluru-1351c791-350.webp 350w, /images/places/tannirbhavi-beach-mangaluru-1351c791-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
   },
   "Yarada Beach": {
-    "src": "/images/places/yarada-beach-visakhapatnam-1200.webp",
-    "srcSet": "/images/places/yarada-beach-visakhapatnam-286.webp 286w, /images/places/yarada-beach-visakhapatnam-350.webp 350w, /images/places/yarada-beach-visakhapatnam-1200.webp 1200w",
+    "src": "/images/places/yarada-beach-visakhapatnam-1974022a-1200.webp",
+    "srcSet": "/images/places/yarada-beach-visakhapatnam-1974022a-286.webp 286w, /images/places/yarada-beach-visakhapatnam-1974022a-350.webp 350w, /images/places/yarada-beach-visakhapatnam-1974022a-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
