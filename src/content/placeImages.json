@@ -34,6 +34,13 @@
     "height": 900,
     "locked": true
   },
+  "Kadri Manjunatha Temple": {
+    "src": "/images/places/kadri-manjunatha-temple-mangaluru-1200.webp",
+    "srcSet": "/images/places/kadri-manjunatha-temple-mangaluru-286.webp 286w, /images/places/kadri-manjunatha-temple-mangaluru-350.webp 350w, /images/places/kadri-manjunatha-temple-mangaluru-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
   "Kailasagiri Hill Park": {
     "src": "/images/places/kailasagiri-visakhapatnam-1200.webp",
     "srcSet": "/images/places/kailasagiri-visakhapatnam-286.webp 286w, /images/places/kailasagiri-visakhapatnam-350.webp 350w, /images/places/kailasagiri-visakhapatnam-1200.webp 1200w",
@@ -83,9 +90,23 @@
     "height": 900,
     "locked": true
   },
+  "St. Aloysius Chapel": {
+    "src": "/images/places/st-aloysius-chapel-mangaluru-1200.webp",
+    "srcSet": "/images/places/st-aloysius-chapel-mangaluru-286.webp 286w, /images/places/st-aloysius-chapel-mangaluru-350.webp 350w, /images/places/st-aloysius-chapel-mangaluru-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
   "TU-142 Aircraft Museum": {
     "src": "/images/places/tu-142-aircraft-museum-visakhapatnam-1200.webp",
     "srcSet": "/images/places/tu-142-aircraft-museum-visakhapatnam-286.webp 286w, /images/places/tu-142-aircraft-museum-visakhapatnam-350.webp 350w, /images/places/tu-142-aircraft-museum-visakhapatnam-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Tannirbhavi Beach": {
+    "src": "/images/places/tannirbhavi-beach-mangaluru-1200.webp",
+    "srcSet": "/images/places/tannirbhavi-beach-mangaluru-286.webp 286w, /images/places/tannirbhavi-beach-mangaluru-350.webp 350w, /images/places/tannirbhavi-beach-mangaluru-1200.webp 1200w",
     "width": 1200,
     "height": 900,
     "locked": true
