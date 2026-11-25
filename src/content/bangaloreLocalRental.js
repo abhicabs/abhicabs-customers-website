@@ -117,7 +117,7 @@ export const BLR_LOCAL = {
     intro: "Local car rental packages are designed mainly for travel within Bangalore. For other journey types, explore these dedicated services:",
     links: [
       { kind: "airport", label: "Bangalore airport taxi booking", href: "/airport-taxi", desc: "for airport pickup and drop-off." },
-      { kind: "oneway", label: "One-way outstation cab services", href: "/one-way-cabs", desc: "for intercity journeys without a planned return." },
+      { kind: "oneway", label: "One-way cab services", href: "/one-way-cabs", desc: "for intercity journeys without a planned return." },
       { kind: "round", label: "Round-trip cab booking services", href: "/round-trip-cabs", desc: "for weekend trips, family holidays and return journeys." },
     ],
   },

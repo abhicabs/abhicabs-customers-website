@@ -718,7 +718,7 @@ export const SEO_ARTICLES = [
       {
         "type": "ol",
         "text": [
-          "Open the booking form and choose <strong>One Way</strong> — or go straight to <a href=\"/services/one-way-outstation\">one-way outstation cabs</a>.",
+          "Open the booking form and choose <strong>One Way</strong> — or go straight to <a href=\"/services/one-way-outstation\">one-way cabs</a>.",
           "Enter your pickup, drop, date and time.",
           "Add any stops you want to make along the way.",
           "Compare the available vehicles and check the fare.",
