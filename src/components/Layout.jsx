@@ -17,6 +17,8 @@ export default function Layout({ children }) {
   const serverPages = pageCtx.data?.allPages ?? null;
   // Home page keeps its full original motion; every other page runs in performance mode.
   const isHome = ((pageCtx.urlPathname || "/").replace(/\/+$/, "") || "/") === "/";
+  // CMS/admin screens are full-screen tools: no public link directory there.
+  const isAdmin = (pageCtx.urlPathname || "").startsWith("/admin");
   // In-site navigation swaps pages without a reload, so <head> tags written on the first
   // load would go stale — re-point canonical / og:url / robots at the current page.
   useEffect(() => {
@@ -105,7 +107,7 @@ export default function Layout({ children }) {
         <main className="flex-1">
           {children}
         </main>
-        <LinkDirectory />
+        {!isAdmin && <LinkDirectory />}
         <Footer />
       </div>
       <ToastStack />

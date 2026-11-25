@@ -71,9 +71,9 @@ export const LANDING_PAGES = {
         cards: [
           { book: "local", title: "Local Car Rental in Bangalore", body: "Book [local car rental services](/local-car-rental) in Bangalore for office travel, hospital visits, shopping, personal appointments and city sightseeing. Choose a vehicle and rental duration according to your schedule." },
           { book: "airport", title: "Bangalore Airport Taxi Booking", body: ["Travelling to or from Kempegowda International Airport? Abhi Cabs 24×7 offers airport pickup and drop-off options for individuals, families and business travellers.", "Explore our [airport taxi booking services](/airport-taxi) to plan your airport journey."] },
-          { book: "one-way", title: "One-Way Outstation Car Rental", body: ["Travelling from Bangalore to another city without a return trip? Book a one-way outstation cab for personal journeys, business visits or family travel.", "Explore our [one-way outstation taxi services](/one-way-cabs)."] },
+          { book: "one-way", title: "One-Way Car Rental", body: ["Travelling from Bangalore to another city without a return trip? Book a one-way cab for personal journeys, business visits or family travel.", "Explore our [one-way taxi services](/one-way-cabs)."] },
           { book: "round-trip", title: "Round-Trip Car Rental from Bangalore", body: ["Planning a weekend getaway or family holiday? Choose round-trip car rentals from Bangalore for return journeys and multi-day travel.", "Learn more about our [round-trip cab booking](/round-trip-cabs) options."] },
-          { href: "/services/corporate", title: "Corporate Car Rental in Bangalore", body: ["Need transportation for business meetings, executives or employee travel? Abhi Cabs 24×7 offers corporate car rental enquiries for local travel, airport pickups, company outings and business visits.", "Explore our [corporate cab rental services](/services/corporate)."] },
+          { href: "/services/corporate", title: "Corporate Car Rental in Bangalore", body: ["Need transportation for business meetings, executives or employee travel? Abhi Cabs 24×7 offers corporate car rental enquiries for local travel, airport pickups, company outings and business visits.", "Explore our [corporate car rental services](/services/corporate)."] },
         ],
       },
       pickup: {

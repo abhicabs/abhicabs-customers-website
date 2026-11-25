@@ -19,7 +19,7 @@ import { SERVICE_PRESETS, VEHICLE_SUGGESTIONS, parsePresetList, presetLabel } fr
 import { BLOGS } from "../data/blogs";
 import { refreshLiveBlogs } from "../hooks/useBlogs";
 import useCmsBlogs, { resetCmsBlogsCache } from "../hooks/useCmsBlogs";
-import { GH_TOKEN, GH_REPO, GH_BRANCH, GH_FILE, fetchBlogsFile } from "../lib/githubBlogs";
+import { GH_FILE, REDIRECTS_FILE, fetchBlogsFile, ghGetFile, ghPutFile, decodeBase64Utf8, parseExportedArray, serializeArray } from "../lib/githubBlogs";
 import BlogStructureFields from "../components/cms/BlogStructureFields";
 import ServiceWorkspace from "../components/cms/ServiceWorkspace";
 import { buildServiceChecklist } from "../components/cms/serviceChecklist";
@@ -1691,24 +1691,21 @@ function BlogEditor({ editingBlog, onBack }) {
           newBlogsArray = [{ ...blogData, id: nextId }, ...filtered];
         }
 
-        const entriesStr = newBlogsArray.map((b) => "  " + JSON.stringify(b, null, 2).replace(/\n/g, "\n  ")).join(",\n");
-        const newContent = `export const BLOGS = [\n${entriesStr}\n];\n`;
-
-        setPublishMsg("Committing to GitHub…");
-        const putRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, {
-          method: "PUT",
-          headers: { Authorization: `token ${GH_TOKEN}`, Accept: "application/vnd.github.v3+json", "Content-Type": "application/json" },
-          body: JSON.stringify({
+        setPublishMsg("Publishing…");
+        try {
+          // The backend commits to GitHub with its own token (none in the browser).
+          await ghPutFile(GH_FILE, {
+            text: serializeArray("BLOGS", newBlogsArray),
+            sha,
             message: isEditMode ? `update blog: ${blogData.slug}` : `add blog: ${blogData.slug}`,
-            content: btoa(unescape(encodeURIComponent(newContent))), sha, branch: GH_BRANCH,
-          }),
-        });
-
-        if (putRes.status === 409) {
-          if (attempt < MAX_RETRIES) { setPublishMsg(`Sync conflict — retrying… (${attempt}/${MAX_RETRIES})`); await new Promise((r) => setTimeout(r, 800 * attempt)); continue; }
-          throw new Error("Sync conflict: GitHub rejected the update 3 times. Please try again.");
+          });
+        } catch (err) {
+          if (err.status === 409) {
+            if (attempt < MAX_RETRIES) { setPublishMsg(`Sync conflict — retrying… (${attempt}/${MAX_RETRIES})`); await new Promise((r) => setTimeout(r, 800 * attempt)); continue; }
+            throw new Error("Sync conflict: the blog file changed 3 times while publishing. Please try again.");
+          }
+          throw err;
         }
-        if (!putRes.ok) { const err = await putRes.json().catch(() => ({})); throw new Error(err.message || `Commit failed: HTTP ${putRes.status}`); }
 
         if (isEditMode) editingBlogOriginalSlug.current = blogData.slug;
         resetCmsBlogsCache(); // next visit to the list reloads from GitHub
@@ -2280,14 +2277,7 @@ function BlogEditor({ editingBlog, onBack }) {
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full ml-1" style={{ background: "#ECFDF5", color: "#059669" }}>{cmsBlogs.length} blogs</span>
                   </div>
                   <p className="text-[13px] text-[#646970] mb-4">Edit any blog redirect slug. Changes commit directly to <code className="bg-[#F9FAFB] px-1.5 py-0.5 rounded text-[12px]">blogs.js</code> and update everywhere instantly.</p>
-                  <RedirectsBox
-                    ghToken={GH_TOKEN}
-                    ghRepo={GH_REPO}
-                    ghBranch={GH_BRANCH}
-                    ghFile={GH_FILE}
-                    fetchCurrentFile={fetchCurrentFile}
-                    inline={true}
-                  />
+                  <RedirectsBox inline={true} />
                 </div>
               </div>
             ) : (
@@ -3446,8 +3436,7 @@ function UsersPanel() {
 
 
 // --- Redirects Box (Ultimate Redirect style manager) -----------------------
-function RedirectsBox({ ghToken, ghRepo, ghBranch, inline = false }) {
-  const REDIRECTS_FILE = "src/data/redirects.js";
+function RedirectsBox({ inline = false }) {
 
   const [redirects, setRedirects] = useState([]);
   const [loading, setLoading]     = useState(true);
@@ -3470,28 +3459,14 @@ function RedirectsBox({ ghToken, ghRepo, ghBranch, inline = false }) {
 
   const [query, setQuery] = useState("");
 
-  const ghHeaders = {
-    Authorization: `token ${ghToken}`,
-    Accept: "application/vnd.github.v3+json",
-  };
-
   // Fetch redirects.js (handles file-not-found by starting empty)
   const fetchRedirects = async () => {
     setLoading(true); setLoadError("");
     try {
-      const res = await fetch(`https://api.github.com/repos/${ghRepo}/contents/${REDIRECTS_FILE}?ref=${ghBranch}&t=${Date.now()}`,
-        { headers: ghHeaders, cache: "no-store" });
-      if (res.status === 404) { setRedirects([]); setLoading(false); return; }
-      if (!res.ok) throw new Error(`Fetch failed: HTTP ${res.status}`);
-      const fileData = await res.json();
-      const binary = atob(fileData.content.replace(/\n/g, ""));
-      const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
-      const text = new TextDecoder("utf-8").decode(bytes);
-      const stripped = text.replace(/^[\s\S]*?export\s+const\s+REDIRECTS\s*=\s*/, "").replace(/;?\s*$/, "").trim();
-      // eslint-disable-next-line no-new-func
-      const arr = new Function(`return ${stripped}`)();
-      setRedirects(Array.isArray(arr) ? arr : []);
+      const fileData = await ghGetFile(REDIRECTS_FILE, { fresh: true });
+      setRedirects(parseExportedArray(decodeBase64Utf8(fileData.content), "REDIRECTS"));
     } catch (e) {
+      if (e.status === 404) { setRedirects([]); return; } // no redirects file yet: start empty
       setLoadError(e.message || "Failed to load redirects");
     } finally {
       setLoading(false);
@@ -3506,22 +3481,10 @@ function RedirectsBox({ ghToken, ghRepo, ghBranch, inline = false }) {
     try {
       // get current sha (if file exists)
       let sha = undefined;
-      const head = await fetch(`https://api.github.com/repos/${ghRepo}/contents/${REDIRECTS_FILE}?ref=${ghBranch}&t=${Date.now()}`,
-        { headers: ghHeaders, cache: "no-store" });
-      if (head.ok) { const d = await head.json(); sha = d.sha; }
+      try { sha = (await ghGetFile(REDIRECTS_FILE, { fresh: true })).sha; }
+      catch (e) { if (e.status !== 404) throw e; } // 404 = file doesn't exist yet; the commit creates it
 
-      const entriesStr = nextArr.map((r) => "  " + JSON.stringify(r, null, 2).replace(/\n/g, "\n  ")).join(",\n");
-      const newContent = `export const REDIRECTS = [\n${entriesStr}\n];\n`;
-
-      const putRes = await fetch(`https://api.github.com/repos/${ghRepo}/contents/${REDIRECTS_FILE}`, {
-        method: "PUT",
-        headers: { ...ghHeaders, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message, content: btoa(unescape(encodeURIComponent(newContent))),
-          branch: ghBranch, ...(sha ? { sha } : {}),
-        }),
-      });
-      if (!putRes.ok) { const err = await putRes.json().catch(() => ({})); throw new Error(err.message || `Commit failed: HTTP ${putRes.status}`); }
+      await ghPutFile(REDIRECTS_FILE, { text: serializeArray("REDIRECTS", nextArr), sha, message });
 
       setRedirects(nextArr);
       setBanner({ type: "ok", msg: "Saved!" });
@@ -4443,6 +4406,11 @@ function PageEditor({ onBack }) {
             ? saved[p.id]
             : DEFAULT_PAGE_CONTENT[p.id] || { sections: [] };
         });
+        // Saved service pages (created in the CMS or customised built-ins) aren't in PAGE_DEFS — keep them,
+        // otherwise they'd vanish on reload and the next save (which sends every page) would delete them.
+        Object.entries(saved).forEach(([id, pg]) => {
+          if (!merged[id] && pg && (pg._custom || pg._service)) merged[id] = pg;
+        });
         setPages(merged);
       } catch {
         // API failed — try recovering from local draft
@@ -4857,7 +4825,7 @@ function PageEditor({ onBack }) {
         <div className="h-14 bg-white border-b border-[#E5E7EB] flex items-center justify-between px-6 shadow-sm sticky top-0 z-10">
           <div>
             <h1 style={{ fontSize: 17, fontWeight: 900, color: "#0a0a0a", letterSpacing: "-0.02em", margin: 0 }}>
-              {activePage ? PAGE_DEFS.find((p) => p.id === activePage)?.label + " Page" : "Page Manager"}
+              {activePage ? `${PAGE_DEFS.find((p) => p.id === activePage)?.label || pages[activePage]?._label || activePage} Page` : "Page Manager"}
             </h1>
             {activePage && <p style={{ fontSize: 11, color: "#9CA3AF", marginTop: 1, fontWeight: 500 }}>Pages → {PAGE_DEFS.find((p) => p.id === activePage)?.label || pages[activePage]?._label || activePage} → {viewMode === "preview" ? "Preview" : "Editing"}</p>}
           </div>
@@ -4964,7 +4932,7 @@ function PageEditor({ onBack }) {
                   <h3 style={{ fontSize: 20, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", margin: 0 }}>{PAGE_DEFS.find((p) => p.id === activePage)?.label || pages[activePage]?._label || activePage} Page</h3>
                   <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: 3, fontWeight: 500 }}>
                     {isTemplatePage(pages[activePage]) ? "Fully customizable · add any section" : <>{currentSections.length} section{currentSections.length !== 1 ? "s" : ""} · reorder with arrows</>}
-                    {(pages[activePage]?._service || pages[activePage]?._custom) && <> · <span style={{ color: "#F5A623" }}>Live at /services/{activePage}</span></>}
+                    {(pages[activePage]?._service || pages[activePage]?._custom) && <> · <span style={{ color: "#F5A623" }}>Live at {livePageUrl}</span></>}
                   </p>
                 </div>
               </div>
@@ -5165,24 +5133,11 @@ export default function AbhiCabsCMS() {
   if (screen === "picker") {
     const deleteBlog = async (blog) => {
       try {
-        // Fetch current blogs.js, remove the blog, commit back
-        const GH_TOKEN = import.meta.env.VITE_GH_TOKEN;
-        const GH_REPO = import.meta.env.VITE_GH_REPO || "abhicabs/abhicabs-customers-website";
-        if (!GH_TOKEN) { alert("GitHub token not configured."); return; }
-        const fileRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/src/data/blogs.js?ref=main`, {
-          headers: { Authorization: `token ${GH_TOKEN}`, Accept: "application/vnd.github.v3+json" },
-        });
-        const file = await fileRes.json();
-        const content = atob(file.content);
-        // Remove the blog entry by slug
-        const slugPattern = new RegExp(`\\{[^}]*slug:\\s*["']${blog.slug}["'][^}]*\\},?\\s*`, "g");
-        const updated = content.replace(slugPattern, "").replace(/,\s*\]/, "\n]");
-        const commitRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/src/data/blogs.js`, {
-          method: "PUT",
-          headers: { Authorization: `token ${GH_TOKEN}`, Accept: "application/vnd.github.v3+json", "Content-Type": "application/json" },
-          body: JSON.stringify({ message: `Delete blog: ${blog.headline || blog.title}`, content: btoa(unescape(encodeURIComponent(updated))), sha: file.sha, branch: "main" }),
-        });
-        if (!commitRes.ok) throw new Error("Failed to delete from GitHub");
+        // Load the live list, drop this post, commit the rebuilt file (through the backend).
+        const { sha, blogsArray } = await fetchBlogsFile();
+        const next = blogsArray.filter((b) => b.slug !== blog.slug);
+        if (next.length === blogsArray.length) throw new Error("That post is no longer in blogs.js.");
+        await ghPutFile(GH_FILE, { text: serializeArray("BLOGS", next), sha, message: `Delete blog: ${blog.headline || blog.title || blog.slug}` });
         // Log the action
         addActivityLog("delete", "blog", blog.slug, blog.headline || blog.title);
         refreshLiveBlogs();

@@ -107,7 +107,7 @@ export default function FleetPage() {
         imagePosition="60% center"
         imageAlt="Abhi Cabs vehicles"
         breadcrumb={[["Home", "/"], ["Our Vehicles", null]]}
-        title={<>Our Vehicles – <span className="ac-gold-shimmer">Cab Rental & Vehicle Booking Services</span> Across India</>}
+        title={<>Our Vehicles – <span className="ac-gold-shimmer">Car Rental & Vehicle Rental Services</span> Across India</>}
         subtitle="Find Your Perfect Ride with Abhi Cabs 24×7"
         description={HERO_DESCRIPTION}
       >

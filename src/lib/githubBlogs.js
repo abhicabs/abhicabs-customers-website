@@ -1,35 +1,77 @@
 /**
- * Live access to the blog posts file (src/data/blogs.js) through the GitHub API.
- * The Blog Builder publishes by committing to this file, so GitHub — not the bundle that
- * was built into the running app — is the source of truth for what exists and can be edited.
+ * Live access to the website's CMS data files (src/data/blogs.js, src/data/redirects.js).
+ * The Blog Builder publishes by committing to these files on GitHub.
  *
- * Needs VITE_GH_TOKEN (a token with repo contents read/write). The repo defaults to this project's own;
- * VITE_GH_REPO ("owner/repo") overrides it.
- * Written with explicit `import.meta.env.VITE_*` references (dynamic access is not inlined).
+ * All GitHub access now goes through the backend (/api/v1/blog/github/file), which holds the
+ * GitHub token on the server. The website no longer needs — and must not have — VITE_GH_TOKEN:
+ * any VITE_ variable is baked into the public JavaScript.
+ *
+ *   GET  /api/v1/blog/github/file?path=…   blogs.js is public; other files need a CMS login
+ *   PUT  /api/v1/blog/github/file          CMS editor/admin login required
  */
-export const GH_TOKEN = import.meta.env.VITE_GH_TOKEN;
-// Default = this project's own repository (from .git/config). Override with VITE_GH_REPO if it ever moves.
-export const GH_REPO = import.meta.env.VITE_GH_REPO || "abhicabs/abhicabs-customers-website";
+import { API_URL } from "./apiBase";
+
 export const GH_BRANCH = "main";
 export const GH_FILE = "src/data/blogs.js";
+export const REDIRECTS_FILE = "src/data/redirects.js";
 
-export const ghConfigured = () => !!GH_TOKEN && !!GH_REPO;
+/** The CMS login token (stored by BlogAuthContext), as an Authorization header. */
+function cmsAuthHeader() {
+  if (typeof window === "undefined") return {};
+  try {
+    const s = JSON.parse(localStorage.getItem("abhicabsBlogAuth") || "null");
+    return s?.token ? { Authorization: `Bearer ${s.token}` } : {};
+  } catch { return {}; }
+}
 
-/** → { sha, blogsArray }. Throws an Error whose message says what is wrong (token / repo / file). */
-export async function fetchBlogsFile() {
-  if (!GH_TOKEN) throw new Error("VITE_GH_TOKEN is not set.");
-  const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}?ref=${GH_BRANCH}&t=${Date.now()}`, {
-    headers: { Authorization: `token ${GH_TOKEN}`, Accept: "application/vnd.github.v3+json" }, cache: "no-store",
+/** Publishing is configured on the server; the CMS can always try. Kept for existing callers. */
+export const ghConfigured = () => true;
+
+async function errorFrom(res, fallback) {
+  const j = await res.json().catch(() => ({}));
+  const e = new Error(j.message || `${fallback}: HTTP ${res.status}`);
+  e.status = res.status;
+  return e;
+}
+
+/** → GitHub-shaped { content (base64), sha }. `fresh` skips the server's 30-second cache (CMS only). */
+export async function ghGetFile(path, { fresh = false, signedIn = true } = {}) {
+  const url = `${API_URL}/blog/github/file?path=${encodeURIComponent(path)}${fresh ? "&fresh=1" : ""}&t=${Date.now()}`;
+  const res = await fetch(url, { headers: signedIn ? cmsAuthHeader() : {}, cache: "no-store" });
+  if (!res.ok) throw await errorFrom(res, "Could not load " + path);
+  return res.json();
+}
+
+/** Commit new text to an allowed file. Throws an Error with .status === 409 if the file changed meanwhile. */
+export async function ghPutFile(path, { text, sha, message }) {
+  const res = await fetch(`${API_URL}/blog/github/file`, {
+    method: "PUT",
+    headers: { ...cmsAuthHeader(), "Content-Type": "application/json" },
+    body: JSON.stringify({ path, content: encodeBase64Utf8(text), sha, message }),
   });
-  if (res.status === 401) throw new Error("GitHub rejected the token (401). Check VITE_GH_TOKEN.");
-  if (res.status === 403) throw new Error("GitHub denied access or rate-limited the request (403).");
-  if (res.status === 404) throw new Error(`Not found (404): check VITE_GH_REPO “${GH_REPO}”, the “${GH_BRANCH}” branch and ${GH_FILE}.`);
-  if (!res.ok) throw new Error(`GitHub fetch failed: ${res.status} ${res.statusText}`);
-  const file = await res.json();
-  const text = new TextDecoder("utf-8").decode(Uint8Array.from(atob(file.content.replace(/\n/g, "")), (c) => c.charCodeAt(0)));
-  const body = text.replace(/^[\s\S]*?export\s+const\s+BLOGS\s*=\s*/, "").replace(/;?\s*$/, "").trim();
+  if (!res.ok) throw await errorFrom(res, "Commit failed");
+  return res.json(); // { content: { sha }, commit: { sha } }
+}
+
+export const decodeBase64Utf8 = (b64) =>
+  new TextDecoder("utf-8").decode(Uint8Array.from(atob(String(b64).replace(/\n/g, "")), (c) => c.charCodeAt(0)));
+export const encodeBase64Utf8 = (text) => btoa(unescape(encodeURIComponent(text)));
+
+/** Evaluate the array literal exported by a data file ("export const NAME = [ … ];"). */
+export function parseExportedArray(text, name) {
+  const body = text.replace(new RegExp(`^[\\s\\S]*?export\\s+const\\s+${name}\\s*=\\s*`), "").replace(/;?\s*$/, "").trim();
   // eslint-disable-next-line no-new-func
-  const blogsArray = new Function(`return ${body || "[]"}`)();
-  if (!Array.isArray(blogsArray)) throw new Error("blogs.js doesn't export a BLOGS array.");
-  return { sha: file.sha, blogsArray };
+  const arr = new Function(`return ${body || "[]"}`)();
+  if (!Array.isArray(arr)) throw new Error(`${name} is not an array.`);
+  return arr;
+}
+
+/** Same layout the CMS has always written. */
+export const serializeArray = (name, arr) =>
+  `export const ${name} = [\n${arr.map((r) => "  " + JSON.stringify(r, null, 2).replace(/\n/g, "\n  ")).join(",\n")}\n];\n`;
+
+/** → { sha, blogsArray } — the live blog list, read fresh for the CMS. */
+export async function fetchBlogsFile() {
+  const file = await ghGetFile(GH_FILE, { fresh: true });
+  return { sha: file.sha, blogsArray: parseExportedArray(decodeBase64Utf8(file.content), "BLOGS") };
 }

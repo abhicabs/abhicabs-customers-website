@@ -302,7 +302,7 @@ export const SERVICE_DEFAULTS = {
   primaryLabel: "Book Your One-Way Cab",
   hero: {
     eyebrow: "One-Way Outstation",
-    heading: "One-Way Outstation Cab Booking – Intercity Taxi Services Across India",
+    heading: "One-Way Cab Booking – Intercity Taxi Services Across India",
     subheading: "Book Your One-Way Taxi with Abhi Cabs 24×7",
     description: "Planning a trip to another city without a return journey? Abhi Cabs 24×7 offers convenient one-way outstation cab booking services for business travel, family visits, holidays, and long-distance journeys. Choose from sedans, SUVs, and other available vehicles with professional drivers. Book your one-way taxi from Karnataka, Andhra Pradesh, Maharashtra, or Telangana to destinations across India.",
     image: "/images/hero-hill-road.webp", imagePosition: "50% center",
