@@ -6,6 +6,20 @@
     "height": 900,
     "locked": true
   },
+  "Ananthagiri Hills": {
+    "src": "/images/places/ananthagiri-hills-visakhapatnam-600.webp",
+    "srcSet": "/images/places/ananthagiri-hills-visakhapatnam-300.webp 300w, /images/places/ananthagiri-hills-visakhapatnam-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
+  "Araku Valley": {
+    "src": "/images/places/araku-valley-visakhapatnam-600.webp",
+    "srcSet": "/images/places/araku-valley-visakhapatnam-300.webp 300w, /images/places/araku-valley-visakhapatnam-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "Bavikonda": {
     "src": "/images/places/bavikonda-visakhapatnam-ac793146-600.webp",
     "srcSet": "/images/places/bavikonda-visakhapatnam-ac793146-300.webp 300w, /images/places/bavikonda-visakhapatnam-ac793146-600.webp 600w",
@@ -16,6 +30,20 @@
   "Bheemili": {
     "src": "/images/places/bheemili-visakhapatnam-1ab4d9fd-600.webp",
     "srcSet": "/images/places/bheemili-visakhapatnam-1ab4d9fd-300.webp 300w, /images/places/bheemili-visakhapatnam-1ab4d9fd-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
+  "Bhimashankar": {
+    "src": "/images/places/bhimashankar-pune-600.webp",
+    "srcSet": "/images/places/bhimashankar-pune-300.webp 300w, /images/places/bhimashankar-pune-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
+  "Borra Caves": {
+    "src": "/images/places/borra-caves-visakhapatnam-600.webp",
+    "srcSet": "/images/places/borra-caves-visakhapatnam-300.webp 300w, /images/places/borra-caves-visakhapatnam-600.webp 600w",
     "width": 600,
     "height": 750,
     "locked": true
@@ -48,6 +76,13 @@
     "height": 900,
     "locked": true
   },
+  "Horsley Hills": {
+    "src": "/images/places/horsley-hills-tirupati-600.webp",
+    "srcSet": "/images/places/horsley-hills-tirupati-300.webp 300w, /images/places/horsley-hills-tirupati-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "INS Kurusura Submarine Museum": {
     "src": "/images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-1200.webp",
     "srcSet": "/images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-286.webp 286w, /images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-350.webp 350w, /images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-1200.webp 1200w",
@@ -67,6 +102,13 @@
     "srcSet": "/images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-286.webp 286w, /images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-350.webp 350w, /images/places/indira-gandhi-zoological-park-visakhapatnam-09314aef-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Jejuri Temple": {
+    "src": "/images/places/jejuri-temple-pune-600.webp",
+    "srcSet": "/images/places/jejuri-temple-pune-300.webp 300w, /images/places/jejuri-temple-pune-600.webp 600w",
+    "width": 600,
+    "height": 750,
     "locked": true
   },
   "Kadri Manjunatha Temple": {
@@ -111,6 +153,13 @@
     "height": 900,
     "locked": true
   },
+  "Karkala": {
+    "src": "/images/places/karkala-mangaluru-600.webp",
+    "srcSet": "/images/places/karkala-mangaluru-300.webp 300w, /images/places/karkala-mangaluru-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "Kateel Temple": {
     "src": "/images/places/kateel-temple-mangaluru-b52b32c1-600.webp",
     "srcSet": "/images/places/kateel-temple-mangaluru-b52b32c1-300.webp 300w, /images/places/kateel-temple-mangaluru-b52b32c1-600.webp 600w",
@@ -125,6 +174,13 @@
     "height": 1125,
     "locked": true
   },
+  "Khandala": {
+    "src": "/images/places/khandala-pune-600.webp",
+    "srcSet": "/images/places/khandala-pune-300.webp 300w, /images/places/khandala-pune-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "Kudroli Gokarnanatheshwara Temple": {
     "src": "/images/places/kudroli-gokarnanatheshwara-temple-mangaluru-f05b2397-1200.webp",
     "srcSet": "/images/places/kudroli-gokarnanatheshwara-temple-mangaluru-f05b2397-286.webp 286w, /images/places/kudroli-gokarnanatheshwara-temple-mangaluru-f05b2397-350.webp 350w, /images/places/kudroli-gokarnanatheshwara-temple-mangaluru-f05b2397-1200.webp 1200w",
@@ -132,11 +188,25 @@
     "height": 900,
     "locked": true
   },
+  "Kukke Subramanya": {
+    "src": "/images/places/kukke-subramanya-mangaluru-600.webp",
+    "srcSet": "/images/places/kukke-subramanya-mangaluru-300.webp 300w, /images/places/kukke-subramanya-mangaluru-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "Lal Mahal": {
     "src": "/images/places/lal-mahal-pune-5b28dee1-1200.webp",
     "srcSet": "/images/places/lal-mahal-pune-5b28dee1-286.webp 286w, /images/places/lal-mahal-pune-5b28dee1-350.webp 350w, /images/places/lal-mahal-pune-5b28dee1-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Lavasa": {
+    "src": "/images/places/lavasa-pune-600.webp",
+    "srcSet": "/images/places/lavasa-pune-300.webp 300w, /images/places/lavasa-pune-600.webp 600w",
+    "width": 600,
+    "height": 750,
     "locked": true
   },
   "Lonavala": {
@@ -160,11 +230,32 @@
     "height": 900,
     "locked": true
   },
+  "Moodbidri": {
+    "src": "/images/places/moodbidri-mangaluru-600.webp",
+    "srcSet": "/images/places/moodbidri-mangaluru-300.webp 300w, /images/places/moodbidri-mangaluru-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
+  "Mulki": {
+    "src": "/images/places/mulki-mangaluru-600.webp",
+    "srcSet": "/images/places/mulki-mangaluru-300.webp 300w, /images/places/mulki-mangaluru-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "Mulshi": {
     "src": "/images/places/mulshi-pune-9ac1b3f8-900.webp",
     "srcSet": "/images/places/mulshi-pune-9ac1b3f8-300.webp 300w, /images/places/mulshi-pune-9ac1b3f8-600.webp 600w, /images/places/mulshi-pune-9ac1b3f8-900.webp 900w",
     "width": 900,
     "height": 1125,
+    "locked": true
+  },
+  "Narayanavanam Temple": {
+    "src": "/images/places/narayanavanam-temple-tirupati-600.webp",
+    "srcSet": "/images/places/narayanavanam-temple-tirupati-300.webp 300w, /images/places/narayanavanam-temple-tirupati-600.webp 600w",
+    "width": 600,
+    "height": 750,
     "locked": true
   },
   "Panambur Beach": {
@@ -186,6 +277,13 @@
     "srcSet": "/images/places/pataleshwar-cave-temple-pune-3dfd3f87-286.webp 286w, /images/places/pataleshwar-cave-temple-pune-3dfd3f87-350.webp 350w, /images/places/pataleshwar-cave-temple-pune-3dfd3f87-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Pawna Lake": {
+    "src": "/images/places/pawna-lake-pune-600.webp",
+    "srcSet": "/images/places/pawna-lake-pune-300.webp 300w, /images/places/pawna-lake-pune-600.webp 600w",
+    "width": 600,
+    "height": 750,
     "locked": true
   },
   "Pilikula Nisargadhama": {
@@ -333,6 +431,13 @@
     "srcSet": "/images/places/visakha-museum-visakhapatnam-f455159b-286.webp 286w, /images/places/visakha-museum-visakhapatnam-f455159b-350.webp 350w",
     "width": 350,
     "height": 263,
+    "locked": true
+  },
+  "Vizianagaram": {
+    "src": "/images/places/vizianagaram-visakhapatnam-600.webp",
+    "srcSet": "/images/places/vizianagaram-visakhapatnam-300.webp 300w, /images/places/vizianagaram-visakhapatnam-600.webp 600w",
+    "width": 600,
+    "height": 750,
     "locked": true
   },
   "Yarada Beach": {
