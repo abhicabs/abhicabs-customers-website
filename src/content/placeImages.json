@@ -6,6 +6,20 @@
     "height": 900,
     "locked": true
   },
+  "Bavikonda": {
+    "src": "/images/places/bavikonda-visakhapatnam-ac793146-600.webp",
+    "srcSet": "/images/places/bavikonda-visakhapatnam-ac793146-300.webp 300w, /images/places/bavikonda-visakhapatnam-ac793146-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
+  "Bheemili": {
+    "src": "/images/places/bheemili-visakhapatnam-1ab4d9fd-600.webp",
+    "srcSet": "/images/places/bheemili-visakhapatnam-1ab4d9fd-300.webp 300w, /images/places/bheemili-visakhapatnam-1ab4d9fd-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "Chandragiri Fort": {
     "src": "/images/places/chandragiri-fort-tirupati-e39f5186-1200.webp",
     "srcSet": "/images/places/chandragiri-fort-tirupati-e39f5186-286.webp 286w, /images/places/chandragiri-fort-tirupati-e39f5186-350.webp 350w, /images/places/chandragiri-fort-tirupati-e39f5186-1200.webp 1200w",
@@ -18,6 +32,13 @@
     "srcSet": "/images/places/dagdusheth-ganpati-temple-pune-6815271d-286.webp 286w, /images/places/dagdusheth-ganpati-temple-pune-6815271d-350.webp 350w, /images/places/dagdusheth-ganpati-temple-pune-6815271d-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Dharmasthala": {
+    "src": "/images/places/dharmasthala-mangaluru-3a427404-600.webp",
+    "srcSet": "/images/places/dharmasthala-mangaluru-3a427404-300.webp 300w, /images/places/dharmasthala-mangaluru-3a427404-600.webp 600w",
+    "width": 600,
+    "height": 750,
     "locked": true
   },
   "Dolphin’s Nose Lighthouse": {
@@ -62,11 +83,46 @@
     "height": 900,
     "locked": true
   },
+  "Kailasakona Waterfalls": {
+    "src": "/images/places/kailasakona-waterfalls-tirupati-43ee72ee-600.webp",
+    "srcSet": "/images/places/kailasakona-waterfalls-tirupati-43ee72ee-300.webp 300w, /images/places/kailasakona-waterfalls-tirupati-43ee72ee-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
+  "Kambalakonda Wildlife Sanctuary": {
+    "src": "/images/places/kambalakonda-wildlife-sanctuary-visakhapatnam-ff043ba6-600.webp",
+    "srcSet": "/images/places/kambalakonda-wildlife-sanctuary-visakhapatnam-ff043ba6-300.webp 300w, /images/places/kambalakonda-wildlife-sanctuary-visakhapatnam-ff043ba6-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
+  "Kanipakam Temple": {
+    "src": "/images/places/kanipakam-temple-tirupati-1539b56f-600.webp",
+    "srcSet": "/images/places/kanipakam-temple-tirupati-1539b56f-300.webp 300w, /images/places/kanipakam-temple-tirupati-1539b56f-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "Kapila Theertham": {
     "src": "/images/places/kapila-theertham-tirupati-ee1a8ad3-1200.webp",
     "srcSet": "/images/places/kapila-theertham-tirupati-ee1a8ad3-286.webp 286w, /images/places/kapila-theertham-tirupati-ee1a8ad3-350.webp 350w, /images/places/kapila-theertham-tirupati-ee1a8ad3-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Kateel Temple": {
+    "src": "/images/places/kateel-temple-mangaluru-b52b32c1-600.webp",
+    "srcSet": "/images/places/kateel-temple-mangaluru-b52b32c1-300.webp 300w, /images/places/kateel-temple-mangaluru-b52b32c1-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
+  "Khadakwasla Dam": {
+    "src": "/images/places/khadakwasla-dam-pune-086f3304-900.webp",
+    "srcSet": "/images/places/khadakwasla-dam-pune-086f3304-300.webp 300w, /images/places/khadakwasla-dam-pune-086f3304-600.webp 600w, /images/places/khadakwasla-dam-pune-086f3304-900.webp 900w",
+    "width": 900,
+    "height": 1125,
     "locked": true
   },
   "Kudroli Gokarnanatheshwara Temple": {
@@ -83,11 +139,32 @@
     "height": 900,
     "locked": true
   },
+  "Lonavala": {
+    "src": "/images/places/lonavala-pune-c2109a09-900.webp",
+    "srcSet": "/images/places/lonavala-pune-c2109a09-300.webp 300w, /images/places/lonavala-pune-c2109a09-600.webp 600w, /images/places/lonavala-pune-c2109a09-900.webp 900w",
+    "width": 900,
+    "height": 1125,
+    "locked": true
+  },
+  "Malpe Beach": {
+    "src": "/images/places/malpe-beach-mangaluru-b62abccf-600.webp",
+    "srcSet": "/images/places/malpe-beach-mangaluru-b62abccf-300.webp 300w, /images/places/malpe-beach-mangaluru-b62abccf-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "Mangaladevi Temple": {
     "src": "/images/places/mangaladevi-temple-mangaluru-7ea953d0-1200.webp",
     "srcSet": "/images/places/mangaladevi-temple-mangaluru-7ea953d0-286.webp 286w, /images/places/mangaladevi-temple-mangaluru-7ea953d0-350.webp 350w, /images/places/mangaladevi-temple-mangaluru-7ea953d0-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Mulshi": {
+    "src": "/images/places/mulshi-pune-9ac1b3f8-900.webp",
+    "srcSet": "/images/places/mulshi-pune-9ac1b3f8-300.webp 300w, /images/places/mulshi-pune-9ac1b3f8-600.webp 600w, /images/places/mulshi-pune-9ac1b3f8-900.webp 900w",
+    "width": 900,
+    "height": 1125,
     "locked": true
   },
   "Panambur Beach": {
@@ -139,6 +216,13 @@
     "height": 900,
     "locked": true
   },
+  "Regional Science Centre": {
+    "src": "/images/places/regional-science-centre-tirupati-148b41bc-601.webp",
+    "srcSet": "/images/places/regional-science-centre-tirupati-148b41bc-286.webp 286w, /images/places/regional-science-centre-tirupati-148b41bc-350.webp 350w, /images/places/regional-science-centre-tirupati-148b41bc-601.webp 601w",
+    "width": 601,
+    "height": 451,
+    "locked": true
+  },
   "Rushikonda Beach": {
     "src": "/images/places/rushikonda-beach-visakhapatnam-a1853a3f-554.webp",
     "srcSet": "/images/places/rushikonda-beach-visakhapatnam-a1853a3f-286.webp 286w, /images/places/rushikonda-beach-visakhapatnam-a1853a3f-350.webp 350w, /images/places/rushikonda-beach-visakhapatnam-a1853a3f-554.webp 554w",
@@ -165,6 +249,13 @@
     "srcSet": "/images/places/simhachalam-temple-visakhapatnam-9dac5824-286.webp 286w, /images/places/simhachalam-temple-visakhapatnam-9dac5824-350.webp 350w, /images/places/simhachalam-temple-visakhapatnam-9dac5824-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Sinhagad Fort": {
+    "src": "/images/places/sinhagad-fort-pune-3fa08941-900.webp",
+    "srcSet": "/images/places/sinhagad-fort-pune-3fa08941-300.webp 300w, /images/places/sinhagad-fort-pune-3fa08941-600.webp 600w, /images/places/sinhagad-fort-pune-3fa08941-900.webp 900w",
+    "width": 900,
+    "height": 1125,
     "locked": true
   },
   "Someshwara Beach": {
@@ -202,6 +293,13 @@
     "height": 900,
     "locked": true
   },
+  "Srikalahasti": {
+    "src": "/images/places/srikalahasti-tirupati-fdb0898f-600.webp",
+    "srcSet": "/images/places/srikalahasti-tirupati-fdb0898f-300.webp 300w, /images/places/srikalahasti-tirupati-fdb0898f-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true
+  },
   "St. Aloysius Chapel": {
     "src": "/images/places/st-aloysius-chapel-mangaluru-b490c1ba-1200.webp",
     "srcSet": "/images/places/st-aloysius-chapel-mangaluru-b490c1ba-286.webp 286w, /images/places/st-aloysius-chapel-mangaluru-b490c1ba-350.webp 350w, /images/places/st-aloysius-chapel-mangaluru-b490c1ba-1200.webp 1200w",
@@ -214,6 +312,13 @@
     "srcSet": "/images/places/tu-142-aircraft-museum-visakhapatnam-2ab9f154-286.webp 286w, /images/places/tu-142-aircraft-museum-visakhapatnam-2ab9f154-350.webp 350w, /images/places/tu-142-aircraft-museum-visakhapatnam-2ab9f154-1200.webp 1200w",
     "width": 1200,
     "height": 900,
+    "locked": true
+  },
+  "Talakona Waterfalls": {
+    "src": "/images/places/talakona-waterfalls-tirupati-c9751516-600.webp",
+    "srcSet": "/images/places/talakona-waterfalls-tirupati-c9751516-300.webp 300w, /images/places/talakona-waterfalls-tirupati-c9751516-600.webp 600w",
+    "width": 600,
+    "height": 750,
     "locked": true
   },
   "Tannirbhavi Beach": {
