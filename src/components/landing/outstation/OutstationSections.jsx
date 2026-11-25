@@ -187,7 +187,7 @@ export function RouteBoard({ eyebrow, title, sub, description, note, ctaLabel, r
     <Band id="routes" bg="bg-[#111]" className="text-white">
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <Head id="routes" light eyebrow={eyebrow} title={title} sub={sub} intro={description ? [description] : []} />
-        <div role="group" aria-label="Filter routes by distance" className="flex flex-wrap gap-2 shrink-0">
+        <div role="group" aria-label="Filter routes by distance" className="relative z-30 flex flex-wrap gap-2 shrink-0">
           {FILTERS.map((f) => (
             <button key={f.id} type="button" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}
               className={`rounded-full px-4 py-2.5 text-[13.5px] font-bold border-2 transition-colors ${focusRing.replace("outline-text", "outline-primary")} ${filter === f.id ? "bg-primary text-text border-primary" : "border-white/20 text-white hover:border-white/50"}`}>
