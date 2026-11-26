@@ -16,7 +16,7 @@ const SERVICE_META = [
   { test: /point-to-point/i, image: "/images/dashboard-pov.jpg", journey: { tripType: "one-way" }, label: "Book a city ride" },
   { test: /hourly/i, image: "/images/hero-local-chauffeur-900.webp", journey: { tripType: "local" }, label: "Book by the hour" },
   { test: /sightseeing/i, image: "/images/route-6.webp", journey: { tripType: "local", package: "8 hrs / 80 km" }, label: "Book sightseeing" },
-  { test: /corporate|business/i, image: "/images/corporate.webp", href: "/services/corporate", label: "Corporate enquiry" },
+  { test: /corporate|business/i, image: "/images/corporate.webp", href: "/services/corporate-car-rental", label: "Corporate enquiry" },
   { test: /family|personal/i, image: "/images/family.webp", journey: { tripType: "local" }, label: "Book a family ride" },
 ];
 const metaFor = (heading, fallbackImage) => SERVICE_META.find((m) => m.test.test(heading)) || { image: fallbackImage, journey: { tripType: "local" }, label: "Book now" };

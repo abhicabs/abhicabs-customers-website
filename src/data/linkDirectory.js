@@ -34,7 +34,7 @@ export const LINK_GROUPS = [
       { label: "Airport taxi", desc: "Pickups and drops, day or night", href: "/airport-taxi", icon: "plane" },
       { label: "One-way cabs", desc: "Intercity trips without a return", href: "/one-way-cabs", icon: "route" },
       { label: "Round-trip cabs", desc: "City-to-city trips with a return", href: "/round-trip-cabs", icon: "repeat" },
-      { label: "Corporate travel", desc: "Business and employee transport", href: "/services/corporate", icon: "building" },
+      { label: "Corporate travel", desc: "Business and employee transport", href: "/services/corporate-car-rental", icon: "building" },
       { label: "Tempo Traveller hire", desc: "Family tours, pilgrimages and group trips", href: "/vehicles/tempo-traveller", icon: "bus" },
       { label: "All our vehicles", desc: "Sedans, SUVs and group vehicles", href: "/our-vehicles", icon: "car" },
     ],

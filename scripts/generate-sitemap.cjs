@@ -31,7 +31,7 @@ const STATIC_URLS = [
   { path: "/local-car-rental",              priority: "0.9", changefreq: "weekly" },
   { path: "/services/local/bangalore",    priority: "0.8", changefreq: "weekly" },
   { path: "/airport-taxi",   priority: "0.9", changefreq: "weekly" },
-  { path: "/services/corporate",          priority: "0.8", changefreq: "monthly" },
+  { path: "/services/corporate-car-rental",          priority: "0.8", changefreq: "monthly" },
   { path: "/bangalore/car-rental",        priority: "0.9", changefreq: "weekly" },
   { path: "/vehicles/tempo-traveller",    priority: "0.9", changefreq: "weekly" },
   { path: "/our-vehicles",                       priority: "0.8", changefreq: "monthly" },

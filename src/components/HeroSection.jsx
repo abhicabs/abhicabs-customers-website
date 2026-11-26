@@ -74,12 +74,23 @@ const KEN_BURNS_CSS = `
 }
 `;
 
+const HERO_TITLE = "Cab Booking Services –";
+const HERO_ACCENT = "Local, Airport & Outstation Cabs";
+const LEGACY_TITLE = "Your Journey,";
+const LEGACY_ACCENT = "Our Priority.";
+
 const DEFAULT_FEATURES = ["Verified Drivers", "Transparent Pricing", "Comfortable Vehicles", "24×7 Support"];
 
 export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
   const cms = usePageContent("home");
-  const heroTitle = cms.get("hero", "title", "Your Journey,");
-  const heroAccent = cms.get("hero", "accent", "Our Priority.");
+  // H1 = title (white) + accent (gold). The previous default heading may still be stored in the CMS
+  // from earlier saves; treat it as "not customized" so the current heading shows. Real CMS edits still win.
+  let heroTitle = cms.get("hero", "title", HERO_TITLE);
+  let heroAccent = cms.get("hero", "accent", HERO_ACCENT);
+  if (String(heroTitle).trim() === LEGACY_TITLE && String(heroAccent).trim() === LEGACY_ACCENT) {
+    heroTitle = HERO_TITLE;
+    heroAccent = HERO_ACCENT;
+  }
   const heroDesc = cms.get("hero", "description", "Reliable Cabs. Transparent Fares. Comfortable Travel. Book reliable cabs for airport transfers, local travel, one-way trip, round trip, group trip and outstation journeys.");
   const heroImage = cms.get("hero", "image", "");
   const FEATURES = cms.getItems("features", "items", DEFAULT_FEATURES.map(f => typeof f === "string" ? { title: f } : f)).map(f => typeof f === "string" ? f : f.title || f);

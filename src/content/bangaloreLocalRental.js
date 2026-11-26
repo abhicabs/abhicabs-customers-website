@@ -64,7 +64,7 @@ export const BLR_LOCAL = {
         title: "Corporate Car Rental in Bangalore", image: "/images/corporate.webp", journey: { tripType: "local" },
         body: [
           "Hire a chauffeur-driven car for business meetings, client visits, office appointments and work-related travel.",
-          "Explore our [corporate cab rental services](/services/corporate) for business transportation.",
+          "Explore our [corporate cab rental services](/services/corporate-car-rental) for business transportation.",
         ],
       },
       {

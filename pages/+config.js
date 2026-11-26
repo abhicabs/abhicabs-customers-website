@@ -25,6 +25,7 @@ export default {
     "/services/one-way-outstation": "/one-way-cabs",
     "/services/airport-taxi": "/airport-taxi",
     "/services/round-trip": "/round-trip-cabs",
+    "/services/corporate": "/services/corporate-car-rental",
     "/contact-us": "/contact",
     "/services/airport-transfer": "/airport-taxi",
     "/blog": "/blogs",

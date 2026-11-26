@@ -17,7 +17,7 @@ export const CITY_CONTENT = {
         { title: "Outstation Cab Services from Mangaluru", desc: "Planning a family holiday, pilgrimage, or business trip? Book outstation taxis from Mangaluru to Udupi, Dharmasthala, Kukke Subramanya, Coorg, Bengaluru, and other destinations.", link: "/one-way-cabs" },
         { title: "One-Way & Round-Trip Taxi Services", desc: "Abhi Cabs 24×7 offers convenient booking options for intercity journeys. Choose one-way taxi services when you don't need a return journey, or explore round-trip bookings for holidays, temple tours, and family travel.", links: [{ label: "one-way taxi services", href: "/one-way-cabs" }, { label: "round-trip bookings", href: "/round-trip-cabs" }] },
         { title: "Hourly Car Rentals in Mangaluru", desc: "Need a cab for shopping, meetings, or sightseeing? Book an hourly taxi for multiple stops and convenient city travel.", link: "/local-car-rental" },
-        { title: "Corporate & Group Transportation", desc: "Abhi Cabs 24×7 offers business travel and group transportation options for corporate meetings, airport pickups, weddings, and family tours.", link: "/services/corporate" },
+        { title: "Corporate & Group Transportation", desc: "Abhi Cabs 24×7 offers business travel and group transportation options for corporate meetings, airport pickups, weddings, and family tours.", link: "/services/corporate-car-rental" },
       ],
     },
     attractions: {
@@ -150,7 +150,7 @@ export const CITY_CONTENT = {
         { title: "Outstation Cab Services from Tirupati", desc: "Planning a family holiday, business journey or pilgrimage to another city? Explore outstation cab booking from Tirupati to Chennai, Bengaluru, Vellore, Srikalahasti, Chittoor, Nellore and other supported destinations.", link: "/one-way-cabs" },
         { title: "One-Way & Round-Trip Cab Booking", desc: "Choose a one-way taxi from Tirupati when you need transportation to another destination without a scheduled return. For multi-temple pilgrimages, family travel and weekend holidays, explore our round-trip cab booking services.", links: [{ label: "one-way taxi services", href: "/one-way-cabs" }, { label: "round-trip cab booking services", href: "/round-trip-cabs" }] },
         { title: "Hourly Car Rentals in Tirupati", desc: "Need a cab for temple visits, shopping, appointments or multiple stops within the city? Explore hourly car rental services in Tirupati based on your preferred travel duration and vehicle availability." },
-        { title: "Corporate & Group Transportation in Tirupati", desc: "Abhi Cabs 24×7 offers corporate cab rental and group transportation enquiries in Tirupati for business travel, employee transportation, railway station pickups, events and group tours.", link: "/services/corporate" },
+        { title: "Corporate & Group Transportation in Tirupati", desc: "Abhi Cabs 24×7 offers corporate cab rental and group transportation enquiries in Tirupati for business travel, employee transportation, railway station pickups, events and group tours.", link: "/services/corporate-car-rental" },
       ],
     },
     tirumala: {
@@ -306,7 +306,7 @@ export const CITY_CONTENT = {
         { title: "Outstation Cab Services from Pune", desc: "Planning a family holiday, pilgrimage, or business trip? Explore outstation cab booking from Pune to Mumbai, Lonavala, Mahabaleshwar, Shirdi, Nashik, Kolhapur, and other supported destinations.", link: "/one-way-cabs" },
         { title: "One-Way & Round-Trip Cab Booking", desc: "Book a one-way taxi from Pune when you don\u2019t need a scheduled return journey. For family holidays, pilgrimages, business trips, and weekend getaways, explore our round-trip cab booking services.", links: [{ label: "one-way taxi services", href: "/one-way-cabs" }, { label: "round-trip cab booking services", href: "/round-trip-cabs" }] },
         { title: "Hourly Car Rental in Pune", desc: "Need a cab for multiple stops, shopping, office meetings, or sightseeing? Choose hourly car rental services in Pune based on your travel schedule, preferred duration, and vehicle availability." },
-        { title: "Corporate & Group Transportation in Pune", desc: "Abhi Cabs 24\u00d77 offers corporate cab rental services in Pune for business meetings, employee travel enquiries, airport pickups, executive journeys, company outings, and group transportation.", link: "/services/corporate" },
+        { title: "Corporate & Group Transportation in Pune", desc: "Abhi Cabs 24\u00d77 offers corporate cab rental services in Pune for business meetings, employee travel enquiries, airport pickups, executive journeys, company outings, and group transportation.", link: "/services/corporate-car-rental" },
       ],
     },
     fleet: {
@@ -458,7 +458,7 @@ export const CITY_CONTENT = {
         { title: "Outstation Cab Services from Visakhapatnam", desc: "Planning a family holiday, pilgrimage, or long-distance journey? Explore outstation cab booking from Visakhapatnam to Araku Valley, Vizianagaram, Srikakulam, Annavaram, Rajahmundry, Vijayawada, and other supported destinations.", link: "/one-way-cabs" },
         { title: "One-Way & Round-Trip Cab Booking", desc: "Choose a one-way taxi from Vizag when you need point-to-point travel without a scheduled return. For family holidays, weekend getaways, temple tours, and business journeys, explore our round-trip cab booking services.", links: [{ label: "one-way taxi services", href: "/one-way-cabs" }, { label: "round-trip cab booking services", href: "/round-trip-cabs" }] },
         { title: "Hourly Car Rentals in Visakhapatnam", desc: "Need a cab for shopping, appointments, office meetings, or sightseeing? Explore hourly car rental services in Visakhapatnam for multiple-stop city journeys based on your preferred duration and vehicle availability." },
-        { title: "Corporate & Group Transportation in Vizag", desc: "Abhi Cabs 24\u00d77 offers corporate cab rental services in Visakhapatnam for employee travel enquiries, business meetings, airport pickups, company outings, and group transportation.", link: "/services/corporate" },
+        { title: "Corporate & Group Transportation in Vizag", desc: "Abhi Cabs 24\u00d77 offers corporate cab rental services in Visakhapatnam for employee travel enquiries, business meetings, airport pickups, company outings, and group transportation.", link: "/services/corporate-car-rental" },
       ],
     },
     fleet: {
@@ -612,7 +612,7 @@ export const CITY_CONTENT = {
         { title: "Outstation Cab Services from Hyderabad", desc: "Planning a weekend getaway, pilgrimage, or long-distance journey? Explore outstation cab booking from Hyderabad to Warangal, Srisailam, Vijayawada, Nagarjuna Sagar, Bidar, Bengaluru, and other destinations.", link: "/one-way-cabs" },
         { title: "One-Way & Round-Trip Cab Booking", desc: "Choose a one-way taxi from Hyderabad for point-to-point travel without a scheduled return journey. For family holidays, pilgrimages, weekend getaways, and business trips, explore our round-trip taxi booking services.", links: [{ label: "one-way taxi services", href: "/one-way-cabs" }, { label: "round-trip taxi booking services", href: "/round-trip-cabs" }] },
         { title: "Hourly Cab Rentals in Hyderabad", desc: "Need a cab for shopping, business meetings, local sightseeing, or multiple stops? Choose hourly cab rental services in Hyderabad based on your preferred travel duration." },
-        { title: "Corporate & Group Transportation in Hyderabad", desc: "Abhi Cabs 24\u00d77 offers corporate transportation options for business travel, airport pickups, employee travel enquiries, company outings, weddings, and group trips.", link: "/services/corporate" },
+        { title: "Corporate & Group Transportation in Hyderabad", desc: "Abhi Cabs 24\u00d77 offers corporate transportation options for business travel, airport pickups, employee travel enquiries, company outings, weddings, and group trips.", link: "/services/corporate-car-rental" },
       ],
     },
     attractions: {
@@ -746,7 +746,7 @@ export const CITY_CONTENT = {
         { title: "Outstation Cab Services from Mumbai", desc: "Planning a weekend getaway, pilgrimage, or family vacation? Explore outstation cab booking from Mumbai to destinations such as Pune, Lonavala, Alibaug, Nashik, Mahabaleshwar, Shirdi, and other supported locations.", link: "/one-way-cabs" },
         { title: "One-Way & Round-Trip Cab Booking", desc: "Choose a one-way taxi from Mumbai for point-to-point travel without a scheduled return journey. For family holidays, pilgrimages, business trips, and weekend getaways, explore our round-trip cab booking services.", links: [{ label: "one-way taxi services", href: "/one-way-cabs" }, { label: "round-trip cab booking services", href: "/round-trip-cabs" }] },
         { title: "Hourly Cab Rentals in Mumbai", desc: "Need a cab for shopping, meetings, sightseeing, or multiple stops? Choose hourly cab rentals in Mumbai based on your preferred travel duration and vehicle availability." },
-        { title: "Corporate & Group Transportation in Mumbai", desc: "Abhi Cabs 24\u00d77 offers corporate cab rental services in Mumbai for employee travel enquiries, airport pickups, executive journeys, conferences, company outings, and group transportation.", link: "/services/corporate" },
+        { title: "Corporate & Group Transportation in Mumbai", desc: "Abhi Cabs 24\u00d77 offers corporate cab rental services in Mumbai for employee travel enquiries, airport pickups, executive journeys, conferences, company outings, and group transportation.", link: "/services/corporate-car-rental" },
       ],
     },
     attractions: {

@@ -3788,7 +3788,7 @@ function sectionDefaults(type) {
 
 const DEFAULT_PAGE_CONTENT = {
   home: { sections: [
-    { id: "h1", type: "hero", title: "Your Journey,", accent: "Our Priority.", description: "Reliable Cabs. Transparent Fares. Comfortable Travel. Book reliable cabs for airport transfers, local travel, one-way trip, round trip, group trip and outstation journeys.", image: "/images/Herosection.jpg", ctaText: "Get Instant Quote", ctaLink: "/#booking" },
+    { id: "h1", type: "hero", title: "Cab Booking Services –", accent: "Local, Airport & Outstation Cabs", description: "Reliable Cabs. Transparent Fares. Comfortable Travel. Book reliable cabs for airport transfers, local travel, one-way trip, round trip, group trip and outstation journeys.", image: "/images/Herosection.jpg", ctaText: "Get Instant Quote", ctaLink: "/#booking" },
     { id: "h2", type: "features", items: [
       { icon: "✅", title: "Verified Drivers", description: "KYC-verified and background-checked" },
       { icon: "💰", title: "Transparent Pricing", description: "See the exact fare before you book" },
@@ -3914,9 +3914,9 @@ function SectionEditor({ section, onChange, onRemove, onDuplicate, onMoveUp, onM
       <div className="p-5 space-y-3">
         {section.type === "hero" && (<>
           <label className="block"><span className="block mb-1 text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">Title</span>
-            <input value={section.title || ""} onChange={(e) => set("title", e.target.value)} className="wp-input" placeholder="Your Journey," /></label>
+            <input value={section.title || ""} onChange={(e) => set("title", e.target.value)} className="wp-input" placeholder="Cab Booking Services –" /></label>
           <label className="block"><span className="block mb-1 text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">Accent (colored text)</span>
-            <input value={section.accent || ""} onChange={(e) => set("accent", e.target.value)} className="wp-input" placeholder="Our Priority." /></label>
+            <input value={section.accent || ""} onChange={(e) => set("accent", e.target.value)} className="wp-input" placeholder="Local, Airport & Outstation Cabs" /></label>
           <label className="block"><span className="block mb-1 text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider">Description</span>
             <textarea rows={3} value={section.description || ""} onChange={(e) => set("description", e.target.value)} className="wp-input resize-y" /></label>
           <ImageUploader value={section.image} onChange={(url) => set("image", url)} label="Background Image" />

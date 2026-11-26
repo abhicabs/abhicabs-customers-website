@@ -30,7 +30,7 @@ export default function CtaBand({ title, subheading, description, actions, image
         <div>
           <motion.span aria-hidden {...(reduce ? {} : { initial: { scaleX: 0 }, whileInView: { scaleX: 1 }, viewport: VIEW, transition: { duration: 0.8, ease: EASE } })} className="block h-[3px] w-14 mb-5 rounded-full origin-left bg-gradient-to-r from-[#E6AC00] via-[#FFD54F] to-[#E6AC00]" />
           <motion.h2 {...rise(0.05)} className="text-[28px] md:text-[40px] font-extrabold tracking-tight leading-[1.12] [text-wrap:balance]">{title}</motion.h2>
-          {subheading && <motion.p {...rise(0.15)} className="mt-3 font-bold text-[16px] md:text-[18px]"><span className="ac-gold-shimmer">{subheading}</span></motion.p>}
+          {subheading && <motion.h3 {...rise(0.15)} className="mt-3 font-bold text-[16px] md:text-[18px]"><span className="ac-gold-shimmer">{subheading}</span></motion.h3>}
           {description && <motion.p {...rise(0.25)} className="mt-4 text-white/78 text-[15px] md:text-[16px] leading-[1.75] max-w-[640px]">{description}</motion.p>}
         </div>
         <motion.div {...rise(0.3)} className="flex flex-col gap-3 w-full max-w-[400px] lg:justify-self-end [&>*]:w-full [&>*]:justify-center">

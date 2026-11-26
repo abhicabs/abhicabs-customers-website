@@ -14,7 +14,7 @@ const SERVICES = [
   { Icon: Navigation, label: "One Way Cabs", desc: "Intercity one-way trips", href: "/one-way-cabs" },
   { Icon: Plane, label: "Airport Taxi", desc: "On-time airport transfers", href: "/airport-taxi" },
   { Icon: Repeat, label: "Round Trip Cabs", desc: "City-to-city round trips", href: "/round-trip-cabs" },
-  { Icon: Building2, label: "Corporate", desc: "Business travel solutions", href: "/services/corporate" },
+  { Icon: Building2, label: "Corporate", desc: "Business travel solutions", href: "/services/corporate-car-rental" },
 ];
 
 export default function ServiceInterlink({ exclude, title = "Explore Our Services", max = 5, className = "" }) {

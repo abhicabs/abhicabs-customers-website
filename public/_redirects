@@ -12,6 +12,8 @@
 /services/airport-taxi/         /airport-taxi       301
 /services/round-trip            /round-trip-cabs    301
 /services/round-trip/           /round-trip-cabs    301
+/services/corporate             /services/corporate-car-rental   301
+/services/corporate/            /services/corporate-car-rental   301
 /contact-us                     /contact            301
 /contact-us/                    /contact            301
 /outstation                     /one-way-cabs       301

@@ -14,6 +14,7 @@ import CtaBand from "./CtaBand";
 import RelatedGuides from "./RelatedGuides";
 import SectionRenderer from "./SectionRenderer";
 import ServiceBooking, { scrollToBooking } from "./ServiceBooking";
+import CorporateEnquiryForm from "./CorporateEnquiryForm";
 import useCmsContent from "../hooks/useCmsContent";
 import { usePageContext } from "vike-react/usePageContext";
 import { contactFormHref, serviceHref } from "../data/siteLinks";
@@ -37,13 +38,15 @@ const DEFAULT_STEPS = [
 ];
 
 /** "Explore our [vehicles](/our-vehicles) today" → text with a real internal link. Plain strings pass through unchanged. */
-const LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+// [label](/url) → link, **text** → bold. Text without either is returned unchanged.
+const LINK_RE = /\*\*([^*]+)\*\*|\[([^\]]+)\]\(([^)\s]+)\)/g;
 export function renderInline(text) {
-  if (typeof text !== "string" || !text.includes("](")) return text;
+  if (typeof text !== "string" || (!text.includes("](") && !text.includes("**"))) return text;
   const out = []; let last = 0; let m; LINK_RE.lastIndex = 0;
   while ((m = LINK_RE.exec(text))) {
     if (m.index > last) out.push(text.slice(last, m.index));
-    out.push(<a key={m.index} href={m[2]} className="font-semibold text-[#B88A00] underline underline-offset-2 hover:text-[#111]">{m[1]}</a>);
+    if (m[1] !== undefined) out.push(<strong key={m.index} className="font-bold text-text">{m[1]}</strong>);
+    else out.push(<a key={m.index} href={m[3]} className="font-semibold text-[#B88A00] underline underline-offset-2 hover:text-[#111]">{m[2]}</a>);
     last = m.index + m[0].length;
   }
   if (last < text.length) out.push(text.slice(last));
@@ -54,6 +57,11 @@ const labelled = (t) => {
   const i = typeof t === "string" ? t.indexOf(": ") : -1;
   return i > 0 && i < 60 ? <><strong className="font-bold text-text">{t.slice(0, i)}:</strong> {renderInline(t.slice(i + 2))}</> : renderInline(t);
 };
+
+const ENQUIRY_FORM_ID = "corporate-enquiry";
+// Long CTA labels wrap onto two lines on phones instead of running off the screen.
+// One-line labels look exactly the same (same 56px height).
+const WRAP_BTN = "max-w-full max-sm:whitespace-normal max-sm:h-auto max-sm:min-h-14 max-sm:py-3.5 max-sm:leading-snug max-sm:text-center";
 
 const DEFAULT_LAYOUT = [
   { id: "hero", enabled: true },
@@ -591,10 +599,12 @@ export default function ServiceLanding({ cfg }) {
   const search = usePageContext().urlParsed?.search || {};
   const [widget, setWidget] = useState({ key: search.from ? "preset" : "default", pickup: search.from || "", drop: search.to || "" });
   const pickRoute = (pickup, drop) => { setWidget({ key: `r-${Date.now()}`, pickup, drop }); scrollToBooking(); };
-  const goBook = () => (canBook ? scrollToBooking() : (window.location.href = contactFormHref(cfg.enquirySubject || "corporate")));
+  // Pages with their own enquiry form (cfg.enquiry) send every button to it; others to the Contact page form.
+  const enquiryHref = cfg.enquiry ? `#${ENQUIRY_FORM_ID}` : contactFormHref(cfg.enquirySubject || "corporate");
+  const goBook = () => (canBook ? scrollToBooking() : (window.location.href = enquiryHref));
   const BookBtn = ({ children = primaryLabel, ...p }) => canBook
     ? <Button onClick={() => scrollToBooking()} {...p}>{children}</Button>
-    : <Button href={contactFormHref(cfg.enquirySubject || "corporate")} {...p}>{children}</Button>;
+    : <Button href={enquiryHref} {...p}>{children}</Button>;
 
   // Helper: get tone override from layout item, or use default
   const getTone = (sectionId, fallback) => {
@@ -611,16 +621,33 @@ export default function ServiceLanding({ cfg }) {
         center image={c.hero.image} imagePosition={c.hero.image === cfg.hero.image ? cfg.hero.imagePosition : undefined} imageAlt={cfg.hero.alt || ""}
         breadcrumb={cfg.breadcrumb || [["Home", "/"], ["Services", "/services"], [cfg.hero.eyebrow, null]]}
         title={c.hero.title} subtitle={cfg.hero.subheading} description={c.hero.description}
-        actions={!canBook && <>
+        actions={!canBook && !cfg.enquiry && <>
           <Button href={contactFormHref(cfg.enquirySubject || "corporate")} size="lg">{primaryLabel}</Button>
           <Button href="/services" variant="outlineInverse" size="lg">All Services</Button>
         </>}
       >
-        {canBook
+        {cfg.enquiry ? null : canBook
           ? <ServiceBooking widgetKey={widget.key} initialMode={cfg.mode} presetPickup={widget.pickup} presetDrop={widget.drop} />
           : <ServiceBooking widgetKey={`${cfg.slug || "service"}-hero`} initialMode="one-way" />}
       </PageHero>
     ),
+
+    // Opening section with the page's own enquiry form (cfg.enquiry): H2, paragraphs and CTA beside the form.
+    enquiry: () => cfg.enquiry ? (
+      <Section tone={getTone("enquiry", "page")}>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-14 items-start">
+          <Reveal variant="left">
+            {cfg.enquiry.eyebrow && <div className={EYEBROW}>{cfg.enquiry.eyebrow}</div>}
+            <h2 className="text-[27px] md:text-[34px] font-bold tracking-tight leading-tight">{cfg.enquiry.heading}</h2>
+            {(cfg.enquiry.body || []).map((p, i) => <p key={i} className="mt-4 text-text-secondary text-[15.5px] leading-relaxed">{renderInline(p)}</p>)}
+            {cfg.enquiry.ctaLabel && <div className="mt-7"><Button href={`#${ENQUIRY_FORM_ID}`} size="lg" className={WRAP_BTN}>{cfg.enquiry.ctaLabel}</Button></div>}
+          </Reveal>
+          <Reveal delay={0.1} variant="right">
+            <CorporateEnquiryForm id={ENQUIRY_FORM_ID} form={cfg.enquiry.form} />
+          </Reveal>
+        </div>
+      </Section>
+    ) : null,
 
     intro: () => (
       <Section tone={getTone("intro", "page")}>
@@ -640,7 +667,7 @@ export default function ServiceLanding({ cfg }) {
                 {cfg.intro.bullets.map((b) => (<li key={b} className="flex items-start gap-2.5 text-[14.5px]"><CheckCircle2 size={18} className="text-[#16A34A] shrink-0 mt-px" aria-hidden /> {b}</li>))}
               </ul>
             )}
-            <div className="mt-7"><BookBtn size="lg" /></div>
+            <div className="mt-7"><BookBtn size="lg" className={WRAP_BTN}>{cfg.intro.ctaLabel}</BookBtn></div>
           </Reveal>
           <Reveal delay={0.1} variant="right">
             <img src={cfg.intro.image} alt={cfg.intro.alt || ""} loading="lazy" className="rounded-[22px] w-full aspect-[5/4] object-cover" style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.14)" }} />
@@ -666,6 +693,7 @@ export default function ServiceLanding({ cfg }) {
             </Reveal>
           ); })}
         </div>
+        {cfg.features.ctaLabel && <div className="text-center mt-10"><BookBtn size="lg" className={WRAP_BTN}>{cfg.features.ctaLabel}</BookBtn></div>}
       </Section>
     ),
 
@@ -805,7 +833,7 @@ export default function ServiceLanding({ cfg }) {
     faqs: () => (
       <Section tone={getTone("faqs", "white")} narrow>
         <Reveal><SectionHead center className="mb-9" eyebrow="FAQ" title={cfg.faqHeading || "Frequently asked questions"} /></Reveal>
-        <Accordion items={c.faqs} tone="tint" />
+        <Accordion items={c.faqs.map((f) => ({ ...f, a: renderInline(f.a) }))} tone="tint" />
       </Section>
     ),
 
@@ -830,9 +858,11 @@ export default function ServiceLanding({ cfg }) {
         image={c.hero.image}
         title={<>{c.cta.line1}{c.cta.line2 ? <> <span className="text-[#FFD54F]">{c.cta.line2}</span></> : null}</>}
         subheading={cfg.cta.subheading && c.cta.line1 === cfg.cta.line1 ? cfg.cta.subheading : undefined}
-        description={c.cta.description}
+        description={Array.isArray(c.cta.description)
+          ? <>{c.cta.description.map((p, i) => <span key={i} className={i ? "block mt-3" : "block"}>{renderInline(p)}</span>)}</>
+          : renderInline(c.cta.description)}
         actions={<>
-          <BookBtn variant="inverse" size="lg">{c.cta.primaryLabel}</BookBtn>
+          <BookBtn variant="inverse" size="lg" className={WRAP_BTN}>{c.cta.primaryLabel}</BookBtn>
           {!canBook && <Button href="/services" variant="outlineInverse" size="lg">All Services</Button>}
           {canBook && <Button href="/contact" variant="outlineInverse" size="lg">Talk to Us</Button>}
         </>}
@@ -893,7 +923,7 @@ export default function ServiceLanding({ cfg }) {
         )}
         {b.cta?.label && (
           <div className="text-center mt-8">
-            {b.cta.href ? <Button href={b.cta.href} size="lg">{b.cta.label}</Button> : <BookBtn size="lg">{b.cta.label}</BookBtn>}
+            {b.cta.href ? <Button href={b.cta.href} size="lg" className={WRAP_BTN}>{b.cta.label}</Button> : <BookBtn size="lg" className={WRAP_BTN}>{b.cta.label}</BookBtn>}
           </div>
         )}
       </Section>

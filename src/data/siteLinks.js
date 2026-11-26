@@ -27,6 +27,7 @@ export const SERVICE_URLS = {
   "one-way-outstation": "/one-way-cabs",
   "airport-taxi": "/airport-taxi",
   "round-trip": "/round-trip-cabs",
+  corporate: "/services/corporate-car-rental",
 };
 export const serviceHref = (slug) => SERVICE_URLS[slug] || `/services/${slug}`;
 
@@ -37,7 +38,7 @@ export const SERVICE_LINKS = [
   { href: "/airport-taxi", label: "Airport Taxi", short: "Airport Taxi", mode: "airport" },
   { href: "/one-way-cabs", label: "One-Way Cabs", short: "One Way Cabs", mode: "one-way" },
   { href: "/round-trip-cabs", label: "Round Trip Services", short: "Round Trip Cabs", mode: "round-trip" },
-  { href: "/services/corporate", label: "Corporate Transportation", short: "Corporate", mode: null },
+  { href: "/services/corporate-car-rental", label: "Corporate Transportation", short: "Corporate Car Rental", mode: null },
 ];
 
 export const NAV_LINKS = [

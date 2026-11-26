@@ -83,11 +83,11 @@ export function toServiceCfg(slug, c) {
   return {
     slug, mode, enquirySubject: c.enquirySubject || "corporate", primaryLabel: c.primaryLabel || undefined,
     hero: { eyebrow: c.hero?.eyebrow || c.hero?.heading || slug, heading: c.hero?.heading || slug, subheading: c.hero?.subheading, description: c.hero?.description || "", image: c.hero?.image || "/images/dashboard-pov.jpg", alt: c.hero?.alt },
-    intro: { eyebrow: c.intro?.eyebrow || "", heading: c.intro?.heading || "", image: c.intro?.image || "/images/airport-family-full.jpg", alt: c.intro?.alt, body: list(c.intro?.body), bullets: list(c.intro?.bullets), items: list(c.intro?.items).filter((it) => it.heading) },
-    features: { heading: c.features?.heading || "Why choose us", subheading: c.features?.subheading, intro: c.features?.intro, items: list(c.features?.items).map((f) => ({ Icon: getIcon(f.icon), title: f.title, desc: f.desc })) },
+    intro: { eyebrow: c.intro?.eyebrow || "", heading: c.intro?.heading || "", image: c.intro?.image || "/images/airport-family-full.jpg", alt: c.intro?.alt, body: list(c.intro?.body), bullets: list(c.intro?.bullets), items: list(c.intro?.items).filter((it) => it.heading), ctaLabel: c.intro?.ctaLabel },
+    features: { eyebrow: c.features?.eyebrow, heading: c.features?.heading || "Why choose us", subheading: c.features?.subheading, intro: c.features?.intro, ctaLabel: c.features?.ctaLabel, items: list(c.features?.items).map((f) => ({ Icon: getIcon(f.icon), title: f.title, desc: f.desc })) },
     pricing: { ...(c.pricing || {}), heading: c.pricing?.heading || "Pricing", description: c.pricing?.description || "", points: list(c.pricing?.points) },
     how: { heading: c.how?.heading || "How it works", subheading: c.how?.subheading, ctaLabel: c.how?.ctaLabel, steps: list(c.how?.steps) },
-    coverage: c.coverage || null, tips: c.tips || null, blocks: c.blocks || null, faqHeading: c.faqHeading, routesHeading: c.routesHeading,
+    coverage: c.coverage || null, tips: c.tips || null, blocks: c.blocks || null, enquiry: c.enquiry || null, faqHeading: c.faqHeading, routesHeading: c.routesHeading,
     routes: list(c.routes).filter((r) => r.from && r.to),
     faqs: list(c.faqs).filter((f) => f.q && f.a).map((f) => [f.q, f.a]),
     related: [...SERVICE_LINKS.map((s) => ({ label: s.short, href: s.href })).slice(0, 4), { label: "All Services", href: "/services" }],
@@ -132,12 +132,14 @@ export function cfgToContent(slug) {
     mode: d.mode || "", group: "", listing: "featured", icon: d.cardIcon || "car",
     primaryLabel: d.primaryLabel, faqHeading: d.faqHeading, routesHeading: d.routesHeading,
     hero: { eyebrow: d.hero.eyebrow, heading: d.hero.heading, subheading: d.hero.subheading, description: d.hero.description, image: d.hero.image, alt: d.hero.alt },
-    intro: { eyebrow: d.intro.eyebrow, heading: d.intro.heading, image: d.intro.image, alt: d.intro.alt, body: [...(d.intro.body || [])], bullets: [...(d.intro.bullets || [])], items: (d.intro.items || []).map((x) => ({ ...x })) },
-    features: { heading: d.features.heading, subheading: d.features.subheading, items: d.features.items.map((f) => ({ icon: f.icon || iconName(f.Icon), title: f.title, desc: f.desc })) },
+    intro: { eyebrow: d.intro.eyebrow, heading: d.intro.heading, image: d.intro.image, alt: d.intro.alt, body: [...(d.intro.body || [])], bullets: [...(d.intro.bullets || [])], items: (d.intro.items || []).map((x) => ({ ...x })), ctaLabel: d.intro.ctaLabel },
+    features: { eyebrow: d.features.eyebrow, heading: d.features.heading, subheading: d.features.subheading, intro: d.features.intro, ctaLabel: d.features.ctaLabel, items: d.features.items.map((f) => ({ icon: f.icon || iconName(f.Icon), title: f.title, desc: f.desc })) },
     pricing: { ...d.pricing, points: [...(d.pricing.points || [])] },
     how: { heading: d.how?.heading || "", subheading: d.how?.subheading, steps: (d.how?.steps || []).map((x) => ({ ...x })) },
     coverage: d.coverage ? JSON.parse(JSON.stringify(d.coverage)) : undefined,
     tips: d.tips ? JSON.parse(JSON.stringify(d.tips)) : undefined,
+    blocks: d.blocks ? JSON.parse(JSON.stringify(d.blocks)) : undefined,
+    enquiry: d.enquiry ? JSON.parse(JSON.stringify(d.enquiry)) : undefined,
     routes: (d.routes || []).map((r) => ({ from: r.from, to: r.to })),
     faqs: (d.faqs || []).map(([q, a]) => ({ q, a })),
     cta: { ...d.cta },
@@ -183,7 +185,7 @@ export function featuredServices(allPages = {}) {
     if (page && page._content?.listing === "directory") return; // unlisted by the editor
     const d = SERVICE_DEFAULTS[slug];
     const sl = SERVICE_LINKS.find((l) => l.href === serviceHref(slug));
-    out.push(row(slug, page, { label: sl?.label || d.hero.eyebrow, short: sl?.short || d.hero.eyebrow, mode: d.mode || null, icon: d.cardIcon, desc: d.hero.description, points: d.intro.bullets }));
+    out.push(row(slug, page, { label: sl?.label || d.hero.eyebrow, short: sl?.short || d.hero.eyebrow, mode: d.mode || null, icon: d.cardIcon, desc: d.hero.description, points: d.cardPoints || d.intro.bullets }));
   });
   Object.entries(allPages).forEach(([id, p]) => {
     const slug = p?._slug || id;
