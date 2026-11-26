@@ -4358,6 +4358,11 @@ function PageEditor({ onBack }) {
   const [livePreviewKey, setLivePreviewKey] = useState(0); // bump to reload the live page frame
   const [serviceModal, setServiceModal] = useState({ open: false, name: "", mode: "one-way", group: "", cities: "", kind: "custom", vehicle: "Tempo Traveller" });
   const [deleteModal, setDeleteModal] = useState({ open: false, id: null, label: "" });
+  // What the server had when this screen loaded (and after each save): each page's JSON
+  // (null = not on the server yet) and version. Saves send only the pages that differ, each
+  // checked against the version loaded here, so a failed load, a stale browser draft or a
+  // second editor can never wipe or overwrite pages without notice.
+  const serverState = useRef({ loaded: false, legacy: false, snap: {}, versions: {} });
 
   // The real public URL for the active page — home "/", main pages "/<id>",
   // service pages "/services/<slug>". Used to show the COMPLETE live page
@@ -4397,9 +4402,12 @@ function PageEditor({ onBack }) {
       try {
         const res = await fetch(`${API}/api/v1/blog/pages`, {
           headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store",
         });
-        const json = await res.json().catch(() => ({}));
-        const saved = json?.data || {};
+        // A failed answer (rate limit, server error …) is a failed load — never "no pages".
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        const saved = json?.data && typeof json.data === "object" ? json.data : {};
         const merged = {};
         PAGE_DEFS.forEach((p) => {
           merged[p.id] = saved[p.id] && saved[p.id].sections
@@ -4411,6 +4419,10 @@ function PageEditor({ onBack }) {
         Object.entries(saved).forEach(([id, pg]) => {
           if (!merged[id] && pg && (pg._custom || pg._service)) merged[id] = pg;
         });
+        const snap = {};
+        Object.keys(merged).forEach((id) => { snap[id] = saved[id] ? JSON.stringify(saved[id]) : null; });
+        // An older backend sends no versions: keep its full-replace save until it is updated.
+        serverState.current = { loaded: true, legacy: !json?.versions, snap, versions: { ...(json?.versions || {}) } };
         setPages(merged);
       } catch {
         // API failed — try recovering from local draft
@@ -4541,6 +4553,52 @@ function PageEditor({ onBack }) {
     setActivePage(slug);
   };
 
+  // Legacy save for a backend without /pages/sync: the old full replace.
+  const putAllPages = async (nextPages) => {
+    const res = await fetch(`${API}/api/v1/blog/pages`, {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(nextPages),
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) return { ok: false, message: json.message || "Save failed" };
+    const st = serverState.current;
+    st.snap = {};
+    Object.entries(nextPages).forEach(([id, pg]) => { st.snap[id] = JSON.stringify(pg); });
+    return { ok: true };
+  };
+
+  /** Save `nextPages`: only pages that changed are sent; deleted ones are removed. → { ok, message } */
+  const syncPages = async (nextPages) => {
+    const st = serverState.current;
+    if (st.legacy) return putAllPages(nextPages);
+    const upsert = {}, base = {}, remove = [];
+    Object.entries(nextPages).forEach(([id, pg]) => {
+      const text = JSON.stringify(pg);
+      if (st.snap[id] == null || st.snap[id] !== text) { upsert[id] = pg; base[id] = st.versions[id] ?? null; }
+    });
+    Object.keys(st.snap).forEach((id) => {
+      if (!(id in nextPages) && st.snap[id] != null) { remove.push(id); base[id] = st.versions[id] ?? null; }
+    });
+    if (!Object.keys(upsert).length && !remove.length) return { ok: true };
+
+    const res = await fetch(`${API}/api/v1/blog/pages/sync`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ upsert, remove, base }),
+    });
+    if (res.status === 404 && st.loaded) { st.legacy = true; return putAllPages(nextPages); } // backend not updated yet
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) return { ok: false, message: json.message || "Save failed" };
+    const versions = json?.data?.versions || {};
+    Object.keys(upsert).forEach((id) => {
+      st.snap[id] = JSON.stringify(upsert[id]);
+      if (versions[id]) st.versions[id] = versions[id];
+    });
+    remove.forEach((id) => { delete st.snap[id]; delete st.versions[id]; });
+    return { ok: true };
+  };
+
   const requestDeleteServicePage = (id) => {
     if (!canEdit) return;
     const pg = pages[id];
@@ -4551,17 +4609,24 @@ function PageEditor({ onBack }) {
     const id = deleteModal.id;
     setDeleteModal({ open: false, id: null, label: "" });
     if (!id || !canEdit) return;
+    const removed = pages[id];
     const next = { ...pages };
     delete next[id];
     setPages(next);
     if (activePage === id) setActivePage(null);
+    let failure = null;
     try {
-      await fetch(`${API}/api/v1/blog/pages`, {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify(next),
-      });
-    } catch { /* kept out of state regardless; next save will reconcile */ }
+      const out = await syncPages(next);
+      if (!out.ok) failure = out.message;
+    } catch (e) {
+      failure = e.message || "Could not reach server";
+    }
+    if (failure) {
+      // Not deleted on the server — put it back so the list matches what is live.
+      setPages((cur) => (cur[id] ? cur : { ...cur, [id]: removed }));
+      setSaveMsg({ type: "err", text: failure });
+      setTimeout(() => setSaveMsg(null), 3000);
+    }
   };
 
   const servicePages = Object.entries(pages)
@@ -4664,13 +4729,8 @@ function PageEditor({ onBack }) {
   const savePage = async (pageId) => {
     setSaving(true); setSaveMsg(null);
     try {
-      const res = await fetch(`${API}/api/v1/blog/pages`, {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify(pages),
-      });
-      const json = await res.json().catch(() => ({}));
-      setSaveMsg(res.ok ? { type: "ok", text: "Saved!" } : { type: "err", text: json.message || "Save failed" });
+      const out = await syncPages(pages);
+      setSaveMsg(out.ok ? { type: "ok", text: "Saved!" } : { type: "err", text: out.message || "Save failed" });
     } catch (e) {
       setSaveMsg({ type: "err", text: e.message || "Could not reach server" });
     } finally {

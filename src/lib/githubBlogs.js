@@ -10,6 +10,7 @@
  *   PUT  /api/v1/blog/github/file          CMS editor/admin login required
  */
 import { API_URL } from "./apiBase";
+import { parseExportedArray as parseDataArray, serializeArray as serializeDataArray } from "./safeLiteral";
 
 export const GH_BRANCH = "main";
 export const GH_FILE = "src/data/blogs.js";
@@ -57,18 +58,16 @@ export const decodeBase64Utf8 = (b64) =>
   new TextDecoder("utf-8").decode(Uint8Array.from(atob(String(b64).replace(/\n/g, "")), (c) => c.charCodeAt(0)));
 export const encodeBase64Utf8 = (text) => btoa(unescape(encodeURIComponent(text)));
 
-/** Evaluate the array literal exported by a data file ("export const NAME = [ … ];"). */
+/**
+ * The array literal exported by a data file ("export const NAME = [ … ];").
+ * Parsed as DATA, never executed — a data file containing code is rejected.
+ */
 export function parseExportedArray(text, name) {
-  const body = text.replace(new RegExp(`^[\\s\\S]*?export\\s+const\\s+${name}\\s*=\\s*`), "").replace(/;?\s*$/, "").trim();
-  // eslint-disable-next-line no-new-func
-  const arr = new Function(`return ${body || "[]"}`)();
-  if (!Array.isArray(arr)) throw new Error(`${name} is not an array.`);
-  return arr;
+  return parseDataArray(text, name);
 }
 
 /** Same layout the CMS has always written. */
-export const serializeArray = (name, arr) =>
-  `export const ${name} = [\n${arr.map((r) => "  " + JSON.stringify(r, null, 2).replace(/\n/g, "\n  ")).join(",\n")}\n];\n`;
+export const serializeArray = serializeDataArray;
 
 /** → { sha, blogsArray } — the live blog list, read fresh for the CMS. */
 export async function fetchBlogsFile() {

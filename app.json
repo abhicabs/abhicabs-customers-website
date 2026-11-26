@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Bimayantra",
+    "slug": "bimayantra-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "bimayantra",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#F6F7FB"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.skyup.bimayantra"
+    },
+    "android": {
+      "package": "com.skyup.bimayantra",
+      "adaptiveIcon": {
+        "backgroundColor": "#1B4DFF"
+      }
+    },
+    "plugins": ["expo-secure-store"],
+    "extra": {}
+  }
+}

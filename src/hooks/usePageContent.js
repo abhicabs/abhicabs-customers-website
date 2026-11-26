@@ -5,6 +5,12 @@
  * Returns the sections array for the requested page, falling back to defaults
  * if the backend is unreachable or the page hasn't been customized yet.
  *
+ * Where the page's `+data` hook fetched the CMS pages at build/render time
+ * (pageContext.data.cmsPages, or .allPages on service routes), that content is
+ * used for the first render, so the pre-rendered HTML — what search engines
+ * read — already contains the CMS edits. The live copy is still fetched in the
+ * browser afterwards, so edits made since the last build show up as before.
+ *
  * Usage:
  *   const { sections, get, loading } = usePageContent("home");
  *   // sections = array of section objects
@@ -12,6 +18,7 @@
  */
 
 import { useState, useEffect, useContext, createContext } from "react";
+import { usePageContext } from "vike-react/usePageContext";
 
 /** Pages fetched on the SERVER for this request (see src/lib/serviceData.js); null when a page has no server data. */
 export const PagesContext = createContext(null);
@@ -19,22 +26,21 @@ export const PagesContext = createContext(null);
 import { API_ROOT } from "../lib/apiBase";
 const API_BASE = API_ROOT;
 
-// In-memory cache so multiple components on one page don't re-fetch
+// In-memory cache so multiple components on one page don't re-fetch.
+// _cache holds the last SUCCESSFUL fetch; a failed fetch leaves it null (and isn't retried this session).
 let _cache = null;
 let _promise = null;
 
+/** → pages object, or null when the API couldn't be reached. */
 function fetchPages() {
   if (_promise) return _promise;
   _promise = fetch(`${API_BASE}/api/v1/blog/pages`)
     .then((r) => (r.ok ? r.json() : Promise.reject()))
     .then((json) => {
-      _cache = json?.data || {};
+      _cache = json?.data && typeof json.data === "object" ? json.data : {};
       return _cache;
     })
-    .catch(() => {
-      _cache = {};
-      return _cache;
-    });
+    .catch(() => null);
   return _promise;
 }
 
@@ -45,7 +51,7 @@ export function useAllPages() {
   useEffect(() => {
     if (server) return;                       // already have this request's pages from the server
     if (_cache) { setData(_cache); return; }
-    fetchPages().then(setData);
+    fetchPages().then((d) => setData(d || {}));
   }, [server]);
   return server || data || {};
 }
@@ -57,14 +63,21 @@ export function useAllPagesState() {
   useEffect(() => {
     if (server) return;
     if (_cache) { setData(_cache); return; }
-    fetchPages().then(setData);
+    fetchPages().then((d) => setData(d || {}));
   }, [server]);
   return { pages: server || data || {}, loading: !(server || data) };
 }
 
 export function usePageContent(pageId) {
+  // Content fetched by this page's +data hook (build/render time), if any.
+  const pageContext = usePageContext();
+  const serverAll = useContext(PagesContext);                 // service routes: every page
+  const serverSome = pageContext?.data?.cmsPages || null;     // other routes: just their own page(s)
+  const serverKnown = !!(serverSome || serverAll);
+  const serverPage = serverSome?.[pageId] ?? serverAll?.[pageId];
+
   const [data, setData] = useState(_cache);
-  const [loading, setLoading] = useState(!_cache);
+  const [loading, setLoading] = useState(!_cache && !serverKnown);
 
   useEffect(() => {
     if (_cache) {
@@ -73,12 +86,13 @@ export function usePageContent(pageId) {
       return;
     }
     fetchPages().then((d) => {
-      setData(d);
+      if (d) setData(d);
       setLoading(false);
     });
   }, []);
 
-  const page = data?.[pageId] || {};
+  // live copy once loaded; until then (or if it fails) the server copy; else nothing → defaults
+  const page = (data ? data[pageId] : serverPage) || {};
   const sections = page.sections || [];
 
   /**

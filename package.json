@@ -6,7 +6,7 @@
   "scripts": {
     "start": "vike dev",
     "dev": "vike dev",
-    "build": "node scripts/generate-sitemap.cjs && vike build",
+    "build": "node scripts/generate-sitemap.cjs && vike build && node scripts/write-cms-redirects.mjs",
     "sitemap": "node scripts/generate-sitemap.cjs",
     "preview": "vike preview",
     "images:upload": "node scripts/upload-images-to-cloudinary.mjs",

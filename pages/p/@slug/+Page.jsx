@@ -9,10 +9,9 @@ import EmojiIcon from "../../../src/components/ui/EmojiIcon";
 import { useState, useEffect } from "react";
 import { usePageContext } from "vike-react/usePageContext";
 import SectionRenderer from "../../../src/components/SectionRenderer";
+import { API_ROOT } from "../../../src/lib/apiBase";
 
-const API_BASE = (
-  import.meta.env.VITE_API_BASE_URL || "https://api.abhicabs24x7.com"
-).replace(/\/api\/v1\/?$/, "");
+const API_BASE = API_ROOT;
 
 export default function Page() {
   const ctx = usePageContext();

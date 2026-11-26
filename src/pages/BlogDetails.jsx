@@ -39,7 +39,12 @@ export default function BlogDetails({ vikeSlug }) {
   const { blogs, isSample } = useBlogs();
   const blog = blogs.find((b) => b.slug === vikeSlug);
   if (!blog) throw render(404, "Article not found"); // real 404 status, not a soft "not found" page
+  // The article's own hooks live in BlogArticle, so they always run in the same order
+  // (React requires that); keyed by slug so moving between articles starts fresh.
+  return <BlogArticle key={blog.slug} blog={blog} blogs={blogs} isSample={isSample} />;
+}
 
+function BlogArticle({ blog, blogs, isSample }) {
   const config = useConfig();
   const url = `${SITE}${blogUrl(blog)}`;
   const img = imageOf(blog);
