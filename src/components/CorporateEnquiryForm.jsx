@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useState } from "react";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { Briefcase, CheckCircle2, Loader2 } from "lucide-react";
 import { isIndianMobile, cleanPhoneInput } from "../lib/phone";
 import { useToast } from "../hooks/useToast";
 import { createSupportTicket } from "../api/services/support";
@@ -12,7 +12,7 @@ import { createSupportTicket } from "../api/services/support";
  */
 
 const FIELD_BASE =
-  "w-full rounded-[12px] border px-3.5 py-3 text-base md:text-[14.5px] font-medium text-[#141414] outline-none transition-[border-color,background-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-[#A8A49B]";
+  "w-full h-12 rounded-[12px] border px-3.5 py-0 text-base md:text-[14.5px] font-medium text-[#141414] outline-none transition-[border-color,background-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-[#A8A49B]";
 const FIELD_OK =
   "border-[#E8E5DE] bg-[#F8F7F3] hover:border-[#D3CFC5] hover:bg-white focus:border-[#FFD54F] focus:bg-white focus:shadow-[0_0_0_4px_rgba(255,213,79,0.18)]";
 const FIELD_ERR =
@@ -43,7 +43,13 @@ function Field({ label, required, error, wide, children }) {
   );
 }
 
-export default function CorporateEnquiryForm({ id = "corporate-enquiry", form = {} }) {
+/**
+ * variant "card" (default): white card — used by the generic service template.
+ * variant "hero": styled like the booking widget in the other service-page heroes
+ * (dark strip with a yellow pill on top, white panel, 3-column field grid).
+ */
+export default function CorporateEnquiryForm({ id = "corporate-enquiry", form = {}, variant = "card", title = "Corporate Enquiry Form" }) {
+  const hero = variant === "hero";
   const toast = useToast();
   const requirements = form.requirements || [];
   const [v, setV] = useState(EMPTY);
@@ -106,11 +112,36 @@ export default function CorporateEnquiryForm({ id = "corporate-enquiry", form = 
     return () => clearTimeout(t);
   }, [sent]);
 
+  const submitButton = (
+    <button
+      type="submit"
+      disabled={submitting}
+      className={`${hero ? "h-12" : "mt-6 py-3.5"} w-full inline-flex items-center justify-center gap-2 rounded-full px-6 text-[15px] font-bold text-[#141414] transition-[transform,box-shadow,opacity] duration-200 hover:-translate-y-px disabled:opacity-70 disabled:hover:translate-y-0`}
+      style={{ background: "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)", boxShadow: "0 14px 28px -14px rgba(240,165,0,.8), inset 0 1px 0 rgba(255,255,255,.55)" }}
+    >
+      {submitting && <Loader2 size={18} className="animate-spin" aria-hidden />}
+      {form.submitLabel || "Submit Enquiry"}
+    </button>
+  );
+
   return (
-    <div id={id} className="relative scroll-mt-28 overflow-hidden rounded-[22px] border border-[#ECE9E2] bg-white p-6 sm:p-7 shadow-[0_24px_48px_-32px_rgba(20,20,20,0.18)]">
-      {form.heading && <h3 className="text-[18px] font-bold text-[#141414] mb-5">{form.heading}</h3>}
-      <form onSubmit={submit} noValidate>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div
+      id={id}
+      className={hero
+        ? "relative scroll-mt-28 overflow-hidden w-full max-w-[1120px] mx-auto text-left bg-white rounded-[22px] border border-white/10 shadow-[0_30px_70px_rgba(0,0,0,.28)]"
+        : "relative scroll-mt-28 overflow-hidden rounded-[22px] border border-[#ECE9E2] bg-white p-6 sm:p-7 shadow-[0_24px_48px_-32px_rgba(20,20,20,0.18)]"}
+    >
+      {hero && (
+        <div className="flex p-[6px] bg-[#0E0E0E]">
+          <span className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[14.5px] font-bold text-[#141414]"
+            style={{ background: "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)" }}>
+            <Briefcase size={16} aria-hidden /> {title}
+          </span>
+        </div>
+      )}
+      {!hero && form.heading && <h3 className="text-[18px] font-bold text-[#141414] mb-5">{form.heading}</h3>}
+      <form onSubmit={submit} noValidate className={hero ? "p-5 sm:p-6" : undefined}>
+        <div className={hero ? "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" : "grid grid-cols-1 gap-4 sm:grid-cols-2"}>
           <Field label="Company Name" required error={errors.company}>
             {(p) => <input {...p} value={v.company} onChange={set("company")} autoComplete="organization" maxLength={120} />}
           </Field>
@@ -140,16 +171,9 @@ export default function CorporateEnquiryForm({ id = "corporate-enquiry", form = 
           <Field label="Required Date" error={errors.date}>
             {(p) => <input {...p} type="date" min={todayISO()} value={v.date} onChange={set("date")} />}
           </Field>
+          {hero && <div className="flex flex-col justify-end sm:col-span-2 lg:col-span-1">{submitButton}</div>}
         </div>
-        <button
-          type="submit"
-          disabled={submitting}
-          className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-bold text-[#141414] transition-[transform,box-shadow,opacity] duration-200 hover:-translate-y-px disabled:opacity-70 disabled:hover:translate-y-0"
-          style={{ background: "linear-gradient(180deg, #FFD54A 0%, #FFD54F 55%, #F0A500 100%)", boxShadow: "0 14px 28px -14px rgba(240,165,0,.8), inset 0 1px 0 rgba(255,255,255,.55)" }}
-        >
-          {submitting && <Loader2 size={18} className="animate-spin" aria-hidden />}
-          {form.submitLabel || "Submit Enquiry"}
-        </button>
+        {!hero && submitButton}
       </form>
 
       {sent && (

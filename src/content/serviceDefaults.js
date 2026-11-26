@@ -582,8 +582,8 @@ export const SERVICE_DEFAULTS = {
     heading: "Corporate Car Rental Services",
     // Not shown on the page (hero descriptions are hidden site-wide); used for the service cards elsewhere.
     description: "Dependable travel for teams, client visits and events — with GST invoicing, monthly billing and a dedicated point of contact.",
-    image: "/images/hero-local-chauffeur.webp", imagePosition: "72% center",
-    alt: "Abhi Cabs 24×7 chauffeur-driven car for corporate car rental",
+    image: "/images/bussiness.webp", imagePosition: "62% center",
+    alt: "Business traveller stepping into a chauffeur-driven corporate car",
   },
   // Opening section: H2, paragraphs and CTA beside the corporate enquiry form.
   enquiry: {

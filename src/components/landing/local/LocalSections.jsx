@@ -275,7 +275,7 @@ export function BenefitRows({ data, ctaLabel, onCta }) {
           );
         })}
       </ul>
-      {ctaLabel && <div className="mt-10 text-center"><Button size="lg" className="bg-text! text-white! shadow-none! hover:bg-black!" onClick={onCta}>{ctaLabel}</Button></div>}
+      {ctaLabel && <div className="mt-10 text-center"><Button size="lg" className="bg-text! text-white! shadow-none! hover:bg-black! max-w-full max-sm:whitespace-normal max-sm:h-auto max-sm:min-h-14 max-sm:py-3.5 max-sm:leading-snug max-sm:text-center" onClick={onCta}>{ctaLabel}</Button></div>}
     </Band>
   );
 }
