@@ -87,6 +87,42 @@
   force = true
 
 [[redirects]]
+  from = "/cities/mangaluru"
+  to = "/mangaluru/car-rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cities/tirupati"
+  to = "/tirupati/car-rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cities/pune"
+  to = "/pune/car-rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cities/visakhapatnam"
+  to = "/visakhapatnam/car-rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cities/hyderabad"
+  to = "/hyderabad/car-rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cities/mumbai"
+  to = "/mumbai/car-rental"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

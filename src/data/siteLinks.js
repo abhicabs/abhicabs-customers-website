@@ -72,12 +72,12 @@ export const FOOTER_COLUMNS = [
     title: "Destinations",
     links: [
       ["Bangalore", "/bangalore/car-rental"],
-      ["Hyderabad", "/cities/hyderabad"],
-      ["Mumbai", "/cities/mumbai"],
-      ["Mangaluru", "/cities/mangaluru"],
-      ["Pune", "/cities/pune"],
-      ["Tirupati", "/cities/tirupati"],
-      ["Visakhapatnam", "/cities/visakhapatnam"],
+      ["Hyderabad", "/hyderabad/car-rental"],
+      ["Mumbai", "/mumbai/car-rental"],
+      ["Mangaluru", "/mangaluru/car-rental"],
+      ["Pune", "/pune/car-rental"],
+      ["Tirupati", "/tirupati/car-rental"],
+      ["Visakhapatnam", "/visakhapatnam/car-rental"],
     ],
   },
 ];

@@ -406,10 +406,10 @@ export function BenefitsBento({ data, onBook, ctaLabel, ctaJourney = { tripType:
 /** Cities we serve with a page or that the coverage copy names, with real coordinates. */
 const CITIES = [
   { name: "Bengaluru", state: "Karnataka", lat: 12.97, lon: 77.59, href: "/bangalore/car-rental", hub: true },
-  { name: "Mangaluru", state: "Karnataka", lat: 12.91, lon: 74.86, href: "/cities/mangaluru" },
-  { name: "Tirupati", state: "Andhra Pradesh", lat: 13.63, lon: 79.42, href: "/cities/tirupati" },
-  { name: "Visakhapatnam", state: "Andhra Pradesh", lat: 17.69, lon: 83.22, href: "/cities/visakhapatnam" },
-  { name: "Pune", state: "Maharashtra", lat: 18.52, lon: 73.86, href: "/cities/pune" },
+  { name: "Mangaluru", state: "Karnataka", lat: 12.91, lon: 74.86, href: "/mangaluru/car-rental" },
+  { name: "Tirupati", state: "Andhra Pradesh", lat: 13.63, lon: 79.42, href: "/tirupati/car-rental" },
+  { name: "Visakhapatnam", state: "Andhra Pradesh", lat: 17.69, lon: 83.22, href: "/visakhapatnam/car-rental" },
+  { name: "Pune", state: "Maharashtra", lat: 18.52, lon: 73.86, href: "/pune/car-rental" },
   { name: "Hyderabad", state: "Telangana", lat: 17.39, lon: 78.49 },
 ];
 const MAP = { w: 1000, h: 640, lon0: 72.6, lon1: 84.4, lat0: 11.7, lat1: 19.6 };

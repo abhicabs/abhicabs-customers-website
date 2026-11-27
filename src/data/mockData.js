@@ -17,12 +17,12 @@ const FROM = (state) => ({ badge: state, badgeLabel: `From ${state}` });
 export const POPULAR_ROUTES = [
   // Karnataka
   { from: "Bangalore",  to: "Mysore",        km: 145, hrs: "3 – 3.5 hrs", price: 2755,  img: "/images/route-1.webp",                ...FROM("Karnataka") },
-  { from: "Mysore",     to: "Mangaluru",     km: 255, hrs: "6 – 7 hrs",   price: 4845,  img: "/images/route-3.webp",                ...FROM("Karnataka"),      href: "/cities/mangaluru" },
+  { from: "Mysore",     to: "Mangaluru",     km: 255, hrs: "6 – 7 hrs",   price: 4845,  img: "/images/route-3.webp",                ...FROM("Karnataka"),      href: "/mangaluru/car-rental" },
   // Andhra Pradesh
-  { from: "Vijayawada", to: "Visakhapatnam", km: 350, hrs: "6 – 7 hrs",   price: 6650,  img: "/images/coastal-road-sedan.jpg",      ...FROM("Andhra Pradesh"), href: "/cities/visakhapatnam" },
-  { from: "Vijayawada", to: "Tirupati",      km: 400, hrs: "7 – 8 hrs",   price: 7600,  img: "/images/route-5.webp",                ...FROM("Andhra Pradesh"), href: "/cities/tirupati" },
+  { from: "Vijayawada", to: "Visakhapatnam", km: 350, hrs: "6 – 7 hrs",   price: 6650,  img: "/images/coastal-road-sedan.jpg",      ...FROM("Andhra Pradesh"), href: "/visakhapatnam/car-rental" },
+  { from: "Vijayawada", to: "Tirupati",      km: 400, hrs: "7 – 8 hrs",   price: 7600,  img: "/images/route-5.webp",                ...FROM("Andhra Pradesh"), href: "/tirupati/car-rental" },
   // Maharashtra
-  { from: "Mumbai",     to: "Pune",          km: 150, hrs: "3 – 4 hrs",   price: 2850,  img: "/images/hero-hill-road-900.webp",     ...FROM("Maharashtra"),    href: "/cities/pune" },
+  { from: "Mumbai",     to: "Pune",          km: 150, hrs: "3 – 4 hrs",   price: 2850,  img: "/images/hero-hill-road-900.webp",     ...FROM("Maharashtra"),    href: "/pune/car-rental" },
   { from: "Pune",       to: "Mahabaleshwar", km: 120, hrs: "3 – 3.5 hrs", price: 2280,  img: "/images/route-2.webp",                ...FROM("Maharashtra") },
   // Telangana
   { from: "Hyderabad",  to: "Srisailam",     km: 215, hrs: "5 – 6 hrs",   price: 4085,  img: "/images/route-4.webp",                ...FROM("Telangana") },

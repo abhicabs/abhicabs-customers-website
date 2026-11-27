@@ -87,22 +87,32 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://abhicabs24x7.com/cities/mangaluru</loc>
+    <loc>https://abhicabs24x7.com/mangaluru/car-rental</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://abhicabs24x7.com/cities/tirupati</loc>
+    <loc>https://abhicabs24x7.com/tirupati/car-rental</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://abhicabs24x7.com/cities/pune</loc>
+    <loc>https://abhicabs24x7.com/pune/car-rental</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://abhicabs24x7.com/cities/visakhapatnam</loc>
+    <loc>https://abhicabs24x7.com/visakhapatnam/car-rental</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abhicabs24x7.com/hyderabad/car-rental</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://abhicabs24x7.com/mumbai/car-rental</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

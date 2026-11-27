@@ -11,9 +11,12 @@ import { CITY_CONTENT } from "../content/cityDefaults";
 
 const cities = Object.entries(CITY_CONTENT).map(([slug, c]) => ({ slug, name: c.cityName, c }));
 
+/** Every city now lives at /<slug>/car-rental. */
+const cityHref = (slug) => `/${slug}/car-rental`;
+
 const CITY_LINKS = [
   { name: "Bangalore", href: "/bangalore/car-rental" },
-  ...cities.map(({ slug, name }) => ({ name, href: `/cities/${slug}` })),
+  ...cities.map(({ slug, name }) => ({ name, href: cityHref(slug) })),
 ];
 
 export const LINK_GROUPS = [
@@ -48,7 +51,7 @@ export const LINK_GROUPS = [
       { label: "Airport taxi booking", href: "/airport-taxi" },
       ...cities
         .filter(({ c }) => c.services?.items?.some((s) => /airport/i.test(s.title)))
-        .map(({ slug, name }) => ({ label: `Airport taxi in ${name}`, href: `/cities/${slug}#uses` })),
+        .map(({ slug, name }) => ({ label: `Airport taxi in ${name}`, href: `${cityHref(slug)}#uses` })),
     ],
   },
   {
@@ -62,7 +65,7 @@ export const LINK_GROUPS = [
         title: name,
         links: c.outstationRoutes.routes.map((r) => {
           const dest = /^.+? to (.+?)(?:\s+Cabs?)?$/i.exec(r.label)?.[1] || r.label;
-          return { label: `${name} to ${dest} cab`, href: `/cities/${slug}#routes` };
+          return { label: `${name} to ${dest} cab`, href: `${cityHref(slug)}#routes` };
         }),
       })),
   },

@@ -19,6 +19,20 @@
 /outstation                     /one-way-cabs       301
 /outstation/                    /one-way-cabs       301
 
+# ── City page URL updates ──
+/cities/mangaluru               /mangaluru/car-rental       301
+/cities/mangaluru/              /mangaluru/car-rental       301
+/cities/tirupati                /tirupati/car-rental        301
+/cities/tirupati/               /tirupati/car-rental        301
+/cities/pune                    /pune/car-rental            301
+/cities/pune/                   /pune/car-rental            301
+/cities/visakhapatnam           /visakhapatnam/car-rental   301
+/cities/visakhapatnam/          /visakhapatnam/car-rental   301
+/cities/hyderabad               /hyderabad/car-rental       301
+/cities/hyderabad/              /hyderabad/car-rental       301
+/cities/mumbai                  /mumbai/car-rental          301
+/cities/mumbai/                 /mumbai/car-rental          301
+
 # ── Older duplicate URLs ──
 /services/airport-transfer      /airport-taxi       301
 /services/airport-transfer/     /airport-taxi       301
