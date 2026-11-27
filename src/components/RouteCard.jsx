@@ -1,6 +1,7 @@
 import React from "react";
 import { IconArrowRight } from "./Icons";
 import Button from "./ui/Button";
+import { cldOptimize } from "../utils/cloudinaryUrl";
 
 // FIX (Figma redesign): badge pill (Intercity/Outstation/Long Distance),
 // "Book Route" instead of "Book", price no longer shown on the card itself
@@ -15,7 +16,7 @@ export default function RouteCard({ route, onBook }) {
           </span>
         )}
         {route.img ? (
-          <img src={route.img} alt={`Road to ${route.to}`} loading="lazy" className="w-full h-full object-cover" />
+          <img src={cldOptimize(route.img, { width: 600 })} alt={`Road to ${route.to}`} loading="lazy" className="w-full h-full object-cover" />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary-light to-primary text-white">
             <IconArrowRight className="w-8 h-8" />

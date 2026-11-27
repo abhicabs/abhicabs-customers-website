@@ -136,7 +136,7 @@ function FeaturesSection({ s }) {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 20 }}>
         {(s.items || []).map((f, i) => (
           <div key={i} style={{ background: s._bgColor ? "rgba(255,255,255,0.08)" : "#fff", border: s._bgColor ? "none" : "1px solid #E5E7EB", borderRadius: 18, padding: 24, textAlign: "center" }}>
-            {f.image && <img loading="lazy" decoding="async" src={f.image} alt="" style={{ width: 56, height: 56, borderRadius: 14, objectFit: "cover", margin: "0 auto 12px" }} />}
+            {f.image && <img loading="lazy" decoding="async" src={cldOptimize(f.image, { width: 112 })} alt="" style={{ width: 56, height: 56, borderRadius: 14, objectFit: "cover", margin: "0 auto 12px" }} />}
             {f.icon && <div style={{ marginBottom: 8, display: "flex", justifyContent: "center" }}><EmojiIcon glyph={f.icon} size={34} color="#F5A623" /></div>}
             <h3 style={{ fontSize: 17, fontWeight: 800, margin: "0 0 6px" }}>{f.title}</h3>
             {f.description && <p style={{ fontSize: 14, color: s._textColor ? `${s._textColor}99` : "#6B7280", lineHeight: 1.6, margin: 0 }}>{f.description}</p>}
@@ -231,7 +231,7 @@ function TestimonialSection({ s }) {
           <div key={i} style={{ background: s._bgColor ? "rgba(255,255,255,0.06)" : "#fff", border: s._bgColor ? "none" : "1px solid #E5E7EB", borderRadius: 18, padding: 24 }}>
             <p style={{ fontSize: 15, fontStyle: "italic", lineHeight: 1.7, marginBottom: 16, color: s._textColor || "#374151" }}>"{t.quote}"</p>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              {t.image ? <img loading="lazy" decoding="async" src={t.image} alt="" style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover" }} /> : <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#F3F4F6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}><EmojiIcon glyph="👤" size={22} color="#9CA3AF" /></div>}
+              {t.image ? <img loading="lazy" decoding="async" src={cldOptimize(t.image, { width: 88 })} alt="" style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover" }} /> : <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#F3F4F6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}><EmojiIcon glyph="👤" size={22} color="#9CA3AF" /></div>}
               <div>
                 <div style={{ fontSize: 14, fontWeight: 700 }}>{t.name}</div>
                 {t.role && <div style={{ fontSize: 12, color: "#9CA3AF" }}>{t.role}</div>}
@@ -251,7 +251,7 @@ function TeamSection({ s }) {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 20 }}>
         {(s.items || []).map((m, i) => (
           <div key={i} style={{ textAlign: "center", background: s._bgColor ? "rgba(255,255,255,0.06)" : "#fff", border: s._bgColor ? "none" : "1px solid #E5E7EB", borderRadius: 18, padding: 24 }}>
-            {m.image ? <img loading="lazy" decoding="async" src={m.image} alt="" style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", margin: "0 auto 12px" }} /> : <div style={{ width: 80, height: 80, borderRadius: "50%", background: "#F3F4F6", margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}><EmojiIcon glyph="👤" size={34} color="#9CA3AF" /></div>}
+            {m.image ? <img loading="lazy" decoding="async" src={cldOptimize(m.image, { width: 160 })} alt="" style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", margin: "0 auto 12px" }} /> : <div style={{ width: 80, height: 80, borderRadius: "50%", background: "#F3F4F6", margin: "0 auto 12px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}><EmojiIcon glyph="👤" size={34} color="#9CA3AF" /></div>}
             <div style={{ fontSize: 16, fontWeight: 800 }}>{m.name}</div>
             {m.role && <div style={{ fontSize: 13, color: "#F5A623", fontWeight: 600, marginTop: 2 }}>{m.role}</div>}
             {m.bio && <p style={{ fontSize: 13, color: s._textColor ? `${s._textColor}99` : "#6B7280", marginTop: 8, lineHeight: 1.5 }}>{m.bio}</p>}

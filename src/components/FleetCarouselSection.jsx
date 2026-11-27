@@ -1,6 +1,7 @@
 import EmojiIcon from "./ui/EmojiIcon";
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { navigate } from "vike/client/router";
+import { cldOptimize } from "../utils/cloudinaryUrl";
 import { LazyMotion, domAnimation, m, MotionConfig, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { fmtINR } from "../data/mockData";
 import FuelToggle from "./FuelToggle";
@@ -174,7 +175,7 @@ export default function FleetCarouselSection({ vehicles = [], loading = false, e
               >
                 {/* Vehicle image */}
                 <div style={{ aspectRatio: "16/9", background: "#F7F7F7", position: "relative", overflow: "hidden", flex: "none" }}>
-                  <img className="vehicle-photo" src={v.img} alt={v.name} loading="lazy" onError={(e) => { if (v.imgFallback && e.currentTarget.src !== v.imgFallback) e.currentTarget.src = v.imgFallback; }} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                  <img className="vehicle-photo" src={cldOptimize(v.img, { width: 600 })} alt={v.name} loading="lazy" onError={(e) => { if (v.imgFallback && e.currentTarget.src !== v.imgFallback) e.currentTarget.src = v.imgFallback; }} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                 </div>
 
                 {/* Card body */}
@@ -263,7 +264,7 @@ export default function FleetCarouselSection({ vehicles = [], loading = false, e
                     <m.img
                       className="vehicle-photo"
                       key={modal.gallery?.[activeImg] || modal.img}
-                      src={modal.gallery?.[activeImg] || modal.img}
+                      src={cldOptimize(modal.gallery?.[activeImg] || modal.img, { width: 900 })}
                       onError={(e) => { if (modal.imgFallback && e.currentTarget.src !== modal.imgFallback) e.currentTarget.src = modal.imgFallback; }}
                       alt={modal.name}
                       initial={{ opacity: 0, scale: 1.03 }}
@@ -297,7 +298,7 @@ export default function FleetCarouselSection({ vehicles = [], loading = false, e
                         aria-label={`Show image ${i + 1}`}
                         style={{ width: 64, height: 44, borderRadius: 8, overflow: "hidden", border: activeImg === i ? "2px solid #FFD54F" : "2px solid transparent", opacity: activeImg === i ? 1 : 0.55, cursor: "pointer", padding: 0, transition: "opacity .2s, border-color .2s" }}
                       >
-                        <img loading="lazy" decoding="async" src={src} alt="" onError={(e) => { if (modal.imgFallback && e.currentTarget.src !== modal.imgFallback) e.currentTarget.src = modal.imgFallback; }} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        <img loading="lazy" decoding="async" src={cldOptimize(src, { width: 128 })} alt="" onError={(e) => { if (modal.imgFallback && e.currentTarget.src !== modal.imgFallback) e.currentTarget.src = modal.imgFallback; }} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       </m.button>
                     ))}
                   </div>

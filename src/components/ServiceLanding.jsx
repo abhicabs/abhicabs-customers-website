@@ -93,7 +93,7 @@ function CustomTextSection({ data }) {
           {(data.body || []).map((p, i) => <p key={i} className="mt-3 text-text-secondary text-[15.5px] leading-relaxed">{p}</p>)}
           {data.image && (
             <div className="mt-8 rounded-[18px] overflow-hidden">
-              <img src={typeof cldOptimize === "function" ? cldOptimize(data.image, { width: 900 }) : data.image} alt={data.imageAlt || ""} loading="lazy" className="w-full aspect-[16/9] object-cover" />
+              <img src={cldOptimize(data.image, { width: 900 })} alt={data.imageAlt || ""} loading="lazy" className="w-full aspect-[16/9] object-cover" />
             </div>
           )}
         </div>
@@ -161,7 +161,7 @@ function CustomGallerySection({ data }) {
           {(data.images || []).map((img, i) => (
             <div key={i} className="rounded-[16px] overflow-hidden aspect-[4/3]">
               {img.url ? (
-                <img src={typeof cldOptimize === "function" ? cldOptimize(img.url, { width: 600 }) : img.url} alt={img.alt || ""} loading="lazy" className="w-full h-full object-cover" />
+                <img src={cldOptimize(img.url, { width: 600 })} alt={img.alt || ""} loading="lazy" className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full bg-[#F3F4F6] flex items-center justify-center text-[#9CA3AF] text-[13px]">No image</div>
               )}
@@ -414,7 +414,7 @@ function CustomImageTextSection({ data }) {
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-center ${!imgLeft ? "lg:[direction:rtl] [&>*]:[direction:ltr]" : ""}`}>
           <div className="rounded-[18px] overflow-hidden">
             {data.image ? (
-              <img src={typeof cldOptimize === "function" ? cldOptimize(data.image, { width: 800 }) : data.image} alt={data.imageAlt || ""} loading="lazy" className="w-full aspect-[4/3] object-cover" />
+              <img src={cldOptimize(data.image, { width: 800 })} alt={data.imageAlt || ""} loading="lazy" className="w-full aspect-[4/3] object-cover" />
             ) : (
               <div className="w-full aspect-[4/3] bg-[#F3F4F6] flex items-center justify-center text-[#9CA3AF]">No image</div>
             )}
@@ -670,7 +670,7 @@ export default function ServiceLanding({ cfg }) {
             <div className="mt-7"><BookBtn size="lg" className={WRAP_BTN}>{cfg.intro.ctaLabel}</BookBtn></div>
           </Reveal>
           <Reveal delay={0.1} variant="right">
-            <img src={cfg.intro.image} alt={cfg.intro.alt || ""} loading="lazy" className="rounded-[22px] w-full aspect-[5/4] object-cover" style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.14)" }} />
+            <img src={cldOptimize(cfg.intro.image, { width: 800 })} alt={cfg.intro.alt || ""} loading="lazy" className="rounded-[22px] w-full aspect-[5/4] object-cover" style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.14)" }} />
           </Reveal>
         </div>
       </Section>

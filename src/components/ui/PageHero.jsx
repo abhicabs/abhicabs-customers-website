@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Breadcrumb from "./Breadcrumb";
+import { cldOptimize } from "../../utils/cloudinaryUrl";
 
 /**
  * Shared inner-page hero — cinematic version matching the Home hero.
@@ -14,13 +15,14 @@ import Breadcrumb from "./Breadcrumb";
 const EASE = [0.22, 1, 0.36, 1];
 
 /** Phone-sized source for the hero photo: Cloudinary resizes on the fly; local hero-*.webp files have a -900 twin. */
-function heroSrcSet(image = "") {
-  if (image.includes("res.cloudinary.com") && image.includes("w_1920")) return `${image.replace("w_1920", "w_900")} 900w, ${image} 1920w`;
-  if (/\/hero-[a-z-]+\.webp$/.test(image)) return `${image.replace(/\.webp$/, "-900.webp")} 900w, ${image} 1672w`;
+function heroSrcSet(img = "") {
+  if (img.includes("res.cloudinary.com") && img.includes("w_1920")) return `${img.replace("w_1920", "w_900")} 900w, ${img} 1920w`;
+  if (/\/hero-[a-z-]+\.webp$/.test(img)) return `${img.replace(/\.webp$/, "-900.webp")} 900w, ${img} 1672w`;
   return undefined;
 }
 
-export default function PageHero({ image, imageAlt = "", imagePosition = "center", breadcrumb, title, accent, subtitle, description, actions, stats, center = false, children }) {
+export default function PageHero({ image: rawImage, imageAlt = "", imagePosition = "center", breadcrumb, title, accent, subtitle, description, actions, stats, center = false, children }) {
+  const image = cldOptimize(rawImage, { width: 1920 });
   const reduce = useReducedMotion();
   const [more, setMore] = useState(false);
   const longDesc = typeof description === "string" && description.length > 220;

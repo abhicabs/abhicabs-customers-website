@@ -1,5 +1,6 @@
 import React from "react";
 import Reveal from "./ui/Reveal";
+import { cldOptimize } from "../utils/cloudinaryUrl";
 
 /**
  * Compact service interlink strip — drops into any page to cross-link services.
@@ -75,7 +76,7 @@ export function BlogInterlink({ blogs = [], title = "From Our Blog", max = 3, cl
               >
                 {blog.heroImage && (
                   <div className="aspect-[16/9] overflow-hidden">
-                    <img src={blog.heroImage} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img src={cldOptimize(blog.heroImage, { width: 600 })} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                 )}
                 <div className="p-4">

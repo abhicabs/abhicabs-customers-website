@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { cldOptimize } from "../utils/cloudinaryUrl";
 
 /**
  * Full-bleed dark CTA band used at the end of service and city pages.
@@ -18,7 +19,7 @@ export default function CtaBand({ title, subheading, description, actions, image
     <section className="ac-cta relative overflow-hidden isolate bg-[#0d0d0d]">
       {image && (
         <div aria-hidden className="absolute -inset-[4%] -z-20">
-          <img src={image} alt="" loading="lazy" decoding="async" className="ac-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.32 }} />
+          <img src={cldOptimize(image, { width: 1920 })} alt="" loading="lazy" decoding="async" className="ac-kenburns" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.32 }} />
         </div>
       )}
       <div aria-hidden className="absolute inset-0 -z-10" style={{ background: "linear-gradient(100deg,#0d0d0d 0%,rgba(13,13,13,.92) 45%,rgba(13,13,13,.7) 100%)" }} />

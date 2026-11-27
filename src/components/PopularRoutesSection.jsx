@@ -1,5 +1,6 @@
 import React, { useId, useMemo, useState } from "react";
 import { LazyMotion, domMax, m, MotionConfig, AnimatePresence, LayoutGroup } from "framer-motion";
+import { cldOptimize } from "../utils/cloudinaryUrl";
 
 // This section carries id="services" (the header nav's "Services" link
 // scrolls here). Card markup and styles are unchanged from the Figma build —
@@ -148,10 +149,10 @@ export default function PopularRoutesSection({ routes, onBook, id = "services" }
                         <div style={{ position: "relative", height: 172, overflow: "hidden" }}>
                           {r.href ? (
                             <a href={r.href} aria-label={`${r.to} — destination guide`} className="block w-full h-full">
-                              <img loading="lazy" decoding="async" src={r.img} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                              <img loading="lazy" decoding="async" src={cldOptimize(r.img, { width: 600 })} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                             </a>
                           ) : (
-                            <img loading="lazy" decoding="async" src={r.img} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                            <img loading="lazy" decoding="async" src={cldOptimize(r.img, { width: 600 })} alt={`${r.from} to ${r.to}`} className="transition-transform duration-700 ease-out group-hover:scale-110" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                           )}
                           <span style={{ position: "absolute", top: 12, left: 12, padding: "5px 11px", borderRadius: 9999, background: badge.bg, color: badge.fg, fontWeight: 600, fontSize: 11, zIndex: 2 }}>
                             {r.badgeLabel || r.badge}

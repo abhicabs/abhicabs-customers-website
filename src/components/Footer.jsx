@@ -135,7 +135,7 @@ export default function Footer() {
               {/* Brand */}
               <m.div variants={col} className="col-span-2 max-w-[360px] md:col-span-3 lg:col-span-1">
                 <img loading="lazy" decoding="async"
-                  src="/images/abhi-cabs-logo-footer.png?v=4"
+                  src="/images/abhi-cabs-logo-footer.png"
                   alt="Abhi Cabs"
                   className="mb-4 w-[240px] object-contain"
                 />

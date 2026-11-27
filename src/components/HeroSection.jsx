@@ -1,5 +1,6 @@
 import usePageContent from "../hooks/usePageContent";
 import React, { useRef } from "react";
+import { cldOptimize } from "../utils/cloudinaryUrl";
 import {
   LazyMotion,
   domAnimation,
@@ -129,7 +130,7 @@ export default function HeroSection({ widgetKey, widgetProps, onModeChange }) {
           >
             <img
               className="ken-burns-img"
-              src={heroImage || "/images/Herosection.jpg"}
+              src={cldOptimize(heroImage || "/images/Herosection.jpg", { width: 1920 })}
               alt=""
               fetchPriority="high"
               decoding="async"

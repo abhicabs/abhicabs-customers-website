@@ -1,6 +1,7 @@
 import EmojiIcon from "./ui/EmojiIcon";
 import React, { useEffect, useState } from "react";
 import { navigate } from "vike/client/router";
+import { cldOptimize } from "../utils/cloudinaryUrl";
 import { LazyMotion, domAnimation, m, MotionConfig, AnimatePresence } from "framer-motion";
 import { fmtINR } from "../data/mockData";
 

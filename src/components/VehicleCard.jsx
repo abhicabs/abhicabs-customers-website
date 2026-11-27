@@ -2,6 +2,7 @@ import React from "react";
 import Button from "./ui/Button";
 import { fmtINR } from "../data/mockData";
 import { IconSeat, IconAC, IconLuggage } from "./Icons";
+import { cldOptimize } from "../utils/cloudinaryUrl";
 
 const catColors = {
   sedan:  "bg-blue-50 text-blue-700",
@@ -17,7 +18,7 @@ export default function VehicleCard({ vehicle: v, ctaHref = "/#booking", ctaLabe
       {/* Image */}
       <div className="relative aspect-[16/9] overflow-hidden">
         <img
-          src={v.img}
+          src={cldOptimize(v.img, { width: 600 })}
           alt={v.name}
           loading="lazy"
           onError={(e) => { if (v.imgFallback && e.currentTarget.src !== v.imgFallback) e.currentTarget.src = v.imgFallback; }}
