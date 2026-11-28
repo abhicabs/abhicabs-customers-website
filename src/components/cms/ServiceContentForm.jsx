@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TRIP_MODES, FEATURE_ICONS, LISTINGS } from "../../lib/servicePage";
 import { DEFAULT_LAYOUT, CUSTOM_SECTION_TYPES, newCustomSection } from "../ServiceLanding";
 import { ArrowUp, ArrowDown, Eye, EyeOff, Plus, Trash2, Copy, ChevronDown, ChevronUp, Pencil } from "lucide-react";
@@ -17,7 +17,8 @@ import { ArrowUp, ArrowDown, Eye, EyeOff, Plus, Trash2, Copy, ChevronDown, Chevr
 const SITE_IMAGES = ["/images/dashboard-pov.jpg", "/images/travelling.jpg", "/images/coastal-road-sedan.jpg", "/images/coastal-road-sedan.jpg", "/images/tea-garden-road.jpg", "/images/tea-garden-road.jpg", "/images/travelling.jpg", "/images/weekend.jpg", "/images/Herosection.jpg"];
 const TONES = [{ value: "", label: "Default" }, { value: "white", label: "White" }, { value: "tint", label: "Tint (Yellow)" }, { value: "page", label: "Page (Gray)" }, { value: "dark", label: "Dark" }];
 
-const box = { background: "#fff", border: "1px solid #E5E7EB", borderRadius: 16, padding: 18, marginBottom: 14, scrollMarginTop: 56 };
+// scrollMarginTop clears the CMS top bar (56px) + the pinned section tabs when jumping to a section
+const box = { background: "#fff", border: "1px solid #E5E7EB", borderRadius: 16, padding: 18, marginBottom: 14, scrollMarginTop: 150 };
 const labelStyle = { display: "block", fontSize: 11.5, fontWeight: 800, color: "#6B7280", marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.04em" };
 const inputStyle = { width: "100%", padding: "10px 12px", borderRadius: 10, border: "1.5px solid #D1D5DB", fontSize: 14, boxSizing: "border-box", outline: "none", fontFamily: "inherit", background: "#fff" };
 const btn = { padding: "7px 12px", borderRadius: 9, border: "1px solid #E5E7EB", background: "#F9FAFB", fontSize: 12.5, fontWeight: 700, cursor: "pointer" };
@@ -35,7 +36,8 @@ const fid = (path) => `svc-f-${path.join("-")}`;
 export function jumpToServiceField(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  // whole sections open at their top; single fields are centred
+  el.scrollIntoView({ behavior: "smooth", block: id.startsWith("svc-sec-") ? "start" : "center" });
   const target = el.matches("input,textarea,select,button") ? el : el.querySelector("input,textarea,select,button");
   try { (target || el).focus({ preventScroll: true }); } catch (_) {}
 }
@@ -481,15 +483,29 @@ export default function ServiceContentForm({ content: c, onChange, canEdit = tru
   }
   navItems.push(["SEO", "svc-sec-seo"]);
 
+  // Highlight the tab of the section currently on screen.
+  const [activeTab, setActiveTab] = useState(null);
+  const navKey = navItems.map((n) => n[1]).join("|");
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return undefined;
+    const els = navKey.split("|").map((id) => document.getElementById(id)).filter(Boolean);
+    const io = new IntersectionObserver((entries) => {
+      const on = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (on[0]) setActiveTab(on[0].target.id);
+    }, { rootMargin: "-150px 0px -55% 0px" });
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [navKey]);
+
   return (
     <div>
       <datalist id="svc-groups">{groups.map((g) => <option key={g} value={g} />)}</datalist>
       <datalist id="svc-images">{SITE_IMAGES.map((s) => <option key={s} value={s} />)}</datalist>
 
       {/* Jump bar */}
-      <nav aria-label="Jump to section" style={{ position: "sticky", top: 0, zIndex: 5, background: "#F3F4F6", padding: "8px 0", marginBottom: 6, display: "flex", gap: 6, overflowX: "auto" }}>
+      <nav aria-label="Jump to section" style={{ position: "sticky", top: 56, zIndex: 5, background: "rgba(249,250,251,.96)", backdropFilter: "blur(4px)", padding: "10px 0", marginBottom: 8, display: "flex", flexWrap: "wrap", gap: 6, borderBottom: "1px solid #EEF0F3" }}>
         {navItems.map(([label, id]) => (
-          <button key={id} type="button" onClick={() => jumpToServiceField(id)} style={{ flex: "none", fontSize: 12, fontWeight: 700, padding: "6px 12px", borderRadius: 999, border: "1px solid #E5E7EB", background: "#fff", color: "#374151", cursor: "pointer", whiteSpace: "nowrap" }}>{label}</button>
+          <button key={id} type="button" onClick={() => jumpToServiceField(id)} aria-current={activeTab === id ? "true" : undefined} style={{ flex: "none", fontSize: 12, fontWeight: 700, padding: "6px 12px", borderRadius: 999, border: `1px solid ${activeTab === id ? "#111" : "#E5E7EB"}`, background: activeTab === id ? "#111" : "#fff", color: activeTab === id ? "#fff" : "#374151", cursor: "pointer", whiteSpace: "nowrap" }}>{label}</button>
         ))}
       </nav>
 

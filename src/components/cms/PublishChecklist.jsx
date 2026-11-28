@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 /**
  * "Ready to publish?" checklist for the blog editor. Guidance only — it never blocks publishing,
@@ -24,27 +24,37 @@ export function buildChecklist(meta, wordCount) {
 const ICON = { ok: ["#059669", "✓"], warn: ["#D97706", "!"], todo: ["#9CA3AF", "○"] };
 
 /** Generic "Ready to publish?" panel: items = [{ id, label, status, hint }], onFix(id) jumps to the field. */
-export function ChecklistPanel({ items, onFix, title = "Ready to publish?", className = "mb-3" }) {
+export function ChecklistPanel({ items, onFix, title = "Ready to publish?", className = "mb-3", collapsible = false, columns = 1 }) {
   const done = items.filter((i) => i.status === "ok").length;
+  const all = done === items.length;
+  // Collapsible panels start closed once everything is done, so a finished checklist takes one line.
+  const [open, setOpen] = useState(!(collapsible && all));
+  const Head = collapsible ? "button" : "div";
   return (
     <div className={`${className} rounded-lg border border-[#E5E7EB] bg-[#FAFAFA]`}>
-      <div className="px-3 py-2 flex items-center justify-between border-b border-[#EDEDED]">
+      <Head {...(collapsible ? { type: "button", onClick: () => setOpen((o) => !o), "aria-expanded": open } : {})}
+        className={`w-full px-3 py-2 flex items-center justify-between gap-2 text-left ${open ? "border-b border-[#EDEDED]" : ""}`}>
         <span className="text-[12px] font-extrabold text-[#111827]">{title}</span>
-        <span className="text-[11px] font-bold" style={{ color: done === items.length ? "#059669" : "#6B7280" }}>{done} of {items.length} done</span>
-      </div>
-      <div className="h-1 bg-[#EDEDED]"><div className="h-1 transition-all" style={{ width: `${(done / items.length) * 100}%`, background: done === items.length ? "#059669" : "#F5A623" }} /></div>
-      <ul className="px-3 py-2 space-y-1.5">
-        {items.map((i) => (
-          <li key={i.id} className="flex items-start gap-2 text-[12px]">
-            <span className="mt-px w-4 h-4 shrink-0 rounded-full text-[10px] font-black flex items-center justify-center text-white" style={{ background: ICON[i.status][0] }} aria-hidden>{ICON[i.status][1]}</span>
-            <span className="flex-1 min-w-0">
-              <span className="font-semibold text-[#374151]">{i.label}</span>
-              {i.status !== "ok" && <span className="block text-[11px] text-[#9CA3AF] leading-snug">{i.hint}</span>}
-            </span>
-            {i.status !== "ok" && <button type="button" onClick={() => onFix(i.id)} className="shrink-0 text-[11px] font-bold text-[#B8860B] hover:underline">Fix</button>}
-          </li>
-        ))}
-      </ul>
+        <span className="flex items-center gap-2 text-[11px] font-bold" style={{ color: all ? "#059669" : "#6B7280" }}>
+          {done} of {items.length} done
+          {collapsible && <span aria-hidden className="text-[#9CA3AF]">{open ? "▴" : "▾"}</span>}
+        </span>
+      </Head>
+      <div className="h-1 bg-[#EDEDED]"><div className="h-1 transition-all" style={{ width: `${(done / items.length) * 100}%`, background: all ? "#059669" : "#F5A623" }} /></div>
+      {open && (
+        <ul className={`px-3 py-2 ${columns === 2 ? "grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5" : "space-y-1.5"}`}>
+          {items.map((i) => (
+            <li key={i.id} className="flex items-start gap-2 text-[12px]">
+              <span className="mt-px w-4 h-4 shrink-0 rounded-full text-[10px] font-black flex items-center justify-center text-white" style={{ background: ICON[i.status][0] }} aria-hidden>{ICON[i.status][1]}</span>
+              <span className="flex-1 min-w-0">
+                <span className="font-semibold text-[#374151]">{i.label}</span>
+                {i.status !== "ok" && <span className="block text-[11px] text-[#9CA3AF] leading-snug">{i.hint}</span>}
+              </span>
+              {i.status !== "ok" && <button type="button" onClick={() => onFix(i.id)} className="shrink-0 text-[11px] font-bold text-[#B8860B] hover:underline">Fix</button>}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

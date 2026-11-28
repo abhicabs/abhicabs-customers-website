@@ -4863,7 +4863,8 @@ function PageEditor({ onBack }) {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 min-w-0 flex flex-col overflow-y-auto">
+      {/* Main panel: fixed to the screen height so it scrolls itself — that is what lets the top bar, section tabs and live preview stay pinned. */}
+      <div className="flex-1 min-w-0 h-screen flex flex-col overflow-y-auto">
         {/* Top bar */}
         <div className="h-14 bg-white border-b border-[#E5E7EB] flex items-center justify-between px-6 shadow-sm sticky top-0 z-10">
           <div>
@@ -4925,7 +4926,7 @@ function PageEditor({ onBack }) {
           </div>
         </div>
 
-        <div className="max-w-[900px] mx-auto w-full px-6 py-8">
+        <div className={`mx-auto w-full ${activePage ? "max-w-[1760px] px-5 py-5" : "max-w-[1200px] px-6 py-8"}`}>
           {!activePage ? (
             <>
               {/* Hero header */}
@@ -4968,11 +4969,11 @@ function PageEditor({ onBack }) {
           ) : (
             <div className="space-y-4">
               {/* Page info header */}
-              <div style={{ background: "linear-gradient(135deg,#18181B,#09090B)", borderRadius: 20, padding: "24px 28px", marginBottom: 8, display: "flex", alignItems: "center", gap: 16, position: "relative", overflow: "hidden" }}>
+              <div style={{ background: "linear-gradient(135deg,#18181B,#09090B)", borderRadius: 16, padding: "14px 20px", marginBottom: 4, display: "flex", alignItems: "center", gap: 14, position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 90% 50%, rgba(245,166,35,0.06) 0%, transparent 50%)" }} />
-                <div style={{ width: 52, height: 52, borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, background: "rgba(255,255,255,0.08)", flexShrink: 0, position: "relative" }}><EmojiIcon glyph={PAGE_DEFS.find((p) => p.id === activePage)?.icon || pages[activePage]?._icon || "📄"} size={26} color="#F5A623" /></div>
+                <div style={{ width: 40, height: 40, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, background: "rgba(255,255,255,0.08)", flexShrink: 0, position: "relative" }}><EmojiIcon glyph={PAGE_DEFS.find((p) => p.id === activePage)?.icon || pages[activePage]?._icon || "📄"} size={20} color="#F5A623" /></div>
                 <div style={{ position: "relative" }}>
-                  <h3 style={{ fontSize: 20, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", margin: 0 }}>{PAGE_DEFS.find((p) => p.id === activePage)?.label || pages[activePage]?._label || activePage} Page</h3>
+                  <h3 style={{ fontSize: 17, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", margin: 0 }}>{PAGE_DEFS.find((p) => p.id === activePage)?.label || pages[activePage]?._label || activePage} Page</h3>
                   <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: 3, fontWeight: 500 }}>
                     {isTemplatePage(pages[activePage]) ? "Standard service page" : <>{currentSections.length} section{currentSections.length !== 1 ? "s" : ""} · reorder with arrows</>}
                     {(pages[activePage]?._service || pages[activePage]?._custom) && <> · <span style={{ color: "#F5A623" }}>Live at {livePageUrl}</span></>}
