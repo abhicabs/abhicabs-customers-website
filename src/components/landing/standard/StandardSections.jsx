@@ -58,7 +58,7 @@ export function Hero({ data: h, breadcrumb, quickPicks = [], booking, onBook }) 
           {h.h2 && <h2 className="mt-3 text-[18px] md:text-[22px] font-extrabold text-primary">{h.h2}</h2>}
           {/* Hero description paragraphs (h.body) are kept in the content but not shown — same as every other page's hero. */}
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <Button size="lg" className="max-w-full max-sm:whitespace-normal max-sm:h-auto max-sm:min-h-14 max-sm:py-3.5 max-sm:leading-snug max-sm:text-center" onClick={() => onBook(null)}>{h.cta} <ArrowRight size={17} aria-hidden /></Button>
+            <Button size="lg" onClick={() => onBook(null)}>{h.cta} <ArrowRight size={17} aria-hidden /></Button>
             {quickPicks.length > 0 && <span className="text-[13px] font-bold text-white/55 ml-1">Quick pick:</span>}
             {quickPicks.map((p) => (
               <button key={p.hours} type="button" onClick={() => onBook({ tripType: "local", package: p.pkg })}
@@ -347,7 +347,7 @@ export function FinalCta({ data: c, onBook }) {
         {c.subheading && <h3 className="mt-4 text-[17px] md:text-[20px] font-extrabold">{c.subheading}</h3>}
         <div className="mt-5 space-y-3 text-[15.5px] md:text-[16.5px] text-[#111]/75 leading-relaxed">{[].concat(c.body || []).map((p, i) => <p key={i}>{rich(p)}</p>)}</div>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button size="lg" className="bg-[#111]! text-white! shadow-none! hover:bg-black! max-w-full max-sm:whitespace-normal max-sm:h-auto max-sm:min-h-14 max-sm:py-3.5 max-sm:leading-snug max-sm:text-center" onClick={() => onBook(null)}>{c.button} <ArrowRight size={17} aria-hidden /></Button>
+          <Button size="lg" className="bg-[#111]! text-white! shadow-none! hover:bg-black!" onClick={() => onBook(null)}>{c.button} <ArrowRight size={17} aria-hidden /></Button>
           <Button size="lg" variant="outline" href="/contact">Talk to Us</Button>
         </div>
       </div>
