@@ -10,7 +10,9 @@ import { cloudinaryUrl } from "./scripts/cloudinary-paths.mjs";
  * content objects, JSON such as placeImages.json, CSS url(), SEO tags with the site
  * origin; subfolders like /images/places/ included) is rewritten to the
  * matching Cloudinary URL. Source files are never modified.
- * No-op when VITE_CLOUDINARY_CLOUD_NAME is not set → local /public/images is used.
+ * OPT-IN: only when VITE_CLOUDINARY_SERVE_SITE_IMAGES=true (and the images were uploaded first
+ * with `npm run images:upload`). Otherwise the site serves public/images itself — setting
+ * VITE_CLOUDINARY_CLOUD_NAME alone (needed for CMS uploads) does not move the site's images.
  */
 function cloudinaryImages(cloudName) {
   const SITE_ABS = /(\$\{SITE\}|https?:\/\/(?:www\.)?abhicabs24x7\.com)\/images\/((?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_.-]+\.(?:png|jpe?g|webp|svg|gif|avif))/g;
@@ -32,7 +34,8 @@ function cloudinaryImages(cloudName) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const cloudName = env.VITE_CLOUDINARY_CLOUD_NAME || process.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const serveSiteImages = (env.VITE_CLOUDINARY_SERVE_SITE_IMAGES || process.env.VITE_CLOUDINARY_SERVE_SITE_IMAGES) === "true";
   return {
-    plugins: [cloudinaryImages(cloudName), vike(), react(), tailwindcss()],
+    plugins: [cloudinaryImages(serveSiteImages ? cloudName : null), vike(), react(), tailwindcss()],
   };
 });

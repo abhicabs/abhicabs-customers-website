@@ -12,12 +12,14 @@
  * This function covers paths assembled at *runtime* — CMS data, API
  * responses, dynamic string concatenation, placeImages.json entries, etc.
  *
- * When VITE_CLOUDINARY_CLOUD_NAME is not set (local dev), local paths are
- * returned as-is so the site works offline from public/images.
+ * Local /images/… paths go to Cloudinary ONLY when VITE_CLOUDINARY_SERVE_SITE_IMAGES=true
+ * (after `npm run images:upload`). Otherwise they are returned as-is and served from
+ * public/images. VITE_CLOUDINARY_CLOUD_NAME on its own is just the CMS upload account.
  */
 import { cloudinaryUrl as _buildCldUrl } from "../../scripts/cloudinary-paths.mjs";
 
 const CLOUD = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const SERVE_SITE_IMAGES = import.meta.env.VITE_CLOUDINARY_SERVE_SITE_IMAGES === "true";
 
 export function cldOptimize(url, { width } = {}) {
   if (!url || typeof url !== "string") return url;
@@ -29,7 +31,7 @@ export function cldOptimize(url, { width } = {}) {
     /^\/images\/((?:[A-Za-z0-9_-]+\/)*[A-Za-z0-9_.-]+)$/
   );
   if (localMatch) {
-    if (!CLOUD) return url; // local dev — serve from public/images
+    if (!CLOUD || !SERVE_SITE_IMAGES) return url; // served from public/images
     // _buildCldUrl already adds f_auto,q_auto,c_limit,w_1920 for rasters
     let out = _buildCldUrl(CLOUD, localMatch[1]);
     // If the caller asked for a tighter width, replace the default w_1920
