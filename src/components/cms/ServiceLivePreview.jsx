@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Monitor, Smartphone } from "lucide-react";
-import ServiceLanding from "../ServiceLanding";
+import { layoutForSlug } from "../serviceLayouts";
 import { toServiceCfg } from "../../lib/servicePage";
 
 const WIDTHS = { desktop: 1280, mobile: 390 }; // render at a real device width, scale down to fit the panel
 
 /**
- * The ACTUAL service-page template (<ServiceLanding>, the exact component visitors get), rendered from
+ * The ACTUAL page layout visitors get (layoutForSlug: the page's own layout for the built-in services,
+ * the standard /services/local/bangalore design for pages created in the CMS), rendered from
  * the draft content as you type — no save, no iframe. Desktop / Mobile switch. Scroll-only: nothing
  * inside the preview is clickable, so nothing navigates away.
  */
@@ -30,6 +31,7 @@ export default function ServicePreview({ slug, content, liveUrl, height = "100%"
     return () => ro.disconnect();
   }, [W, device]);
 
+  const View = layoutForSlug(slug);
   let cfg = null, err = "";
   try { cfg = toServiceCfg(slug, content); } catch (e) { err = e.message; }
 
@@ -53,7 +55,7 @@ export default function ServicePreview({ slug, content, liveUrl, height = "100%"
         {err ? <div style={{ padding: 20, color: "#B91C1C", fontSize: 13 }}>Preview error: {err}</div> : (
           <div style={{ height: innerH * scale, position: "relative" }}>
             <div ref={inner} aria-hidden style={{ width: W, transform: `scale(${scale})`, transformOrigin: "top left", pointerEvents: "none", position: "absolute", top: 0, left: device === "mobile" ? Math.max(0, ((wrap.current?.clientWidth || W * scale) - W * scale) / 2) : 0, background: "#fff" }}>
-              <ServiceLanding key={slug + device} cfg={cfg} />
+              <View key={slug + device} cfg={cfg} />
             </div>
           </div>
         )}
