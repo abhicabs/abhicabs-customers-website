@@ -138,7 +138,7 @@ export function HowSection({ data, onBook, bg = "bg-white" }) {
           );
         })}
       </ol>
-      <div className="mt-10"><Button size="lg" onClick={() => onBook(null)}>{data.ctaLabel || "Start Booking"}</Button></div>
+      <div className="mt-10"><Button size="lg" className="max-w-full max-sm:whitespace-normal max-sm:h-auto max-sm:min-h-14 max-sm:py-3.5 max-sm:leading-snug max-sm:text-center" onClick={() => onBook(null)}>{data.ctaLabel || "Start Booking"}</Button></div>
     </Band>
   );
 }

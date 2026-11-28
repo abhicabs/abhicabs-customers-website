@@ -31,5 +31,16 @@ export default function ServiceBooking({ widgetKey, initialMode = "one-way", pre
 export function scrollToBooking(id = "booking") {
   if (typeof document === "undefined") return;
   if (typeof id !== "string") id = "booking"; // guard: called directly as an onClick handler (receives the click event)
-  setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "center" }), 60);
+  const go = () => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  setTimeout(go, 60);
+  // A widget that animates in (e.g. the round-trip form) makes framer-motion measure it, which
+  // resets the window scroll and cancels the smooth scroll above. If we didn't arrive, go again.
+  const retry = () => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) go();
+  };
+  setTimeout(retry, 450);
+  setTimeout(retry, 1100);
 }
