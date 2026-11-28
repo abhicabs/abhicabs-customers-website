@@ -151,44 +151,15 @@ function LayoutManager({ layout, customSections = [], mode, canEdit, onChange, o
     next[idx] = { ...next[idx], enabled: !next[idx].enabled };
     onChange(next);
   };
-  const setTone = (idx, tone) => {
-    const next = [...layout];
-    next[idx] = { ...next[idx], tone };
-    onChange(next);
-  };
-  const [showAdd, setShowAdd] = useState(false);
-  const [showTone, setShowTone] = useState(null);
 
   return (
     <section id="svc-sec-layout" style={{ ...box, background: "#FAFAFA", borderColor: "#E5E7EB" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
         <div>
           <div style={{ fontSize: 14.5, fontWeight: 900, color: "#111" }}>📐 Layout Manager</div>
-          <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 2 }}>Toggle, reorder, style and add sections. Custom blocks can go anywhere.</div>
+          <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 2 }}>Show, hide and reorder the sections of the standard service-page design.</div>
         </div>
-        {canEdit && (
-          <button type="button" onClick={() => setShowAdd(!showAdd)} style={{ ...btn, background: "#111", color: "#fff", border: "none", display: "inline-flex", alignItems: "center", gap: 5 }}>
-            <Plus size={13} /> Add section
-          </button>
-        )}
       </div>
-
-      {showAdd && canEdit && (
-        <div style={{ marginTop: 12, display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(175px, 1fr))", gap: 8 }}>
-          {CUSTOM_SECTION_TYPES.map((ct) => (
-            <button key={ct.type} type="button" onClick={() => { onAddCustom(ct.type); setShowAdd(false); }}
-              style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", borderRadius: 12, border: "1.5px solid #E5E7EB", background: "#fff", cursor: "pointer", textAlign: "left", transition: "all 0.15s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#F5A623"; e.currentTarget.style.background = "#FFFBEB"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#E5E7EB"; e.currentTarget.style.background = "#fff"; }}>
-              <span style={{ fontSize: 20 }}>{ct.emoji}</span>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: "#111" }}>{ct.label}</div>
-                <div style={{ fontSize: 11, color: "#9CA3AF" }}>{ct.desc}</div>
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
 
       <div style={{ marginTop: 14, display: "grid", gap: 4 }}>
         {layout.map((item, idx) => {
@@ -209,26 +180,8 @@ function LayoutManager({ layout, customSections = [], mode, canEdit, onChange, o
               <span style={{ fontSize: 14, width: 22, textAlign: "center", flexShrink: 0 }}>{meta.emoji}</span>
               <span style={{ fontSize: 13, fontWeight: 700, color: "#111", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {meta.label}
-                {isCustom && <span style={{ fontSize: 10, color: "#9CA3AF", fontWeight: 600, marginLeft: 6 }}>CUSTOM</span>}
-                {item.tone && <span style={{ fontSize: 10, color: "#6B7280", fontWeight: 600, marginLeft: 6, background: "#F3F4F6", padding: "1px 5px", borderRadius: 4 }}>{item.tone}</span>}
+                {isCustom && <span title="Older custom block — can be deleted; new ones can't be added" style={{ fontSize: 10, color: "#9CA3AF", fontWeight: 600, marginLeft: 6 }}>CUSTOM</span>}
               </span>
-
-              {/* Tone picker */}
-              {canEdit && (
-                <div style={{ position: "relative" }}>
-                  <button type="button" onClick={() => setShowTone(showTone === idx ? null : idx)} title="Change background" style={{ ...iconBtn, fontSize: 12 }}>🎨</button>
-                  {showTone === idx && (
-                    <div style={{ position: "absolute", top: "100%", right: 0, zIndex: 10, background: "#fff", border: "1px solid #E5E7EB", borderRadius: 10, padding: 4, minWidth: 120, boxShadow: "0 8px 24px rgba(0,0,0,0.12)" }}>
-                      {TONES.map((t) => (
-                        <button key={t.value} type="button" onClick={() => { setTone(idx, t.value); setShowTone(null); }}
-                          style={{ display: "block", width: "100%", textAlign: "left", padding: "6px 10px", borderRadius: 7, border: "none", background: item.tone === t.value ? "#F3F4F6" : "transparent", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
-                          {t.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
 
               {/* Edit — scroll to section editor */}
               <button type="button" onClick={() => {
@@ -240,7 +193,6 @@ function LayoutManager({ layout, customSections = [], mode, canEdit, onChange, o
               {canEdit && <button type="button" onClick={() => toggle(idx)} title={hidden ? "Show" : "Hide"} style={{ ...iconBtn, color: hidden ? "#DC2626" : "#16A34A" }}>{hidden ? <EyeOff size={14} /> : <Eye size={14} />}</button>}
               {canEdit && idx > 0 && <button type="button" onClick={() => move(idx, -1)} title="Move up" style={iconBtn}><ArrowUp size={14} /></button>}
               {canEdit && idx < layout.length - 1 && <button type="button" onClick={() => move(idx, 1)} title="Move down" style={iconBtn}><ArrowDown size={14} /></button>}
-              {canEdit && isCustom && <button type="button" onClick={() => onDuplicateCustom(item.id)} title="Duplicate" style={iconBtn}><Copy size={13} /></button>}
               {canEdit && isCustom && <button type="button" onClick={() => onRemoveCustom(item.id)} title="Delete" style={{ ...iconBtn, color: "#DC2626" }}><Trash2 size={14} /></button>}
             </div>
           );
@@ -264,7 +216,6 @@ function CustomSectionEditor({ section, onChange, canEdit, onUpload }) {
       <Field label="Subtitle (optional)" htmlFor={`${id}-subtitle`}>
         <input id={`${id}-subtitle`} style={inputStyle} disabled={!canEdit} value={section.subtitle || ""} onChange={(e) => up("subtitle", e.target.value)} placeholder="A short line under the heading" />
       </Field>
-      <TonePicker value={section.tone} onChange={(v) => up("tone", v)} canEdit={canEdit} />
 
       {/* ── TYPE-SPECIFIC FIELDS ── */}
 

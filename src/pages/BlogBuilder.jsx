@@ -3733,6 +3733,9 @@ const HOME_LAYOUT_LABELS = {
   faq: "FAQ", cta: "Final call-to-action",
 };
 
+// New service pages are always created from a service page type (no blank pages).
+const DEFAULT_PAGE_TYPE = "city-car-rental";
+
 const PAGE_DEFS = [
   { id: "home", label: "Home", icon: "🏠", desc: "Hero section, features, and booking widget intro" },
   { id: "about", label: "About", icon: "📖", desc: "Company story, mission, stats, and team" },
@@ -4356,7 +4359,7 @@ function PageEditor({ onBack }) {
   const [viewMode, setViewMode] = useState("preview"); // "preview" | "edit"
   const [editingIdx, setEditingIdx] = useState(null);
   const [livePreviewKey, setLivePreviewKey] = useState(0); // bump to reload the live page frame
-  const [serviceModal, setServiceModal] = useState({ open: false, name: "", mode: "one-way", group: "", cities: "", kind: "custom", vehicle: "Tempo Traveller" });
+  const [serviceModal, setServiceModal] = useState({ open: false, name: "", mode: "one-way", group: "", cities: "", kind: DEFAULT_PAGE_TYPE, vehicle: "Tempo Traveller" });
   const [deleteModal, setDeleteModal] = useState({ open: false, id: null, label: "" });
   // What the server had when this screen loaded (and after each save): each page's JSON
   // (null = not on the server yet) and version. Saves send only the pages that differ, each
@@ -4505,7 +4508,7 @@ function PageEditor({ onBack }) {
   };
 
   const slugify = (s) => (s || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  const openServiceModal = () => { if (canEdit) setServiceModal({ open: true, name: "", mode: "one-way", group: "", cities: "", kind: "custom", vehicle: "Tempo Traveller" }); };
+  const openServiceModal = () => { if (canEdit) setServiceModal({ open: true, name: "", mode: "one-way", group: SERVICE_PRESETS.find((p) => p.id === DEFAULT_PAGE_TYPE)?.group || "", cities: "", kind: DEFAULT_PAGE_TYPE, vehicle: "Tempo Traveller" }); };
   // Plan what the popup will create: [{ label, slug, bad, vars }]
   //  - a page type (preset): one page per city / route line, content generated from the preset
   //  - custom: one page, or one per city using the name pattern
@@ -4520,7 +4523,8 @@ function PageEditor({ onBack }) {
     const seen = new Set();
     return entries.map(({ vars, label }) => {
       const slug = slugifyName(label);
-      const bad = !slug || MAIN_PAGE_IDS.includes(slug) || !!pages[slug] || seen.has(slug);
+      // built-in service URLs (local, airport-taxi …) are code pages — a CMS page there would override them
+      const bad = !slug || MAIN_PAGE_IDS.includes(slug) || BUILT_IN_SLUGS.includes(slug) || !!pages[slug] || seen.has(slug);
       seen.add(slug);
       return { label, slug, bad, vars };
     });
@@ -4542,15 +4546,7 @@ function PageEditor({ onBack }) {
       return next;
     });
     setActivePage(plan[0].slug);
-    setServiceModal({ open: false, name: "", mode: "one-way", group: "", cities: "", kind: "custom", vehicle: "Tempo Traveller" });
-  };
-
-  // Built-in services run on code defaults until "customised": this copies the defaults into an editable CMS page.
-  const customizeBuiltIn = (slug) => {
-    if (!canEdit || pages[slug]) { setActivePage(slug); return; }
-    const label = SERVICE_LINKS.find((l) => l.href === serviceHref(slug))?.short || slug;
-    setPages((prev) => ({ ...prev, [slug]: { _slug: slug, _label: label, _icon: "🧳", _desc: "Service page", _custom: true, _service: true, _template: "service", _content: cfgToContent(slug), sections: [] } }));
-    setActivePage(slug);
+    setServiceModal({ open: false, name: "", mode: "one-way", group: "", cities: "", kind: DEFAULT_PAGE_TYPE, vehicle: "Tempo Traveller" });
   };
 
   // Legacy save for a backend without /pages/sync: the old full replace.
@@ -4753,7 +4749,7 @@ function PageEditor({ onBack }) {
         const preset = SERVICE_PRESETS.find((p) => p.id === serviceModal.kind);
         const badOnes = plan.filter((x) => x.bad);
         const valid = plan.length > 0 && badOnes.length === 0;
-        const reset = { open: false, name: "", mode: "one-way", group: "", cities: "", kind: "custom", vehicle: "Tempo Traveller" };
+        const reset = { open: false, name: "", mode: "one-way", group: "", cities: "", kind: DEFAULT_PAGE_TYPE, vehicle: "Tempo Traveller" };
         const close = () => setServiceModal(reset);
         const lbl = { display: "block", fontSize: 11.5, fontWeight: 800, color: "#6B7280", margin: "14px 0 5px", textTransform: "uppercase" };
         const inp = { width: "100%", padding: "10px 12px", borderRadius: 10, border: "1.5px solid #D1D5DB", fontSize: 14, boxSizing: "border-box", outline: "none", fontFamily: "inherit", background: "#fff" };
@@ -4765,11 +4761,10 @@ function PageEditor({ onBack }) {
           <div onClick={close} style={{ position: "fixed", inset: 0, zIndex: 9998, background: "rgba(10,10,10,0.55)", backdropFilter: "blur(2px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
             <div onClick={(e) => e.stopPropagation()} style={{ width: 520, maxWidth: "100%", maxHeight: "92vh", overflowY: "auto", background: "#fff", borderRadius: 16, border: "1px solid #E5E7EB", boxShadow: "0 24px 60px rgba(0,0,0,0.25)", padding: 22, animation: "cms-slide-up 0.2s ease-out both" }}>
               <div style={{ fontSize: 16, fontWeight: 900, color: "#111" }}>New service page</div>
-              <div style={{ fontSize: 12.5, color: "#6B7280", marginTop: 4 }}>Pages are fully customizable — add, remove, and reorder any section. Pick a type to start with ready-made content, or choose Custom to build from scratch.</div>
+              <div style={{ fontSize: 12.5, color: "#6B7280", marginTop: 4 }}>Pick a service page type — each page starts with ready-made content in the standard service-page design. Edit the text, and show, hide or reorder its sections.</div>
 
               <label style={lbl}>Page type</label>
               <select value={serviceModal.kind} onChange={(e) => pickKind(e.target.value)} style={inp}>
-                <option value="custom">Custom page (blank content)</option>
                 {SERVICE_PRESETS.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
               </select>
               {preset && <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 5 }}>{preset.hint}</div>}
@@ -4844,18 +4839,6 @@ function PageEditor({ onBack }) {
           <div className="text-[9px] font-bold uppercase tracking-widest text-white/40 px-3 pt-2 pb-1">Service pages</div>
           {servicePages.map(renderPageBtn)}
           {servicePages.length === 0 && <div className="px-3 py-1 text-[11px] text-white/30">None yet</div>}
-          {BUILT_IN_SLUGS.filter((sl) => !pages[sl]).length > 0 && (
-            <>
-              <div className="text-[9px] font-bold uppercase tracking-widest text-white/40 px-3 pt-2 pb-1">Built-in (default content)</div>
-              {BUILT_IN_SLUGS.filter((sl) => !pages[sl]).map((sl) => (
-                <button key={sl} onClick={() => customizeBuiltIn(sl)} title="Copy the default content into an editable page"
-                  className="w-full flex items-center justify-between gap-2 px-3 py-1.5 text-[12px] rounded-lg text-[#9CA3AF] hover:text-white transition-colors"
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}>
-                  <span className="truncate">{SERVICE_LINKS.find((l) => l.href === serviceHref(sl))?.short || sl}</span><span className="text-[10px] text-[#F5A623]">Customize</span>
-                </button>
-              ))}
-            </>
-          )}
           {canEdit && (
             <button onClick={openServiceModal}
               className="w-full flex items-center gap-2 px-3 py-1.5 mt-0.5 text-[12px] rounded-lg text-[#F5A623] hover:text-white transition-colors"
@@ -4991,7 +4974,7 @@ function PageEditor({ onBack }) {
                 <div style={{ position: "relative" }}>
                   <h3 style={{ fontSize: 20, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", margin: 0 }}>{PAGE_DEFS.find((p) => p.id === activePage)?.label || pages[activePage]?._label || activePage} Page</h3>
                   <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: 3, fontWeight: 500 }}>
-                    {isTemplatePage(pages[activePage]) ? "Fully customizable · add any section" : <>{currentSections.length} section{currentSections.length !== 1 ? "s" : ""} · reorder with arrows</>}
+                    {isTemplatePage(pages[activePage]) ? "Standard service page" : <>{currentSections.length} section{currentSections.length !== 1 ? "s" : ""} · reorder with arrows</>}
                     {(pages[activePage]?._service || pages[activePage]?._custom) && <> · <span style={{ color: "#F5A623" }}>Live at {livePageUrl}</span></>}
                   </p>
                 </div>
