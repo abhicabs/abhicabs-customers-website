@@ -82,12 +82,14 @@ export function DayTripCarousel({ data, imageFor, destOf, origin, onBook, bg = "
         {data.places.map((p) => {
           const dest = destOf(p.name);
           const m = /^(.+? to )(.+)$/.exec(p.name);
+          const img = imageFor(dest);
+          const art = !!img?.card; // finished card artwork: its label is painted in, so ours stays visually hidden
           return (
             <li key={p.name} className="shrink-0 w-[80%] sm:w-[320px] lg:w-[300px] snap-start flex flex-col">
               <div className="relative rounded-[20px] overflow-hidden">
-                <PlacePhoto img={imageFor(dest)} alt={dest} className="aspect-[4/5]" creditPos="top" />
-                <div aria-hidden className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
-                <h3 className="absolute left-5 right-5 bottom-5 text-white leading-tight">
+                <PlacePhoto img={img} alt={art ? p.name : dest} className="aspect-[4/5]" creditPos="top" />
+                {!art && <div aria-hidden className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />}
+                <h3 className={art ? "sr-only" : "absolute left-5 right-5 bottom-5 text-white leading-tight"}>
                   {m ? <>
                     <span className="block text-[13px] font-semibold text-white/75">{m[1]}</span>
                     <span className="block text-[23px] font-extrabold tracking-[-0.02em]">{m[2]}</span>

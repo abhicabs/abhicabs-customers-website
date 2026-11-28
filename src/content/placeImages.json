@@ -83,6 +83,62 @@
     "height": 750,
     "locked": true
   },
+  "Hyderabad/Birla Mandir": {
+    "src": "/images/places/birla-mandir-hyderabad-attraction-600.webp",
+    "srcSet": "/images/places/birla-mandir-hyderabad-attraction-300.webp 300w, /images/places/birla-mandir-hyderabad-attraction-600.webp 600w",
+    "width": 600,
+    "height": 450,
+    "locked": true
+  },
+  "Hyderabad/Charminar": {
+    "src": "/images/places/charminar-hyderabad-attraction-600.webp",
+    "srcSet": "/images/places/charminar-hyderabad-attraction-300.webp 300w, /images/places/charminar-hyderabad-attraction-600.webp 600w",
+    "width": 600,
+    "height": 450,
+    "locked": true
+  },
+  "Hyderabad/Chowmahalla Palace": {
+    "src": "/images/places/chowmahalla-palace-hyderabad-attraction-600.webp",
+    "srcSet": "/images/places/chowmahalla-palace-hyderabad-attraction-300.webp 300w, /images/places/chowmahalla-palace-hyderabad-attraction-600.webp 600w",
+    "width": 600,
+    "height": 450,
+    "locked": true
+  },
+  "Hyderabad/Golconda Fort": {
+    "src": "/images/places/golconda-fort-hyderabad-attraction-600.webp",
+    "srcSet": "/images/places/golconda-fort-hyderabad-attraction-300.webp 300w, /images/places/golconda-fort-hyderabad-attraction-600.webp 600w",
+    "width": 600,
+    "height": 450,
+    "locked": true
+  },
+  "Hyderabad/Hussain Sagar Lake": {
+    "src": "/images/places/hussain-sagar-lake-hyderabad-attraction-600.webp",
+    "srcSet": "/images/places/hussain-sagar-lake-hyderabad-attraction-300.webp 300w, /images/places/hussain-sagar-lake-hyderabad-attraction-600.webp 600w",
+    "width": 600,
+    "height": 450,
+    "locked": true
+  },
+  "Hyderabad/Qutb Shahi Tombs": {
+    "src": "/images/places/qutb-shahi-tombs-hyderabad-attraction-600.webp",
+    "srcSet": "/images/places/qutb-shahi-tombs-hyderabad-attraction-300.webp 300w, /images/places/qutb-shahi-tombs-hyderabad-attraction-600.webp 600w",
+    "width": 600,
+    "height": 450,
+    "locked": true
+  },
+  "Hyderabad/Salar Jung Museum": {
+    "src": "/images/places/salar-jung-museum-hyderabad-attraction-600.webp",
+    "srcSet": "/images/places/salar-jung-museum-hyderabad-attraction-300.webp 300w, /images/places/salar-jung-museum-hyderabad-attraction-600.webp 600w",
+    "width": 600,
+    "height": 450,
+    "locked": true
+  },
+  "Hyderabad/Shilparamam": {
+    "src": "/images/places/shilparamam-hyderabad-attraction-600.webp",
+    "srcSet": "/images/places/shilparamam-hyderabad-attraction-300.webp 300w, /images/places/shilparamam-hyderabad-attraction-600.webp 600w",
+    "width": 600,
+    "height": 450,
+    "locked": true
+  },
   "INS Kurusura Submarine Museum": {
     "src": "/images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-1200.webp",
     "srcSet": "/images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-286.webp 286w, /images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-350.webp 350w, /images/places/ins-kursura-submarine-museum-visakhapatnam-5f02ba6f-1200.webp 1200w",
@@ -230,6 +286,126 @@
     "height": 900,
     "locked": true
   },
+  "Mangaluru/Dharmasthala": {
+    "src": "/images/places/dharmasthala-mangaluru-card-600.webp",
+    "srcSet": "/images/places/dharmasthala-mangaluru-card-300.webp 300w, /images/places/dharmasthala-mangaluru-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mangaluru/Kadri Manjunatha Temple": {
+    "src": "/images/places/kadri-manjunatha-temple-mangaluru-attraction-1200.webp",
+    "srcSet": "/images/places/kadri-manjunatha-temple-mangaluru-attraction-300.webp 300w, /images/places/kadri-manjunatha-temple-mangaluru-attraction-600.webp 600w, /images/places/kadri-manjunatha-temple-mangaluru-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mangaluru/Karkala": {
+    "src": "/images/places/karkala-mangaluru-card-600.webp",
+    "srcSet": "/images/places/karkala-mangaluru-card-300.webp 300w, /images/places/karkala-mangaluru-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mangaluru/Kateel Temple": {
+    "src": "/images/places/kateel-temple-mangaluru-card-600.webp",
+    "srcSet": "/images/places/kateel-temple-mangaluru-card-300.webp 300w, /images/places/kateel-temple-mangaluru-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mangaluru/Kudroli Gokarnanatheshwara Temple": {
+    "src": "/images/places/kudroli-gokarnanatheshwara-temple-mangaluru-attraction-1200.webp",
+    "srcSet": "/images/places/kudroli-gokarnanatheshwara-temple-mangaluru-attraction-300.webp 300w, /images/places/kudroli-gokarnanatheshwara-temple-mangaluru-attraction-600.webp 600w, /images/places/kudroli-gokarnanatheshwara-temple-mangaluru-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mangaluru/Kukke Subramanya": {
+    "src": "/images/places/kukke-subramanya-mangaluru-card-600.webp",
+    "srcSet": "/images/places/kukke-subramanya-mangaluru-card-300.webp 300w, /images/places/kukke-subramanya-mangaluru-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mangaluru/Malpe Beach": {
+    "src": "/images/places/malpe-beach-mangaluru-card-600.webp",
+    "srcSet": "/images/places/malpe-beach-mangaluru-card-300.webp 300w, /images/places/malpe-beach-mangaluru-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mangaluru/Mangaladevi Temple": {
+    "src": "/images/places/mangaladevi-temple-mangaluru-attraction-1200.webp",
+    "srcSet": "/images/places/mangaladevi-temple-mangaluru-attraction-300.webp 300w, /images/places/mangaladevi-temple-mangaluru-attraction-600.webp 600w, /images/places/mangaladevi-temple-mangaluru-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mangaluru/Moodbidri": {
+    "src": "/images/places/moodbidri-mangaluru-card-600.webp",
+    "srcSet": "/images/places/moodbidri-mangaluru-card-300.webp 300w, /images/places/moodbidri-mangaluru-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mangaluru/Mulki": {
+    "src": "/images/places/mulki-mangaluru-card-600.webp",
+    "srcSet": "/images/places/mulki-mangaluru-card-300.webp 300w, /images/places/mulki-mangaluru-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mangaluru/Panambur Beach": {
+    "src": "/images/places/panambur-beach-mangaluru-attraction-1200.webp",
+    "srcSet": "/images/places/panambur-beach-mangaluru-attraction-300.webp 300w, /images/places/panambur-beach-mangaluru-attraction-600.webp 600w, /images/places/panambur-beach-mangaluru-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mangaluru/Pilikula Nisargadhama": {
+    "src": "/images/places/pilikula-nisargadhama-mangaluru-attraction-1200.webp",
+    "srcSet": "/images/places/pilikula-nisargadhama-mangaluru-attraction-300.webp 300w, /images/places/pilikula-nisargadhama-mangaluru-attraction-600.webp 600w, /images/places/pilikula-nisargadhama-mangaluru-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mangaluru/Someshwara Beach": {
+    "src": "/images/places/someshwara-beach-mangaluru-attraction-1200.webp",
+    "srcSet": "/images/places/someshwara-beach-mangaluru-attraction-300.webp 300w, /images/places/someshwara-beach-mangaluru-attraction-600.webp 600w, /images/places/someshwara-beach-mangaluru-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mangaluru/St. Aloysius Chapel": {
+    "src": "/images/places/st-aloysius-chapel-mangaluru-attraction-1200.webp",
+    "srcSet": "/images/places/st-aloysius-chapel-mangaluru-attraction-300.webp 300w, /images/places/st-aloysius-chapel-mangaluru-attraction-600.webp 600w, /images/places/st-aloysius-chapel-mangaluru-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mangaluru/Tannirbhavi Beach": {
+    "src": "/images/places/tannirbhavi-beach-mangaluru-attraction-1200.webp",
+    "srcSet": "/images/places/tannirbhavi-beach-mangaluru-attraction-300.webp 300w, /images/places/tannirbhavi-beach-mangaluru-attraction-600.webp 600w, /images/places/tannirbhavi-beach-mangaluru-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mangaluru/Udupi": {
+    "src": "/images/places/udupi-mangaluru-card-600.webp",
+    "srcSet": "/images/places/udupi-mangaluru-card-300.webp 300w, /images/places/udupi-mangaluru-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
   "Moodbidri": {
     "src": "/images/places/moodbidri-mangaluru-600.webp",
     "srcSet": "/images/places/moodbidri-mangaluru-300.webp 300w, /images/places/moodbidri-mangaluru-600.webp 600w",
@@ -249,6 +425,133 @@
     "srcSet": "/images/places/mulshi-pune-9ac1b3f8-300.webp 300w, /images/places/mulshi-pune-9ac1b3f8-600.webp 600w, /images/places/mulshi-pune-9ac1b3f8-900.webp 900w",
     "width": 900,
     "height": 1125,
+    "locked": true
+  },
+  "Mumbai/Alibaug": {
+    "src": "/images/places/alibaug-mumbai-card-600.webp",
+    "srcSet": "/images/places/alibaug-mumbai-card-300.webp 300w, /images/places/alibaug-mumbai-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mumbai/Bandra Bandstand": {
+    "src": "/images/places/bandra-bandstand-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/bandra-bandstand-mumbai-attraction-300.webp 300w, /images/places/bandra-bandstand-mumbai-attraction-600.webp 600w, /images/places/bandra-bandstand-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mumbai/Chhatrapati Shivaji Maharaj Terminus": {
+    "src": "/images/places/chhatrapati-shivaji-maharaj-terminus-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/chhatrapati-shivaji-maharaj-terminus-mumbai-attraction-300.webp 300w, /images/places/chhatrapati-shivaji-maharaj-terminus-mumbai-attraction-600.webp 600w, /images/places/chhatrapati-shivaji-maharaj-terminus-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mumbai/Elephanta Caves": {
+    "src": "/images/places/elephanta-caves-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/elephanta-caves-mumbai-attraction-300.webp 300w, /images/places/elephanta-caves-mumbai-attraction-600.webp 600w, /images/places/elephanta-caves-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mumbai/Gateway of India": {
+    "src": "/images/places/gateway-of-india-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/gateway-of-india-mumbai-attraction-300.webp 300w, /images/places/gateway-of-india-mumbai-attraction-600.webp 600w, /images/places/gateway-of-india-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mumbai/Haji Ali Dargah": {
+    "src": "/images/places/haji-ali-dargah-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/haji-ali-dargah-mumbai-attraction-300.webp 300w, /images/places/haji-ali-dargah-mumbai-attraction-600.webp 600w, /images/places/haji-ali-dargah-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mumbai/Igatpuri": {
+    "src": "/images/places/igatpuri-mumbai-card-600.webp",
+    "srcSet": "/images/places/igatpuri-mumbai-card-300.webp 300w, /images/places/igatpuri-mumbai-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mumbai/Juhu Beach": {
+    "src": "/images/places/juhu-beach-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/juhu-beach-mumbai-attraction-300.webp 300w, /images/places/juhu-beach-mumbai-attraction-600.webp 600w, /images/places/juhu-beach-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mumbai/Karjat": {
+    "src": "/images/places/karjat-mumbai-card-600.webp",
+    "srcSet": "/images/places/karjat-mumbai-card-300.webp 300w, /images/places/karjat-mumbai-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mumbai/Karnala Bird Sanctuary": {
+    "src": "/images/places/karnala-bird-sanctuary-mumbai-card-600.webp",
+    "srcSet": "/images/places/karnala-bird-sanctuary-mumbai-card-300.webp 300w, /images/places/karnala-bird-sanctuary-mumbai-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mumbai/Khandala": {
+    "src": "/images/places/khandala-mumbai-card-600.webp",
+    "srcSet": "/images/places/khandala-mumbai-card-300.webp 300w, /images/places/khandala-mumbai-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mumbai/Lonavala": {
+    "src": "/images/places/lonavala-mumbai-card-600.webp",
+    "srcSet": "/images/places/lonavala-mumbai-card-300.webp 300w, /images/places/lonavala-mumbai-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mumbai/Malshej Ghat": {
+    "src": "/images/places/malshej-ghat-mumbai-card-600.webp",
+    "srcSet": "/images/places/malshej-ghat-mumbai-card-300.webp 300w, /images/places/malshej-ghat-mumbai-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mumbai/Marine Drive": {
+    "src": "/images/places/marine-drive-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/marine-drive-mumbai-attraction-300.webp 300w, /images/places/marine-drive-mumbai-attraction-600.webp 600w, /images/places/marine-drive-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mumbai/Matheran": {
+    "src": "/images/places/matheran-mumbai-card-600.webp",
+    "srcSet": "/images/places/matheran-mumbai-card-300.webp 300w, /images/places/matheran-mumbai-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Mumbai/Sanjay Gandhi National Park": {
+    "src": "/images/places/sanjay-gandhi-national-park-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/sanjay-gandhi-national-park-mumbai-attraction-300.webp 300w, /images/places/sanjay-gandhi-national-park-mumbai-attraction-600.webp 600w, /images/places/sanjay-gandhi-national-park-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Mumbai/Siddhivinayak Temple": {
+    "src": "/images/places/siddhivinayak-temple-mumbai-attraction-1200.webp",
+    "srcSet": "/images/places/siddhivinayak-temple-mumbai-attraction-300.webp 300w, /images/places/siddhivinayak-temple-mumbai-attraction-600.webp 600w, /images/places/siddhivinayak-temple-mumbai-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
     "locked": true
   },
   "Narayanavanam Temple": {
@@ -292,6 +595,141 @@
     "width": 1200,
     "height": 900,
     "locked": true
+  },
+  "Pune/Aga Khan Palace": {
+    "src": "/images/places/aga-khan-palace-pune-attraction-1200.webp",
+    "srcSet": "/images/places/aga-khan-palace-pune-attraction-300.webp 300w, /images/places/aga-khan-palace-pune-attraction-600.webp 600w, /images/places/aga-khan-palace-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Bhimashankar": {
+    "src": "/images/places/bhimashankar-pune-card-600.webp",
+    "srcSet": "/images/places/bhimashankar-pune-card-300.webp 300w, /images/places/bhimashankar-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Pune/Dagdusheth Ganpati Temple": {
+    "src": "/images/places/dagdusheth-ganpati-temple-pune-attraction-1200.webp",
+    "srcSet": "/images/places/dagdusheth-ganpati-temple-pune-attraction-300.webp 300w, /images/places/dagdusheth-ganpati-temple-pune-attraction-600.webp 600w, /images/places/dagdusheth-ganpati-temple-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Jejuri Temple": {
+    "src": "/images/places/jejuri-temple-pune-card-600.webp",
+    "srcSet": "/images/places/jejuri-temple-pune-card-300.webp 300w, /images/places/jejuri-temple-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Pune/Khadakwasla Dam": {
+    "src": "/images/places/khadakwasla-dam-pune-card-600.webp",
+    "srcSet": "/images/places/khadakwasla-dam-pune-card-300.webp 300w, /images/places/khadakwasla-dam-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Pune/Khandala": {
+    "src": "/images/places/khandala-pune-card-600.webp",
+    "srcSet": "/images/places/khandala-pune-card-300.webp 300w, /images/places/khandala-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Pune/Lal Mahal": {
+    "src": "/images/places/lal-mahal-pune-attraction-1200.webp",
+    "srcSet": "/images/places/lal-mahal-pune-attraction-300.webp 300w, /images/places/lal-mahal-pune-attraction-600.webp 600w, /images/places/lal-mahal-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Lavasa": {
+    "src": "/images/places/lavasa-pune-card-600.webp",
+    "srcSet": "/images/places/lavasa-pune-card-300.webp 300w, /images/places/lavasa-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Pune/Lonavala": {
+    "src": "/images/places/lonavala-pune-card-600.webp",
+    "srcSet": "/images/places/lonavala-pune-card-300.webp 300w, /images/places/lonavala-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Pune/Mulshi": {
+    "src": "/images/places/mulshi-pune-card-600.webp",
+    "srcSet": "/images/places/mulshi-pune-card-300.webp 300w, /images/places/mulshi-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Pune/Parvati Hill": {
+    "src": "/images/places/parvati-hill-pune-attraction-1200.webp",
+    "srcSet": "/images/places/parvati-hill-pune-attraction-300.webp 300w, /images/places/parvati-hill-pune-attraction-600.webp 600w, /images/places/parvati-hill-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Pataleshwar Cave Temple": {
+    "src": "/images/places/pataleshwar-cave-temple-pune-attraction-1200.webp",
+    "srcSet": "/images/places/pataleshwar-cave-temple-pune-attraction-300.webp 300w, /images/places/pataleshwar-cave-temple-pune-attraction-600.webp 600w, /images/places/pataleshwar-cave-temple-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Pawna Lake": {
+    "src": "/images/places/pawna-lake-pune-card-600.webp",
+    "srcSet": "/images/places/pawna-lake-pune-card-300.webp 300w, /images/places/pawna-lake-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Pune/Raja Dinkar Kelkar Museum": {
+    "src": "/images/places/raja-dinkar-kelkar-museum-pune-attraction-1200.webp",
+    "srcSet": "/images/places/raja-dinkar-kelkar-museum-pune-attraction-300.webp 300w, /images/places/raja-dinkar-kelkar-museum-pune-attraction-600.webp 600w, /images/places/raja-dinkar-kelkar-museum-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Rajiv Gandhi Zoological Park": {
+    "src": "/images/places/rajiv-gandhi-zoological-park-pune-attraction-1200.webp",
+    "srcSet": "/images/places/rajiv-gandhi-zoological-park-pune-attraction-300.webp 300w, /images/places/rajiv-gandhi-zoological-park-pune-attraction-600.webp 600w, /images/places/rajiv-gandhi-zoological-park-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Sarasbaug Ganpati Temple": {
+    "src": "/images/places/sarasbaug-ganpati-temple-pune-attraction-1200.webp",
+    "srcSet": "/images/places/sarasbaug-ganpati-temple-pune-attraction-300.webp 300w, /images/places/sarasbaug-ganpati-temple-pune-attraction-600.webp 600w, /images/places/sarasbaug-ganpati-temple-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Shaniwar Wada": {
+    "src": "/images/places/shaniwar-wada-pune-attraction-1200.webp",
+    "srcSet": "/images/places/shaniwar-wada-pune-attraction-300.webp 300w, /images/places/shaniwar-wada-pune-attraction-600.webp 600w, /images/places/shaniwar-wada-pune-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Pune/Sinhagad Fort": {
+    "src": "/images/places/sinhagad-fort-pune-card-600.webp",
+    "srcSet": "/images/places/sinhagad-fort-pune-card-300.webp 300w, /images/places/sinhagad-fort-pune-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
   },
   "RK Beach": {
     "src": "/images/places/rk-beach-visakhapatnam-159c7cb6-1200.webp",
@@ -426,11 +864,201 @@
     "height": 900,
     "locked": true
   },
+  "Tirupati/Chandragiri Fort": {
+    "src": "/images/places/chandragiri-fort-tirupati-card-600.webp",
+    "srcSet": "/images/places/chandragiri-fort-tirupati-card-300.webp 300w, /images/places/chandragiri-fort-tirupati-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Tirupati/Horsley Hills": {
+    "src": "/images/places/horsley-hills-tirupati-card-600.webp",
+    "srcSet": "/images/places/horsley-hills-tirupati-card-300.webp 300w, /images/places/horsley-hills-tirupati-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Tirupati/Kailasakona Waterfalls": {
+    "src": "/images/places/kailasakona-waterfalls-tirupati-card-600.webp",
+    "srcSet": "/images/places/kailasakona-waterfalls-tirupati-card-300.webp 300w, /images/places/kailasakona-waterfalls-tirupati-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Tirupati/Nagalapuram": {
+    "src": "/images/places/nagalapuram-tirupati-card-600.webp",
+    "srcSet": "/images/places/nagalapuram-tirupati-card-300.webp 300w, /images/places/nagalapuram-tirupati-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Tirupati/Narayanavanam Temple": {
+    "src": "/images/places/narayanavanam-temple-tirupati-card-600.webp",
+    "srcSet": "/images/places/narayanavanam-temple-tirupati-card-300.webp 300w, /images/places/narayanavanam-temple-tirupati-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Tirupati/Srikalahasti": {
+    "src": "/images/places/srikalahasti-tirupati-card-600.webp",
+    "srcSet": "/images/places/srikalahasti-tirupati-card-300.webp 300w, /images/places/srikalahasti-tirupati-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Tirupati/Talakona Waterfalls": {
+    "src": "/images/places/talakona-waterfalls-tirupati-card-600.webp",
+    "srcSet": "/images/places/talakona-waterfalls-tirupati-card-300.webp 300w, /images/places/talakona-waterfalls-tirupati-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
   "Visakha Museum": {
     "src": "/images/places/visakha-museum-visakhapatnam-f455159b-350.webp",
     "srcSet": "/images/places/visakha-museum-visakhapatnam-f455159b-286.webp 286w, /images/places/visakha-museum-visakhapatnam-f455159b-350.webp 350w",
     "width": 350,
     "height": 263,
+    "locked": true
+  },
+  "Visakhapatnam/Ananthagiri Hills": {
+    "src": "/images/places/ananthagiri-hills-visakhapatnam-card-600.webp",
+    "srcSet": "/images/places/ananthagiri-hills-visakhapatnam-card-300.webp 300w, /images/places/ananthagiri-hills-visakhapatnam-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Visakhapatnam/Araku Valley": {
+    "src": "/images/places/araku-valley-visakhapatnam-card-600.webp",
+    "srcSet": "/images/places/araku-valley-visakhapatnam-card-300.webp 300w, /images/places/araku-valley-visakhapatnam-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Visakhapatnam/Bavikonda": {
+    "src": "/images/places/bavikonda-visakhapatnam-card-600.webp",
+    "srcSet": "/images/places/bavikonda-visakhapatnam-card-300.webp 300w, /images/places/bavikonda-visakhapatnam-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Visakhapatnam/Bheemili": {
+    "src": "/images/places/bheemili-visakhapatnam-card-600.webp",
+    "srcSet": "/images/places/bheemili-visakhapatnam-card-300.webp 300w, /images/places/bheemili-visakhapatnam-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Visakhapatnam/Borra Caves": {
+    "src": "/images/places/borra-caves-visakhapatnam-card-600.webp",
+    "srcSet": "/images/places/borra-caves-visakhapatnam-card-300.webp 300w, /images/places/borra-caves-visakhapatnam-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Visakhapatnam/Dolphin’s Nose Lighthouse": {
+    "src": "/images/places/dolphins-nose-lighthouse-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/dolphins-nose-lighthouse-visakhapatnam-attraction-300.webp 300w, /images/places/dolphins-nose-lighthouse-visakhapatnam-attraction-600.webp 600w, /images/places/dolphins-nose-lighthouse-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/INS Kurusura Submarine Museum": {
+    "src": "/images/places/ins-kurusura-submarine-museum-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/ins-kurusura-submarine-museum-visakhapatnam-attraction-300.webp 300w, /images/places/ins-kurusura-submarine-museum-visakhapatnam-attraction-600.webp 600w, /images/places/ins-kurusura-submarine-museum-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/Indira Gandhi Zoological Park": {
+    "src": "/images/places/indira-gandhi-zoological-park-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/indira-gandhi-zoological-park-visakhapatnam-attraction-300.webp 300w, /images/places/indira-gandhi-zoological-park-visakhapatnam-attraction-600.webp 600w, /images/places/indira-gandhi-zoological-park-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/Kailasagiri Hill Park": {
+    "src": "/images/places/kailasagiri-hill-park-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/kailasagiri-hill-park-visakhapatnam-attraction-300.webp 300w, /images/places/kailasagiri-hill-park-visakhapatnam-attraction-600.webp 600w, /images/places/kailasagiri-hill-park-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/Kambalakonda Wildlife Sanctuary": {
+    "src": "/images/places/kambalakonda-wildlife-sanctuary-visakhapatnam-card-600.webp",
+    "srcSet": "/images/places/kambalakonda-wildlife-sanctuary-visakhapatnam-card-300.webp 300w, /images/places/kambalakonda-wildlife-sanctuary-visakhapatnam-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Visakhapatnam/RK Beach": {
+    "src": "/images/places/rk-beach-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/rk-beach-visakhapatnam-attraction-300.webp 300w, /images/places/rk-beach-visakhapatnam-attraction-600.webp 600w, /images/places/rk-beach-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/Rushikonda Beach": {
+    "src": "/images/places/rushikonda-beach-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/rushikonda-beach-visakhapatnam-attraction-300.webp 300w, /images/places/rushikonda-beach-visakhapatnam-attraction-600.webp 600w, /images/places/rushikonda-beach-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/Simhachalam Temple": {
+    "src": "/images/places/simhachalam-temple-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/simhachalam-temple-visakhapatnam-attraction-300.webp 300w, /images/places/simhachalam-temple-visakhapatnam-attraction-600.webp 600w, /images/places/simhachalam-temple-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/TU-142 Aircraft Museum": {
+    "src": "/images/places/tu-142-aircraft-museum-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/tu-142-aircraft-museum-visakhapatnam-attraction-300.webp 300w, /images/places/tu-142-aircraft-museum-visakhapatnam-attraction-600.webp 600w, /images/places/tu-142-aircraft-museum-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/Thotlakonda": {
+    "src": "/images/places/thotlakonda-visakhapatnam-card-600.webp",
+    "srcSet": "/images/places/thotlakonda-visakhapatnam-card-300.webp 300w, /images/places/thotlakonda-visakhapatnam-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Visakhapatnam/Visakha Museum": {
+    "src": "/images/places/visakha-museum-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/visakha-museum-visakhapatnam-attraction-300.webp 300w, /images/places/visakha-museum-visakhapatnam-attraction-600.webp 600w, /images/places/visakha-museum-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
+    "locked": true
+  },
+  "Visakhapatnam/Vizianagaram": {
+    "src": "/images/places/vizianagaram-visakhapatnam-card-600.webp",
+    "srcSet": "/images/places/vizianagaram-visakhapatnam-card-300.webp 300w, /images/places/vizianagaram-visakhapatnam-card-600.webp 600w",
+    "width": 600,
+    "height": 750,
+    "locked": true,
+    "card": true
+  },
+  "Visakhapatnam/Yarada Beach": {
+    "src": "/images/places/yarada-beach-visakhapatnam-attraction-1200.webp",
+    "srcSet": "/images/places/yarada-beach-visakhapatnam-attraction-300.webp 300w, /images/places/yarada-beach-visakhapatnam-attraction-600.webp 600w, /images/places/yarada-beach-visakhapatnam-attraction-1200.webp 1200w",
+    "width": 1200,
+    "height": 900,
     "locked": true
   },
   "Vizianagaram": {

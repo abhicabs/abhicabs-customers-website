@@ -81,7 +81,7 @@ export const SAMPLE_BLOGS = [
     id: 4, slug: "sample-monsoon-travel-precautions", category: "Travel Tips", author: "Abhi Cabs", date: "Oct 10, 2026", sample: true,
     title: "Monsoon Travel Precautions for Long Drives", headline: "Monsoon Travel Precautions for Long Drives",
     description: "What to check and how to adjust your plan when you are travelling in the rain.",
-    image: "/images/mountain-road-full.jpg", imageAlt: "A misty mountain road in the monsoon", tags: ["tips", "safety", "monsoon"],
+    image: "/images/hero-hill-road.webp", imageAlt: "A misty mountain road in the monsoon", tags: ["tips", "safety", "monsoon"],
     sections: [
       p("Rain turns a familiar road into a different drive. A little extra care keeps a monsoon trip safe and pleasant."),
       h2("Give yourself more time"),

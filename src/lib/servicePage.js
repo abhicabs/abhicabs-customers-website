@@ -37,7 +37,7 @@ export function newServiceContent(label, mode = "one-way", group = "") {
   return {
     mode, group, listing: "directory", icon: "car",
     hero: { eyebrow: label, heading: label, description: `Book ${lower} with Abhi Cabs — transparent fares, verified drivers and support from our team.`, image: "/images/dashboard-pov.jpg" },
-    intro: { eyebrow: label, heading: `About our ${lower}`, image: "/images/airport-family-full.jpg", body: [`Describe your ${lower} here — what it covers, who it's for and why travellers choose Abhi Cabs.`], bullets: ["Verified, rated drivers", "Transparent fares", "AC sedans & SUVs"] },
+    intro: { eyebrow: label, heading: `About our ${lower}`, image: "/images/airport.webp", body: [`Describe your ${lower} here — what it covers, who it's for and why travellers choose Abhi Cabs.`], bullets: ["Verified, rated drivers", "Transparent fares", "AC sedans & SUVs"] },
     features: { heading: `Why ${lower} with Abhi Cabs`, items: [
       { icon: "shield", title: "Verified drivers", desc: "KYC-verified, background-checked chauffeurs." },
       { icon: "price", title: "Transparent pricing", desc: "See the exact fare before you book." },
@@ -83,7 +83,7 @@ export function toServiceCfg(slug, c) {
   return {
     slug, mode, enquirySubject: c.enquirySubject || "corporate", primaryLabel: c.primaryLabel || undefined,
     hero: { eyebrow: c.hero?.eyebrow || c.hero?.heading || slug, heading: c.hero?.heading || slug, subheading: c.hero?.subheading, description: c.hero?.description || "", image: c.hero?.image || "/images/dashboard-pov.jpg", alt: c.hero?.alt },
-    intro: { eyebrow: c.intro?.eyebrow || "", heading: c.intro?.heading || "", image: c.intro?.image || "/images/airport-family-full.jpg", alt: c.intro?.alt, body: list(c.intro?.body), bullets: list(c.intro?.bullets), items: list(c.intro?.items).filter((it) => it.heading), ctaLabel: c.intro?.ctaLabel },
+    intro: { eyebrow: c.intro?.eyebrow || "", heading: c.intro?.heading || "", image: c.intro?.image || "/images/airport.webp", alt: c.intro?.alt, body: list(c.intro?.body), bullets: list(c.intro?.bullets), items: list(c.intro?.items).filter((it) => it.heading), ctaLabel: c.intro?.ctaLabel },
     features: { eyebrow: c.features?.eyebrow, heading: c.features?.heading || "Why choose us", subheading: c.features?.subheading, intro: c.features?.intro, ctaLabel: c.features?.ctaLabel, items: list(c.features?.items).map((f) => ({ Icon: getIcon(f.icon), title: f.title, desc: f.desc })) },
     pricing: { ...(c.pricing || {}), heading: c.pricing?.heading || "Pricing", description: c.pricing?.description || "", points: list(c.pricing?.points) },
     how: { heading: c.how?.heading || "How it works", subheading: c.how?.subheading, ctaLabel: c.how?.ctaLabel, steps: list(c.how?.steps) },

@@ -791,7 +791,7 @@ export const SEO_ARTICLES = [
     "date": "Nov 01, 2026",
     "keywords": "long-distance road trip, how to plan a long-distance road trip, what to carry on an outstation journey, how to plan an inter-state road trip, how to prepare for an overnight road trip",
     "author": "Abhi Cabs",
-    "image": "/images/mountain-road-full.jpg",
+    "image": "/images/hero-hill-road.webp",
     "imageAlt": "A mountain road on a long-distance road trip",
     "tags": [
       "road trip",
@@ -900,7 +900,7 @@ export const SEO_ARTICLES = [
     "date": "Nov 01, 2026",
     "keywords": "how to choose a tempo traveller, how to book a cab for group travel, Tempo Traveller booking, group travel Tempo Traveller, 12 seater Tempo Traveller, 17 seater Tempo Traveller, Urbania on rent",
     "author": "Abhi Cabs",
-    "image": "/images/airport-family-full.jpg",
+    "image": "/images/airport.webp",
     "imageAlt": "A group of travellers with luggage preparing to board a vehicle",
     "tags": [
       "group travel",

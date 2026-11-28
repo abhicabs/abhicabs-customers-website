@@ -51,7 +51,16 @@ export default function CityLanding({ cfg: c }) {
   const [booking, setBooking] = useState({ key: "city-default", journey: null });
   const book = (journey) => { setBooking({ key: `b-${Date.now()}`, journey }); scrollToBooking(); };
 
-  const imageFor = (name) => placeImages[name] || null;
+  // A city's own image ("Mumbai/Lonavala") wins over the shared one ("Lonavala"), so two cities
+  // can show different pictures of the same destination.
+  // Entries marked "card" are finished card artwork (label painted in) — used only where the
+  // image is shown whole (day-trip cards), never cropped into the 4:3 attraction cards.
+  const imageFor = (name, { card = true } = {}) => {
+    const own = placeImages[`${city}/${name}`];
+    if (own && (card || !own.card)) return own;
+    const shared = placeImages[name];
+    return shared && (card || !shared.card) ? shared : null;
+  };
   const services = {
     heading: c.services.heading,
     cards: c.services.items.map((s) => {
@@ -65,7 +74,7 @@ export default function CityLanding({ cfg: c }) {
     ["services", (bg) => <UsesSection data={services} onBook={book} bg={bg} center />],
     c.fleet && ["fleet", (bg) => <FleetLineup data={c.fleet} bg={bg} />],
     c.tirumala && ["tirumala", () => <TirumalaBand data={c.tirumala} city={city} onBook={book} />, "fixed"],
-    ["attractions", (bg) => <AttractionsGrid data={c.attractions} imageFor={imageFor} onBook={book} bg={bg} />],
+    ["attractions", (bg) => <AttractionsGrid data={c.attractions} imageFor={(n) => imageFor(n, { card: false })} onBook={book} bg={bg} />],
     ["daytrips", (bg) => <DayTripCarousel data={c.dayTrips} imageFor={imageFor} destOf={destOf} origin={city} onBook={book} bg={bg} />],
     ["routes", () => <RoutesBoard data={c.outstationRoutes} origin={city} onBook={book} />, "fixed"],
     ["pickup", (bg) => <PickupMap data={c.pickupLocations} region={city} onBook={book} bg={bg} />],
